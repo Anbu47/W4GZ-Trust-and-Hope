@@ -386,7 +386,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
         <div><span>💗</span><em><b>Trust</b> grows with supportive answers and drops with hurtful ones. The more trust, the more they open up.</em></div>
         <div><span>🔋</span><em>Every talk costs <b>energy</b>. When it runs out, recharge in Your Corner before your next talk.</em></div>
         <div><span>👀</span><em><b>Read the moment.</b> Sometimes they need quiet company, sometimes your full attention.</em></div>
-        <div><span>🗺️</span><em><b>Choose your path.</b> Each chapter opens new rooms — visit them in any order.</em></div>
+        <div><span>🗺️</span><em><b>Choose your path.</b> Each chapter opens new rooms.</em></div>
         <div><span>🌧️</span><em>Weeks pass. On <b>bad days</b> something may go dark again — help bring it back.</em></div>
       </div>
     </div>
@@ -1348,7 +1348,7 @@ function phaseCard(ph){
     const P = PHASES[ph];
     let extra = "";
     const rooms = ph === 0 ? "Choose where to begin: the Living Room or the Kitchen."
-      : ph === 1 ? "🚪 New rooms are open: the Study and the Balcony. Visit them in any order."
+      : ph === 1 ? "🚪 New rooms are open: the Study and the Balcony."
       : "🚪 Your Corner is open. The Bedroom will open when the rest of the house is lit.";
     extra += `<p class="gain">${rooms}</p>`;
     if (ph > 0) {

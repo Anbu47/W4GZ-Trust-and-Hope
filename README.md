@@ -11,7 +11,7 @@ Someone you love is going through a hard time. Walk through your home, find the 
 Open `index.html` in any browser (phone or desktop). No install or internet connection needed, apart from loading fonts.
 
 1. Choose your character (Man, Woman or Non-binary) and your loved one (Man, Woman or Non-binary). Names are optional.
-2. Explore six rooms, opened chapter by chapter (Week 1 → Week 3 → Month 2). Within a chapter, visit rooms in any order.
+2. Explore six rooms, opened chapter by chapter (Week 1 → Week 3 → Month 2).
    Each grey, faded object (a guitar, a bowl of soup, a phone…) is a moment with your loved one: pick the response you think helps most and it comes back to life.
 3. Keep an eye on:
    - 💗 **Trust**: grows with supportive answers and drops with hurtful ones. The Bedroom only opens at trust 60.
