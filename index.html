@@ -2018,7 +2018,7 @@ function openTalk(t){
   const order = shuffleArr([0,1,2]);
   const icon = (t.kind === "light" || t.kind === "setback") ? rm.icons[t.idx % 2] + " " : "";
   const chip = t.kind === "setback" ? "🌧️ RELIGHT EVENT · A BAD DAY" : t.kind === "moment" ? `💗 HEART MILESTONE · ${HEARTS[t.idx].name.toUpperCase()}` : `${icon}${rm.name.toUpperCase()} · ${rm.theme.toUpperCase()}`;
-  const tag = t.kind === "light" ? (t.revisit ? "Revisit" : `Light ${t.idx+1} / 12`) : t.kind === "moment" ? "Single-use" : `${icon}Bad day`;
+  const tag = t.kind === "light" ? (t.revisit ? "Revisit" : `Light ${t.idx+1} / 12`) : t.kind === "moment" ? "1 chance only" : `${icon}Bad day`;
   const card = $("qCard");
   card.className = "qcard" + (t.kind === "moment" ? " heartq" : t.kind === "setback" ? " stormq" : "");
   card.innerHTML = `<div class="qhead"><span class="chip">${chip}</span><span class="n">${tag}</span></div>
