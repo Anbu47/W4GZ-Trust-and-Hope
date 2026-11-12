@@ -1765,7 +1765,7 @@ function openTalk(t){
   const order = shuffleArr([0,1,2]);
   const icon = (t.kind === "light" || t.kind === "setback") ? rm.icons[t.idx % 2] + " " : "";
   const chip = t.kind === "setback" ? "🌧️ RELIGHT EVENT · A BAD DAY" : t.kind === "moment" ? `💗 HEART MILESTONE · ${HEARTS[t.idx].name.toUpperCase()}` : `${icon}${rm.name.toUpperCase()} · ${rm.theme.toUpperCase()}`;
-  const tag = t.kind === "light" ? (t.revisit ? "Revisit" : `Light ${t.idx+1} / 12`) : t.kind === "moment" ? "Single-use" : `${icon}+${RELIGHT_BONUS} bonus`;
+  const tag = t.kind === "light" ? (t.revisit ? "Revisit" : `Light ${t.idx+1} / 12`) : t.kind === "moment" ? "Single-use" : `${icon}Bad day`;
   const card = $("qCard");
   card.className = "qcard" + (t.kind === "moment" ? " heartq" : t.kind === "setback" ? " stormq" : "");
   card.innerHTML = `<div class="qhead"><span class="chip">${chip}</span><span class="n">${tag}</span></div>
@@ -1804,7 +1804,6 @@ function answer(i, btn){
   let streakBonus = 0; const baseDt = dt, lostStreak = o.g !== "help" ? (PLAY.streak || 0) : 0;
   if (o.g === "help") { PLAY.streak = (PLAY.streak || 0) + 1; streakBonus = Math.min(3, PLAY.streak - 1); dt += streakBonus; PLAY.bestStreak = Math.max(PLAY.bestStreak || 0, PLAY.streak); }
   else PLAY.streak = 0;
-  if (t.kind === "setback" && o.g === "help") dt += RELIGHT_BONUS;
   const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
   if (PLAY.trust === 0 && before > 0) PLAY.darkPending = true;
   let heartsGot = [];
@@ -1820,7 +1819,7 @@ function answer(i, btn){
     let nv = cur;
     if (o.g === "help") nv = 2;
     else if (o.g === "okay" && !Q.critical) nv = Math.max(cur, 1);
-    if (t.kind === "setback" && nv >= 1) { PLAY.setbacksFixed++; PLAY.relit = { idx:t.idx, full: nv === 2, bonus: o.g === "help" ? RELIGHT_BONUS : 0 }; }
+    if (t.kind === "setback" && nv >= 1) { PLAY.setbacksFixed++; PLAY.relit = { idx:t.idx, full: nv === 2 }; }
     PLAY.light[t.idx] = nv; lightNow = nv;
     if (o.g !== "help") (PLAY.tried = PLAY.tried || {})[t.idx] = true;
     if (nv > cur || (nv >= 1 && cur === -1)) { PLAY.justLit = t.idx; }
@@ -1937,7 +1936,6 @@ function houseGoesDark(){
 }
 
 // ---------------- RELIGHT EVENT: a bad day ----------------
-const RELIGHT_BONUS = 3;
 function startBadDay(ph){
   const from = PHASES[ph].from;
   const cands = PLAY.light.map((v,i) => (v >= 1 && Math.floor(i/2) < from) ? i : -1).filter(i => i >= 0);
@@ -1960,7 +1958,6 @@ function badDayCard(i){
       ${paras(PART === 2 ? "You had been doing better. Then, one grey morning, everything felt heavy again.\n\nSetbacks are part of healing — not the end of it." : "{P} had been doing better. Then, one grey morning, the curtains stayed closed again.\n\nSetbacks are part of healing — not the end of it.")}
       <div class="bd-mission"><b>Your mission</b>
         <div class="bd-row"><span class="bd-ic">${obj}</span><span>${escH(fill(PART === 2 ? `Then came a bad day. A light in ${ROOMS[r].ref} went out — find it and get through it with {p}.` : `Then came a bad day. A light in ${ROOMS[r].ref} went out — locate it and help {p} relight it.`))}</span></div>
-        <div class="bd-reward">🌤️ Relight it with care: <b>+${RELIGHT_BONUS} relight bonus</b></div>
       </div>`, btn: PART === 2 ? "Face the day ☔" : fill("Go to {them} ☔") };
   };
 }
@@ -1975,7 +1972,7 @@ function lightReturnsCard(R){
       ${paras(R.full
         ? PART === 2 ? "The rain eases. By evening, you open the curtains and sit beside {p}.\n\n“Thanks for letting me help — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress." : "The rain eases. By evening, {p} opens the curtains and sits beside you.\n\n“Thanks for not giving up on me — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress."
         : "The rain softens, but it hasn't quite stopped. The light flickers back — still a little dim.\n\nCome back later and help it glow fully again.")}
-      ${R.bonus ? `<p class="gain">🌤️ Relight bonus: +${R.bonus} ${tw()}</p>` : ""}`, btn:"Continue" };
+      `, btn:"Continue" };
   };
 }
 
