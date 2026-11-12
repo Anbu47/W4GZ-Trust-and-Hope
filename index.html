@@ -185,7 +185,14 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 /* ---------- v2 mechanics ---------- */
 .hbar{position:relative}
 .hbar i{background:linear-gradient(90deg,#ff7aa8,#ffd27a)}
-.hbar em{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff;opacity:.7;border-radius:2px}
+.hwrap{position:relative;margin:4px 0 2px}
+.hwrap .hbar{margin:6px 0 4px}
+.hearts{position:absolute;inset:0;pointer-events:none}
+.hm{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:15px;line-height:1;pointer-events:auto;cursor:pointer;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5));transition:transform .3s}
+.hm:not(.on){opacity:.75;font-size:13px}
+.hm.pop{animation:hpop .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes hpop{0%{transform:translate(-50%,-50%) scale(.5)}60%{transform:translate(-50%,-50%) scale(1.4)}}
+.why .lm.hg{color:#ffc2d6}
 .hud2{display:flex;align-items:center;gap:8px;flex:none;margin:-2px 0 8px}
 .hud2 .phase{font-size:10.5px;font-weight:900;letter-spacing:.12em;padding:5px 9px;border-radius:999px;background:var(--gold);color:#4a2c00}
 .hud2 .lights{font-size:12px;font-weight:800;color:#f5e3ec}
@@ -399,7 +406,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="hmood" id="hMood"></div>
       <div class="hmeter">
         <div class="hlabel"><b id="hName"></b><span id="hPct"></span></div>
-        <div class="hbar"><i id="hFill"></i><em id="hMark" title="Trust needed for the Bedroom"></em></div>
+        <div class="hwrap"><div class="hbar"><i id="hFill"></i></div><div class="hearts" id="hHearts"></div></div>
       </div>
       <button class="helpbtn" id="helpBtn" aria-label="Get help">♡<small>Help</small></button>
     </div>
@@ -704,11 +711,32 @@ function shuffleArr(a){ for (let i = a.length - 1; i > 0; i--) { const j = Math.
 function anim(el, c){ if (!el) return; el.classList.remove(c); void el.offsetWidth; el.classList.add(c); }
 
 // ---------------- tuning ----------------
+// Heart milestones on the trust bar. Reaching one for the first time gives a small bonus.
+const HEARTS = [
+  { at:50, name:"Opening Up",  tip:"{P} starts to share more with you." },
+  { at:60, name:"Ready to Talk", tip:"Trust needed for the hardest conversation in the Bedroom." },
+  { at:75, name:"Deep Trust",  tip:"{P} trusts you with {their} fears." },
+  { at:85, name:"Safe Harbor", tip:"The deepest ending is within reach." }
+];
+const HEART_BONUS = 5;
+function checkHearts(){
+  const got = [];
+  let again = true;
+  while (again) {
+    again = false;
+    HEARTS.forEach((h, k) => {
+      if (!PLAY.hearts[k] && PLAY.trust >= h.at) { PLAY.hearts[k] = true; (PLAY.heartNew = PLAY.heartNew || []).push(k); PLAY.trust = clamp(PLAY.trust + HEART_BONUS, 0, 100); got.push(h); again = true; }
+    });
+  }
+  if (got.length) setTimeout(() => { burstHearts(innerWidth / 2, 40, 18); [659,784,988,1319].forEach((f,i) => tone(f,.22,.07,i*.07)); }, 200);
+  return got;
+}
+const heartHTML = got => got.map(h => `<div class="lm hg">💗 Heart milestone: <b>${h.name}</b> · +${HEART_BONUS} trust</div>`).join("");
 const MAX_ENERGY = 3, START_TRUST = 30, BEDROOM_TRUST = 60;
 const GRADE = {
   help:{ trust:6, cls:"good", head:"💛 Supportive" },
   okay:{ trust:1,  cls:"mid",  head:"🙂 Well-meant, but not quite" },
-  hurt:{ trust:-10, cls:"bad",  head:"💔 That stung" }
+  hurt:{ trust:-20, cls:"bad",  head:"💔 That stung" }
 };
 // Story told at each turning point. Paragraphs are separated by "\n\n".
 const PHASES = [
@@ -1033,7 +1061,7 @@ let PLAY = null;
 function newPlay(){
   PLAY = { light:Array(12).fill(0), trust:START_TRUST, energy:MAX_ENERGY, chap:0, bedOpen:false, phase:0, justLit:-1,
            setback:{}, setbacksFixed:0, tm:TRUST_MOMENTS.map(() => ({ shown:false, done:false })),
-           restsGood:0, rests:0, qt:0, msShown:[], doorShown:false, me:{ r:0, x:18, y:90 }, q:null, pendingPhase:null };
+           restsGood:0, rests:0, qt:0, msShown:[], doorShown:false, hearts:HEARTS.map(() => false), me:{ r:0, x:18, y:90 }, q:null, pendingPhase:null };
 }
 const lit = i => PLAY.light[i] >= 1;
 const roomComplete = r => lit(r*2) && lit(r*2+1);
@@ -1150,7 +1178,9 @@ function updateHUD(){
   $("hName").textContent = showName("partner");
   $("hPct").textContent = `Trust ${PLAY.trust}`;
   $("hFill").style.width = PLAY.trust + "%";
-  $("hMark").style.left = BEDROOM_TRUST + "%";
+  $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${PLAY.trust >= h.at ? 'on' : ''} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${h.at}%" data-h="${k}">${PLAY.trust >= h.at ? '💗' : '🤍'}</span>`).join("");
+  PLAY.heartNew = [];
+  $("hHearts").querySelectorAll(".hm").forEach(el => el.onclick = () => { const h = HEARTS[+el.dataset.h]; toast(`${PLAY.trust >= h.at ? "💗" : "🤍"} ${h.at} · ${h.name}: ${fill(h.tip)}`); });
   $("hPhase").textContent = PHASES[PLAY.phase].label;
   $("hLights").textContent = `✨ ${litN}/12`;
   $("hEnergy").innerHTML = Array.from({length:MAX_ENERGY}, (_,i) => `<i class="${i < PLAY.energy ? 'on' : ''}"></i>`).join("");
@@ -1249,11 +1279,12 @@ function answer(i, btn){
   const Q = t.data, o = Q.opts[i], G = GRADE[o.g];
   // trust change
   let dt = G.trust;
-  if (t.kind === "light" && t.revisit) dt = o.g === "help" ? 4 : o.g === "okay" ? 0 : -10;
-  if (t.kind === "moment") dt = o.g === "help" ? 8 : o.g === "okay" ? 1 : -8;
+  if (t.kind === "light" && t.revisit) dt = o.g === "help" ? 4 : o.g === "okay" ? 0 : -20;
+  if (t.kind === "moment") dt = o.g === "help" ? 8 : o.g === "okay" ? 1 : -20;
   if (Q.critical && o.g === "okay") dt = 0;
   const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
   if (PLAY.trust === 0 && before > 0) PLAY.darkPending = true;
+  const heartsGot = dt > 0 ? checkHearts() : [];
   // light change
   let lightNow = null, lightMsg = "";
   if (t.kind === "light" || t.kind === "setback") {
@@ -1276,7 +1307,7 @@ function answer(i, btn){
   $("qOpts").classList.add("done");
   const react = REACT[o.g][trustTier()];
   const why = $("qWhy");
-  why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${dt>0?'up':dt<0?'down':''}">${dt>0?'+':''}${dt} trust</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}</div>
+  why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${dt>0?'up':dt<0?'down':''}">${dt>0?'+':''}${dt} trust</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
     <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
     <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? "Bring it back to life ✨" : t.collect ? "Warm it up" : "Continue"}</button>`;
   why.querySelector(".w").textContent = T(o.why);
@@ -1431,8 +1462,9 @@ function tapQualityTime(){
       if ($("qOpts").classList.contains("done")) return;
       const o = QUALITY_TIME[+b.dataset.k];
       PLAY.trust = clamp(PLAY.trust + 8, 0, 100); PLAY.qt++;
+      const hg = checkHearts();
       b.classList.add("yes"); b.querySelector(".dot").textContent = "✓"; $("qOpts").classList.add("done");
-      $("qWhy").innerHTML = `<div class="why good"><h4>💛 A quiet, good evening<span class="delta up">+8 trust</span></h4><span class="w"></span></div><button class="cta" id="doneBtn">Continue</button>`;
+      $("qWhy").innerHTML = `<div class="why good"><h4>💛 A quiet, good evening<span class="delta up">+8 trust</span></h4><span class="w"></span>${heartHTML(hg)}</div><button class="cta" id="doneBtn">Continue</button>`;
       $("qWhy").querySelector(".w").textContent = fill(o.r) + " Small, steady moments build the safety people need to open up.";
       sfx.love(); updateHUD(); anim($("hMood"), "bump");
       $("doneBtn").onclick = () => { $("qSheet").classList.remove("show"); setTimeout(afterTalk, 250); };
