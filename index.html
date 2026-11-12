@@ -374,7 +374,6 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       </div>
     </div>
     <button class="cta" id="startBtn">Begin your story</button>
-    <button class="ghost" id="resumeBtn" style="display:none"></button>
   </section>
 
   <!-- STEP 1: PLAYER -->
@@ -621,9 +620,6 @@ function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show
 // ================= TITLE =================
 function renderTitle(){
   $("titleCouple").innerHTML = `<div class="halo"></div><div class="ring"></div><div class="ring r2"></div><div class="p r">${avatar("man",PARTNER_VARIANT.man,"t2","calm")}</div><div class="p l">${avatar("woman",null,"t1")}</div>`;
-  const ready = GAME.player.kind && GAME.partner.kind;
-  $("resumeBtn").style.display = ready ? "block" : "none";
-  if (ready) $("resumeBtn").textContent = `Continue as ${showName("player")} ♥ ${showName("partner")}`;
 }
 // "Begin your story" always starts fresh: no leftover names or choices from an earlier player.
 $("startBtn").onclick = () => {
@@ -631,7 +627,6 @@ $("startBtn").onclick = () => {
   $("playerName").value = ""; $("partnerName").value = "";
   audio(); sfx.next(); go("s-player");
 };
-$("resumeBtn").onclick = () => { audio(); sfx.next(); go("s-confirm"); };
 
 // ================= STEP 1 =================
 function choiceCard(kind, variant, uid, selected, delay){
