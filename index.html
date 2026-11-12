@@ -244,6 +244,9 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .chap.story p.gain,.chap.story p.sb{font-family:Nunito,sans-serif;font-style:normal;font-size:14px;text-align:center}
 .chap .sub{font-family:"Playfair Display",serif;font-style:italic;color:var(--rose2);font-size:18px;margin:-6px 0 14px}
 .chap.ms h2{font-size:38px}
+.chap.dark h2{font-size:38px;background:linear-gradient(180deg,#fff,#9aa3c7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.house.blackout{animation:blackout 2.6s ease}
+@keyframes blackout{0%{filter:none}25%{filter:brightness(.15) saturate(.2)}100%{filter:none}}
 .msface{position:relative;width:96px;height:96px;margin:12px auto 4px;border-radius:50%;overflow:visible}
 .msface svg{width:96px;height:96px;border-radius:50%;border:3px solid rgba(255,255,255,.9);display:block}
 .msface span{position:absolute;right:-8px;bottom:-4px;font-size:30px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4))}
@@ -1180,6 +1183,7 @@ function answer(i, btn){
   if (t.kind === "moment") dt = o.g === "help" ? 8 : o.g === "okay" ? 1 : -8;
   if (Q.critical && o.g === "okay") dt = 0;
   const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
+  if (PLAY.trust === 0 && before > 0) PLAY.darkPending = true;
   // light change
   let lightNow = null, lightMsg = "";
   if (t.kind === "light" || t.kind === "setback") {
@@ -1232,6 +1236,7 @@ function finishTalk(){
 function afterTalk(){
   // trust moments become available
   PLAY.tm.forEach((m, k) => { if (!m.shown && PLAY.trust >= TRUST_MOMENTS[k].at && PLAY.maxRoom >= 1) { m.shown = true; setTimeout(() => toast(fill("💗 {P} wants to tell you something")), 600); } });
+  if (PLAY.darkPending) { PLAY.darkPending = false; houseGoesDark(); return; }
   const prevMax = PLAY.maxRoom;
   refreshUnlocks();
   renderHouse();
@@ -1242,6 +1247,26 @@ function afterTalk(){
   if (PLAY.maxRoom > prevMax) setTimeout(() => placeTokens(false), 300);
   if (cards.length) setTimeout(() => showCards(cards), 600);
   if (PLAY.light.every(v => v >= 1) && roomComplete(5)) { PLAY.ending = true; setTimeout(() => { sfx.love(); go("s-end"); }, 1100); }
+}
+
+// ---------------- trust breaks: the house goes dark ----------------
+const DARK_TRUST = 10;
+function houseGoesDark(){
+  PLAY.light = PLAY.light.map(() => 0);   // every light goes out
+  PLAY.setback = {};
+  PLAY.trust = DARK_TRUST;
+  PLAY.darkTimes = (PLAY.darkTimes || 0) + 1;
+  renderHouse();
+  $("house").classList.add("blackout");
+  setTimeout(() => $("house").classList.remove("blackout"), 2600);
+  tone(196,.8,.08,0,"sine"); tone(147,1.2,.07,.3,"sine");
+  setTimeout(() => showCards([() => ({
+    html:`<div class="chap story dark"><small>TRUST HAS BROKEN</small><div class="msface">${avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "dk" + Math.random().toString(36).slice(2,6), "sad")}<span>🌑</span></div>
+      <h2>The House Goes Dark</h2>
+      ${paras("After one too many hurtful moments, {p} stops talking. The bedroom door stays closed. One by one, every light in the house goes out.\n\nThis can happen in real life too. When someone feels judged or dismissed again and again, they protect themselves by shutting others out.\n\nBut trust can be rebuilt. Not with one big gesture — with small, steady moments of kindness, again and again.")}
+      <p class="sb">🌑 Every light has gone out. Trust is now ${DARK_TRUST}.</p>
+      <p class="gain">The rooms you opened stay open. Walk back through the house and light it again — you know more now than when you started.</p>`,
+    btn:"Start rebuilding" })]), 900);
 }
 
 // ---------------- timeline + setbacks ----------------
