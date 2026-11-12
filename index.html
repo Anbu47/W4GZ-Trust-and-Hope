@@ -2115,7 +2115,7 @@ function renderEnd(){
   const tr = PLAY.trust, tier = tr >= 80 ? 2 : tr >= 60 ? 1 : 0;
   $("pair3").innerHTML = pairHTML(tier === 0 ? "calm" : "happy", tier === 0 ? "calm" : "happy");
   const two = PART === 2;
-  const title = (two ? ["Learning to Lean", "Stronger Together", "Two Steady Lights"] : ["A Growing Spark", "A Steady Light", "A Safe Harbor"])[tier];
+  const title = (two ? ["Learning to Lean", "Stronger Together", "Two Steady Lights"] : ["A Growing Spark", "A Steady Light", "A Home Full of Light"])[tier];
   const lines = two ? [
     `Months later, the house is lit again. Some days are still hard, but you keep going to counseling — and you don't hide the bad days from <b>{p}</b> anymore. <br><b>“Thanks for letting me in, even a little.”</b><br><br>Learning to accept help takes time — and you've started.`,
     `Light fills every window. <b>{P}</b> squeezes your hand: <br><b>“Thank you for trusting me.”</b><br><br>You admitted you were struggling, said yes to help, and let someone stand beside you. That takes real courage.`,
@@ -2123,7 +2123,7 @@ function renderEnd(){
   ] : [
     `Months later, the house glows once more. <b>{P}</b> is navigating {their} terrain with clinical support, and bad days grow progressively rarer. <br><b>“Thanks for refusing to drop my hand.”</b><br><br>Trust accumulates slowly — and you cultivated it from scratch.`,
     `Luminescent warmth spills through every window. <b>{P}</b> grips your fingers: <br><b>“Thank you for staying the course.”</b><br><br>Healing is a collaborative marathon. Because you noticed, listened, and bridged {them} to professional care, {they} no longer march{es} through the dark alone.`,
-    `The house radiates gold. <b>{P}</b> rests {their} temple against your shoulder: <br><b>“With you, I never have to fake resilience. I am completely safe.”</b><br><br>You evolved into a true safe harbor — steady through tempest and calm alike, while fiercely protecting your own light.`
+    `The house radiates gold. <b>{P}</b> rests {their} temple against your shoulder: <br><b>“With you, I never have to fake resilience. I am completely safe.”</b><br><br>You became {their} safe place — steady through storms and calm days alike, while still protecting your own light.`
   ];
   const pr = CHAR[GAME.partner.kind].pron;
   const txt = lines[tier].replace("{go}", pr.s === "they" ? "go" : "goes").replace("{es}", pr.s === "they" ? "" : "es");
@@ -2148,11 +2148,11 @@ function renderEnd(){
     ${half ? `<p class="rhalf">${half} ${half === 1 ? "light is" : "lights are"} still half-lit — play again to make every one shine.</p>` : ""}</div>`;
   $("endNext").textContent = two
     ? (tier < 2 ? `Replay Part 2 — reaching 80+ hope unlocks “Two Steady Lights”.` : `You reached the brightest ending of Part 2. 💛`)
-    : (tier < 2 ? `Replay to access the deepest narrative ending — reaching 80+ trust unlocks “A Safe Harbor”.` : `You attained the ultimate golden ending. 💛`);
+    : (tier < 2 ? `Replay to access the deepest narrative ending — reaching 80+ trust unlocks “A Home Full of Light”.` : `You attained the ultimate golden ending. 💛`);
   if (!two) unlockPart2(!half);
-  $("endTeaser").hidden = two; $("nextPartBtn").hidden = two;
+  $("endTeaser").hidden = true; $("nextPartBtn").hidden = true;
   $("againBtn").textContent = two ? "Play Part 2 again ♥" : "Play again ♥";
-  $("againBtn").className = two ? "cta" : "ghost";
+  $("againBtn").className = "cta";
   $("learnedH").textContent = two ? "What you learned about yourself" : "What you practised";
   $("learned").innerHTML = LEARNED.map(t => `<li>${escH(t)}</li>`).join("");
   setTimeout(() => { const r = $("pair3").getBoundingClientRect(); burstHearts(r.left + r.width/2, r.top + r.height/3, 30); }, 300);
