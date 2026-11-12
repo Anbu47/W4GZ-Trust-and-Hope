@@ -362,6 +362,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .qcard.heartq .say .face{border-color:#ff9ec0;box-shadow:0 0 16px rgba(255,107,154,.8)}
 /* ---------- music button ---------- */
 .musicbtn{width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center;flex:none;position:relative}
+.helpbtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));left:16px;z-index:5}
 .musicbtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:16px;z-index:5}
 .musicbtn.off{opacity:.5;filter:grayscale(1)}
 .musicbtn.off::after{content:"";position:absolute;left:8px;right:8px;top:50%;height:2px;background:#ffb3cc;transform:rotate(-40deg);border-radius:2px}
@@ -634,6 +635,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
   <!-- TITLE -->
   <section class="screen active" id="s-title">
     <button class="musicbtn floating" aria-label="Music on">🎵</button>
+    <button class="helpbtn floating" id="helpBtnTitle" aria-label="Get help">♡<small>Help</small></button>
     <div class="scroll">
       <div class="title-wrap">
         <div class="couple" id="titleCouple"></div>
@@ -2402,7 +2404,7 @@ function tapQualityTime(){
 $("qSheet").addEventListener("click", e => { if (e.target.id === "qSheet" && !PLAY.q) $("qSheet").classList.remove("show"); });
 
 // ---------------- help ----------------
-$("helpBtn").onclick = () => { audio(); sfx.tap(); $("helpSheet").classList.add("show"); };
+["helpBtn","helpBtnTitle"].forEach(id => $(id).onclick = () => { audio(); sfx.tap(); $("helpSheet").classList.add("show"); });
 $("helpClose").onclick = () => $("helpSheet").classList.remove("show");
 $("helpSheet").addEventListener("click", e => { if (e.target.id === "helpSheet") $("helpSheet").classList.remove("show"); });
 
