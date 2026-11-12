@@ -403,6 +403,23 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .token.love.opening .love-msg{animation:msgOpen .5s ease-in forwards}
 @keyframes msgOpen{to{transform:translateX(-50%) translateY(-14px) scale(1.4);opacity:0}}
 @media (prefers-reduced-motion:reduce){.love-msg,.lm-heart,.lm-dots i,.love-msg .rise,.token.love.has-msg .tk-face{animation:none}}
+/* ---------- situation text: read this first ---------- */
+.qcard .scene{position:relative;font-size:16.5px;line-height:1.5;font-weight:700;color:#fff;margin:4px 0 14px;padding:26px 14px 13px 16px;
+  border-radius:16px;background:linear-gradient(135deg,rgba(255,210,122,.16),rgba(255,255,255,.05));border:1px solid rgba(255,210,122,.38);border-left:5px solid var(--gold);
+  box-shadow:0 6px 18px rgba(0,0,0,.18);animation:sceneIn .45s ease-out both}
+.qcard .scene::before{content:"📍 SITUATION";position:absolute;left:14px;top:8px;font-size:10px;font-weight:900;letter-spacing:.18em;color:var(--gold)}
+@keyframes sceneIn{from{opacity:0;transform:translateY(6px)}}
+/* recharge cards get their own colours: calm teal in Part 1, warm rose for self-love in Part 2 */
+.qcard.restq{background:linear-gradient(180deg,#123f44,#16303d 55%,#1c2638);border-color:rgba(120,220,200,.45)}
+.qcard.restq .chip{background:rgba(110,220,195,.2);color:#c8fff0;border-color:rgba(120,230,200,.55)}
+.qcard.restq .scene{background:linear-gradient(135deg,rgba(110,220,195,.2),rgba(255,255,255,.04));border-color:rgba(120,230,200,.45);border-left-color:#6fe0c4}
+.qcard.restq .scene::before{color:#8ff0d6}
+.qcard.loveq{background:linear-gradient(180deg,#5a1d45,#3d1838 55%,#2a1430);border-color:rgba(255,150,200,.5)}
+.qcard.loveq .chip{background:rgba(255,130,190,.22);color:#ffe0f0;border-color:rgba(255,160,205,.6)}
+.qcard.loveq .scene{background:linear-gradient(135deg,rgba(255,130,190,.22),rgba(255,255,255,.04));border-color:rgba(255,160,205,.5);border-left-color:#ff8cc6}
+.qcard.loveq .scene::before{content:"💖 SITUATION";color:#ffb3d9}
+.qcard.restq .scene::before{content:"🌿 SITUATION"}
+@media (prefers-reduced-motion:reduce){.qcard .scene{animation:none}}
 /* ---------- part 2 ---------- */
 .teaser{margin:14px 0 4px;padding:14px;border-radius:20px;text-align:center;background:linear-gradient(135deg,rgba(150,170,255,.22),rgba(255,140,190,.18));border:1px solid rgba(190,200,255,.55)}
 .teaser small{display:block;font-size:10px;font-weight:900;letter-spacing:.22em;color:#c9d0ff}
@@ -1333,7 +1350,8 @@ const RECHARGE = [
     { g:"poor", t:"Vow strictly that you aren't permitted to smile until {p} is 100% fully recovered.", tip:"Joy isn't a prize unlocked at a finish line; it's the fuel required to finish the marathon." } ] }
 ];
 const REST_GAIN = { best:3, okay:2, poor:0 };
-const REST_HEAD = { best:["🌿 Fully restored","good"], okay:["🙂 Minor rest","mid"], poor:["😮‍💨 Minimal recovery","bad"] };
+const REST_HEAD_P1 = { best:["🌿 Fully restored","good"], okay:["🙂 Minor rest","mid"], poor:["😮‍💨 Minimal recovery","bad"] };
+const REST_HEAD_P2 = { best:["💖 True self-love","good"], okay:["🙂 A little kindness","mid"], poor:["😮‍💨 Not really self-love","bad"] };
 let restQueue = [];
 function nextRecharge(){ if (!restQueue.length) restQueue = shuffleArr(RECHARGE.map((_, i) => i)); return RECHARGE[restQueue.pop()]; }
 const QUALITY_TIME = [
@@ -1444,6 +1462,8 @@ function refreshUnlocks(){
   return changed;
 }
 function trustTier(){ return PLAY.trust < 40 ? 0 : PLAY.trust < 70 ? 1 : 2; }
+// Part 2 calls the meter "hope" — it's your own hope growing as you let people in.
+const tw = () => PART === 2 ? "hope" : "trust", Tw = () => PART === 2 ? "Hope" : "Trust";
 function trustMood(){ return !PLAY ? "sad" : PLAY.trust >= 70 ? "happy" : PLAY.trust >= 45 ? "calm" : "sad"; }
 // Part 1: your loved one's mood follows trust. Part 2: yours does, and they're a calm, worried helper.
 function partnerMood(){ return PART === 2 ? (PLAY && PLAY.trust >= 45 ? "happy" : "calm") : trustMood(); }
@@ -1460,15 +1480,15 @@ function renderIntro(){
   const d = document.createElement("div");
   d.innerHTML = two
     ? fill(`Lately, <b>you</b> have been running on empty. You laugh less, sleep badly, and keep telling <b>{p}</b> “I'm fine.”<br><br>This time, {p} is the one who notices. Your job: let {them} in — one moment at a time.`)
-      + (PLAY.carry ? `<br><br><span class="carry">💞 Because you stood by ${escH(inSentence("partner"))} in Part 1, you start with <b>${PLAY.trust} trust</b>.</span>` : "")
+      + (PLAY.carry ? `<br><br><span class="carry">💞 Because you stood by ${escH(inSentence("partner"))} in Part 1, you start with <b>${PLAY.trust} hope</b>.</span>` : "")
     : fill(`Lately, <b>{p}</b> doesn't seem like {their} usual self. {They} laugh{s} less, sleep{s} more, and spend{s} a lot of time alone.<br><br>Your job: help bring the light back to your home, one moment at a time.`);
   $("introLine").innerHTML = d.innerHTML;
   const H = two ? [
     ["🎸","Light up the house.","Each room has 2 dark objects. Tap one and your loved one reaches out to you. Choose an honest, open answer and the object lights up again."],
-    ["💗","Build trust.","Letting them in raises trust; pushing them away lowers it. The more trust you have, the more you both open up."],
+    ["💗","Build hope.","Letting them in raises your hope; pushing them away lowers it. The more hope you have, the more you both open up."],
     ["💌","Watch for hearts.","When a 💗 message appears on your loved one, tap it. It's a special moment that only happens once."],
-    ["🔥","Keep a streak.","Several open answers in a row give you bonus trust."],
-    ["🔋","Look after yourself.","Every talk uses energy. When it runs out, tap Recharge before you talk again."],
+    ["🔥","Keep a streak.","Several open answers in a row give you bonus hope."],
+    ["💖","Practice self-love.","Every talk uses energy. When it runs out, tap Self-love and choose a kind action for yourself."],
     ["🗺️","Unlock new rooms.","Light up the rooms that are open and new ones will appear."],
     ["🌧️","Expect bad days.","Sometimes a light goes out again. Find it and get through it together."]
   ] : [
@@ -1566,16 +1586,17 @@ addEventListener("resize", () => { if ($("s-house").classList.contains("active")
 
 function updateHUD(){
   const litN = PLAY.light.filter(v => v >= 1).length;
-  $("hMood").innerHTML = partnerAvatar("hm");
-  $("hName").textContent = showName("partner");
-  $("hPct").textContent = `Trust ${PLAY.trust}`;
+  $("hMood").innerHTML = PART === 2 ? avatar(GAME.player.kind, null, "hm", playerMood()) : partnerAvatar("hm");
+  $("hName").textContent = PART === 2 ? showName("player") : showName("partner");
+  $("hPct").textContent = `${Tw()} ${PLAY.trust}`;
+  $("restBtn").textContent = PART === 2 ? "💖 Self-love" : "🔋 Recharge";
   $("hFill").style.width = PLAY.trust + "%";
   const hState = k => { const m = PLAY.tm[k]; return m.done ? (m.won ? "won" : "lost") : m.shown ? "ready" : "far"; };
   const hIcon = { won:"💗", lost:"❌", ready:"🤍", far:"🤍" };
   $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${hState(k)} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${Math.min(h.at, 96)}%" data-h="${k}">${hIcon[hState(k)]}</span>`).join("");
   PLAY.heartNew = [];
   $("hHearts").querySelectorAll(".hm").forEach(el => el.onclick = () => { const k = +el.dataset.h, h = HEARTS[k], st = hState(k);
-    const note = { won:"Heart secured!", lost:"Heart missed.", ready:"Tap the 💗 on your loved one and respond with total care.", far:`Reach trust ${h.at} to unlock this heart.` }[st];
+    const note = { won:"Heart secured!", lost:"Heart missed.", ready:"Tap the 💗 on your loved one and respond with total care.", far:`Reach ${tw()} ${h.at} to unlock this heart.` }[st];
     toast(`${hIcon[st]} ${h.name} — ${note}`); });
   $("hPhase").textContent = PHASES[PLAY.phase].label;
   $("hLights").textContent = `✨ ${litN}/12`;
@@ -1589,11 +1610,11 @@ function updateHUD(){
   const outs = outLights(), g = bedroomGate();
   $("house").classList.toggle("raining", outs.length > 0);
   let msg;
-  if (PLAY.energy === 0) msg = "🪫 System Critical — tap Recharge to salvage your sanity!";
+  if (PLAY.energy === 0) msg = PART === 2 ? "🪫 Running on empty — tap Self-love and do something kind for yourself." : "🪫 System Critical — tap Recharge to salvage your sanity!";
   else if (outs.length) msg = `🌧️ Setback alert: an object in ${ROOMS[Math.floor(outs[0]/2)].ref} went dark again. Time for damage control!`;
   else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill(PART === 2 ? "💗 {P} has something on {their} mind." : "💗 {P} has an unexpressed breakthrough waiting to drop.");
   else if (PLAY.chap === 2 && !PLAY.bedOpen && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit half-lit things.");
-  else if (PLAY.energy === 1) msg = "⚠️ Battery Low — your next dialogue interaction triggers a mandatory recharge.";
+  else if (PLAY.energy === 1) msg = PART === 2 ? "⚠️ Battery low — after your next talk, take a self-love break." : "⚠️ Battery Low — your next dialogue interaction triggers a mandatory recharge.";
   else msg = "";
   $("guide").textContent = msg;
 }
@@ -1629,7 +1650,7 @@ function needEnergy(){
     <p>${escH(fill("Supporting someone through mental health struggles consumes massive psychological bandwidth — deep listening, radical patience, and holding hope."))}</p>
     <p>When your battery hits absolute zero, empathy evaporates, leaving irritability, numbness, and <b>caregiver burnout</b>. It happens to anyone carrying heavy loads without systemic breaks.</p>
     <p class="gain">Stepping away to recharge isn't selfish abandonment. It's the mechanism that keeps you upright — for ${escH(inSentence("partner"))} and for yourself.</p>
-    <button class="cta" id="emptyGo">Go recharge 🔋</button><button class="ghost" id="emptyLater">Not now</button></div>`;
+    <button class="cta" id="emptyGo">${PART === 2 ? "Choose a self-love action 💖" : "Go recharge 🔋"}</button><button class="ghost" id="emptyLater">Not now</button></div>`;
   c.classList.add("show");
   $("emptyGo").onclick = () => { c.classList.remove("show"); setTimeout(goRest, 300); };
   $("emptyLater").onclick = () => { c.classList.remove("show"); anim($("restBtn"), "shake"); };
@@ -1673,7 +1694,7 @@ function openTalk(t){
   const card = $("qCard");
   card.className = "qcard" + (t.kind === "moment" ? " heartq" : t.kind === "setback" ? " stormq" : "");
   card.innerHTML = `<div class="qhead"><span class="chip">${chip}</span><span class="n">${tag}</span></div>
-    ${t.drained ? `<div class="drain">🔋 This exchange drains your last drop of energy. Recharge immediately after!</div>` : ""}
+    ${t.drained ? `<div class="drain">${PART === 2 ? "🔋 This talk uses your last drop of energy. Take a self-love break right after!" : "🔋 This exchange drains your last drop of energy. Recharge immediately after!"}</div>` : ""}
     <p class="scene"></p>
     ${Q.cue ? `<div class="cue"><b>Read the subtext</b><span></span></div>` : ""}
     ${Q.line ? `<div class="say"><div class="face">${partnerAvatar("qf")}</div><div class="bubble"></div></div>` : ""}
@@ -1739,7 +1760,7 @@ function answer(i, btn){
   $("qOpts").classList.add("done");
   const react = REACT[o.g][trustTier()];
   const why = $("qWhy");
-  why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${baseDt>0?'up':baseDt<0?'down':''}">${baseDt>0?'+':''}${baseDt} trust</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
+  why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${baseDt>0?'up':baseDt<0?'down':''}">${baseDt>0?'+':''}${baseDt} ${tw()}</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
     ${streakBonus ? streakCard(PLAY.streak, streakBonus) : lostStreak >= 2 ? `<div class="streak-lost">🔥 Your ${lostStreak}-answer streak ended — the next supportive answer starts a new one.</div>` : ""}
     <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
     <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? "Resurrect ✨" : t.collect ? "Warm it up" : "Continue"}</button>`;
@@ -1832,10 +1853,10 @@ function houseGoesDark(){
   setTimeout(() => $("house").classList.remove("blackout"), 2600);
   tone(196,.8,.08,0,"sine"); tone(147,1.2,.07,.3,"sine");
   setTimeout(() => showCards([() => ({
-    html:`<div class="chap story dark"><small>TRUST SYSTEM COLLAPSE</small><div class="msface">${avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "dk" + Math.random().toString(36).slice(2,6), "sad")}<span>🌑</span></div>
+    html:`<div class="chap story dark"><small>${PART === 2 ? "HOPE HAS RUN OUT" : "TRUST SYSTEM COLLAPSE"}</small><div class="msface">${PART === 2 ? avatar(GAME.player.kind, null, "dk" + Math.random().toString(36).slice(2,6), "sad") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "dk" + Math.random().toString(36).slice(2,6), "sad")}<span>🌑</span></div>
       <h2>Total System Blackout</h2>
       ${paras(PART === 2 ? "After pushing {p} away too many times, {they} stop{s} asking how you are. The house goes quiet, and one by one, every light goes out.\n\nThis happens in real life too: when we shut people out again and again, they can lose track of how to reach us.\n\nBut it's never too late. Trust comes back through small, honest moments of letting someone in." : "Following too many clumsy or wounding responses, {p} initiates total emotional withdrawal. The bedroom door stays locked. Every light in the house blows out one by one.\n\nThis mirrors reality: persistent judgment pushes people to build defensive walls.\n\nBut trust can be rebuilt — not through grand sweeping gestures, but via relentless, micro-doses of steady, authentic empathy.")}
-      <p class="sb">🌑 Complete blackout. Trust has bottomed out at ${DARK_TRUST}.</p>
+      <p class="sb">🌑 Complete blackout. ${Tw()} has bottomed out at ${DARK_TRUST}.</p>
       <p class="gain">Unlocked rooms remain accessible. Traverse the dark house and relight it — you possess infinitely more wisdom now than when you first stepped inside!</p>`,
     btn:"Start rebuilding" })]), 900);
 }
@@ -1879,7 +1900,7 @@ function lightReturnsCard(R){
       ${paras(R.full
         ? PART === 2 ? "The rain eases. By evening, you open the curtains and sit beside {p}.\n\n“Thanks for letting me help — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress." : "The rain eases. By evening, {p} opens the curtains and sits beside you.\n\n“Thanks for not giving up on me — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress."
         : "The rain softens, but it hasn't quite stopped. The light flickers back — still a little dim.\n\nCome back later and help it glow fully again.")}
-      ${R.bonus ? `<p class="gain">🌤️ Relight bonus: +${R.bonus} trust</p>` : ""}`, btn:"Continue" };
+      ${R.bonus ? `<p class="gain">🌤️ Relight bonus: +${R.bonus} ${tw()}</p>` : ""}`, btn:"Continue" };
   };
 }
 
@@ -1902,7 +1923,7 @@ function phaseCard(ph){
   };
 }
 function milestoneCard(M, label, note){
-  return () => ({ html:`<div class="chap story ms"><small>${label}</small><div class="msface">${avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "ms" + Math.random().toString(36).slice(2,6), M.mood)}<span>${M.icon}</span></div>
+  return () => ({ html:`<div class="chap story ms"><small>${label}</small><div class="msface">${PART === 2 ? avatar(GAME.player.kind, null, "ms" + Math.random().toString(36).slice(2,6), M.mood) : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "ms" + Math.random().toString(36).slice(2,6), M.mood)}<span>${M.icon}</span></div>
       <h2>${M.title}</h2>${paras(M.story)}${note ? `<p class="gain">✨ ${escH(note)}</p>` : ""}`, btn:"Continue" });
 }
 function heartRevealCard(k){
@@ -1935,10 +1956,10 @@ function goRest(){ if (PLAY.ending) return; audio(); sfx.tap(); openRest(); }
 $("restBtn").onclick = () => { if ($("qSheet").classList.contains("show")) return; goRest(); };
 function openRest(){
   const R = nextRecharge(), opts = shuffleArr(R.opts.slice());
-  const card = $("qCard"); card.className = "qcard";
-  card.innerHTML = `<div class="qhead"><span class="chip">🔋 RECHARGE</span><span class="n">Energy ${PLAY.energy}/${MAX_ENERGY}</span></div>
+  const card = $("qCard"); card.className = "qcard " + (PART === 2 ? "loveq" : "restq");
+  card.innerHTML = `<div class="qhead"><span class="chip">${PART === 2 ? "💖 SELF-LOVE ACTION" : "🔋 RECHARGE"}</span><span class="n">Energy ${PLAY.energy}/${MAX_ENERGY}</span></div>
     <p class="scene"></p>
-    <div class="ask">How will you restore your baseline?</div>
+    <div class="ask">${PART === 2 ? "Which self-love action will you choose?" : "How will you restore your baseline?"}</div>
     <div class="qopts" id="qOpts">${opts.map((o,k) => `<button class="qopt" data-k="${k}"><span class="dot"></span><span class="t"></span></button>`).join("")}</div>
     <div id="qWhy"></div>`;
   card.querySelector(".scene").textContent = fill(R.q);
@@ -1947,7 +1968,7 @@ function openRest(){
     b.querySelector(".t").textContent = fill(o.t);
     b.onclick = () => {
       if ($("qOpts").classList.contains("done")) return;
-      const gain = Math.min(REST_GAIN[o.g], MAX_ENERGY - PLAY.energy), [head, cls] = REST_HEAD[o.g];
+      const gain = Math.min(REST_GAIN[o.g], MAX_ENERGY - PLAY.energy), [head, cls] = (PART === 2 ? REST_HEAD_P2 : REST_HEAD_P1)[o.g];
       PLAY.energy += gain; PLAY.rests++; if (o.g === "best") PLAY.restsGood++;
       b.classList.add(o.g === "best" ? "yes" : o.g === "okay" ? "mid" : "no");
       b.querySelector(".dot").textContent = o.g === "best" ? "✓" : o.g === "okay" ? "~" : "✕";
@@ -2015,7 +2036,7 @@ function renderEnd(){
   $("endLine").innerHTML = fill(txt);
   $("endBadge").textContent = title.toUpperCase();
   const bright = PLAY.light.filter(v => v === 2).length;
-  $("endResult").innerHTML = `<div><b>${tr}</b><span>TRUST</span></div><div><b>${bright}/12</b><span>LUMINOUS LIGHTS</span></div><div><b>${PLAY.tm.filter(m => m.won).length}/5</b><span>HEARTS SECURED</span></div>`;
+  $("endResult").innerHTML = `<div><b>${tr}</b><span>${Tw().toUpperCase()}</span></div><div><b>${bright}/12</b><span>LUMINOUS LIGHTS</span></div><div><b>${PLAY.tm.filter(m => m.won).length}/5</b><span>HEARTS SECURED</span></div>`;
   const half = PLAY.light.filter(v => v === 1).length;
   const ST = two ? (half
     ? { cls:"growing", ic:"🌱", name:"Learning to Lean", txt:`You lit the whole house — but ${half} ${half === 1 ? "light is" : "lights are"} still half-lit. Letting people in is a skill you're still growing. Play again to light every one fully.` }
@@ -2025,7 +2046,7 @@ function renderEnd(){
   $("endTitle").className = "sup-title " + ST.cls;
   $("endTitle").innerHTML = `<div class="st-medal"><span>${ST.ic}</span></div><div class="st-body"><small>${two ? "YOUR TITLE" : "YOUR SUPPORTER TITLE"}</small><b>${ST.name}</b><p>${escH(ST.txt)}</p></div>`;
   $("endNext").textContent = two
-    ? (tier < 2 ? `Replay Part 2 — reaching 80+ trust unlocks “Two Steady Lights”.` : `You reached the brightest ending of Part 2. 💛`)
+    ? (tier < 2 ? `Replay Part 2 — reaching 80+ hope unlocks “Two Steady Lights”.` : `You reached the brightest ending of Part 2. 💛`)
     : (tier < 2 ? `Replay to access the deepest narrative ending — reaching 80+ trust unlocks “A Safe Harbor”.` : `You attained the ultimate golden ending. 💛`);
   if (!two) unlockPart2(!half);
   $("endTeaser").hidden = two; $("nextPartBtn").hidden = two;
