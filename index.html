@@ -1107,14 +1107,15 @@ function scatter(r){
   const rm = ROOMS[r], A = 1.7, B = 2.15;                 // rough px per % (rooms are taller than wide)
   const dist = (p, q) => Math.hypot((p[0]-q[0]) * A, (p[1]-q[1]) * B);
   const block = [rm.pp].concat(rm.rest ? [rm.rest] : []);
-  const cand = []; for (const x of [22,38,54,72]) for (const y of [36,52,68,84]) cand.push([x + Math.round(Math.random()*6-3), y + Math.round(Math.random()*4-2)]);
-  for (let tries = 0; tries < 60; tries++) {
-    shuffleArr(cand);
-    const heart = cand.find(p => p[1] <= 70 && block.every(b => dist(p, b) > 60));
+  for (let tries = 0; tries < 200; tries++) {
+    // fresh random points anywhere in the room (away from the title and the edges)
+    const cand = Array.from({length:40}, () => [Math.round(18 + Math.random() * 64), Math.round(34 + Math.random() * 52)]);
+    const below = (h, p) => p[1] > h[1] && Math.abs(p[0] - h[0]) * A < 62 && (p[1] - h[1]) * B < 100;   // under the HEART label
+    const heart = cand.find(p => p[1] <= 70 && block.every(b => dist(p, b) > 72 && !below(p, b)));
     if (!heart) continue;
     const picked = [];
     for (const p of cand) {
-      const underLabel = p[1] > heart[1] && Math.abs(p[0] - heart[0]) * A < 62 && (p[1] - heart[1]) * B < 100;
+      const underLabel = below(heart, p);
       if (p === heart || underLabel || block.some(b => dist(p, b) < 56) || dist(p, heart) < 72 || picked.some(q => dist(p, q) < 68)) continue;
       picked.push(p); if (picked.length === 2) break;
     }
@@ -1432,6 +1433,7 @@ function afterTalk(){
 const DARK_TRUST = 10;
 function houseGoesDark(){
   PLAY.light = PLAY.light.map(() => 0);   // every light goes out
+  PLAY.pos = ROOMS.map((_, r) => scatter(r));   // and everything is moved to new places
   PLAY.setback = {};
   PLAY.trust = DARK_TRUST;
   PLAY.darkTimes = (PLAY.darkTimes || 0) + 1;
