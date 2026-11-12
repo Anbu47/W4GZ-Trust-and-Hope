@@ -736,7 +736,7 @@ const MAX_ENERGY = 3, START_TRUST = 30, BEDROOM_TRUST = 60;
 const GRADE = {
   help:{ trust:6, cls:"good", head:"💛 Supportive" },
   okay:{ trust:1,  cls:"mid",  head:"🙂 Well-meant, but not quite" },
-  hurt:{ trust:-20, cls:"bad",  head:"💔 That stung" }
+  hurt:{ trust:-10, cls:"bad",  head:"💔 That stung" }
 };
 // Story told at each turning point. Paragraphs are separated by "\n\n".
 const PHASES = [
@@ -1279,8 +1279,8 @@ function answer(i, btn){
   const Q = t.data, o = Q.opts[i], G = GRADE[o.g];
   // trust change
   let dt = G.trust;
-  if (t.kind === "light" && t.revisit) dt = o.g === "help" ? 4 : o.g === "okay" ? 0 : -20;
-  if (t.kind === "moment") dt = o.g === "help" ? 8 : o.g === "okay" ? 1 : -20;
+  if (t.kind === "light" && t.revisit) dt = o.g === "help" ? 4 : o.g === "okay" ? 0 : -10;
+  if (t.kind === "moment") dt = o.g === "help" ? 8 : o.g === "okay" ? 1 : -20;   // heart-milestone talks: hurt costs more
   if (Q.critical && o.g === "okay") dt = 0;
   const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
   if (PLAY.trust === 0 && before > 0) PLAY.darkPending = true;
