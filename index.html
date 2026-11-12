@@ -2115,7 +2115,6 @@ function renderEnd(){
   const tr = PLAY.trust, tier = tr >= 80 ? 2 : tr >= 60 ? 1 : 0;
   $("pair3").innerHTML = pairHTML(tier === 0 ? "calm" : "happy", tier === 0 ? "calm" : "happy");
   const two = PART === 2;
-  const title = (two ? ["Learning to Lean", "Stronger Together", "Two Steady Lights"] : ["A Growing Spark", "A Steady Light", "A Home Full of Light"])[tier];
   const lines = two ? [
     `Months later, the house is lit again. Some days are still hard, but you keep going to counseling — and you don't hide the bad days from <b>{p}</b> anymore. <br><b>“Thanks for letting me in, even a little.”</b><br><br>Learning to accept help takes time — and you've started.`,
     `Light fills every window. <b>{P}</b> squeezes your hand: <br><b>“Thank you for trusting me.”</b><br><br>You admitted you were struggling, said yes to help, and let someone stand beside you. That takes real courage.`,
@@ -2128,7 +2127,6 @@ function renderEnd(){
   const pr = CHAR[GAME.partner.kind].pron;
   const txt = lines[tier].replace("{go}", pr.s === "they" ? "go" : "goes").replace("{es}", pr.s === "they" ? "" : "es");
   $("endLine").innerHTML = fill(txt);
-  $("endBadge").textContent = title.toUpperCase();
   const bright = PLAY.light.filter(v => v === 2).length;
   $("endResult").innerHTML = `<div><b>${tr}</b><span>${Tw().toUpperCase()}</span></div><div><b>${bright}/12</b><span>LUMINOUS LIGHTS</span></div><div><b>${PLAY.tm.filter(m => m.won).length}/5</b><span>HEARTS SECURED</span></div>`;
   const half = PLAY.light.filter(v => v === 1).length;
@@ -2141,14 +2139,13 @@ function renderEnd(){
   const [rk, ric, rname] = RANKS[won];
   const nxt = won < 5 ? RANKS[won + 1] : null;
   const bar = Array.from({length:5}, (_, k) => `<i class="${k < won ? "on" : ""}"></i>`).join("");
+  $("endBadge").textContent = `${ric} ${rname} ${two ? "Hope" : "Supporter"}`.toUpperCase();
   $("endTitle").className = "sup-title rank rank-" + rk;
-  $("endTitle").innerHTML = `<div class="st-medal"><span>${ric}</span></div><div class="st-body"><small>YOUR RANK · ${two ? "HOPE RECOVERY" : "TRUST RECOVERY"}</small><b>${rname} ${two ? "Hope" : "Supporter"}</b><p>${escH(RLINE[won])}</p>
+  $("endTitle").innerHTML = `<div class="st-medal"><span>${ric}</span></div><div class="st-body"><small>MENTAL RANK · ${two ? "HOPE RECOVERY" : "TRUST RECOVERY"}</small><b>${rname} ${two ? "Hope" : "Supporter"}</b><p>${escH(RLINE[won])}</p>
     <div class="rbar">${bar}<span>${won}/5 💗</span></div>
     <p class="rnext">${nxt ? `Win 1 more heart to reach <b>${nxt[2]}</b> ${nxt[1]}` : "Max rank reached 👑"}</p>
     ${half ? `<p class="rhalf">${half} ${half === 1 ? "light is" : "lights are"} still half-lit — play again to make every one shine.</p>` : ""}</div>`;
-  $("endNext").textContent = two
-    ? (tier < 2 ? `Replay Part 2 — reaching 80+ hope unlocks “Two Steady Lights”.` : `You reached the brightest ending of Part 2. 💛`)
-    : (tier < 2 ? `Replay to access the deepest narrative ending — reaching 80+ trust unlocks “A Home Full of Light”.` : `You attained the ultimate golden ending. 💛`);
+  $("endNext").textContent = ""; $("endNext").hidden = true;
   if (!two) unlockPart2(!half);
   $("endTeaser").hidden = true; $("nextPartBtn").hidden = true;
   $("againBtn").textContent = two ? "Play Part 2 again ♥" : "Play again ♥";
