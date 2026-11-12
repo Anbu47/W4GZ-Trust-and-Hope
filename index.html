@@ -420,6 +420,18 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
   background:repeating-linear-gradient(105deg,transparent 0 14px,rgba(190,205,255,.18) 14px 15px,transparent 15px 34px);background-size:200% 200%;animation:houseRain .6s linear infinite}
 @keyframes houseRain{to{background-position:-34px 120px}}
 @media (prefers-reduced-motion:reduce){.rain,.flash,.house.raining::after,.rays,.bd-cloud{animation:none}.rain{display:none}}
+/* ---------- supporter title ---------- */
+.sup-title{display:flex;gap:12px;align-items:center;text-align:left;margin:0 0 14px;padding:14px;border-radius:20px;animation:scIn .7s cubic-bezier(.2,1.4,.4,1) both .5s}
+.sup-title.growing{background:linear-gradient(135deg,rgba(120,220,150,.2),rgba(60,140,90,.18));border:1px solid rgba(157,245,196,.55)}
+.sup-title.shining{background:linear-gradient(135deg,rgba(255,210,122,.25),rgba(255,140,170,.16));border:1px solid rgba(255,210,122,.65)}
+.st-medal{flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:30px;border:2px solid #fff}
+.growing .st-medal{background:radial-gradient(circle at 40% 35%,#d9ffe6,#5fcf8a);box-shadow:0 0 18px rgba(120,230,160,.6)}
+.shining .st-medal{background:radial-gradient(circle at 40% 35%,#fff6d6,#ffbf4a);box-shadow:0 0 22px rgba(255,210,122,.8)}
+.st-medal span{animation:hop 2.4s ease-in-out infinite}
+.st-body small{display:block;font-size:10px;font-weight:900;letter-spacing:.18em;color:var(--dim)}
+.st-body b{display:block;font-family:"Playfair Display",serif;font-size:22px;line-height:1.15;margin:2px 0 4px}
+.growing .st-body b{color:#c9ffdc}.shining .st-body b{color:#fff1c4}
+.st-body p{margin:0;font-size:12.5px;line-height:1.45;color:#f0dce6}
 /* ---------- streak bonus card ---------- */
 .streak-card{position:relative;display:flex;align-items:center;gap:12px;margin:12px 0 4px;padding:12px 14px;border-radius:20px;overflow:hidden;
   background:linear-gradient(120deg,#5a1a1a,#a8321f 45%,#ff7a2e 100%);border:1px solid rgba(255,210,122,.7);
@@ -589,6 +601,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="pair" id="pair3" style="margin-top:0"></div>
       <div class="story" id="endLine"></div>
       <div class="result" id="endResult"></div>
+      <div class="sup-title" id="endTitle"></div>
       <p class="note" id="endNext" style="color:#ffe7ef;font-weight:800"></p>
       <div class="learned"><h3>What you practised</h3><ol id="learned"></ol></div>
       <div class="brand-sign"><div class="brand"><div class="brand-mark"><span class="brand-logo" role="img" aria-label="W4GZ"></span><span class="brand-spark">✦</span></div><div class="brand-sub">Writing for <i>Gen Z</i></div></div><p class="vision">“Create narratives worth living.”</p><p class="mission">We learn how to do things. We do things, seriously and kindly. We share how to do it so others can learn.</p></div>
@@ -1895,6 +1908,12 @@ function renderEnd(){
   $("endBadge").textContent = title.toUpperCase();
   const bright = PLAY.light.filter(v => v === 2).length;
   $("endResult").innerHTML = `<div><b>${tr}</b><span>TRUST</span></div><div><b>${bright}/12</b><span>BRIGHT LIGHTS</span></div><div><b>${PLAY.tm.filter(m => m.won).length}/5</b><span>HEARTS WON</span></div>`;
+  const half = PLAY.light.filter(v => v === 1).length;
+  const ST = half
+    ? { cls:"growing", ic:"🌱", name:"Growing Supporter", txt:`You lit the whole house — but ${half} ${half === 1 ? "light is" : "lights are"} still half-lit. Every supporter is still learning. Play again and help every light shine fully.` }
+    : { cls:"shining", ic:"🌟", name:"Shining Supporter", txt:"Every light in the house shines fully. You chose care again and again." };
+  $("endTitle").className = "sup-title " + ST.cls;
+  $("endTitle").innerHTML = `<div class="st-medal"><span>${ST.ic}</span></div><div class="st-body"><small>YOUR SUPPORTER TITLE</small><b>${ST.name}</b><p>${escH(ST.txt)}</p></div>`;
   $("endNext").textContent = tier < 2 ? `Play again to reach a deeper ending — trust 80+ unlocks “A Safe Harbor”.` : `You reached the deepest ending. 💛`;
   $("learned").innerHTML = LEARNED.map(t => `<li>${escH(t)}</li>`).join("");
   setTimeout(() => { const r = $("pair3").getBoundingClientRect(); burstHearts(r.left + r.width/2, r.top + r.height/3, 30); }, 300);
