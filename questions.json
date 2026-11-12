@@ -256,7 +256,7 @@
      "n": 10,
      "loc": "Kitchen",
      "title": "Returning from Work",
-     "scene": "{P} walks through the kitchen door, drops {their} bag, and sits on the stool staring at the floor without moving.",
+     "scene": "{P} comes home from work, drops {their} bag, and sits down staring at the floor without moving.",
      "line": "“I spent eight hours pretending to be a functional human. I have nothing left.”",
      "ask": "What is your opening move?",
      "opts": [
@@ -303,7 +303,7 @@
       },
       {
        "g": "hurt",
-       "t": "Leave the kitchen without speaking.",
+       "t": "Walk away without speaking.",
        "why": "Exiting the room while someone struggles silently with basic intake leaves them entirely unassisted.",
        "re": "…Oh. You're going. Okay."
       }
@@ -341,7 +341,7 @@
      "n": 13,
      "loc": "Study",
      "title": "Administrative Overwhelm",
-     "scene": "A stack of unopened mail and an overdue bill reminder sit untouched on the study desk.",
+     "scene": "A stack of unopened mail and an overdue bill reminder sit untouched on the desk.",
      "line": "“If I open those envelopes, I'm going to panic. I'm failing at basic adulthood.”",
      "ask": "How do you support {them} without taking over {their} autonomy?",
      "opts": [
@@ -369,7 +369,7 @@
      "n": 14,
      "loc": "Bedroom",
      "title": "Insomniac Spiral",
-     "scene": "At 2:30 AM in the bedroom, {p} is wide awake scrolling on {their} phone after lying in the dark for hours.",
+     "scene": "At 2:30 AM, {p} is wide awake scrolling on {their} phone after lying in the dark for hours.",
      "line": "“My brain refuses to shut off and tomorrow is already ruined.”",
      "ask": "What is a grounded response?",
      "opts": [
@@ -425,14 +425,14 @@
      "n": 16,
      "loc": "Living Room",
      "title": "Sensory Overload",
-     "scene": "After a loud morning outside, {p} sits on the living room rug, breathing shallowly with hands over {their} ears.",
+     "scene": "After a loud morning outside, {p} sits on the rug, breathing shallowly with hands over {their} ears.",
      "cue": "👀 Shoulders hunched against ambient apartment noises.",
      "line": "“There's too much noise. I can't process anything.”",
      "ask": "What is your tactical move?",
      "opts": [
       {
        "g": "help",
-       "t": "Mute the TV smoothly: “Totally fine. Go lie down in the quiet bedroom—I'll close all doors and be back later.”",
+       "t": "Mute the TV smoothly: “Totally fine. Go lie down somewhere quiet—I'll close all the doors and check on you later.”",
        "why": "Providing an immediate, zero-shame exit route stops sensory overload from escalating.",
        "re": "…Thank you. Quiet. I just need quiet."
       },
@@ -454,7 +454,7 @@
      "n": 17,
      "loc": "Kitchen",
      "title": "Morning Coffee Ritual",
-     "scene": "You wake up early and see {p} sitting at the kitchen table staring at an empty mug, too drained to boil water.",
+     "scene": "You wake up early and see {p} sitting at the table staring at an empty mug, too drained to boil water.",
      "ask": "How do you practice stealthy care?",
      "opts": [
       {
@@ -471,7 +471,7 @@
       },
       {
        "g": "hurt",
-       "t": "Pour your own coffee and return to the study.",
+       "t": "Pour your own coffee and go back to your desk.",
        "why": "Making your own beverage while ignoring their empty cup highlights the solitude of their struggle.",
        "re": "…Okay. Morning."
       }
@@ -481,13 +481,13 @@
      "n": 18,
      "loc": "Balcony",
      "title": "Getting Outside",
-     "scene": "{P} hasn't stepped off the balcony or apartment in five days.",
+     "scene": "{P} hasn't stepped outside in five days.",
      "line": "“The thought of walking around the block feels like climbing Everest.”",
      "ask": "How do you adjust the goal?",
      "opts": [
       {
        "g": "help",
-       "t": "Open the balcony door wide: “Forget the walk. Want to just stand by the open door in our socks for sixty seconds?”",
+       "t": "Open the door wide: “Forget the walk. Want to just stand by the open door in our socks for sixty seconds?”",
        "why": "Shrinking the threshold to zero-effort contact respects limits while breaking stagnation.",
        "re": "…Sixty seconds in socks? Okay. That I can do."
       },
@@ -509,7 +509,7 @@
      "n": 19,
      "loc": "Living Room",
      "title": "Gift of Presence",
-     "scene": "You bring home {p}'s favorite takeout to the living room table, and {they} look{s} guilty.",
+     "scene": "You bring home {p}'s favorite takeout, and {they} look{s} guilty.",
      "line": "“You shouldn't spend money on me when I haven't reciprocated.”",
      "ask": "How do you diffuse transactional guilt?",
      "opts": [
@@ -537,7 +537,7 @@
      "n": 20,
      "loc": "Study",
      "title": "Work Performance Anxiety",
-     "scene": "{P} has fallen behind on work tasks at the study desk and is paralyzed by dread.",
+     "scene": "{P} has fallen behind on work tasks and is paralyzed by dread.",
      "line": "“If I open my laptop, I'm going to see overdue notifications and lose my mind.”",
      "ask": "How do you help lower the activation barrier?",
      "opts": [
@@ -567,7 +567,7 @@
      "n": 21,
      "loc": "Study",
      "title": "Listening without fixing",
-     "scene": "It's 3:15 AM in the study. {P} is staring out the window into the pitch-black yard.",
+     "scene": "It's 3:15 AM. {P} is staring out the window into the pitch-black yard.",
      "line": "“Everything feels completely hollow. Honestly, what's even the point of trying?”",
      "ask": "What is your response strategy?",
      "opts": [
@@ -595,7 +595,7 @@
      "n": 22,
      "loc": "Study",
      "title": "Interruption Subtext",
-     "scene": "You're typing at the study desk when {p} appears in the doorway, shifting weight and snapping {their} mouth shut.",
+     "scene": "You're typing at your desk when {p} appears in the doorway, shifting weight and snapping {their} mouth shut.",
      "line": "“Hey… are you in the middle of something urgent?”",
      "ask": "How do you execute this?",
      "opts": [
@@ -623,7 +623,7 @@
      "n": 23,
      "loc": "Living Room",
      "title": "Venting vs. Problem-Solving",
-     "scene": "On the living room sofa, {p} opens up about feeling disconnected from everyone.",
+     "scene": "Sitting on the sofa, {p} opens up about feeling disconnected from everyone.",
      "line": "“I'm surrounded by people, yet I feel like I'm watching life from behind thick glass.”",
      "ask": "How do you respond?",
      "opts": [
@@ -651,7 +651,7 @@
      "n": 24,
      "loc": "Bedroom",
      "title": "Crying Without a 'Reason'",
-     "scene": "{P} starts crying quietly in the bedroom while folding laundry and tries to wipe tears away.",
+     "scene": "{P} starts crying quietly while folding laundry and tries to wipe the tears away.",
      "line": "“Nothing happened today. Why am I crying over nothing? It's embarrassing.”",
      "ask": "How do you normalize unprovoked emotion?",
      "opts": [
@@ -679,7 +679,7 @@
      "n": 25,
      "loc": "Kitchen",
      "title": "Comparing Struggles",
-     "scene": "{P} reads a news story at the kitchen counter and turns guilt inward.",
+     "scene": "{P} reads a news story on {their} phone and turns guilt inward.",
      "line": "“People survive real disasters and I can't handle a normal Tuesday. I'm pathetic.”",
      "ask": "How do you counter comparative guilt?",
      "opts": [
@@ -707,7 +707,7 @@
      "n": 26,
      "loc": "Study",
      "title": "Anger Masking Sadness",
-     "scene": "Working in the study, {p} snaps irritably over a misplaced pen, then slumps back looking hollow.",
+     "scene": "Working at the desk, {p} snaps irritably over a misplaced pen, then slumps back looking hollow.",
      "line": "“I'm turning into a bitter person. I don't recognize myself.”",
      "ask": "How do you read beneath irritability?",
      "opts": [
@@ -735,7 +735,7 @@
      "n": 27,
      "loc": "Living Room",
      "title": "Numbness Over Sadness",
-     "scene": "You ask how {p} feels in the living room, and {they} answer{s} with blankness.",
+     "scene": "You ask how {p} feels, and {they} answer{s} with blankness.",
      "line": "“I don't even feel sad. Just gray static. Nothing registers.”",
      "ask": "How do you respond to emotional blunting?",
      "opts": [
@@ -763,7 +763,7 @@
      "n": 28,
      "loc": "Balcony",
      "title": "Fear of Never Recovering",
-     "scene": "Standing on the balcony, {p} looks out over the street.",
+     "scene": "{P} stands by the window, looking out over the street.",
      "line": "“What if this isn't a rough patch? What if this gray version of me is permanent?”",
      "ask": "How do you hold hope without toxic positivity?",
      "opts": [
@@ -791,7 +791,7 @@
      "n": 29,
      "loc": "Bedroom",
      "title": "Feeling Unlovable",
-     "scene": "In the bedroom late at night, {p} pulls away slightly from your touch.",
+     "scene": "Late at night, {p} pulls away slightly from your touch.",
      "line": "“I don't know how you stand being around me when I'm like this.”",
      "ask": "How do you anchor attachment security?",
      "opts": [
@@ -819,7 +819,7 @@
      "n": 30,
      "loc": "Kitchen",
      "title": "Half-Finished Sentences",
-     "scene": "In the kitchen, {p} starts sharing something personal, pauses, and waves a hand.",
+     "scene": "{P} starts sharing something personal, pauses, and waves a hand.",
      "line": "“Never mind, it sounds stupid out loud. Forget I said anything.”",
      "ask": "How do you keep the door open safely?",
      "opts": [
@@ -847,7 +847,7 @@
      "n": 47,
      "loc": "Study",
      "title": "Financial Stress Trigger",
-     "scene": "An unexpected repair bill arrives at the study desk; {p} spirals in panic.",
+     "scene": "An unexpected repair bill arrives in the mail; {p} spirals in panic.",
      "line": "“Everything goes wrong when I'm barely holding on. I'm cursed.”",
      "ask": "How do you ground catastrophic thinking?",
      "opts": [
@@ -875,7 +875,7 @@
      "n": 48,
      "loc": "Bedroom",
      "title": "Anniversary or Trigger Date",
-     "scene": "A difficult anniversary approaches on the bedroom calendar.",
+     "scene": "A difficult anniversary is coming up on the calendar.",
      "ask": "How do you acknowledge a quiet trigger date?",
      "opts": [
       {
@@ -902,7 +902,7 @@
      "n": 49,
      "loc": "Living Room",
      "title": "Social Media Spiral",
-     "scene": "{P} lies on the living room sofa doomscrolling for hours.",
+     "scene": "{P} lies on the sofa doomscrolling for hours.",
      "line": "“Everyone else is thriving while I'm rotting under a blanket.”",
      "ask": "How do you gently interrupt comparison shame?",
      "opts": [
@@ -920,7 +920,7 @@
       },
       {
        "g": "hurt",
-       "t": "Walk past toward the kitchen.",
+       "t": "Walk past without stopping.",
        "why": "Stepping past without interaction leaves isolation.",
        "re": "…Okay."
       }
@@ -932,7 +932,7 @@
      "n": 31,
      "loc": "Living Room",
      "title": "Crossing into professional territory",
-     "scene": "Three weeks in living room talks, and nothing has lifted. {P}'s sleep is broken.",
+     "scene": "Three weeks of talking at home, and nothing has lifted. {P}'s sleep is broken.",
      "ask": "What is your next evolutionary step?",
      "opts": [
       {
@@ -949,7 +949,7 @@
       },
       {
        "g": "hurt",
-       "t": "Place a business card on the living room table.",
+       "t": "Place a therapist's business card on the table.",
        "why": "Leaving a card anonymously treats professional help like a pamphlet drop.",
        "re": "…A card. Okay. I guess I'm a problem to hand off."
       }
@@ -959,7 +959,7 @@
      "n": 32,
      "loc": "Living Room",
      "title": "Defusing Therapy Stigma",
-     "scene": "You suggest therapy while sitting in the living room.",
+     "scene": "You suggest therapy while sitting together at home.",
      "line": "“What if they think I'm completely broken? Or worse, dangerous?”",
      "ask": "How do you defuse their panic?",
      "opts": [
@@ -987,7 +987,7 @@
      "n": 33,
      "loc": "Living Room",
      "title": "Medication Hesitation",
-     "scene": "A doctor recommends an antidepressant; {p} stares at the slip on the living room couch.",
+     "scene": "A doctor recommends an antidepressant; {p} stares at the slip of paper in {their} hands.",
      "line": "“If I take pills, am I weak? What if it erases my personality?”",
      "ask": "How do you support an informed conversation?",
      "opts": [
@@ -1015,7 +1015,7 @@
      "n": 34,
      "loc": "Study",
      "title": "First Therapy Session Aftermath",
-     "scene": "{P} comes out of the study after an online therapy session, looking drained.",
+     "scene": "{P} comes out of an online therapy session, looking drained.",
      "line": "“I spent fifty minutes explaining background. I don't feel magically better.”",
      "ask": "How do you manage early therapy expectations?",
      "opts": [
@@ -1033,7 +1033,7 @@
       },
       {
        "g": "hurt",
-       "t": "Close the study door behind them.",
+       "t": "Close the door behind them.",
        "why": "Shutting the door treats therapy as an administrative chore.",
        "re": "…Okay. I'll just go lie down."
       }
@@ -1043,7 +1043,7 @@
      "n": 50,
      "loc": "Bedroom",
      "title": "Early Signs of Relapse Months Later",
-     "scene": "Months later in the bedroom, {p} mentions sleep slipping and gray heaviness returning.",
+     "scene": "Months later, {p} mentions sleep slipping and gray heaviness returning.",
      "line": "“I'm terrified I'm sliding back to square one.”",
      "ask": "How do you respond to early warning signs?",
      "opts": [
@@ -1073,7 +1073,7 @@
      "n": 35,
      "loc": "Your Corner",
      "title": "Guarding your sanity",
-     "scene": "Carrying the mental load in your corner, you find yourself crying over toast.",
+     "scene": "Carrying the mental load for weeks, you find yourself crying over burnt toast.",
      "ask": "What is the only sustainable survival move?",
      "opts": [
       {
@@ -1100,7 +1100,7 @@
      "n": 36,
      "loc": "Your Corner",
      "title": "Midnight Crisis Calls",
-     "scene": "{P} calls your corner at 3:00 AM every night. Your work is slipping.",
+     "scene": "{P} calls you at 3:00 AM every night. Your work is slipping.",
      "ask": "How do you regulate this dynamic?",
      "opts": [
       {
@@ -1127,7 +1127,7 @@
      "n": 37,
      "loc": "Kitchen",
      "title": "Declining an Invitation for Yourself",
-     "scene": "A friend invites you out, but {p} looks gloomy in the kitchen.",
+     "scene": "A friend invites you out, but {p} looks gloomy.",
      "line": "“Go ahead, have fun. I'll stay here in the dark.”",
      "ask": "How do you take a healthy break without guilt?",
      "opts": [
@@ -1155,7 +1155,7 @@
      "n": 38,
      "loc": "Living Room",
      "title": "Bringing in Trusted Family/Friends",
-     "scene": "Carrying secrets in the living room, {their} sister asks how to help.",
+     "scene": "You've been carrying this secret, and {their} sister asks how she can help.",
      "line": "“I don't want anyone knowing. Keep this strictly between us.”",
      "ask": "How do you encourage widening the circle safely?",
      "opts": [
@@ -1183,7 +1183,7 @@
      "n": 39,
      "loc": "Bedroom",
      "title": "After a Rough Argument",
-     "scene": "Exhaustion boils over; you snap in the bedroom over a mess. {P} looks devastated.",
+     "scene": "Exhaustion boils over; you snap at {p} over a small mess. {P} looks devastated.",
      "ask": "How do you repair the rupture cleanly?",
      "opts": [
       {
@@ -1210,7 +1210,7 @@
      "n": 40,
      "loc": "Balcony",
      "title": "Recognizing Your Limits",
-     "scene": "On the balcony, {p} asks you to analyze childhood trauma, and you feel out of your depth.",
+     "scene": "{P} asks you to analyze {their} childhood trauma, and you feel out of your depth.",
      "ask": "How do you hold a loving boundary around expertise?",
      "opts": [
       {
@@ -1237,7 +1237,7 @@
      "n": 46,
      "loc": "Living Room",
      "title": "Holiday & Family Gathering Pressure",
-     "scene": "Before a family dinner in the living room, {p} freezes, overwhelmed.",
+     "scene": "Before a family dinner, {p} freezes, overwhelmed.",
      "line": "“Everyone will ask what I've been doing and I have zero answers.”",
      "ask": "How do you co-design an exit strategy?",
      "opts": [
@@ -1269,7 +1269,7 @@
      "n": 41,
      "loc": "Bedroom",
      "title": "The ultimate midnight test",
-     "scene": "In bedroom shadows, {p} speaks in a flat tone.",
+     "scene": "Late at night, in the shadows, {p} speaks in a flat tone.",
      "line": "“Sometimes I honestly believe everyone would be better off if I vanished permanently.”",
      "ask": "What is your critical protocol?",
      "critical": true,
@@ -1298,7 +1298,7 @@
      "n": 43,
      "loc": "Study",
      "title": "Subtle Warning Signs",
-     "scene": "You notice {p} giving away books in the study and seeming serene.",
+     "scene": "You notice {p} giving away {their} books and seeming strangely serene.",
      "ask": "How do you interpret this abrupt shift?",
      "critical": true,
      "opts": [
@@ -1328,7 +1328,7 @@
      "n": 42,
      "loc": "Bedroom",
      "title": "Imminent Safety Action",
-     "scene": "{P} confirms those dark intentions in the bedroom.",
+     "scene": "{P} confirms those dark intentions.",
      "ask": "Execute your final emergency action.",
      "critical": true,
      "opts": [
@@ -1359,7 +1359,7 @@
     "n": 44,
     "loc": "Bedroom",
     "title": "The Nonlinear Zigzag",
-    "scene": "After good days, {p} wakes up paralyzed in bedroom bed.",
+    "scene": "After a few good days, {p} wakes up and can't get out of bed.",
     "line": "“I thought I was fixed. I ruined progress overnight.”",
     "ask": "How do you frame this setback?",
     "opts": [
@@ -1387,7 +1387,7 @@
     "n": 45,
     "loc": "Balcony",
     "title": "Skipping Therapy",
-    "scene": "{P} panicked and skipped therapy, returning to sit on the balcony.",
+    "scene": "{P} panicked and skipped therapy, and now sits alone outside.",
     "line": "“I drove to the parking lot, panicked, and drove home. I'm a coward.”",
     "ask": "How do you respond to the avoidance loop?",
     "opts": [
@@ -1420,7 +1420,7 @@
      "n": 51,
      "loc": "Living Room",
      "title": "Admitting it to yourself",
-     "scene": "You've cancelled plans three weekends in a row on the living room couch. {P} sits down.",
+     "scene": "You've cancelled plans three weekends in a row and spend evenings on the couch. {P} sits down next to you.",
      "line": "“Hey… you've seemed really tired. How are you doing — really?”",
      "ask": "What do you say?",
      "opts": [
@@ -1448,7 +1448,7 @@
      "n": 52,
      "loc": "Living Room",
      "title": "Naming What You Need",
-     "scene": "You catch your reflection in the hallway mirror near the living room. {P} watches.",
+     "scene": "You catch your reflection in the mirror. {P} watches from the doorway.",
      "line": "“Want company, or would you rather be alone?”",
      "ask": "What do you need?",
      "opts": [
@@ -1476,7 +1476,7 @@
      "n": 53,
      "loc": "Bedroom",
      "title": "Recognizing the Pattern",
-     "scene": "Your morning alarm sounds in the bedroom; dread hits instantly.",
+     "scene": "Your morning alarm goes off; dread hits instantly.",
      "ask": "What is your internal framing?",
      "opts": [
       {
@@ -1503,7 +1503,7 @@
      "n": 54,
      "loc": "Study",
      "title": "Dropping the 'Fine' Reflex",
-     "scene": "A friend texts your study phone asking how you are; your thumbs type 'All good!'.",
+     "scene": "A friend texts asking how you are; your thumbs type 'All good!'.",
      "ask": "Before hitting send, what do you adjust?",
      "opts": [
       {
@@ -1530,7 +1530,7 @@
      "n": 55,
      "loc": "Living Room",
      "title": "Sitting With Unexplained Sadness",
-     "scene": "You sit in your living room armchair for twenty minutes, unable to move.",
+     "scene": "You sit in the armchair for twenty minutes, unable to move.",
      "ask": "How do you treat yourself?",
      "opts": [
       {
@@ -1557,7 +1557,7 @@
      "n": 56,
      "loc": "Bedroom",
      "title": "Body & Exhaustion",
-     "scene": "You notice bedroom self-disgust over skipped meals and exercise.",
+     "scene": "You notice self-disgust creeping in over skipped meals and exercise.",
      "ask": "How do you respond to your inner critic?",
      "opts": [
       {
@@ -1584,7 +1584,7 @@
      "n": 57,
      "loc": "Study",
      "title": "Separating Identity from Mood",
-     "scene": "Staring at a project on the study desk, you feel total indifference.",
+     "scene": "Staring at a project on your desk, you feel total indifference.",
      "ask": "How do you interpret numbness?",
      "opts": [
       {
@@ -1611,7 +1611,7 @@
      "n": 58,
      "loc": "Kitchen",
      "title": "When Someone Notices",
-     "scene": "{P} mentions in the kitchen you've been quiet all week.",
+     "scene": "{P} mentions that you've been quiet all week.",
      "line": "“No pressure, I just miss your voice.”",
      "ask": "How do you respond?",
      "opts": [
@@ -1639,7 +1639,7 @@
      "n": 59,
      "loc": "Study",
      "title": "Letting Go of 'Shoulds'",
-     "scene": "Looking at errands on your study list, you completed zero.",
+     "scene": "Looking at today's errand list, you completed zero.",
      "ask": "What is the healthiest end-of-day move?",
      "opts": [
       {
@@ -1666,7 +1666,7 @@
      "n": 60,
      "loc": "Bedroom",
      "title": "Admitting You Need Help",
-     "scene": "Realizing in the bedroom you've white-knuckled for a month.",
+     "scene": "You realize you've been white-knuckling it alone for a month.",
      "ask": "What is your honest takeaway?",
      "opts": [
       {
@@ -1695,7 +1695,7 @@
      "n": 61,
      "loc": "Kitchen",
      "title": "Accepting small help",
-     "scene": "{P} sets toast on the kitchen counter.",
+     "scene": "{P} sets a plate of toast down beside you.",
      "line": "“No pressure. I just made extra.”",
      "ask": "How do you respond?",
      "opts": [
@@ -1723,7 +1723,7 @@
      "n": 62,
      "loc": "Kitchen",
      "title": "Naming Burden Guilt",
-     "scene": "Washing dishes at the kitchen sink, guilt hits.",
+     "scene": "Washing dishes together, guilt suddenly hits.",
      "line": "“Hey, you went quiet. What's going on?”",
      "ask": "What do you say?",
      "opts": [
@@ -1751,7 +1751,7 @@
      "n": 63,
      "loc": "Living Room",
      "title": "Friend Dropping Off Groceries",
-     "scene": "A friend leaves soup on your living room porch.",
+     "scene": "A friend leaves soup on your doorstep.",
      "ask": "How do you respond?",
      "opts": [
       {
@@ -1778,7 +1778,7 @@
      "n": 64,
      "loc": "Study",
      "title": "Delegating at Work",
-     "scene": "Drowning in study deadlines with brain fog.",
+     "scene": "You're drowning in work deadlines with brain fog.",
      "ask": "What is a grounded move?",
      "opts": [
       {
@@ -1805,7 +1805,7 @@
      "n": 65,
      "loc": "Living Room",
      "title": "Letting Someone Hold Space",
-     "scene": "{P} sits quietly on the living room couch while you're drained.",
+     "scene": "{P} sits quietly beside you on the couch while you're drained.",
      "ask": "How do you handle silence?",
      "opts": [
       {
@@ -1832,7 +1832,7 @@
      "n": 66,
      "loc": "Kitchen",
      "title": "Saying Yes to Rides",
-     "scene": "Offering a ride from the kitchen area.",
+     "scene": "{P} offers to drive you to your appointment.",
      "ask": "What do you say?",
      "opts": [
       {
@@ -1859,7 +1859,7 @@
      "n": 67,
      "loc": "Bedroom",
      "title": "Accepting a Check-In Call",
-     "scene": "Sibling calls your bedroom phone; you have low energy.",
+     "scene": "Your sibling calls; you have very low energy.",
      "ask": "How do you handle it?",
      "opts": [
       {
@@ -1886,7 +1886,7 @@
      "n": 68,
      "loc": "Kitchen",
      "title": "Sharing Household Load",
-     "scene": "Watching {p} cook in the kitchen.",
+     "scene": "You watch {p} start cooking dinner.",
      "ask": "How do you participate?",
      "opts": [
       {
@@ -1903,7 +1903,7 @@
       },
       {
        "g": "hurt",
-       "t": "Sit down at the kitchen island.",
+       "t": "Sit down and watch.",
        "why": "Sitting passively maintains silent division of labor.",
        "re": "…Want to keep me company at least?"
       }
@@ -1913,7 +1913,7 @@
      "n": 69,
      "loc": "Bedroom",
      "title": "Asking for Reassurance Directly",
-     "scene": "Waking up in the bedroom feeling insecure.",
+     "scene": "You wake up feeling insecure.",
      "ask": "What is the cleanest way to ask for comfort?",
      "opts": [
       {
@@ -1940,7 +1940,7 @@
      "n": 70,
      "loc": "Living Room",
      "title": "Receiving a Compliment",
-     "scene": "{P} compliments you in the living room.",
+     "scene": "{P} compliments you on how hard you've been trying.",
      "ask": "How do you receive it?",
      "opts": [
       {
@@ -1969,7 +1969,7 @@
      "n": 71,
      "loc": "Study",
      "title": "Saying it out loud",
-     "scene": "Midnight in study, rewriting emails. {P} brings tea.",
+     "scene": "It's midnight and you're still rewriting emails. {P} brings you tea.",
      "ask": "How do you answer?",
      "opts": [
       {
@@ -1996,7 +1996,7 @@
      "n": 72,
      "loc": "Study",
      "title": "Using the Notebook",
-     "scene": "Notebook sits on study desk.",
+     "scene": "The notebook {p} gave you sits on your desk.",
      "ask": "What do you do?",
      "opts": [
       {
@@ -2023,7 +2023,7 @@
      "n": 79,
      "loc": "Bedroom",
      "title": "Voice Memo When Words Fail",
-     "scene": "Throat tight in bedroom.",
+     "scene": "Your throat feels too tight to talk tonight.",
      "ask": "How do you bridge the gap?",
      "opts": [
       {
@@ -2050,7 +2050,7 @@
      "n": 97,
      "loc": "Living Room",
      "title": "When a Comment Stings",
-     "scene": "Friend makes clumsy comment in living room.",
+     "scene": "A friend makes a clumsy comment about how you're doing.",
      "ask": "How do you handle sting?",
      "opts": [
       {
@@ -2077,7 +2077,7 @@
      "n": 100,
      "loc": "Study",
      "title": "Keep-Close Reminder",
-     "scene": "Clear afternoon in study.",
+     "scene": "It's a clear, calm afternoon.",
      "ask": "What is a wise step?",
      "opts": [
       {
@@ -2106,7 +2106,7 @@
      "n": 73,
      "loc": "Balcony",
      "title": "Reaching out for real help",
-     "scene": "Weeks of feeling low on the balcony.",
+     "scene": "You've felt low for weeks.",
      "ask": "What do you say?",
      "opts": [
       {
@@ -2133,7 +2133,7 @@
      "n": 74,
      "loc": "Balcony",
      "title": "Night Before First Appointment",
-     "scene": "Pacing the balcony night before appointment.",
+     "scene": "It's the night before your first appointment, and you can't stop pacing.",
      "ask": "What do you say?",
      "opts": [
       {
@@ -2150,7 +2150,7 @@
       },
       {
        "g": "hurt",
-       "t": "Walk past toward kitchen.",
+       "t": "Walk past without a word.",
        "why": "Pacing past avoids verbal processing.",
        "re": "…Hey. I'm nervous for you too."
       }
@@ -2160,7 +2160,7 @@
      "n": 75,
      "loc": "Study",
      "title": "Clinic Waiting Room",
-     "scene": "Sitting in study/clinic waiting room, urge to leave.",
+     "scene": "You're sitting in the clinic waiting room, fighting the urge to leave.",
      "ask": "How do you ride out the urge?",
      "opts": [
       {
@@ -2187,7 +2187,7 @@
      "n": 76,
      "loc": "Study",
      "title": "Therapy Office Blankness",
-     "scene": "In therapy office study, mind goes blank.",
+     "scene": "In the therapy office, your mind suddenly goes blank.",
      "ask": "What do you say?",
      "opts": [
       {
@@ -2214,7 +2214,7 @@
      "n": 77,
      "loc": "Living Room",
      "title": "Doctor's Office Symptoms",
-     "scene": "Intake checkup in living room area.",
+     "scene": "It's your intake checkup with the doctor.",
      "ask": "How do you answer?",
      "opts": [
       {
@@ -2241,7 +2241,7 @@
      "n": 78,
      "loc": "Living Room",
      "title": "Wrong Therapist Fit",
-     "scene": "Realizing poor fit on living room sofa.",
+     "scene": "You realize your therapist isn't a good fit.",
      "ask": "What is your constructive move?",
      "opts": [
       {
@@ -2268,7 +2268,7 @@
      "n": 80,
      "loc": "Kitchen",
      "title": "Medication Side Effects",
-     "scene": "Groggy from prescription in kitchen.",
+     "scene": "You feel groggy from your new prescription.",
      "ask": "What is the safest step?",
      "opts": [
       {
@@ -2297,7 +2297,7 @@
      "n": 81,
      "loc": "Study",
      "title": "Being Kind to Yourself",
-     "scene": "Replaying study work mistake.",
+     "scene": "You keep replaying a mistake from work.",
      "ask": "What's the kindest move?",
      "opts": [
       {
@@ -2324,7 +2324,7 @@
      "n": 82,
      "loc": "Kitchen",
      "title": "Encouraging Helper to Rest",
-     "scene": "Exhausted partner in kitchen.",
+     "scene": "{P} looks exhausted after caring for you all week.",
      "ask": "What do you do?",
      "opts": [
       {
@@ -2341,7 +2341,7 @@
       },
       {
        "g": "hurt",
-       "t": "Turn off overhead kitchen light.",
+       "t": "Turn off the light and go to bed.",
        "why": "Darkening rooms silently bypasses appreciation.",
        "re": "…Oh. Lights off. Okay, goodnight."
       }
@@ -2351,7 +2351,7 @@
      "n": 83,
      "loc": "Living Room",
      "title": "Catching All-or-Nothing Thinking",
-     "scene": "Ate takeout in living room, brain whispers failure.",
+     "scene": "You ate takeout for dinner again, and your brain whispers 'failure'.",
      "ask": "How do you interrupt distortion?",
      "opts": [
       {
@@ -2378,7 +2378,7 @@
      "n": 84,
      "loc": "Bedroom",
      "title": "Social Media Comparison",
-     "scene": "Scrolling bedroom phone, seeing milestones.",
+     "scene": "You're scrolling your phone, seeing everyone's milestones.",
      "ask": "What is a self-protective move?",
      "opts": [
       {
@@ -2405,7 +2405,7 @@
      "n": 85,
      "loc": "Bedroom",
      "title": "Forgiving Yourself for Snapping",
-     "scene": "Guilt over bedroom snap.",
+     "scene": "You feel guilty for snapping at {p} earlier.",
      "ask": "How do you handle repair?",
      "opts": [
       {
@@ -2432,7 +2432,7 @@
      "n": 86,
      "loc": "Kitchen",
      "title": "Lowering Bar on Hard Days",
-     "scene": "Zero energy in kitchen.",
+     "scene": "You have zero energy today.",
      "ask": "What is minimum viable care?",
      "opts": [
       {
@@ -2443,9 +2443,9 @@
       },
       {
        "g": "okay",
-       "t": "Deep-clean kitchen despite dizziness.",
+       "t": "Deep-clean the house despite feeling dizzy.",
        "why": "Ignoring exhaustion leads to crashes.",
-       "re": "Please sit down. The kitchen can wait."
+       "re": "Please sit down. The cleaning can wait."
       },
       {
        "g": "hurt",
@@ -2459,7 +2459,7 @@
      "n": 87,
      "loc": "Living Room",
      "title": "Boundaries with Unhelpful Advice",
-     "scene": "Relative gives advice in living room.",
+     "scene": "A relative gives you unhelpful advice about your mood.",
      "ask": "How do you protect energy?",
      "opts": [
       {
@@ -2486,7 +2486,7 @@
      "n": 88,
      "loc": "Study",
      "title": "Low-Energy Comfort Menu",
-     "scene": "Blanking on soothing methods in study.",
+     "scene": "You're blanking on what usually soothes you.",
      "ask": "What can you do?",
      "opts": [
       {
@@ -2513,7 +2513,7 @@
      "n": 89,
      "loc": "Living Room",
      "title": "Laughing Without Guilt",
-     "scene": "Laughing at video in living room, impostor thought hits.",
+     "scene": "You laugh at a funny video, then an impostor thought hits.",
      "ask": "How do you answer?",
      "opts": [
       {
@@ -2567,7 +2567,7 @@
      "n": 96,
      "loc": "Study",
      "title": "Protecting Sleep During Stress",
-     "scene": "Study deadlines piling up.",
+     "scene": "Deadlines are piling up this week.",
      "ask": "How do you protect baseline?",
      "opts": [
       {
@@ -2594,7 +2594,7 @@
      "n": 98,
      "loc": "Study",
      "title": "Returning to Hobby Slowly",
-     "scene": "Instrument in study feels rusty.",
+     "scene": "Your old instrument feels rusty in your hands.",
      "ask": "How do you approach re-entry?",
      "opts": [
       {
@@ -2621,7 +2621,7 @@
      "n": 99,
      "loc": "Living Room",
      "title": "Sharing Credit With Yourself",
-     "scene": "Reflecting in living room on progress.",
+     "scene": "You reflect on how far you've come.",
      "ask": "How do you acknowledge agency?",
      "opts": [
       {
@@ -2652,7 +2652,7 @@
      "n": 91,
      "loc": "Bedroom",
      "title": "The hardest night",
-     "scene": "Bedroom dark thoughts. Partner asks entry.",
+     "scene": "Late at night, the dark thoughts are loud. {P} knocks and asks to come in.",
      "ask": "What do you do?",
      "critical": true,
      "opts": [
@@ -2680,7 +2680,7 @@
      "n": 93,
      "loc": "Bedroom",
      "title": "Reaching Out When Alone",
-     "scene": "1:00 AM bedroom spiral.",
+     "scene": "It's 1:00 AM and you're spiraling alone.",
      "ask": "What is your lifeline move?",
      "critical": true,
      "opts": [
@@ -2710,7 +2710,7 @@
      "n": 92,
      "loc": "Bedroom",
      "title": "Choosing Safety Over Secrecy",
-     "scene": "Screening for suicide in bedroom.",
+     "scene": "{P} gently asks if you're having thoughts of ending your life.",
      "ask": "What is next step?",
      "critical": true,
      "opts": [
@@ -2741,7 +2741,7 @@
     "n": 94,
     "loc": "Bedroom",
     "title": "Waking Up Heavy Again",
-    "scene": "Bedroom morning relapse.",
+    "scene": "After some good days, you wake up heavy again.",
     "ask": "What do you say?",
     "opts": [
      {
@@ -2768,7 +2768,7 @@
     "n": 95,
     "loc": "Study",
     "title": "After Missing Counseling",
-    "scene": "Missed clinic call in study.",
+    "scene": "You missed your counseling session, and the clinic called.",
     "ask": "How do you respond?",
     "opts": [
      {
