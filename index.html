@@ -1522,6 +1522,144 @@ PART2.TRUST_MOMENTS = [{"scene": "For the first time in weeks, you wake up and n
 // Part 2's breaks are self-love actions, written fresh for the one who is struggling.
 PART2.RECHARGE = [{"q": "You catch your reflection, and the first thing you think is: “Ugh, look at you.”", "opts": [{"g": "best", "t": "Pause and say one kind thing to yourself instead — out loud if you can.", "tip": "How you talk to yourself shapes how you feel. A kinder inner voice is a real self-love skill."}, {"g": "okay", "t": "Look away quickly and try not to think about it.", "tip": "Avoiding helps for a moment, but the harsh voice stays in charge."}, {"g": "poor", "t": "Make a mental list of everything wrong with how you look.", "tip": "Feeding the inner critic drains you and deepens low mood."}]}, {"q": "You finished one small task today: you did the laundry.", "opts": [{"g": "best", "t": "Celebrate it: “Today was hard, and I still did that.”", "tip": "Noticing small wins builds momentum. On low days, small things really count."}, {"g": "okay", "t": "Shrug: “It's just laundry.”", "tip": "Fair — but brushing off every win makes your progress invisible."}, {"g": "poor", "t": "Remind yourself of the ten things you didn't do.", "tip": "Measuring yourself against a perfect day turns a win into another failure."}]}, {"q": "Someone asks you to take on an extra project, and you have no energy left.", "opts": [{"g": "best", "t": "Say kindly: “I can't take that on right now.”", "tip": "Saying no to protect your energy is a form of self-respect."}, {"g": "okay", "t": "Say yes, then plan to stay up late to squeeze it in.", "tip": "Helping is good, but not at the cost of the rest you need to recover."}, {"g": "poor", "t": "Say yes to everything so nobody notices you're struggling.", "tip": "Overloading yourself to look fine usually ends in a crash."}]}, {"q": "You haven't showered in two days, and you feel heavy.", "opts": [{"g": "best", "t": "Take a slow, warm shower and put on clean, comfy clothes.", "tip": "Simple body care is self-love in action. Small routines help lift your mood."}, {"g": "okay", "t": "Wash your face and call it enough for today.", "tip": "A small step still counts — maybe tomorrow you'll manage a little more."}, {"g": "poor", "t": "Tell yourself you don't deserve to feel nice until you're better.", "tip": "Care isn't a reward for getting better. It's part of how you get better."}]}, {"q": "It's 1 AM, and you're still scrolling — feeling worse with every post.", "opts": [{"g": "best", "t": "Put the phone across the room and do a short wind-down routine.", "tip": "Good sleep is one of the strongest supports for your mood. Protecting it is self-love."}, {"g": "okay", "t": "Switch to a calmer app, but keep scrolling.", "tip": "Gentler content helps a little, but the screen still steals your sleep."}, {"g": "poor", "t": "Keep comparing your life to everyone's highlight reels.", "tip": "Comparison feeds the feeling that you're falling behind."}]}, {"q": "You made a mistake, and your mind says: “You always mess everything up.”", "opts": [{"g": "best", "t": "Answer back: “I made a mistake. That doesn't make me a mistake.”", "tip": "Separating what you did from who you are is at the heart of self-compassion."}, {"g": "okay", "t": "Distract yourself with a game until the feeling fades.", "tip": "Distraction gives you a break, but the harsh thought may come back."}, {"g": "poor", "t": "Agree with the voice and replay the mistake all evening.", "tip": "Believing every harsh thought makes low mood stronger."}]}, {"q": "You have a free afternoon and nothing planned.", "opts": [{"g": "best", "t": "Do something you used to love, even for just 20 minutes.", "tip": "Doing enjoyable things — even before you feel like it — is a proven way to lift low mood."}, {"g": "okay", "t": "Lie in bed watching videos all afternoon.", "tip": "Rest is okay, but a little enjoyable activity often helps more than you'd expect."}, {"g": "poor", "t": "Spend it worrying about everything you should be doing.", "tip": "Worry takes your free time and gives nothing back."}]}, {"q": "You've eaten nothing but snacks all day.", "opts": [{"g": "best", "t": "Make a simple, real meal — even toast and eggs counts.", "tip": "Eating regularly is basic self-care, and it steadies your energy and mood."}, {"g": "okay", "t": "Order fast food and eat it standing up.", "tip": "Eating beats not eating — next time, try sitting down and slowing down."}, {"g": "poor", "t": "Skip dinner because you feel you don't deserve a proper meal.", "tip": "You deserve care on hard days too. Food isn't something you have to earn."}]}, {"q": "A friend texts: “Thinking of you. Want to talk?”", "opts": [{"g": "best", "t": "Reply honestly: “It's been a hard week. A call would be nice.”", "tip": "Letting friends in is self-love too. Connection is one of the strongest protectors of mental health."}, {"g": "okay", "t": "Send a heart emoji and leave it there.", "tip": "A small reply keeps the door open — even better if you can say a little more."}, {"g": "poor", "t": "Leave it on read because you don't want to bother anyone.", "tip": "Pulling away from people who care makes everything feel heavier."}]}, {"q": "Your counselor suggested writing down three good moments each day.", "opts": [{"g": "best", "t": "Write them tonight — even tiny ones, like a warm cup of tea.", "tip": "Noticing small good moments trains your attention away from only the bad ones."}, {"g": "okay", "t": "Plan to start tomorrow instead.", "tip": "Starting later is okay — just don't let “tomorrow” keep moving."}, {"g": "poor", "t": "Tell yourself nothing good ever happens anyway.", "tip": "When you're low, good moments are easy to miss. Looking for them helps you see them."}]}, {"q": "You've been inside all week, and the sun is finally out.", "opts": [{"g": "best", "t": "Step outside for a 10-minute walk, even just around the block.", "tip": "Daylight and gentle movement are simple, proven mood boosters."}, {"g": "okay", "t": "Open the curtains and sit by the window.", "tip": "Some light is better than none — a short walk would help even more."}, {"g": "poor", "t": "Close the curtains. The sunshine just makes you feel worse.", "tip": "Shutting out light and movement tends to keep low mood stuck."}]}, {"q": "You feel guilty for needing so much help lately.", "opts": [{"g": "best", "t": "Remind yourself: “Needing help is human. I'd help someone I love, too.”", "tip": "Treating yourself the way you'd treat a friend is the heart of self-love."}, {"g": "okay", "t": "Promise yourself you'll stop asking for help soon.", "tip": "Wanting independence is natural, but recovery goes better with support."}, {"g": "poor", "t": "Decide you're a burden and pull away from everyone.", "tip": "Feeling like a burden is part of how you feel right now — not the truth."}]}];
 const fillIn = (arr, src) => { arr.splice(0, arr.length, ...JSON.parse(JSON.stringify(src))); };
+// Each answer gets its own reply from your loved one — [supportive, well-meant, hurtful].
+const REPLIES = {
+1: {
+ Q: [
+  ["…You noticed? Honestly, I'm not holding up great. I didn't think anyone saw.",
+   "A game night? Maybe… I'll try. I just don't have much energy for fun right now.",
+   "Wow. Okay. I didn't know you were keeping score of my life."],
+  ["…Yeah. Silence sounds really good right now. Thanks for not making me talk.",
+   "That's sweet… I'll probably just zone out, but it's nice having it on.",
+   "Right. Because lying here feels like such a vacation."],
+  ["…Thanks. I think I can manage a little of this, if no one's watching me.",
+   "Three bites… okay. I'll try. It just feels like a lot.",
+   "I know that. You think I'm doing this on purpose?"],
+  ["…A storm. Okay. I really needed to hear that you're still in the boat.",
+   "Thank you for being honest… it hurts a bit, but I'd rather know.",
+   "…Right. I knew it. I'm just weighing you down."],
+  ["…It's like a hollow hum. Nothing feels real. Thanks for actually asking.",
+   "Three anchors… I'll try. It's hard to feel them right now, though.",
+   "I'm not trying to ruin anything. Forget I said it."],
+  ["…You really stopped for me? Okay. I just didn't want to be alone right now.",
+   "Oh — it's fine, finish up. It's… not that important.",
+   "Sure. Tomorrow. Sorry I bothered you."],
+  ["…Yeah. I think I'm ready to admit I can't do this alone. Will you help me look?",
+   "Thank you… it's a lot to read through. I don't know where to start.",
+   "So it's just my fault for not trying hard enough. Got it."],
+  ["…A doctor for the mind. Okay. That makes it feel a little less scary.",
+   "…So it is something to be ashamed of? I guess I'll keep it quiet.",
+   "…Right. Not special enough to matter. Okay."],
+  ["Go — call your friend. You deserve rest too. I'll be okay for a few hours.",
+   "You look so tired lately… are you okay? You don't have to hide it from me.",
+   "You just left. I didn't know where you were. I was so scared."],
+  ["Check-in times… and more people to call. Okay. I think that's fair for both of us.",
+   "You always pick up… but you sound exhausted. I'm sorry I keep calling.",
+   "…Okay. I won't bother you anymore. Message received."],
+  ["…Yes. I've been having those thoughts. I'm scared. Thank you for asking me straight.",
+   "I love you too… but I'm not okay. It's more than a bad night.",
+   "…Sorry. I won't say anything again. I'll keep it to myself."],
+  ["…You're staying? Okay. I'm scared, but I don't want to be alone with this.",
+   "I'm a bit calmer… but please don't go just yet. I'm not safe on my own.",
+   "…You promise? …Okay. But part of me hoped you'd get me help."]
+ ],
+ S: [
+  ["A zigzag… okay. Maybe I didn't lose everything. Thanks for reminding me.",
+   "I don't know if I have it in me today… I'm trying.",
+   "…Yeah. I knew it was too good. I'm just broken."],
+  ["…You'd come with me? Okay. Let's call together.",
+   "I'll try… but I'm scared the fear wins again.",
+   "…So I'm wasting your money. Maybe I just shouldn't bother."]
+ ],
+ T: [
+  ["…That means more than you know. Thank you for seeing me.",
+   "Like a hawk… I didn't know I was scaring you that much.",
+   "…Sorry. I didn't realise I was so much work."],
+  ["…Thank you for not being angry. It feels lighter just saying it.",
+   "I know… I'm sorry. I just didn't know how to tell you.",
+   "No — I wasn't lying to you. I just couldn't say it."],
+  ["…Okay. Take my time. Thank you. That makes it easier to start.",
+   "I'm trying… it's just hard to get it all out at once.",
+   "…Yeah. Never mind. It's not important."],
+  ["…At my speed. Okay. Just hold on with me a little longer.",
+   "I don't feel strong… I just feel scared right now.",
+   "…I know. That's exactly why I'm afraid to say it."],
+  ["…I couldn't have found the way without you holding that map. Thank you.",
+   "Ha… we do make a good team. I'm glad you're still here.",
+   "…I'm sorry it was that hard for you. I didn't know."]
+ ]
+},
+2: {
+ Q: [
+  ["Thank you for telling me the truth. Empty is real — we'll take it slow, together.",
+   "A schedule sounds good… but how are you feeling, not just your work?",
+   "…Okay. I'm not analyzing you. I'm just worried."],
+  ["Of course. I'm right here. No words needed.",
+   "That's okay. I'll just sit here with you, phone and all.",
+   "…Okay. I'll be out here if you need me."],
+  ["I'm so glad. There's more if you want it — no rush.",
+   "Okay… I'll leave it here. Just try a little when you can?",
+   "Sorry… I wasn't trying to hover. I just made extra."],
+  ["Of course. No fixing. I'm just listening — and you're not a burden.",
+   "You don't have to be fun. I just want you here — the real you.",
+   "Because I love you. Even when it's hard. That's why."],
+  ["Then don't start anywhere. Just tell me how heavy it feels. I'm listening.",
+   "Okay… but this isn't really about one paragraph, is it?",
+   "I know it won't make the work disappear. But you don't have to carry it alone."],
+  ["Three honest lines… that's brave. Thank you for trying it.",
+   "A list helps a bit… maybe one line about how you feel, too?",
+   "That's okay. It's yours, whenever you're ready."],
+  ["I'll help you book it. Scared and brave can happen at the same time.",
+   "Okay… but please don't wait too long. I can help whenever you're ready.",
+   "You don't have to be broken to deserve help. Burned out counts too."],
+  ["Because you deserve to feel better. That's not weak — that's brave.",
+   "It's yours to share, always… but there's nothing shameful about it.",
+   "…Sorry. I'm just nervous for you. I'll give you some space."],
+  ["There you go. Talk to yourself like you'd talk to me. You're not useless.",
+   "Okay… but please don't be too hard on yourself in there.",
+   "…It's late. Please be kind to yourself. One mistake isn't who you are."],
+  ["…Really? Thank you. I think I do need that weekend.",
+   "…You've gone quiet lately. Please keep telling me the hard stuff too.",
+   "You're not wearing me down. I'm just tired. I'm not going anywhere."],
+  ["Thank you for telling me. I'm right here. You're not alone in this.",
+   "I'm here. But your eyes say it's more than racing thoughts… please tell me.",
+   "…Are you asleep? Okay… I'll be right next door if you need me."],
+  ["Thank you for being honest. Let's call together right now. I'm not leaving.",
+   "I hear you. I'm not leaving you alone tonight — let's call someone together now.",
+   "I love you, and I can't keep this secret. Your safety matters more. Let's call together."]
+ ],
+ S: [
+  ["Bad day, not a bad life. Of course — move over, I'm staying.",
+   "Okay… but you don't have to force it. It's alright to go slow today.",
+   "It did mean something. One hard morning doesn't erase it."],
+  ["Of course. Let's call them together right now.",
+   "…Was it really work? It's okay if you got scared.",
+   "Therapy takes time. Skipping one day doesn't mean it can't help you."]
+ ],
+ T: [
+  ["…That's wonderful. I'm really glad you told me.",
+   "You seem a little lighter this morning… I'm glad.",
+   "…You seem far away today. I'm here if you want to talk."],
+  ["I heard you humming. It's nice to hear that again.",
+   "…You went quiet. That's okay — I liked hearing you hum.",
+   "Hey… you were humming a second ago. What happened?"],
+  ["It sounds kind when you say it to yourself. Keep practising that.",
+   "Gentle with everyone… you deserve that gentleness too.",
+   "…Would you really say that to a friend? You deserve kinder words."],
+  ["That's a great plan. I'll remind you about it — and protect your sleep with you.",
+   "Okay… just tell me if it starts getting too heavy.",
+   "Please keep your session… that's exactly when it helps most."],
+  ["I'm proud of you too. Of us. Write it down — you earned this.",
+   "One day at a time. But today was a really good one.",
+   "Maybe. But today was real, and I'm going to enjoy it."]
+ ]
+}
+};
+function applyReplies(n){
+  const R = REPLIES[n], G = ["help","okay","hurt"];
+  [[QUESTIONS, R.Q], [SETBACKS, R.S], [TRUST_MOMENTS, R.T]].forEach(([arr, rs]) =>
+    arr.forEach((q, k) => (q.opts || []).forEach(o => { const r = rs[k] && rs[k][G.indexOf(o.g)]; if (r) o.re = r; else delete o.re; })));
+}
 function applyPart(n){
   PART = n;
   const D = n === 2 ? PART2 : PART1;
@@ -1535,7 +1673,9 @@ function applyPart(n){
   const ats = PART1.TRUST_MOMENTS.map(t => t.at);
   fillIn(TRUST_MOMENTS, D.TRUST_MOMENTS); TRUST_MOMENTS.forEach((t, k) => t.at = ats[k]);
   ["help","okay","hurt"].forEach(g => REACT[g] = D.REACT[g].slice());
+  applyReplies(n);
 }
+applyReplies(1);
 // Part 2 unlocks after finishing Part 1 (remembered on this device when possible).
 let P2_SAVE = null;
 try { P2_SAVE = JSON.parse(localStorage.getItem("hq_part2")); } catch (e) {}
@@ -1929,7 +2069,7 @@ function answer(i, btn){
   btn.classList.add(o.g === "help" ? "yes" : o.g === "okay" ? "mid" : "no");
   btn.querySelector(".dot").textContent = o.g === "help" ? "✓" : o.g === "okay" ? "~" : "✕";
   $("qOpts").classList.add("done");
-  const react = pickReact(o.g, trustTier());
+  const react = o.re || pickReact(o.g, trustTier());
   const why = $("qWhy");
   why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${baseDt>0?'up':baseDt<0?'down':''}">${baseDt>0?'+':''}${baseDt} ${tw()}</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
     ${streakBonus ? streakCard(PLAY.streak, streakBonus) : lostStreak >= 2 ? `<div class="streak-lost">🔥 Your ${lostStreak}-answer streak ended — the next supportive answer starts a new one.</div>` : ""}
