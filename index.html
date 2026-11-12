@@ -1225,11 +1225,7 @@ function updateHUD(){
   else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill("💗 {P} wants to tell you something.");
   else if (PLAY.chap === 2 && !PLAY.bedOpen && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit half-lit things.");
   else if (PLAY.energy === 1) msg = "⚠️ Last bit of energy — after your next talk, you'll need to recharge.";
-  else {
-    const open = ROOMS.map((rm, r) => ({ rm, r, left:[r*2, r*2+1].filter(i => !lit(i)).length })).filter(o => isUnlocked(o.r) && o.left);
-    msg = open.length > 1 ? `${PHASES[PLAY.phase].title} — choose a room: ` + open.map(o => `${o.rm.name} (${o.left})`).join(" · ")
-        : open.length ? `${open[0].rm.name} · ${open[0].rm.theme} — ${open[0].left} left.` : "Tap something in the house to begin.";
-  }
+  else msg = "";
   $("guide").textContent = msg;
 }
 
@@ -1409,10 +1405,10 @@ function phaseCard(ph){
   return () => {
     const P = PHASES[ph];
     let extra = "";
-    const rooms = ph === 0 ? "Choose where to begin: the Living Room or the Kitchen."
+    const rooms = ph === 0 ? ""
       : ph === 1 ? "🚪 New rooms are open: the Study and the Balcony."
       : "🚪 Your Corner is open. The Bedroom will open when the rest of the house is lit.";
-    extra += `<p class="gain">${rooms}</p>`;
+    if (rooms) extra += `<p class="gain">${rooms}</p>`;
     if (ph > 0) {
       PLAY.energy = Math.min(MAX_ENERGY, PLAY.energy + 2);
       extra += `<p class="gain">🔋 Time passes. You catch your breath: +2 energy</p>`;
