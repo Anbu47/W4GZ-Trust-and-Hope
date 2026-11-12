@@ -1930,7 +1930,7 @@ function answer(i, btn){
   const why = $("qWhy");
   why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${baseDt>0?'up':baseDt<0?'down':''}">${baseDt>0?'+':''}${baseDt} ${tw()}</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
     ${streakBonus ? streakCard(PLAY.streak, streakBonus) : lostStreak >= 2 ? `<div class="streak-lost">🔥 Your ${lostStreak}-answer streak ended — the next supportive answer starts a new one.</div>` : ""}
-    ${PART === 2 && spokenPart(T(o.t)) ? `<div class="say small mine"><div class="bubble"></div><div class="face">${avatar(GAME.player.kind, null, "mf", playerMood())}</div></div>` : ""}
+    ${spokenPart(T(o.t)) ? `<div class="say small mine"><div class="bubble"></div><div class="face">${avatar(GAME.player.kind, null, "mf", playerMood())}</div></div>` : ""}
     <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
     <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? (PART === 2 ? "Let the light in ✨" : "Resurrect ✨") : t.collect ? "Warm it up" : "Continue"}</button>`;
   why.querySelector(".w").textContent = T(o.why);
