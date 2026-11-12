@@ -1057,14 +1057,14 @@ function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show
 
 // ================= TITLE =================
 function renderTitle(){
-  // the Help hint pops up, fades after 3 s, and comes back every 5 s while the player stays on the front page
+  // the Help hint pops up, fades after 3 s, and comes back after 5 s hidden (every 8 s) while the player stays on the front page
   const tip = $("helpTip");
   if (tip) {
     clearInterval(renderTitle.iv); clearTimeout(renderTitle.t); tip.classList.remove("on");
     const onTitle = () => $("s-title").classList.contains("active") && !$("helpSheet").classList.contains("show");
     const flash = () => { if (!onTitle()) return; tip.classList.add("on"); clearTimeout(renderTitle.t); renderTitle.t = setTimeout(() => tip.classList.remove("on"), 3000); };
     setTimeout(flash, 900);
-    renderTitle.iv = setInterval(() => { if (!$("s-title").classList.contains("active")) { clearInterval(renderTitle.iv); tip.classList.remove("on"); return; } flash(); }, 5000);
+    renderTitle.iv = setInterval(() => { if (!$("s-title").classList.contains("active")) { clearInterval(renderTitle.iv); tip.classList.remove("on"); return; } flash(); }, 8000);
   }
   // the couple on the title follows the characters you chose (or a default pair before you've chosen)
   const P = GAME.player.kind || "woman", L = GAME.partner.kind || "man";
