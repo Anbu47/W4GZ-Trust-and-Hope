@@ -257,6 +257,11 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .chap.dark h2{font-size:38px;background:linear-gradient(180deg,#fff,#9aa3c7);-webkit-background-clip:text;background-clip:text;color:transparent}
 .chap.warn h2{font-size:34px;color:#ffd27a}
 .chap.warn p.sb{color:#ffd27a;font-weight:800}
+.qcount{display:flex;align-items:center;gap:12px;margin:16px auto 6px;max-width:340px;padding:10px 16px;border-radius:18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,190,220,.35);text-align:left}
+.qcount b{font-size:38px;font-weight:900;line-height:1;background:linear-gradient(180deg,#fff,#ffb3d1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.qcount span{font-size:13px;line-height:1.4;color:#f3dceb}
+.qcount i{display:block;font-style:normal;font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:11px;color:#ffb3d1}
+.pp .qn{display:inline-block;margin-left:4px;font-size:10.5px;font-weight:900;letter-spacing:.06em;padding:2px 8px;border-radius:999px;background:rgba(255,179,209,.18);color:#ffb3d1;vertical-align:2px}
 .house.blackout{animation:blackout 2.6s ease}
 @keyframes blackout{0%{filter:none}25%{filter:brightness(.15) saturate(.2)}100%{filter:none}}
 .msface{position:relative;width:96px;height:96px;margin:12px auto 4px;border-radius:50%;overflow:visible}
@@ -616,6 +621,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
         <div class="divider"></div>
         <p class="lead" id="titleLead">Someone you love is orbiting a black hole of low energy. Walk through your house, decode their confusing signals, and learn how to help them without faceplanting into burnout.</p>
         <div class="pillars" id="titlePillars"><span>NOTICE</span><span>LISTEN</span><span>SUPPORT</span><span>REST</span></div>
+        <div class="qcount"><b>100</b><span><i>real-life questions</i>50 in each part. Every new game draws a fresh random set, so no two playthroughs are the same.</span></div>
         <p class="safe">For learning purposes only, not a substitute for professional help. Crisis resources are always just a tap away.</p>
       </div>
     </div>
@@ -654,8 +660,8 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="pair" id="pair"></div>
       <div class="partpick" id="partPick">
         <small>CHOOSE YOUR STORY</small>
-        <button class="pp" data-part="1"><span class="ic">🕯️</span><span class="tx"><b>Part 1 · Trust Recovery</b><em>Support someone you love through a hard time.</em></span></button>
-        <button class="pp" data-part="2"><span class="ic">🌱</span><span class="tx"><b>Part 2 · Hope Recovery</b><em>Months later, you're the one struggling — learn to let someone help.</em></span></button>
+        <button class="pp" data-part="1"><span class="ic">🕯️</span><span class="tx"><b>Part 1 · Trust Recovery <span class="qn">50 Q</span></b><em>Support someone you love through a hard time.</em></span></button>
+        <button class="pp" data-part="2"><span class="ic">🌱</span><span class="tx"><b>Part 2 · Hope Recovery <span class="qn">50 Q</span></b><em>Months later, you're the one struggling — learn to let someone help.</em></span></button>
       </div>
       <div class="story" id="storyLine"></div>
     </div>
