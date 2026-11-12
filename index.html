@@ -189,7 +189,10 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .hwrap .hbar{margin:6px 0 4px}
 .hearts{position:absolute;inset:0;pointer-events:none}
 .hm{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:15px;line-height:1;pointer-events:auto;cursor:pointer;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5));transition:transform .3s}
-.hm:not(.on){opacity:.75;font-size:13px}
+.hm.far{opacity:.45;font-size:12px}
+.hm.ready{font-size:15px;animation:readyH 1s ease-in-out infinite;filter:drop-shadow(0 0 6px #ff9ec0)}
+@keyframes readyH{50%{transform:translate(-50%,-50%) scale(1.25)}}
+.hm.lost{font-size:13px;opacity:.9}
 .hm.pop{animation:hpop .6s cubic-bezier(.2,1.6,.4,1)}
 @keyframes hpop{0%{transform:translate(-50%,-50%) scale(.5)}60%{transform:translate(-50%,-50%) scale(1.4)}}
 .why .lm.hg{color:#ffc2d6}
@@ -749,19 +752,7 @@ const HEARTS = [
   { at:100, name:"Unbreakable Bond",tip:"Complete trust — you're a safe place for {them}." }
 ];
 const HEART_BONUS = 5;
-function checkHearts(){
-  const got = [];
-  let again = true;
-  while (again) {
-    again = false;
-    HEARTS.forEach((h, k) => {
-      if (!PLAY.hearts[k] && PLAY.trust >= h.at) { PLAY.hearts[k] = true; (PLAY.heartNew = PLAY.heartNew || []).push(k); PLAY.trust = clamp(PLAY.trust + HEART_BONUS, 0, 100); got.push(h); again = true; }
-    });
-  }
-  if (got.length) setTimeout(() => { burstHearts(innerWidth / 2, 40, 18); [659,784,988,1319].forEach((f,i) => tone(f,.22,.07,i*.07)); }, 200);
-  return got;
-}
-const heartHTML = got => got.map(h => `<div class="lm hg">💗 Heart milestone: <b>${h.name}</b> · +${HEART_BONUS} trust</div>`).join("");
+const heartHTML = got => got.map(h => `<div class="lm hg">💗 Heart won: <b>${h.name}</b> · +${HEART_BONUS} trust</div>`).join("");
 const MAX_ENERGY = 3, START_TRUST = 10, BEDROOM_TRUST = 60;
 const GRADE = {
   help:{ trust:6, cls:"good", head:"💛 Supportive" },
@@ -1116,10 +1107,32 @@ const REACT = {
 // ---------------- state ----------------
 // light: 0 = dark, 1 = dim (okay answer — can be revisited), 2 = bright, -1 = gone out (setback)
 let PLAY = null;
+// Each new game scatters the story objects (and the heart spot) to new places in every room.
+function scatter(r){
+  const rm = ROOMS[r], A = 1.7, B = 2.15;                 // rough px per % (rooms are taller than wide)
+  const dist = (p, q) => Math.hypot((p[0]-q[0]) * A, (p[1]-q[1]) * B);
+  const block = [rm.pp].concat(rm.rest ? [rm.rest] : []);
+  const cand = []; for (const x of [22,38,54,72]) for (const y of [36,52,68,84]) cand.push([x + Math.round(Math.random()*6-3), y + Math.round(Math.random()*4-2)]);
+  for (let tries = 0; tries < 60; tries++) {
+    shuffleArr(cand);
+    const heart = cand.find(p => p[1] <= 70 && block.every(b => dist(p, b) > 60));
+    if (!heart) continue;
+    const picked = [];
+    for (const p of cand) {
+      const underLabel = p[1] > heart[1] && Math.abs(p[0] - heart[0]) * A < 62 && (p[1] - heart[1]) * B < 100;
+      if (p === heart || underLabel || block.some(b => dist(p, b) < 56) || dist(p, heart) < 72 || picked.some(q => dist(p, q) < 68)) continue;
+      picked.push(p); if (picked.length === 2) break;
+    }
+    if (picked.length === 2) return { spots:picked, hx:heart };
+  }
+  return { spots:rm.spots, hx:rm.hx };
+}
+const spotPos = (r, k) => (PLAY.pos && PLAY.pos[r] ? PLAY.pos[r].spots[k] : ROOMS[r].spots[k]);
+const heartPos = r => (PLAY.pos && PLAY.pos[r] ? PLAY.pos[r].hx : ROOMS[r].hx);
 function newPlay(){
   PLAY = { light:Array(12).fill(0), trust:START_TRUST, energy:MAX_ENERGY, chap:0, bedOpen:false, phase:0, justLit:-1,
            setback:{}, setbacksFixed:0, tm:TRUST_MOMENTS.map(() => ({ shown:false, done:false })),
-           restsGood:0, rests:0, qt:0, msShown:[], doorShown:false, hearts:HEARTS.map(() => false), me:{ r:0, x:18, y:90 }, q:null, pendingPhase:null };
+           pos:ROOMS.map((_, r) => scatter(r)), restsGood:0, rests:0, qt:0, msShown:[], doorShown:false, hearts:HEARTS.map(() => false), me:{ r:0, x:18, y:90 }, q:null, pendingPhase:null };
 }
 const lit = i => PLAY.light[i] >= 1;
 const roomComplete = r => lit(r*2) && lit(r*2+1);
@@ -1193,13 +1206,13 @@ function renderHouse(){
     const n = [r*2, r*2+1].reduce((s,i) => s + (PLAY.light[i] === 2 ? 1 : PLAY.light[i] === 1 ? .6 : 0), 0);
     const d0 = open ? 0.55 - n * 0.27 : 0.8, d1 = open ? 0.88 - n * 0.44 : 0.92;
     let spots = "";
-    if (open) spots = rm.spots.map(([x,y],k) => { const i = r*2+k, v = PLAY.light[i];
+    if (open) spots = [0,1].map(k => { const [x, y] = spotPos(r, k), i = r*2+k, v = PLAY.light[i];
       const cls = (v === 2 ? "done" : v === 1 ? "dim" : v === -1 ? "out" : "") + (PLAY.justLit === i ? " pop" : "");
       const badge = v === -1 ? '<span class="bd">🌧️</span>' : v === 2 ? '<span class="bd ok">✓</span>' : v === 1 ? '<span class="bd half">½</span>' : '<span class="bd talk">💬</span>';
       return `<button class="spot obj ${cls}" data-q="${i}" style="left:${x}%;top:${y}%" aria-label="${rm.name} moment"><span class="ic">${rm.icons[k]}</span>${badge}</button>`; }).join("");
     // trust moments
     const nextTm = PLAY.tm.findIndex(m => m.shown && !m.done);
-    PLAY.tm.forEach((m, k) => { if (k === nextTm && r === partnerRoom()) spots += `<button class="spot heart special" data-tm="${k}" style="left:${rm.hx[0]}%;top:${rm.hx[1]}%" aria-label="Heart moment"><span class="aura"></span><span class="hh">💗</span><span class="rise r1">💗</span><span class="rise r2">💕</span><span class="rise r3">💗</span><span class="lbl">Heart</span></button>`; });
+    PLAY.tm.forEach((m, k) => { if (k === nextTm && r === partnerRoom()) spots += `<button class="spot heart special" data-tm="${k}" style="left:${heartPos(r)[0]}%;top:${heartPos(r)[1]}%" aria-label="Heart moment"><span class="aura"></span><span class="hh">💗</span><span class="rise r1">💗</span><span class="rise r2">💕</span><span class="rise r3">💗</span><span class="lbl">Heart</span></button>`; });
     if (r === 0 && qtOn) spots += `<button class="spot heart" data-qt="1" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Spend time together">🫶</button>`;
     if (r === 4) spots += `<button class="spot rest" id="restSpot" style="left:${rm.rest[0]}%;top:${rm.rest[1]}%" aria-label="Recharge">🔋</button>`;
     return `<div class="room ${n>=2?'lit':''} ${open && !roomComplete(r) ? 'cur' : ''}" data-room="${r}" style="--floor:${rm.floor}">
@@ -1237,12 +1250,16 @@ function updateHUD(){
   $("hName").textContent = showName("partner");
   $("hPct").textContent = `Trust ${PLAY.trust}`;
   $("hFill").style.width = PLAY.trust + "%";
-  $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${PLAY.trust >= h.at ? 'on' : ''} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${Math.min(h.at, 96)}%" data-h="${k}">${PLAY.trust >= h.at ? '💗' : '🤍'}</span>`).join("");
+  const hState = k => { const m = PLAY.tm[k]; return m.done ? (m.won ? "won" : "lost") : m.shown ? "ready" : "far"; };
+  const hIcon = { won:"💗", lost:"💔", ready:"🤍", far:"🤍" };
+  $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${hState(k)} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${Math.min(h.at, 96)}%" data-h="${k}">${hIcon[hState(k)]}</span>`).join("");
   PLAY.heartNew = [];
-  $("hHearts").querySelectorAll(".hm").forEach(el => el.onclick = () => { const h = HEARTS[+el.dataset.h]; toast(`${PLAY.trust >= h.at ? "💗" : "🤍"} ${h.at} · ${h.name}: ${fill(h.tip)}`); });
+  $("hHearts").querySelectorAll(".hm").forEach(el => el.onclick = () => { const k = +el.dataset.h, h = HEARTS[k], st = hState(k);
+    const note = { won:"Heart won!", lost:"This heart was missed.", ready:"Find the 💗 in the house and answer with care.", far:`Reach trust ${h.at} to unlock this heart.` }[st];
+    toast(`${hIcon[st]} ${h.name} — ${note}`); });
   $("hPhase").textContent = PHASES[PLAY.phase].label;
   $("hLights").textContent = `✨ ${litN}/12`;
-  $("hHeartN").textContent = `💗 ${HEARTS.filter(h => PLAY.trust >= h.at).length}/${HEARTS.length}`;
+  $("hHeartN").textContent = `💗 ${PLAY.tm.filter(m => m.won).length}/${HEARTS.length}`;
   $("hEnergy").innerHTML = Array.from({length:MAX_ENERGY}, (_,i) => `<i class="${i < PLAY.energy ? 'on' : ''}"></i>`).join("");
   $("hEnergy").classList.toggle("low", PLAY.energy <= 1);
   $("restBtn").classList.toggle("urge", PLAY.energy <= 1);
@@ -1285,7 +1302,7 @@ function tapLight(i){
   const v = PLAY.light[i];
   if (v === 2) return;
   if (!needEnergy()) return;
-  const r = Math.floor(i / 2), [x, y] = ROOMS[r].spots[i % 2];
+  const r = Math.floor(i / 2), [x, y] = spotPos(r, i % 2);
   walkTo(r, x + 10, y + 6, () => {
     if (v === -1) openTalk({ kind:"setback", idx:i, data:SETBACKS[PLAY.setback[i]], room:r });
     else openTalk({ kind:"light", idx:i, data:QUESTIONS[i], room:r, revisit: v === 1 });
@@ -1293,7 +1310,7 @@ function tapLight(i){
 }
 function tapTrustMoment(k, el){
   if (!needEnergy()) return;
-  const r = partnerRoom(), [x, y] = ROOMS[r].hx;
+  const r = partnerRoom(), [x, y] = heartPos(r);
   walkTo(r, x + (x > 50 ? -14 : 14), y + 8, () => openTalk({ kind:"moment", idx:k, data:TRUST_MOMENTS[k], room:r }));
 }
 
@@ -1341,7 +1358,12 @@ function answer(i, btn){
   if (Q.critical && o.g === "okay") dt = 0;
   const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
   if (PLAY.trust === 0 && before > 0) PLAY.darkPending = true;
-  const heartsGot = dt > 0 ? checkHearts() : [];
+  let heartsGot = [];
+  if (t.kind === "moment") {
+    PLAY.tm[t.idx].won = o.g === "help";
+    if (o.g === "help") { PLAY.trust = clamp(PLAY.trust + HEART_BONUS, 0, 100); (PLAY.heartNew = PLAY.heartNew || []).push(t.idx); heartsGot = [HEARTS[t.idx]];
+      setTimeout(() => { burstHearts(innerWidth / 2, 60, 24); [659,784,988,1319].forEach((f,i) => tone(f,.22,.07,i*.07)); }, 200); }
+  }
   // light change
   let lightNow = null, lightMsg = "";
   if (t.kind === "light" || t.kind === "setback") {
@@ -1536,7 +1558,7 @@ function tapQualityTime(){
       if ($("qOpts").classList.contains("done")) return;
       const o = QUALITY_TIME[+b.dataset.k];
       PLAY.trust = clamp(PLAY.trust + 8, 0, 100); PLAY.qt++;
-      const hg = checkHearts();
+      const hg = [];
       b.classList.add("yes"); b.querySelector(".dot").textContent = "✓"; $("qOpts").classList.add("done");
       $("qWhy").innerHTML = `<div class="why good"><h4>💛 A quiet, good evening<span class="delta up">+8 trust</span></h4><span class="w"></span>${heartHTML(hg)}</div><button class="cta" id="doneBtn">Continue</button>`;
       $("qWhy").querySelector(".w").textContent = fill(o.r) + " Small, steady moments build the safety people need to open up.";
@@ -1569,7 +1591,7 @@ function renderEnd(){
   $("endLine").innerHTML = fill(txt);
   $("endBadge").textContent = title.toUpperCase();
   const bright = PLAY.light.filter(v => v === 2).length;
-  $("endResult").innerHTML = `<div><b>${tr}</b><span>TRUST</span></div><div><b>${bright}/12</b><span>BRIGHT LIGHTS</span></div><div><b>${PLAY.restsGood}</b><span>GOOD RESTS</span></div>`;
+  $("endResult").innerHTML = `<div><b>${tr}</b><span>TRUST</span></div><div><b>${bright}/12</b><span>BRIGHT LIGHTS</span></div><div><b>${PLAY.tm.filter(m => m.won).length}/5</b><span>HEARTS WON</span></div>`;
   $("endNext").textContent = tier < 2 ? `Play again to reach a deeper ending — trust 80+ unlocks “A Safe Harbor”.` : `You reached the deepest ending. 💛`;
   $("learned").innerHTML = LEARNED.map(t => `<li>${escH(t)}</li>`).join("");
   setTimeout(() => { const r = $("pair3").getBoundingClientRect(); burstHearts(r.left + r.width/2, r.top + r.height/3, 30); }, 300);
