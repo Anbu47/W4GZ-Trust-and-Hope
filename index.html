@@ -403,6 +403,13 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .token.love.opening .love-msg{animation:msgOpen .5s ease-in forwards}
 @keyframes msgOpen{to{transform:translateX(-50%) translateY(-14px) scale(1.4);opacity:0}}
 @media (prefers-reduced-motion:reduce){.love-msg,.lm-heart,.lm-dots i,.love-msg .rise,.token.love.has-msg .tk-face{animation:none}}
+/* ---------- part 2 ---------- */
+.teaser{margin:14px 0 4px;padding:14px;border-radius:20px;text-align:center;background:linear-gradient(135deg,rgba(150,170,255,.22),rgba(255,140,190,.18));border:1px solid rgba(190,200,255,.55)}
+.teaser small{display:block;font-size:10px;font-weight:900;letter-spacing:.22em;color:#c9d0ff}
+.teaser b{display:block;font-family:"Playfair Display",serif;font-size:22px;color:#fff;margin:4px 0}
+.teaser p{margin:0;font-size:13px;line-height:1.45;color:#efe3f5}
+.p2btn{margin-top:8px}
+.carry{display:inline-block;margin-top:2px;padding:6px 10px;border-radius:12px;background:rgba(255,107,154,.16);border:1px solid rgba(255,140,180,.4);font-size:13px}
 /* ---------- relight event ---------- */
 .chap.storm,.chap.sunny{position:relative;overflow:hidden;border-radius:26px;padding:18px 16px 8px}
 .chap.storm{background:linear-gradient(180deg,rgba(40,48,96,.75),rgba(20,20,48,.6));border:1px solid rgba(170,180,255,.35)}
@@ -539,6 +546,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       </div>
     </div>
     <button class="cta" id="startBtn">Begin your story</button>
+    <button class="ghost p2btn" id="part2Btn" hidden>▶ Part 2: Your Turn</button>
   </section>
 
   <!-- STEP 1: PLAYER -->
@@ -581,17 +589,10 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
   <!-- CHAPTER INTRO -->
   <section class="screen" id="s-intro">
     <div class="scroll soon">
-      <div><span class="badge">CHAPTER 1 · THE DIMMING HOUSE</span></div>
+      <div><span class="badge" id="introBadge">CHAPTER 1 · THE DIMMING HOUSE</span></div>
       <div class="pair" id="pair2" style="margin-top:0"></div>
       <div class="story" id="introLine"></div>
-      <div class="howto">
-        <div><span>🎸</span><em>Each room has <b>two greyed-out items</b>. Tap one to trigger a tricky scenario with your loved one. Pick the exact right response to resurrect it.</em></div>
-        <div><span>💗</span><em><b>Trust</b> skyrockets with emotionally intelligent answers, but tanks instantly if you sound like an insensitive robot. High trust unlocks deep secrets.</em></div>
-        <div><span>🔋</span><em>Every conversation drains your <b>social battery</b>. When it hits empty, hit <b>Recharge</b> before trying to talk again.</em></div>
-        <div><span>👀</span><em><b>Read the subtext carefully.</b> Sometimes they want zero words, sometimes they want total focus, and sometimes both options sound like traps.</em></div>
-        <div><span>🗺️</span><em><b>Choose your path wisely.</b> Progress unlocks brand new rooms.</em></div>
-        <div><span>🌧️</span><em>Time passes. On <b>bad days</b>, old objects might flip back to dark — time to do damage control.</em></div>
-      </div>
+      <div class="howto" id="howto"></div>
     </div>
     <button class="cta" id="enterBtn">Enter the house</button>
   </section>
@@ -626,10 +627,12 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="result" id="endResult"></div>
       <div class="sup-title" id="endTitle"></div>
       <p class="note" id="endNext" style="color:#ffe7ef;font-weight:800"></p>
+      <div class="teaser" id="endTeaser" hidden><small>TO BE CONTINUED…</small><b>Part 2: Your Turn</b><p>Months later, something in you quietly runs out. This time, it's your turn to let someone help.</p></div>
       <div class="learned"><h3>What you practised</h3><ol id="learned"></ol></div>
       <div class="brand-sign"><div class="brand"><div class="brand-mark"><span class="brand-logo" role="img" aria-label="W4GZ"></span><span class="brand-spark">✦</span></div><div class="brand-sub">Writing for <i>Gen Z</i></div></div><p class="vision">“Create narratives worth living.”</p><p class="mission">We learn how to do things. We do things, seriously and kindly. We share how to do it so others can learn.</p></div>
       <div class="note">This experience is educational and cannot replace clinical psychiatric care. If someone faces imminent danger, contact emergency services immediately. Locate confidential global hotlines at <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</div>
     </div>
+    <button class="cta" id="nextPartBtn" hidden>Continue to Part 2: Your Turn ▶</button>
     <button class="cta" id="againBtn">Play again ♥</button>
     <button class="ghost" data-go="s-title">Title screen</button>
   </section>
@@ -753,7 +756,7 @@ const PROG = {
 const MUSIC = { on: (() => { try { return localStorage.getItem("hq_music") !== "off"; } catch(e) { return true; } })(),
                 master:null, verb:null, timer:null, next:0, bar:0 };
 const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
-function musicMood(){ try { return (typeof PLAY !== "undefined" && PLAY && $("s-house").classList.contains("active")) ? partnerMood() : $("s-end").classList.contains("active") ? "happy" : "calm"; } catch(e) { return "calm"; } }
+function musicMood(){ try { return (typeof PLAY !== "undefined" && PLAY && $("s-house").classList.contains("active")) ? trustMood() : $("s-end").classList.contains("active") ? "happy" : "calm"; } catch(e) { return "calm"; } }
 function musicSetup(){
   if (!AC || MUSIC.master) return;
   const lp = AC.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2600;
@@ -863,15 +866,20 @@ function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show
 
 // ================= TITLE =================
 function renderTitle(){
+  $("part2Btn").hidden = !(P2_SAVE && P2_SAVE.unlocked);
   $("titleCouple").innerHTML = `<div class="halo"></div><div class="ring"></div><div class="ring r2"></div><div class="p r">${avatar("man",PARTNER_VARIANT.man,"t2","calm")}</div><div class="p l">${avatar("woman",null,"t1")}</div>`;
 }
 // "Begin your story" always starts fresh: no leftover names or choices from an earlier player.
 $("startBtn").onclick = () => {
-  GAME.player = { kind:null, name:"" }; GAME.partner = { kind:null, name:"" }; save();
+  GAME.player = { kind:null, name:"" }; GAME.partner = { kind:null, name:"" }; save(); applyPart(1);
   $("playerName").value = ""; $("partnerName").value = "";
   audio(); sfx.next(); go("s-player");
 };
 
+$("part2Btn").onclick = () => {
+  applyPart(2); audio(); sfx.next();
+  go(GAME.player.kind && GAME.partner.kind ? "s-intro" : "s-player");
+};
 // ================= STEP 1 =================
 function choiceCard(kind, variant, uid, selected, delay){
   const c = CHAR[kind], v = Object.assign({}, c, variant||{});
@@ -938,11 +946,11 @@ $("partnerNext").onclick = () => {
 };
 
 // ================= STEP 3 =================
-function pairHTML(partnerMood){
+function pairHTML(partnerMood, youMood){
   const P = GAME.player, L = GAME.partner;
   const pv = CHAR[P.kind], lv = Object.assign({}, CHAR[L.kind], PARTNER_VARIANT[L.kind]);
   const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  return `<div class="who"><div class="portrait" style="--pbg:${pv.bg}">${avatar(P.kind,null,"c_p"+Math.random().toString(36).slice(2,6))}</div><b>${esc(showName("player"))}</b><span>${pv.sub}</span><br><span class="role">YOU</span></div>
+  return `<div class="who"><div class="portrait" style="--pbg:${pv.bg}">${avatar(P.kind,null,"c_p"+Math.random().toString(36).slice(2,6),youMood)}</div><b>${esc(showName("player"))}</b><span>${pv.sub}</span><br><span class="role">YOU</span></div>
           <div class="link">💞</div>
           <div class="who"><div class="portrait" style="--pbg:${lv.bg}">${avatar(L.kind,PARTNER_VARIANT[L.kind],"c_l"+Math.random().toString(36).slice(2,6),partnerMood)}</div><b>${esc(showName("partner"))}</b><span>${CHAR[L.kind].sub}</span><br><span class="role">LOVED ONE</span></div>`;
 }
@@ -952,7 +960,8 @@ function renderConfirm(){
   const L = GAME.partner, pr = CHAR[L.kind].pron;
   const e = document.createElement("div");
   const named = !!GAME.player.name.trim();
-  e.innerHTML = (named ? `<b></b>, ` : ``) + `${named ? "you" : "You"} share your home with <b></b>, the person you love most. Lately, something feels different—${pr.s === "they" ? "they seem" : pr.s + " seems"} emotionally drained and ${pr.s === "they" ? "need" : "needs"} you more than ever. This is a story about noticing the subtle signs, listening without judgment, and staying by ${pr.p} side through the hard days.`;
+  if (PART === 2) e.innerHTML = (named ? `<b></b>, ` : ``) + `${named ? "you" : "You"} share your home with <b></b>. Months ago, you helped ${pr.o} through a hard time. Now something in you has quietly run out — and it's your turn to let someone help.`;
+  else e.innerHTML = (named ? `<b></b>, ` : ``) + `${named ? "you" : "You"} share your home with <b></b>, the person you love most. Lately, something feels different—${pr.s === "they" ? "they seem" : pr.s + " seems"} emotionally drained and ${pr.s === "they" ? "need" : "needs"} you more than ever. This is a story about noticing the subtle signs, listening without judgment, and staying by ${pr.p} side through the hard days.`;
   const bs = e.querySelectorAll("b");
   if (named) bs[0].textContent = GAME.player.name.trim();
   bs[bs.length - 1].textContent = inSentence("partner");
@@ -1348,6 +1357,40 @@ const REACT = {
   hurt:[ "Forget it. Total mistake opening my mouth.", "…Never mind. Drop it completely.", "Ouch. That cut deeper than you think, honestly." ]
 };
 
+// ================= PARTS =================
+// Part 1: you support your loved one. Part 2 ("Your Turn"): months later, you're the one struggling and they support you.
+let PART = 1;
+const PART2 = {"HEARTS": [{"name": "First Step", "tip": "You let {p} see that you're not okay."}, {"name": "Two-Way Street", "tip": "{P} feels safe being honest with you too."}, {"name": "Opening Up", "tip": "You trust {p} with what's underneath."}, {"name": "Asking for What You Need", "tip": "You tell {p} exactly how to help."}, {"name": "Stronger Together", "tip": "You're a team — on good days and hard ones."}], "GRADE": {"help": "💛 Letting them in", "okay": "🙂 Half-open — close, but not quite", "hurt": "💔 Shutting them out"}, "PHASES": [{"sub": "The Quiet Crash", "story": "Months after {p} found {their} light again, something in you quietly ran out. You sleep badly, snap at small things, and keep telling everyone “I'm fine.”\n\nThis time, {p} is the one who notices.", "tip": "When you push help away, the object stays dark. Go back and try a more open answer — every object must light up to open new rooms."}, {"sub": "Letting Someone In", "story": "Some days you laugh with {p} like old times. Other days, even answering a text feels impossible.\n\nYou're learning that needing help is not the same as being a burden.", "tip": "Still have dark or half-lit objects? Go back and try a more honest answer."}, {"sub": "Two People, One Team", "story": "You've started talking to a counselor, and some days feel lighter.\n\nThis chapter is about being kind to yourself — and trusting {p} with the hard parts.", "tip": "Every object must glow before the Bedroom opens. Go back to any that are still dark."}], "MILESTONES": [{"icon": "🪞", "title": "Saying It Out Loud", "mood": "calm", "story": "You finally said the words: “I'm not okay.”\n\n{P} didn't panic or lecture. {They} just pulled you into a long hug.\n\nAdmitting it is the first light."}, {"icon": "☕", "title": "Letting Them In", "mood": "calm", "story": "For the first time in weeks, you ate a real lunch — because {p} made it, and you said yes.\n\nAccepting help isn't weakness. It's teamwork."}, {"icon": "📓", "title": "Words on Paper", "mood": "calm", "story": "Your notebook has three pages now. Messy, honest pages.\n\nOne night you read a line to {p}, and {they} understood more than you expected.\n\nSometimes the right words start on paper."}, {"icon": "📞", "title": "The First Appointment", "mood": "happy", "story": "You sat in the waiting room with {p}'s hand in yours. Then you walked in on your own — and walked out lighter.\n\nAsking for help was your brave step."}, {"icon": "🌿", "title": "Kind to Yourself", "mood": "happy", "story": "You made a mistake today and, for once, talked to yourself like a friend.\n\n{P} took a weekend with friends, and you called your sister.\n\nSupport works best when it's shared."}], "DOOR": {"icon": "🌙", "title": "The Hardest Night", "mood": "sad", "story": "Some nights are still heavy. Tonight is one of them.\n\nBut you're not the same person who said “I'm fine” at the start.\n\nTake a breath. You don't have to hold this alone."}, "ROOMS": [{"theme": "Admitting it to yourself", "icons": ["📺", "🪞"]}, {"theme": "Accepting small help", "icons": ["🥪", "🍽️"]}, {"theme": "Saying it out loud", "icons": ["💻", "📓"]}, {"theme": "Reaching out for real help", "icons": ["📞", "🩺"]}, {"theme": "Being kind to yourself", "icons": ["🛁", "🎨"]}, {"theme": "The hardest night", "icons": ["💭", "🤝"]}], "QUESTIONS": [{"scene": "You've cancelled plans three weekends in a row and spend evenings scrolling without really seeing anything. {P} sits down next to you.", "line": "Hey… you've seemed really tired lately. How are you doing — really?", "ask": "What do you say?", "opts": [{"g": "help", "t": "Take a breath and be honest: “Not great, actually. I think I've been running on empty for a while.”", "why": "Admitting it out loud — to yourself and to someone who cares — is the first step. You don't need the whole story yet, just the truth."}, {"g": "okay", "t": "“Just busy with work. It'll calm down soon, don't worry about me.”", "why": "Very common — and sometimes true. But brushing it off after weeks of feeling this way keeps the people who care about you locked out."}, {"g": "hurt", "t": "“Why are you watching me? I said I'm fine. Drop it.”", "why": "Snapping at someone who checks in teaches them to stop asking — right when you need them most."}]}, {"scene": "You catch your reflection in the hallway mirror: dark circles, the same hoodie for the third day.", "cue": "🪞 {P} is in the doorway, watching quietly, not sure whether to come closer.", "line": "Want some company, or would you rather be alone right now?", "ask": "Read the moment — your own, this time. What do you need?", "opts": [{"g": "help", "t": "“Company, I think. You don't have to say anything — just sit with me?”", "why": "Naming what you need, even something small, makes it easy for others to help in the right way."}, {"g": "okay", "t": "“Whatever you want. It doesn't matter.”", "why": "Leaving it all to them feels easier, but it turns helping you into a guessing game."}, {"g": "hurt", "t": "Shut the bedroom door without answering.", "why": "Disappearing without a word can scare the people who love you — and makes you feel even more alone."}]}, {"scene": "It's 3 PM and you've only had coffee. {P} sets a plate of toast and fruit in front of you.", "line": "No pressure. I just made extra.", "ask": "How do you respond?", "opts": [{"g": "help", "t": "Eat a few bites and say: “Thank you. I really needed that.”", "why": "Accepting small, practical help is a skill. Letting people care for you makes the relationship stronger — it doesn't make you weaker."}, {"g": "okay", "t": "“You didn't have to do that. I'll eat later.”", "why": "Polite, but turning down care out of guilt leaves you running on empty."}, {"g": "hurt", "t": "“Stop treating me like a child. I can feed myself.”", "why": "Turning kindness into an insult makes the people around you afraid to offer help again."}]}, {"scene": "Washing dishes together, a wave of guilt hits you: you feel like you're dragging {p} down with you.", "line": "Hey, you went quiet. What's going on?", "ask": "What do you say?", "opts": [{"g": "help", "t": "“I feel like such a burden lately. Can I say that without you trying to fix it?”", "why": "Saying the scary thought out loud lets the other person respond to it — and asking for what you need makes support easier to give."}, {"g": "okay", "t": "“Nothing. Sorry I'm so boring these days.”", "why": "Apologising for struggling hides the real feeling and quietly feeds the guilt."}, {"g": "hurt", "t": "“Honestly, you'd be better off with someone who isn't such a mess.”", "why": "Pushing them away to “protect” them hurts you both. Feeling like a burden is a symptom of how you feel right now, not the truth."}]}, {"scene": "It's midnight. You're staring at a work email you've rewritten six times. {P} brings you a cup of tea.", "line": "You've been at that for an hour. Want to talk about what's really going on?", "ask": "How do you answer?", "opts": [{"g": "help", "t": "Close the laptop: “I don't even know where to start. Everything feels heavy and pointless lately.”", "why": "You don't need perfect words. Describing how it feels, even messily, helps someone understand — and help."}, {"g": "okay", "t": "“It's just this email. If I fix it, I'll be fine.”", "why": "Fixing one small task can be a way of not looking at the bigger problem."}, {"g": "hurt", "t": "“You wouldn't understand. Just leave me alone.”", "why": "Deciding for others that they can't understand shuts the door before they get a chance."}]}, {"scene": "On the desk sits a notebook {p} gave you weeks ago. It's still empty.", "line": "No rules. Some people find it easier to write things down than to say them.", "ask": "What do you do with it?", "opts": [{"g": "help", "t": "Write three honest lines tonight about how you actually feel.", "why": "Writing feelings down can make them clearer and less overwhelming — and gives you words to share later."}, {"g": "okay", "t": "Write a perfect to-do list instead, so at least it feels productive.", "why": "Organising tasks can help a little, but it skips the feelings that are weighing on you."}, {"g": "hurt", "t": "Shove it in a drawer: “Journaling is for people with real problems.”", "why": "Deciding your struggle “doesn't count” keeps you stuck. Your feelings are real enough to deserve care."}]}, {"scene": "It's been more than two weeks. You feel low most days, and your sleep and appetite are off.", "line": "I think it might help to talk to a doctor or counselor. I can help you find one — or come with you.", "ask": "What do you say?", "opts": [{"g": "help", "t": "“Okay. I'm scared, but… can you help me book it?”", "why": "Feeling low most days for two weeks or more is a good reason to get professional support. Saying yes while scared is a brave step."}, {"g": "okay", "t": "“Maybe. Let me see if it gets better on its own first.”", "why": "Waiting is tempting, but getting support early usually works better than waiting for things to get worse."}, {"g": "hurt", "t": "“Therapy is for people who are actually broken. I'm not that bad.”", "why": "You don't have to hit rock bottom to deserve help. That belief keeps many people from getting support early."}]}, {"scene": "The night before your first appointment, you can't stop pacing.", "line": "Nervous?", "ask": "What do you say?", "opts": [{"g": "help", "t": "“Terrified. What if they think I'm weak? Can you remind me why I'm doing this?”", "why": "Sharing your fear lets someone reassure you. Asking for help is a sign of strength, not weakness."}, {"g": "okay", "t": "“Don't tell anyone about this, okay? It's embarrassing.”", "why": "Your privacy is yours to choose — but feeling ashamed of getting help makes it harder to keep going."}, {"g": "hurt", "t": "Pick a fight about the dishes so you don't have to talk about it.", "why": "Turning fear into anger pushes away the person trying to support you."}]}, {"scene": "You made a mistake at work and have spent all day replaying it, calling yourself useless.", "line": "Want to take a walk? You've been really hard on yourself today.", "ask": "What's the kindest move — for you?", "self": true, "opts": [{"g": "help", "t": "Go on the walk, and try talking to yourself the way you'd talk to a friend. (+2 energy)", "why": "Self-compassion isn't letting yourself off the hook — it helps you recover and learn faster than harsh self-criticism."}, {"g": "okay", "t": "“Maybe later. I need to work out exactly what I did wrong first.”", "why": "Reflecting is useful, but endless replaying usually turns into self-punishment."}, {"g": "hurt", "t": "Stay up all night listing every mistake you've ever made.", "why": "Attacking yourself drains your energy and deepens low mood. You deserve the kindness you'd give anyone else."}]}, {"scene": "{P} has been looking after you for weeks and looks exhausted tonight.", "line": "I'm okay, really. Don't worry about me.", "ask": "What do you do?", "opts": [{"g": "help", "t": "“You matter too. See your friends this weekend — I'll call my sister so I'm not alone.”", "why": "Support works best when it's shared. Encouraging your helper to rest — and building a wider support team — protects you both."}, {"g": "okay", "t": "Quietly decide to stop telling {them} how you feel, so you're less of a burden.", "why": "Going silent to protect them leaves you alone with it. Share the load more widely instead."}, {"g": "hurt", "t": "“If you're tired of me, just say so.”", "why": "Turning their tiredness into rejection adds guilt for both of you. Needing a break isn't the same as giving up on you."}]}, {"scene": "Late at night, the dark thoughts are louder than ever. Part of you wishes you could just disappear.", "line": "I can't sleep either. Can I come in?", "ask": "This is the hardest moment. What do you do?", "critical": true, "opts": [{"g": "help", "t": "Let {them} in and say it out loud: “I've been having really dark thoughts. I'm scared.”", "why": "Telling someone about thoughts of not wanting to be here is one of the bravest and most important things you can do. You don't have to carry them alone."}, {"g": "okay", "t": "Let {them} in, but say: “It's nothing. I just can't sleep.”", "why": "Company helps, but hiding thoughts this serious keeps you from the help you deserve. It's okay to say it."}, {"g": "hurt", "t": "Stay silent and pretend to be asleep.", "why": "Hiding dark thoughts makes them feel stronger. Reaching out — to someone you trust or a crisis line — matters."}]}, {"scene": "{P} holds your hand, takes a slow breath and stays calm.", "line": "Thank you for telling me. Are you having thoughts of ending your life?", "ask": "What's the right next step?", "critical": true, "opts": [{"g": "help", "t": "Answer honestly, and agree to call a crisis line or a doctor together right now.", "why": "Being honest lets the people who love you help you stay safe, right away. Crisis services are there for exactly this moment, any time of day."}, {"g": "okay", "t": "“Sort of… but I'll be fine by tomorrow. Let's just sleep.”", "why": "Thoughts like these need support tonight, not tomorrow. Let someone help you get help now."}, {"g": "hurt", "t": "“Promise you won't tell anyone, or I'll never trust you again.”", "why": "Asking for secrecy keeps you in danger. Someone who loves you can't keep this secret — and that's a good thing."}]}], "SETBACKS": [{"scene": "After a few good days, you wake up and can't face getting out of bed.", "line": "Rough morning?", "ask": "What do you say?", "opts": [{"g": "help", "t": "“Yeah. Bad day, not a bad life. Can you sit with me for a bit?”", "why": "Recovery has ups and downs. Treating a bad day as normal stops it from turning into a shame spiral."}, {"g": "okay", "t": "“I'm fine. I'll just push through it.”", "why": "Pushing through sometimes works, but pretending on a hard day leaves you more drained."}, {"g": "hurt", "t": "“See? I'm never going to get better. Stop wasting your time on me.”", "why": "All-or-nothing thinking turns one bad day into hopelessness — and pushes away support."}]}, {"scene": "You skipped your counseling session today and feel awful about it.", "line": "I saw the missed call from the clinic. What happened?", "ask": "How do you respond?", "opts": [{"g": "help", "t": "“I panicked. Could you sit with me while I reschedule?”", "why": "Missing a session happens. Being honest and making the next step small keeps you moving forward."}, {"g": "okay", "t": "“I just forgot. It's not a big deal.”", "why": "Brushing it off avoids the uncomfortable feeling — but also avoids fixing it."}, {"g": "hurt", "t": "“I'm quitting. Therapy doesn't work for people like me.”", "why": "Giving up after one hard day cuts you off from help that often takes time to work."}]}], "TRUST_MOMENTS": [{"scene": "After dinner, {p} lingers in the kitchen doorway.", "line": "Thank you for telling me you weren't okay. I'd rather know than guess.", "ask": "A small moment of trust. What do you say?", "opts": [{"g": "help", "t": "“Thanks for asking — and for not giving up when I kept saying I was fine.”", "why": "Appreciating someone's care encourages them to keep checking in."}, {"g": "okay", "t": "“Sorry you had to deal with it.”", "why": "Apologising turns their care into a problem. “Thank you” works better than “sorry”."}, {"g": "hurt", "t": "“You only noticed because I couldn't hide it anymore.”", "why": "Brushing off their care makes them feel their effort doesn't count."}]}, {"scene": "{P} sits beside you on the floor, quiet for a long time.", "line": "Can I tell you something? Watching you struggle scares me sometimes.", "ask": "{P} is opening up too. What do you say?", "opts": [{"g": "help", "t": "“Thank you for telling me. I'm getting help, and I'll keep talking to you about it.”", "why": "Honest reassurance — without promising to be “fixed” — helps both of you feel safer."}, {"g": "okay", "t": "“Don't worry, I'll hide it better from now on.”", "why": "Hiding your struggles to protect them makes it harder for anyone to help you."}, {"g": "hurt", "t": "“Great, so now I'm scaring you too.”", "why": "Turning their honesty into more guilt shuts down an important conversation."}]}, {"scene": "On a quiet evening, you feel ready to share a little more.", "line": "You can tell me anything. No rush.", "ask": "Do you open up?", "opts": [{"g": "help", "t": "“Some days I feel like I'm failing at everything. Saying it out loud actually helps.”", "why": "Sharing what's underneath, at your own pace, deepens trust and lightens the load."}, {"g": "okay", "t": "“Maybe another time.”", "why": "It's okay to wait until you're ready — just don't let “another time” turn into never."}, {"g": "hurt", "t": "“Why do you always want to talk about feelings?”", "why": "Mocking their invitation teaches them to stop offering."}]}, {"scene": "Late at night, you reach for {p}'s hand.", "line": "What do you need from me right now?", "ask": "{P} wants to get it right. What do you say?", "opts": [{"g": "help", "t": "“Just stay close. And remind me tomorrow that this feeling passes.”", "why": "Telling people exactly what helps makes their support easier and more effective."}, {"g": "okay", "t": "“I don't know. Fix it, I guess.”", "why": "No one can fix it for you — but they can help if you tell them what you need."}, {"g": "hurt", "t": "“Nothing. You can't help anyway.”", "why": "Pushing help away can feel safer, but it leaves you alone with the hardest feelings."}]}, {"scene": "On a bright afternoon, you laugh — a real laugh — for the first time in weeks.", "line": "I missed that laugh.", "ask": "How do you respond?", "opts": [{"g": "help", "t": "“I missed it too. Thank you for staying — I couldn't have done this alone.”", "why": "Celebrating progress together, and sharing the credit, makes your bond stronger."}, {"g": "okay", "t": "“Don't get used to it. I'll probably crash again.”", "why": "Bracing for the worst is understandable, but it can steal the good moments."}, {"g": "hurt", "t": "“You don't have to keep babysitting me, you know.”", "why": "Calling care “babysitting” makes the person who stayed feel unwanted."}]}], "LEARNED": ["Notice your own warning signs — and admit them out loud.", "Tell people what you need: company, space, or help.", "Accept small, practical help without guilt.", "Put feelings into words — talking and writing both count.", "Say yes to professional help, even when you're scared.", "Expect bad days. One hard day doesn't erase your progress.", "Be as kind to yourself as you'd be to a friend — and share the load.", "If dark thoughts come, tell someone right away and get crisis help together."], "REACT": {"help": ["…Thank you for telling me.", "I'm really glad you let me in.", "We've got this — together."], "okay": ["…Okay. I'm here if that changes.", "Alright. Just don't shut me out, okay?", "I'll take it. Small steps."], "hurt": ["…Okay. I'll back off.", "Honestly, that hurt a little.", "I'm not going anywhere — but that stung."]}, "RECHARGE_PATCH": {"0": {"q": "It's midnight, and your brain is replaying every worst-case scenario on loop."}, "1": {"opts": {"2": {"why": "Cutting off your own friends makes getting better much harder."}}}, "5": {"q": "You catch yourself believing you should be able to fix your mood on your own, with pure willpower.", "opts": {"0": {"t": "Talk it through with your counselor or a support group.", "why": "Getting better isn't a solo project. Sharing the load breaks the “I should handle this alone” myth."}, "1": {"t": "Read five more articles about fixing low mood at home.", "why": "Learning helps a little, but talking with people who understand helps more."}, "2": {"t": "Berate yourself for not being stronger.", "why": "Self-criticism doesn't speed up recovery; it only drains you."}}}, "6": {"opts": {"0": {"why": "Doing something just for joy reminds you who you are outside of this hard time."}}}, "9": {"q": "A relative calls: “Can I come over this weekend so you and {p} can both rest?”", "opts": {"0": {"t": "Say yes right away and let them help with meals and chores.", "why": "Letting more people help builds a stronger safety net for both of you."}, "2": {"t": "Decline: “No thanks, we should be able to handle everything on our own.”", "why": "Turning down help out of pride wears you both out."}}}, "11": {"opts": {"2": {"t": "Promise yourself you're not allowed to have fun until you're 100% better."}}}}};
+const PART1 = JSON.parse(JSON.stringify({
+  HEARTS: HEARTS.map(h => ({ name:h.name, tip:h.tip })), GRADE: { help:GRADE.help.head, okay:GRADE.okay.head, hurt:GRADE.hurt.head },
+  PHASES: PHASES.map(p => ({ sub:p.sub, story:p.story, tip:p.tip })), MILESTONES, DOOR, ROOMS: ROOMS.map(r => ({ theme:r.theme, icons:r.icons })),
+  QUESTIONS, SETBACKS, TRUST_MOMENTS, LEARNED, REACT, RECHARGE }));
+PART2.RECHARGE = JSON.parse(JSON.stringify(PART1.RECHARGE));
+Object.entries(PART2.RECHARGE_PATCH).forEach(([i, pt]) => {
+  const R = PART2.RECHARGE[+i];
+  if (pt.q) R.q = pt.q;
+  if (pt.opts) Object.entries(pt.opts).forEach(([k, o]) => Object.assign(R.opts[+k], o));
+});
+const fillIn = (arr, src) => { arr.splice(0, arr.length, ...JSON.parse(JSON.stringify(src))); };
+function applyPart(n){
+  PART = n;
+  const D = n === 2 ? PART2 : PART1;
+  HEARTS.forEach((h, k) => Object.assign(h, D.HEARTS[k]));
+  ["help","okay","hurt"].forEach(g => GRADE[g].head = D.GRADE[g]);
+  PHASES.forEach((ph, k) => Object.assign(ph, D.PHASES[k]));
+  fillIn(MILESTONES, D.MILESTONES);
+  Object.assign(DOOR, JSON.parse(JSON.stringify(D.DOOR)));
+  ROOMS.forEach((r, k) => { r.theme = D.ROOMS[k].theme; r.icons = D.ROOMS[k].icons.slice(); });
+  fillIn(QUESTIONS, D.QUESTIONS); fillIn(SETBACKS, D.SETBACKS); fillIn(LEARNED, D.LEARNED); fillIn(RECHARGE, D.RECHARGE);
+  const ats = PART1.TRUST_MOMENTS.map(t => t.at);
+  fillIn(TRUST_MOMENTS, D.TRUST_MOMENTS); TRUST_MOMENTS.forEach((t, k) => t.at = ats[k]);
+  ["help","okay","hurt"].forEach(g => REACT[g] = D.REACT[g].slice());
+}
+// Part 2 unlocks after finishing Part 1 (remembered on this device when possible).
+let P2_SAVE = null;
+try { P2_SAVE = JSON.parse(localStorage.getItem("hq_part2")); } catch (e) {}
+function unlockPart2(shining){ P2_SAVE = { unlocked:true, shining: !!(shining || (P2_SAVE && P2_SAVE.shining)) }; try { localStorage.setItem("hq_part2", JSON.stringify(P2_SAVE)); } catch (e) {} }
+
 // ---------------- state ----------------
 // light: 0 = dark, 1 = dim (okay answer — can be revisited), 2 = bright, -1 = gone out (setback)
 let PLAY = null;
@@ -1374,7 +1417,8 @@ function scatter(r){
 const spotPos = (r, k) => (PLAY.pos && PLAY.pos[r] ? PLAY.pos[r].spots[k] : ROOMS[r].spots[k]);
 const heartPos = r => (PLAY.pos && PLAY.pos[r] ? PLAY.pos[r].hx : ROOMS[r].hx);
 function newPlay(){
-  PLAY = { light:Array(12).fill(0), trust:START_TRUST, energy:MAX_ENERGY, chap:0, bedOpen:false, phase:0, justLit:-1,
+  const carry = PART === 2 && P2_SAVE && P2_SAVE.unlocked ? (P2_SAVE.shining ? 10 : 5) : 0;
+  PLAY = { carry, light:Array(12).fill(0), trust:START_TRUST + carry, energy:MAX_ENERGY, chap:0, bedOpen:false, phase:0, justLit:-1,
            setback:{}, setbacksFixed:0, tm:TRUST_MOMENTS.map(() => ({ shown:false, done:false })),
            pos:ROOMS.map((_, r) => scatter(r)), restsGood:0, rests:0, qt:0, msShown:[], doorShown:false, hearts:HEARTS.map(() => false), me:{ r:0, x:18, y:90 }, q:null, pendingPhase:null };
 }
@@ -1400,17 +1444,43 @@ function refreshUnlocks(){
   return changed;
 }
 function trustTier(){ return PLAY.trust < 40 ? 0 : PLAY.trust < 70 ? 1 : 2; }
-function partnerMood(){ return !PLAY ? "sad" : PLAY.trust >= 70 ? "happy" : PLAY.trust >= 45 ? "calm" : "sad"; }
+function trustMood(){ return !PLAY ? "sad" : PLAY.trust >= 70 ? "happy" : PLAY.trust >= 45 ? "calm" : "sad"; }
+// Part 1: your loved one's mood follows trust. Part 2: yours does, and they're a calm, worried helper.
+function partnerMood(){ return PART === 2 ? (PLAY && PLAY.trust >= 45 ? "happy" : "calm") : trustMood(); }
+function playerMood(){ return PART === 2 ? trustMood() : "happy"; }
 function partnerAvatar(uid){ return avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], uid, partnerMood()); }
 
 // ---------------- intro ----------------
 function renderIntro(){
   if (!GAME.player.kind || !GAME.partner.kind) return go("s-player");
   newPlay();
-  $("pair2").innerHTML = pairHTML("sad");
+  const two = PART === 2;
+  $("introBadge").textContent = two ? "PART 2 · YOUR TURN" : "CHAPTER 1 · THE DIMMING HOUSE";
+  $("pair2").innerHTML = two ? pairHTML("calm", "sad") : pairHTML("sad");
   const d = document.createElement("div");
-  d.innerHTML = fill(`Lately, <b>{p}</b> has been ghosting {their} own life. Zero laughter, heavy sighs, and an impressive talent for living in the dark.<br><br>Time to bring the light back — one high-stakes interaction at a time.`);
+  d.innerHTML = two
+    ? fill(`Lately, <b>you</b> have been running on empty. You laugh less, sleep badly, and keep telling <b>{p}</b> “I'm fine.”<br><br>This time, {p} is the one who notices. Your job: let {them} in — one moment at a time.`)
+      + (PLAY.carry ? `<br><br><span class="carry">💞 Because you stood by ${escH(inSentence("partner"))} in Part 1, you start with <b>${PLAY.trust} trust</b>.</span>` : "")
+    : fill(`Lately, <b>{p}</b> doesn't seem like {their} usual self. {They} laugh{s} less, sleep{s} more, and spend{s} a lot of time alone.<br><br>Your job: help bring the light back to your home, one moment at a time.`);
   $("introLine").innerHTML = d.innerHTML;
+  const H = two ? [
+    ["🎸","Light up the house.","Each room has 2 dark objects. Tap one and your loved one reaches out to you. Choose an honest, open answer and the object lights up again."],
+    ["💗","Build trust.","Letting them in raises trust; pushing them away lowers it. The more trust you have, the more you both open up."],
+    ["💌","Watch for hearts.","When a 💗 message appears on your loved one, tap it. It's a special moment that only happens once."],
+    ["🔥","Keep a streak.","Several open answers in a row give you bonus trust."],
+    ["🔋","Look after yourself.","Every talk uses energy. When it runs out, tap Recharge before you talk again."],
+    ["🗺️","Unlock new rooms.","Light up the rooms that are open and new ones will appear."],
+    ["🌧️","Expect bad days.","Sometimes a light goes out again. Find it and get through it together."]
+  ] : [
+    ["🎸","Light up the house.","Each room has 2 dark objects. Tap one to talk with your loved one. Choose a caring answer and the object lights up again."],
+    ["💗","Build trust.","Kind answers raise trust; hurtful ones lower it. The more trust you have, the more your loved one opens up to you."],
+    ["💌","Watch for hearts.","When a 💗 message appears on your loved one, tap it. It's a special moment that only happens once."],
+    ["🔥","Keep a streak.","Several caring answers in a row give you bonus trust."],
+    ["🔋","Look after yourself.","Every talk uses energy. When it runs out, tap Recharge before you talk again."],
+    ["🗺️","Unlock new rooms.","Light up the rooms that are open and new ones will appear."],
+    ["🌧️","Expect bad days.","Sometimes a light goes out again. Find it and help your loved one through it."]
+  ];
+  $("howto").innerHTML = H.map(([ic, b, t]) => `<div><span>${ic}</span><em><b>${b}</b> ${escH(t)}</em></div>`).join("");
 }
 $("enterBtn").onclick = () => { audio(); sfx.next(); go("s-house"); setTimeout(() => showPhase(0), 450); };
 
@@ -1471,7 +1541,7 @@ function renderHouse(){
         ? `<div class="lock trustlock">🔒<b>Needs trust ${BEDROOM_TRUST}</b><div class="tl"><i id="bedTrustFill" style="width:${Math.min(100, PLAY.trust / BEDROOM_TRUST * 100)}%"></i></div><small id="bedTrustTxt">Now ${PLAY.trust} — spend time together or brighten half-lit objects</small></div>`
         : `<div class="lock">🔒<small>${escH(lockText(r))}</small></div>`}
     </div>`;
-  }).join("") + `<div class="token love${nextTmAll >= 0 ? " has-msg" : ""}" id="tokLove"><div class="tk-face">${partnerAvatar("tl")}</div>${nextTmAll >= 0 ? `<button class="love-msg" data-tm="${nextTmAll}" aria-label="${escH(fill("{P} has a message for you"))}"><span class="lm-heart">💗</span><span class="lm-dots"><i></i><i></i><i></i></span><span class="rise r1">💗</span><span class="rise r2">💕</span></button>` : ""}</div><div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm","happy")}</div>`;
+  }).join("") + `<div class="token love${nextTmAll >= 0 ? " has-msg" : ""}" id="tokLove"><div class="tk-face">${partnerAvatar("tl")}</div>${nextTmAll >= 0 ? `<button class="love-msg" data-tm="${nextTmAll}" aria-label="${escH(fill("{P} has a message for you"))}"><span class="lm-heart">💗</span><span class="lm-dots"><i></i><i></i><i></i></span><span class="rise r1">💗</span><span class="rise r2">💕</span></button>` : ""}</div><div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm",playerMood())}</div>`;
   PLAY.justLit = -1;
   house.querySelectorAll(".spot[data-q]").forEach(b => b.onclick = e => { e.stopPropagation(); tapLight(+b.dataset.q); });
   const lt = $("tokLove");
@@ -1521,7 +1591,7 @@ function updateHUD(){
   let msg;
   if (PLAY.energy === 0) msg = "🪫 System Critical — tap Recharge to salvage your sanity!";
   else if (outs.length) msg = `🌧️ Setback alert: an object in ${ROOMS[Math.floor(outs[0]/2)].ref} went dark again. Time for damage control!`;
-  else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill("💗 {P} has an unexpressed breakthrough waiting to drop.");
+  else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill(PART === 2 ? "💗 {P} has something on {their} mind." : "💗 {P} has an unexpressed breakthrough waiting to drop.");
   else if (PLAY.chap === 2 && !PLAY.bedOpen && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit half-lit things.");
   else if (PLAY.energy === 1) msg = "⚠️ Battery Low — your next dialogue interaction triggers a mandatory recharge.";
   else msg = "";
@@ -1764,7 +1834,7 @@ function houseGoesDark(){
   setTimeout(() => showCards([() => ({
     html:`<div class="chap story dark"><small>TRUST SYSTEM COLLAPSE</small><div class="msface">${avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "dk" + Math.random().toString(36).slice(2,6), "sad")}<span>🌑</span></div>
       <h2>Total System Blackout</h2>
-      ${paras("Following too many clumsy or wounding responses, {p} initiates total emotional withdrawal. The bedroom door stays locked. Every light in the house blows out one by one.\n\nThis mirrors reality: persistent judgment pushes people to build defensive walls.\n\nBut trust can be rebuilt — not through grand sweeping gestures, but via relentless, micro-doses of steady, authentic empathy.")}
+      ${paras(PART === 2 ? "After pushing {p} away too many times, {they} stop{s} asking how you are. The house goes quiet, and one by one, every light goes out.\n\nThis happens in real life too: when we shut people out again and again, they can lose track of how to reach us.\n\nBut it's never too late. Trust comes back through small, honest moments of letting someone in." : "Following too many clumsy or wounding responses, {p} initiates total emotional withdrawal. The bedroom door stays locked. Every light in the house blows out one by one.\n\nThis mirrors reality: persistent judgment pushes people to build defensive walls.\n\nBut trust can be rebuilt — not through grand sweeping gestures, but via relentless, micro-doses of steady, authentic empathy.")}
       <p class="sb">🌑 Complete blackout. Trust has bottomed out at ${DARK_TRUST}.</p>
       <p class="gain">Unlocked rooms remain accessible. Traverse the dark house and relight it — you possess infinitely more wisdom now than when you first stepped inside!</p>`,
     btn:"Start rebuilding" })]), 900);
@@ -1791,9 +1861,9 @@ function badDayCard(i){
       <div class="bd-scene"><div class="bd-cloud">🌧️</div><div class="bd-obj"><span>${obj}</span></div></div>
       <h2>A Bad Day</h2>
       <div class="sub">The light goes out</div>
-      ${paras("{P} had been doing better. Then, one grey morning, the curtains stayed closed again.\n\nSetbacks are part of healing — not the end of it.")}
+      ${paras(PART === 2 ? "You had been doing better. Then, one grey morning, everything felt heavy again.\n\nSetbacks are part of healing — not the end of it." : "{P} had been doing better. Then, one grey morning, the curtains stayed closed again.\n\nSetbacks are part of healing — not the end of it.")}
       <div class="bd-mission"><b>Your mission</b>
-        <div class="bd-row"><span class="bd-ic">${obj}</span><span>${escH(fill(`Then came a bad day. A light in ${ROOMS[r].ref} went out — locate it and help {p} relight it.`))}</span></div>
+        <div class="bd-row"><span class="bd-ic">${obj}</span><span>${escH(fill(PART === 2 ? `Then came a bad day. A light in ${ROOMS[r].ref} went out — find it and get through it with {p}.` : `Then came a bad day. A light in ${ROOMS[r].ref} went out — locate it and help {p} relight it.`))}</span></div>
         <div class="bd-reward">🌤️ Relight it with care: <b>+${RELIGHT_BONUS} relight bonus</b></div>
       </div>`, btn: fill("Go to {them} ☔") };
   };
@@ -1807,7 +1877,7 @@ function lightReturnsCard(R){
       <div class="bd-scene"><div class="bd-sun">☀️</div><div class="bd-obj lit"><span>${obj}</span></div></div>
       <h2>The Light Returns</h2>
       ${paras(R.full
-        ? "The rain eases. By evening, {p} opens the curtains and sits beside you.\n\n“Thanks for not giving up on me — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress."
+        ? PART === 2 ? "The rain eases. By evening, you open the curtains and sit beside {p}.\n\n“Thanks for letting me help — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress." : "The rain eases. By evening, {p} opens the curtains and sits beside you.\n\n“Thanks for not giving up on me — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress."
         : "The rain softens, but it hasn't quite stopped. The light flickers back — still a little dim.\n\nCome back later and help it glow fully again.")}
       ${R.bonus ? `<p class="gain">🌤️ Relight bonus: +${R.bonus} trust</p>` : ""}`, btn:"Continue" };
   };
@@ -1827,7 +1897,7 @@ function phaseCard(ph){
       PLAY.energy = Math.min(MAX_ENERGY, PLAY.energy + 2);
       extra += `<p class="gain">🔋 Time passes. You catch your breath: +2 energy</p>`;
     }
-    return { html:`<div class="chap story"><small>${ph === 0 ? "CHAPTER 1" : "TIME PASSES"}</small><h2>${P.title}</h2><div class="sub">${P.sub}</div>${paras(P.story)}<div class="retrybox"><b>🔁 Try again</b>${escH(P.tip)}</div>${extra}`,
+    return { html:`<div class="chap story"><small>${ph === 0 ? (PART === 2 ? "PART 2 · CHAPTER 1" : "CHAPTER 1") : "TIME PASSES"}</small><h2>${P.title}</h2><div class="sub">${P.sub}</div>${paras(P.story)}<div class="retrybox"><b>🔁 Try again</b>${escH(P.tip)}</div>${extra}`,
              btn: ph === 0 ? "Let's begin" : "Continue" };
   };
 }
@@ -1847,7 +1917,7 @@ function heartRevealCard(k){
         <path d="M30 18 C22 20 16 27 16 35" stroke="rgba(255,255,255,.7)" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
         <div class="hface">${avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "hr" + k, k >= 3 ? "happy" : "calm")}</div></div>
       <h2>${H.name}</h2>
-      ${paras(H.tip + "\n\n{P} is ready to confess a secret. Tap the 💗 message on {them} — this event happens once!")}`, btn: fill("Go to {them} 💗") };
+      ${paras(H.tip + (PART === 2 ? "\n\n{P} has something to say. Tap the 💗 message on {them} — this moment happens once!" : "\n\n{P} is ready to confess a secret. Tap the 💗 message on {them} — this event happens once!"))}`, btn: fill("Go to {them} 💗") };
   };
 }
 function showCards(list){
@@ -1928,9 +1998,14 @@ $("helpSheet").addEventListener("click", e => { if (e.target.id === "helpSheet")
 function renderEnd(){
   if (!PLAY) return go("s-title");
   const tr = PLAY.trust, tier = tr >= 80 ? 2 : tr >= 60 ? 1 : 0;
-  $("pair3").innerHTML = pairHTML(tier === 0 ? "calm" : "happy");
-  const title = ["A Growing Spark", "A Steady Light", "A Safe Harbor"][tier];
-  const lines = [
+  $("pair3").innerHTML = pairHTML(tier === 0 ? "calm" : "happy", tier === 0 ? "calm" : "happy");
+  const two = PART === 2;
+  const title = (two ? ["Learning to Lean", "Stronger Together", "Two Steady Lights"] : ["A Growing Spark", "A Steady Light", "A Safe Harbor"])[tier];
+  const lines = two ? [
+    `Months later, the house is lit again. Some days are still hard, but you keep going to counseling — and you don't hide the bad days from <b>{p}</b> anymore. <br><b>“Thanks for letting me in, even a little.”</b><br><br>Learning to accept help takes time — and you've started.`,
+    `Light fills every window. <b>{P}</b> squeezes your hand: <br><b>“Thank you for trusting me.”</b><br><br>You admitted you were struggling, said yes to help, and let someone stand beside you. That takes real courage.`,
+    `The house glows warm and golden. You rest your head on <b>{p}</b>'s shoulder: <br><b>“We really are a team, aren't we?”</b><br><br>Two steady lights — each caring for the other, and each caring for themselves.`
+  ] : [
     `Months later, the house glows once more. <b>{P}</b> is navigating {their} terrain with clinical support, and bad days grow progressively rarer. <br><b>“Thanks for refusing to drop my hand.”</b><br><br>Trust accumulates slowly — and you cultivated it from scratch.`,
     `Luminescent warmth spills through every window. <b>{P}</b> grips your fingers: <br><b>“Thank you for staying the course.”</b><br><br>Healing is a collaborative marathon. Because you noticed, listened, and bridged {them} to professional care, {they} no longer march{es} through the dark alone.`,
     `The house radiates gold. <b>{P}</b> rests {their} temple against your shoulder: <br><b>“With you, I never have to fake resilience. I am completely safe.”</b><br><br>You evolved into a true safe harbor — steady through tempest and calm alike, while fiercely protecting your own light.`
@@ -1942,16 +2017,25 @@ function renderEnd(){
   const bright = PLAY.light.filter(v => v === 2).length;
   $("endResult").innerHTML = `<div><b>${tr}</b><span>TRUST</span></div><div><b>${bright}/12</b><span>LUMINOUS LIGHTS</span></div><div><b>${PLAY.tm.filter(m => m.won).length}/5</b><span>HEARTS SECURED</span></div>`;
   const half = PLAY.light.filter(v => v === 1).length;
-  const ST = half
+  const ST = two ? (half
+    ? { cls:"growing", ic:"🌱", name:"Learning to Lean", txt:`You lit the whole house — but ${half} ${half === 1 ? "light is" : "lights are"} still half-lit. Letting people in is a skill you're still growing. Play again to light every one fully.` }
+    : { cls:"shining", ic:"🌟", name:"Open Heart", txt:"Every light in the house shines fully. You let people in, again and again." }) : half
     ? { cls:"growing", ic:"🌱", name:"Growing Supporter", txt:`You lit the whole house — but ${half} ${half === 1 ? "light is" : "lights are"} still half-lit. Every supporter is still learning. Play again and help every light shine fully.` }
     : { cls:"shining", ic:"🌟", name:"Shining Supporter", txt:"Every light in the house shines fully. You chose care again and again." };
   $("endTitle").className = "sup-title " + ST.cls;
-  $("endTitle").innerHTML = `<div class="st-medal"><span>${ST.ic}</span></div><div class="st-body"><small>YOUR SUPPORTER TITLE</small><b>${ST.name}</b><p>${escH(ST.txt)}</p></div>`;
-  $("endNext").textContent = tier < 2 ? `Replay to access the deepest narrative ending — reaching 80+ trust unlocks “A Safe Harbor”.` : `You attained the ultimate golden ending. 💛`;
+  $("endTitle").innerHTML = `<div class="st-medal"><span>${ST.ic}</span></div><div class="st-body"><small>${two ? "YOUR TITLE" : "YOUR SUPPORTER TITLE"}</small><b>${ST.name}</b><p>${escH(ST.txt)}</p></div>`;
+  $("endNext").textContent = two
+    ? (tier < 2 ? `Replay Part 2 — reaching 80+ trust unlocks “Two Steady Lights”.` : `You reached the brightest ending of Part 2. 💛`)
+    : (tier < 2 ? `Replay to access the deepest narrative ending — reaching 80+ trust unlocks “A Safe Harbor”.` : `You attained the ultimate golden ending. 💛`);
+  if (!two) unlockPart2(!half);
+  $("endTeaser").hidden = two; $("nextPartBtn").hidden = two;
+  $("againBtn").textContent = two ? "Play Part 2 again ♥" : "Play again ♥";
+  $("againBtn").className = two ? "cta" : "ghost";
   $("learned").innerHTML = LEARNED.map(t => `<li>${escH(t)}</li>`).join("");
   setTimeout(() => { const r = $("pair3").getBoundingClientRect(); burstHearts(r.left + r.width/2, r.top + r.height/3, 30); }, 300);
 }
 $("againBtn").onclick = () => { audio(); sfx.next(); go("s-intro"); };
+$("nextPartBtn").onclick = () => { applyPart(2); audio(); sfx.next(); go("s-intro"); };
 
 document.querySelectorAll(".musicbtn").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.onclick = e => { e.stopPropagation(); audio(); musicToggle(); }; });
 renderTitle();
