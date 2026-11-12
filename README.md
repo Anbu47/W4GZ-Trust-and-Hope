@@ -20,6 +20,10 @@ Open `index.html` in any browser (phone or desktop). No install or internet conn
    - 🌧️ **Setbacks**: as weeks pass, a light may go out on a bad day.
 4. Reach one of three endings: *A Growing Spark*, *A Steady Light* (trust 60+) or *A Safe Harbor* (trust 80+).
 
+## Music
+
+The game has its own calm piano-and-pad soundtrack, composed in code with the Web Audio API (no audio files). It follows your loved one's mood — gentle minor chords when they're struggling, warmer chords as trust grows, bright major chords when they're doing well. Tap 🎵 to turn it on or off.
+
 ## A note on safety
 
 This game is for learning. It is not a substitute for professional help. If someone may be in danger, contact your local emergency number. To find a free, confidential helpline in your country, visit [findahelpline.com](https://findahelpline.com).
