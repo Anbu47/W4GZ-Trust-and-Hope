@@ -1661,7 +1661,8 @@ function updateHUD(){
   const outs = outLights(), g = bedroomGate();
   $("house").classList.toggle("raining", outs.length > 0);
   let msg;
-  if (PLAY.energy === 0) msg = PART === 2 ? "🪫 Running on empty — tap Self-love and do something kind for yourself." : "🪫 System Critical — tap Recharge to salvage your sanity!";
+  if (heartWaiting()) msg = PART === 2 ? "💗 One last step: tap the 💗 on yourself to see your ending." : fill("💗 One last step: tap the 💗 on {p} to see your ending.");
+  else if (PLAY.energy === 0) msg = PART === 2 ? "🪫 Running on empty — tap Self-love and do something kind for yourself." : "🪫 System Critical — tap Recharge to salvage your sanity!";
   else if (outs.length) msg = PART === 2 ? `🌧️ A heavy day: the light in ${ROOMS[Math.floor(outs[0]/2)].ref} went out. Find it and get through it together.` : `🌧️ Setback alert: an object in ${ROOMS[Math.floor(outs[0]/2)].ref} went dark again. Time for damage control!`;
   else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill(PART === 2 ? "💗 You have a new moment of hope. Tap the 💗 on yourself." : "💗 {P} has an unexpressed breakthrough waiting to drop.");
   else if (PLAY.chap === 2 && !PLAY.bedOpen && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit half-lit things.");
@@ -1915,10 +1916,19 @@ function afterTalk(){
   if (PLAY.chap + "/" + PLAY.bedOpen !== prevKey) setTimeout(() => placeTokens(false), 300);
   cards.push(...heartCards);
   if (cards.length) setTimeout(() => showCards(cards), 600);
+  if (heartWaiting() && !PLAY.heartWaitShown) { PLAY.heartWaitShown = true; cards.push(heartWaitCard()); if (cards.length === 1) setTimeout(() => showCards(cards), 600); }
   if (canFinish()) {
     if (PLAY.light.every(v => v === 2)) { PLAY.ending = true; setTimeout(() => { sfx.love(); go("s-end"); }, 1100); }
     else if (!PLAY.finishOffered) { PLAY.finishOffered = true; cards.push(finishChoiceCard()); if (cards.length === 1) setTimeout(() => showCards(cards), 600); }
   }
+}
+// Every light is on, but a 💗 heart moment hasn't been answered yet — the ending waits for it.
+function heartWaiting(){ return !!PLAY && !PLAY.ending && PLAY.light.every(v => v >= 1) && roomComplete(5) && PLAY.tm.some(m => m.shown && !m.done); }
+function heartWaitCard(){
+  return () => ({ html:`<div class="chap story heartcard"><small>ONE LAST MOMENT</small><h2>A Heart Is Waiting</h2>
+    ${paras(PART === 2
+      ? "Every light in the house is on — but there's still a moment of hope waiting for you.\n\nTap the 💗 on your character to answer it. Your ending comes right after."
+      : "Every light in the house is on — but {p} still has something to tell you.\n\nTap the 💗 on {them} to answer it. Your ending comes right after.")}`, btn:"Find the 💗" });
 }
 // Every light is on, but some are only half-lit: the player can stop here or keep improving.
 function canFinish(){ return !!PLAY && !PLAY.ending && PLAY.light.every(v => v >= 1) && roomComplete(5) && !PLAY.tm.some(m => m.shown && !m.done); }
