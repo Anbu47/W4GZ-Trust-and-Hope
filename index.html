@@ -1500,22 +1500,23 @@ function renderIntro(){
   if (!GAME.player.kind || !GAME.partner.kind) return go("s-player");
   newPlay();
   const two = PART === 2;
-  $("introBadge").textContent = two ? "PART 2 · YOUR TURN" : "CHAPTER 1 · THE DIMMING HOUSE";
+  $("introBadge").textContent = two ? "PART 2 · YOUR TURN · MONTHS LATER" : "CHAPTER 1 · THE DIMMING HOUSE";
+  $("enterBtn").textContent = two ? "Let them in ▶" : "Enter the house";
   $("pair2").innerHTML = two ? pairHTML("calm", "sad") : pairHTML("sad");
   const d = document.createElement("div");
   d.innerHTML = two
-    ? fill(`Lately, <b>you</b> don't seem like your usual self. You laugh less, sleep badly, and keep telling <b>{p}</b> “I'm fine.”<br><br>This time, {p} is the one who notices. Your job: let {them} in — one moment at a time.`)
+    ? fill(`Months have passed since you helped <b>{p}</b> through {their} darkest days. Now the tiredness has followed <b>you</b> home: unanswered messages, cancelled plans, and a smile you have to practise in the mirror.<br><br>You've been carrying it quietly. But {p} has started to notice — and this time, the bravest thing you can do is let {them} help.`)
       + (PLAY.carry ? `<br><br><span class="carry">💞 Because you stood by ${escH(inSentence("partner"))} in Part 1, you start with <b>${PLAY.trust} hope</b>.</span>` : "")
     : fill(`Lately, <b>{p}</b> doesn't seem like {their} usual self. {They} laugh{s} less, sleep{s} more, and spend{s} a lot of time alone.<br><br>Your job: help bring the light back to your home, one moment at a time.`);
   $("introLine").innerHTML = d.innerHTML;
   const H = two ? [
-    ["🎸","Light up the house.","Each room has 2 dark objects. Tap one and your loved one reaches out to you. Choose an honest, open answer and the object lights up again."],
-    ["💗","Build hope.","Letting them in raises your hope; pushing them away lowers it. The more hope you have, the more you both open up."],
-    ["💌","Watch for hearts.","As your hope grows, a 💗 appears on your own character. Tap it — it's a moment of hope that only happens once."],
-    ["🔥","Keep a streak.","Several open answers in a row give you bonus hope."],
-    ["💖","Practice self-love.","Every talk uses energy. When it runs out, tap Self-love and choose a kind action for yourself."],
-    ["🗺️","Unlock new rooms.","Light up the rooms that are open and new ones will appear."],
-    ["🌧️","Expect bad days.","Sometimes a light goes out again. Find it and get through it together."]
+    ["🕯️","Let the light in.",fill("Each room hides 2 dark moments from your own life. Tap one, and {p} reaches out to you. Answer openly and the light comes back.")],
+    ["🌱","Grow your hope.","Every time you let someone in, your hope grows. Shutting them out makes it shrink."],
+    ["💗","Moments of hope.","When your hope reaches a heart on your bar, a 💗 appears on you. Tap it for a moment that's just for you."],
+    ["🔥","Keep opening up.","Honest answers in a row give you bonus hope."],
+    ["💖","Be kind to yourself.","Talking takes energy. When you run low, tap Self-love and pick a kind action for yourself."],
+    ["🚪","Find your way forward.","Each chapter opens new rooms as you heal."],
+    ["🌧️","Heavy days happen.","A light may go out again. That's part of recovery, not failure."]
   ] : [
     ["🎸","Light up the house.","Each room has 2 dark objects. Tap one to talk with your loved one. Choose a caring answer and the object lights up again."],
     ["💗","Build trust.","Kind answers raise trust; hurtful ones lower it. The more trust you have, the more your loved one opens up to you."],
