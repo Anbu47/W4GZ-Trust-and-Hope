@@ -845,7 +845,7 @@ function anim(el, c){ if (!el) return; el.classList.remove(c); void el.offsetWid
 const HEARTS = [
   { at:20,  name:"Feeling Seen",    tip:"{P} notices that you notice." },
   { at:40,  name:"Opening Up",      tip:"{P} starts to share more with you." },
-  { at:60,  name:"Ready to Talk",   tip:"Trust needed for the hardest conversation in the Bedroom." },
+  { at:60,  name:"Ready to Talk",   tip:"{P} feels ready to talk about harder things." },
   { at:80,  name:"Deep Trust",      tip:"{P} trusts you with {their} fears." },
   { at:100, name:"Unbreakable Bond",tip:"Complete trust — you're a safe place for {them}." }
 ];
@@ -1243,7 +1243,6 @@ const outLights = () => PLAY.light.map((v,i) => v === -1 ? i : -1).filter(i => i
 function bedroomGate(){ // reason the bedroom is closed, or "" if open
   for (let r = 0; r < 5; r++) if (!roomComplete(r)) return "lights";
   if (outLights().length) return "out";
-  if (PLAY.trust < BEDROOM_TRUST) return "trust";
   return "";
 }
 // Rooms open by chapter: Week 1 = Living Room + Kitchen, Week 3 = Study + Balcony,

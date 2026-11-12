@@ -14,7 +14,7 @@ Open `index.html` in any browser (phone or desktop). No install or internet conn
 2. Explore six rooms, opened chapter by chapter (Week 1 → Week 3 → Month 2).
    Each grey, faded object (placed somewhere new every game) (a guitar, a bowl of soup, a phone…) is a moment with your loved one: pick the response you think helps most and it comes back to life.
 3. Keep an eye on:
-   - 💗 **Trust**: grows with supportive answers and drops by 10 with hurtful ones (by 20 in the 💗 heart-milestone conversations). Five heart milestones on the trust bar (20, 40, 60, 80, 100) each unlock a one-time 💗 heart conversation. A heart is only won (💗, +5 trust) if you answer it supportively; otherwise it is missed (❌). Each supportive answer to a room question gives +4 trust, and a well-meant one +2. The Bedroom only opens at trust 60.
+   - 💗 **Trust**: grows with supportive answers and drops by 10 with hurtful ones (by 20 in the 💗 heart-milestone conversations). Five heart milestones on the trust bar (20, 40, 60, 80, 100) each unlock a one-time 💗 heart conversation. A heart is only won (💗, +5 trust) if you answer it supportively; otherwise it is missed (❌). Each supportive answer to a room question gives +4 trust, and a well-meant one +2. The Bedroom opens once every other object is lit.
    - 🔋 **Energy**: every talk costs energy. Tap Recharge any time — some ways to rest work better than others.
    - 👀 **Reading the moment**: sometimes they need quiet company, sometimes your full attention.
    - 🌧️ **Setbacks**: as weeks pass, a light may go out on a bad day.
