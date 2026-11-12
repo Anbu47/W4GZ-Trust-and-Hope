@@ -1810,7 +1810,6 @@ function answer(i, btn){
     t.collect = nv > cur || (nv === 1 && cur === -1);
   }
   if (t.kind === "moment") PLAY.tm[t.idx].done = true;
-  if (Q.self && o.g === "help") PLAY.energy = Math.min(MAX_ENERGY, PLAY.energy + 2);
   // show result
   btn.classList.add(o.g === "help" ? "yes" : o.g === "okay" ? "mid" : "no");
   btn.querySelector(".dot").textContent = o.g === "help" ? "✓" : o.g === "okay" ? "~" : "✕";
