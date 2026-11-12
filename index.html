@@ -1152,7 +1152,7 @@ const FURNITURE = [
 ];
 
 // g: help = most supportive, okay = well-meant but not ideal, hurt = hurtful.
-// cue = "read the moment" body-language clue. critical = only the supportive answer lights it.
+// cue = "read the moment" body-language clue.
 const QUESTIONS = [
   { scene:"For weeks, {p} has ditched movie nights, hibernated until noon, and completely ignored {their} guitar.",
     ask:"What is your tactical opening move?",
@@ -1799,7 +1799,6 @@ function answer(i, btn){
   // fixing a half-lit object later earns +2, so well-meant (+2) then supportive (+2) = 4, the same as getting it right first time
   if (t.kind === "light" && t.revisit) dt = o.g === "help" ? 2 : o.g === "okay" ? 0 : -10;
   if (t.kind === "moment") dt = o.g === "help" ? HEART_BONUS : o.g === "okay" ? 2 : -20;   // heart-milestone talks: hurt costs more
-  if (Q.critical && o.g === "okay") dt = 0;
   // streak: supportive answers in a row earn a growing bonus (+1, +2, then +3 each)
   let streakBonus = 0; const baseDt = dt, lostStreak = o.g !== "help" ? (PLAY.streak || 0) : 0;
   if (o.g === "help") { PLAY.streak = (PLAY.streak || 0) + 1; streakBonus = Math.min(3, PLAY.streak - 1); dt += streakBonus; PLAY.bestStreak = Math.max(PLAY.bestStreak || 0, PLAY.streak); }
@@ -1818,7 +1817,7 @@ function answer(i, btn){
     const cur = PLAY.light[t.idx];
     let nv = cur;
     if (o.g === "help") nv = 2;
-    else if (o.g === "okay" && !Q.critical) nv = Math.max(cur, 1);
+    else if (o.g === "okay") nv = Math.max(cur, 1);
     if (t.kind === "setback" && nv >= 1) { PLAY.setbacksFixed++; PLAY.relit = { idx:t.idx, full: nv === 2 }; }
     PLAY.light[t.idx] = nv; lightNow = nv;
     if (o.g !== "help") (PLAY.tried = PLAY.tried || {})[t.idx] = true;
