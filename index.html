@@ -339,6 +339,8 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .room .lock.trustlock b{font-size:12px;color:#fff}
 .room .lock .tl{width:70%;height:8px;border-radius:99px;background:rgba(255,255,255,.15);overflow:hidden;margin:2px 0}
 .room .lock .tl i{display:block;height:100%;background:linear-gradient(90deg,#ff7aa8,#ffd27a);border-radius:99px;transition:width .6s}
+.why .lm.sk{color:#ffcf7a}
+.hud2 .streak{color:#ffcf7a;font-weight:900;animation:pulse2 .9s ease infinite alternate}
 /* ---------- question sheet ---------- */
 .sheet-bg{position:fixed;inset:0;z-index:20;background:rgba(15,6,22,.6);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .sheet-bg.show{opacity:1;pointer-events:auto}
@@ -470,7 +472,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
     </div>
     <div class="hud2">
       <span class="phase" id="hPhase">WEEK 1</span>
-      <span class="lights" id="hLights">✨ 0/12</span><span class="lights" id="hHeartN">💗 0/5</span>
+      <span class="lights" id="hLights">✨ 0/12</span><span class="lights" id="hHeartN">💗 0/5</span><span class="lights streak" id="hStreak"></span>
       <span class="energy" id="hEnergy" title="Your energy"></span>
       <button class="restbtn" id="restBtn">🔋 Recharge</button>
     </div>
@@ -1368,6 +1370,7 @@ function updateHUD(){
   $("hPhase").textContent = PHASES[PLAY.phase].label;
   $("hLights").textContent = `✨ ${litN}/12`;
   if ($("bedTrustFill")) { $("bedTrustFill").style.width = Math.min(100, PLAY.trust / BEDROOM_TRUST * 100) + "%"; $("bedTrustTxt").textContent = `Now ${PLAY.trust} — spend time together or brighten half-lit objects`; }
+  $("hStreak").textContent = (PLAY.streak || 0) >= 2 ? `🔥${PLAY.streak}` : "";
   $("hHeartN").textContent = `💗 ${PLAY.tm.filter(m => m.won).length}/${HEARTS.length}`;
   $("hEnergy").innerHTML = Array.from({length:MAX_ENERGY}, (_,i) => `<i class="${i < PLAY.energy ? 'on' : ''}"></i>`).join("");
   $("hEnergy").classList.toggle("low", PLAY.energy <= 1);
@@ -1480,6 +1483,10 @@ function answer(i, btn){
   if (t.kind === "light" && t.revisit) dt = o.g === "help" ? 3 : o.g === "okay" ? 0 : -10;
   if (t.kind === "moment") dt = o.g === "help" ? HEART_BONUS : o.g === "okay" ? 2 : -20;   // heart-milestone talks: hurt costs more
   if (Q.critical && o.g === "okay") dt = 0;
+  // streak: supportive answers in a row earn a growing bonus (+1, +2, then +3 each)
+  let streakBonus = 0;
+  if (o.g === "help") { PLAY.streak = (PLAY.streak || 0) + 1; streakBonus = Math.min(3, PLAY.streak - 1); dt += streakBonus; PLAY.bestStreak = Math.max(PLAY.bestStreak || 0, PLAY.streak); }
+  else PLAY.streak = 0;
   const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
   if (PLAY.trust === 0 && before > 0) PLAY.darkPending = true;
   let heartsGot = [];
@@ -1511,7 +1518,7 @@ function answer(i, btn){
   $("qOpts").classList.add("done");
   const react = REACT[o.g][trustTier()];
   const why = $("qWhy");
-  why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${dt>0?'up':dt<0?'down':''}">${dt>0?'+':''}${dt} trust</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
+  why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${dt>0?'up':dt<0?'down':''}">${dt>0?'+':''}${dt} trust</span></h4><span class="w"></span>${streakBonus ? `<div class="lm sk">🔥 ${PLAY.streak} in a row · +${streakBonus} streak bonus</div>` : ""}${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
     <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
     <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? "Bring it back to life ✨" : t.collect ? "Warm it up" : "Continue"}</button>`;
   why.querySelector(".w").textContent = T(o.why);
@@ -1562,7 +1569,7 @@ function afterTalk(){
   if (PLAY.chap + "/" + PLAY.bedOpen !== prevKey) setTimeout(() => placeTokens(false), 300);
   cards.push(...heartCards);
   if (cards.length) setTimeout(() => showCards(cards), 600);
-  if (PLAY.light.every(v => v >= 1) && roomComplete(5)) { PLAY.ending = true; setTimeout(() => { sfx.love(); go("s-end"); }, 1100); }
+  if (PLAY.light.every(v => v >= 1) && roomComplete(5) && !PLAY.tm.some(m => m.shown && !m.done)) { PLAY.ending = true; setTimeout(() => { sfx.love(); go("s-end"); }, 1100); }
 }
 
 // ---------------- trust breaks: the house goes dark ----------------
