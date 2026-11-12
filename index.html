@@ -1246,7 +1246,7 @@ function updateHUD(){
   $("hPct").textContent = `Trust ${PLAY.trust}`;
   $("hFill").style.width = PLAY.trust + "%";
   const hState = k => { const m = PLAY.tm[k]; return m.done ? (m.won ? "won" : "lost") : m.shown ? "ready" : "far"; };
-  const hIcon = { won:"💗", lost:"💔", ready:"🤍", far:"🤍" };
+  const hIcon = { won:"💗", lost:"❌", ready:"🤍", far:"🤍" };
   $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${hState(k)} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${Math.min(h.at, 96)}%" data-h="${k}">${hIcon[hState(k)]}</span>`).join("");
   PLAY.heartNew = [];
   $("hHearts").querySelectorAll(".hm").forEach(el => el.onclick = () => { const k = +el.dataset.h, h = HEARTS[k], st = hState(k);
