@@ -1057,7 +1057,15 @@ function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show
 
 // ================= TITLE =================
 function renderTitle(){
-  const tip = $("helpTip"); if (tip) { tip.classList.remove("on"); clearTimeout(renderTitle.t); setTimeout(() => tip.classList.add("on"), 900); renderTitle.t = setTimeout(() => tip.classList.remove("on"), 6500); }
+  // the Help hint pops up, fades after 6 s, and comes back every 15 s while the player stays on the front page
+  const tip = $("helpTip");
+  if (tip) {
+    clearInterval(renderTitle.iv); clearTimeout(renderTitle.t); tip.classList.remove("on");
+    const onTitle = () => $("s-title").classList.contains("active") && !$("helpSheet").classList.contains("show");
+    const flash = () => { if (!onTitle()) return; tip.classList.add("on"); clearTimeout(renderTitle.t); renderTitle.t = setTimeout(() => tip.classList.remove("on"), 6000); };
+    setTimeout(flash, 900);
+    renderTitle.iv = setInterval(() => { if (!$("s-title").classList.contains("active")) { clearInterval(renderTitle.iv); tip.classList.remove("on"); return; } flash(); }, 15000);
+  }
   // the couple on the title follows the characters you chose (or a default pair before you've chosen)
   const P = GAME.player.kind || "woman", L = GAME.partner.kind || "man";
   $("titleCouple").innerHTML = `<div class="halo"></div><div class="ring"></div><div class="ring r2"></div><div class="p r">${avatar(L,PARTNER_VARIANT[L],"t2","calm")}</div><div class="p l">${avatar(P,null,"t1")}</div>`;
