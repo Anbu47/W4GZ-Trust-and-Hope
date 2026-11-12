@@ -1771,7 +1771,8 @@ function answer(i, btn){
   const Q = t.data, o = Q.opts[i], G = GRADE[o.g];
   // trust change
   let dt = G.trust;
-  if (t.kind === "light" && t.revisit) dt = o.g === "help" ? 3 : o.g === "okay" ? 0 : -10;
+  // fixing a half-lit object later earns +1, so well-meant (+2) then supportive (+1) = 3, less than getting it right first time (+4)
+  if (t.kind === "light" && t.revisit) dt = o.g === "help" ? 1 : o.g === "okay" ? 0 : -10;
   if (t.kind === "moment") dt = o.g === "help" ? HEART_BONUS : o.g === "okay" ? 2 : -20;   // heart-milestone talks: hurt costs more
   if (Q.critical && o.g === "okay") dt = 0;
   // streak: supportive answers in a row earn a growing bonus (+1, +2, then +3 each)
