@@ -275,9 +275,6 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .spot.obj .bd{position:absolute;right:-4px;top:-6px;z-index:2;font-size:15px}
 .spot.obj.pop .ic{animation:objpop .9s cubic-bezier(.2,1.6,.4,1)}
 @keyframes objpop{0%{transform:scale(.4);filter:grayscale(1) brightness(.5)}60%{transform:scale(1.4)}100%{transform:scale(1.08)}}
-.comfort{position:absolute;z-index:4;transform:translate(-50%,-50%);font-size:clamp(20px,6vw,28px);filter:drop-shadow(0 3px 6px rgba(0,0,0,.35)) drop-shadow(0 0 10px rgba(255,220,150,.6));pointer-events:none}
-.comfort.pop{animation:comfortIn 1.2s cubic-bezier(.2,1.5,.4,1)}
-@keyframes comfortIn{0%{transform:translate(-50%,-50%) scale(0) rotate(-30deg);opacity:0}70%{transform:translate(-50%,-50%) scale(1.3)}100%{transform:translate(-50%,-50%) scale(1)}}
 /* ---------- question sheet ---------- */
 .sheet-bg{position:fixed;inset:0;z-index:20;background:rgba(15,6,22,.6);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .sheet-bg.show{opacity:1;pointer-events:auto}
@@ -385,7 +382,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="pair" id="pair2" style="margin-top:0"></div>
       <div class="story" id="introLine"></div>
       <div class="howto">
-        <div><span>🎸</span><em>Each room has <b>2 things</b> gone dark and grey. Tap one: it's a moment with your loved one. Respond well and it comes back to life — finish a room to bring in something cosy.</em></div>
+        <div><span>🎸</span><em>Each room has <b>2 things</b> gone dark and grey. Tap one: it's a moment with your loved one. Respond well and it comes back to life.</em></div>
         <div><span>💗</span><em><b>Trust</b> grows with supportive answers and drops with hurtful ones. The more trust, the more they open up.</em></div>
         <div><span>🔋</span><em>Every talk costs <b>energy</b>. When it runs out, recharge in Your Corner before your next talk.</em></div>
         <div><span>👀</span><em><b>Read the moment.</b> Sometimes they need quiet company, sometimes your full attention.</em></div>
@@ -740,17 +737,17 @@ const DOOR = { icon:"🚪", title:"The Door Opens", mood:"sad",
 
 const ROOMS = [
   { name:"Living Room", ref:"the Living Room", theme:"Noticing the signs",    floor:"#a8746a", deco:[["🛋️",26,72],["📺",78,26],["🪴",88,80]], spots:[[34,40],[66,62]], pp:[52,82], ex:[18,44],
-    icons:["🎸","🎧"], comfort:["🌻",56,22,"fresh sunflowers"] },
+    icons:["🎸","🎧"] },
   { name:"Kitchen",     ref:"the Kitchen",     theme:"Small acts of care",    floor:"#8f9a7a", deco:[["🍳",18,30],["☕",84,74],["🧺",16,80]], spots:[[48,36],[62,70]], pp:[38,66], ex:[80,40],
-    icons:["🍲","🍽️"], comfort:["🧁",30,56,"a tray of cupcakes"] },
+    icons:["🍲","🍽️"] },
   { name:"Study",       ref:"the Study",       theme:"Listening well",        floor:"#7b7fa8", deco:[["📚",16,30],["💻",82,30],["🗂️",18,78]], spots:[[50,46],[72,74]], pp:[40,70], ex:[28,50],
-    icons:["🫖","🚪"], comfort:["🧶",84,56,"a cosy knitted throw"] },
+    icons:["🫖","🚪"] },
   { name:"Balcony",     ref:"the Balcony",     theme:"Finding help",          floor:"#6f9aa3", deco:[["🌙",84,22],["🪴",14,30],["🌿",86,80]], spots:[[40,40],[62,70]], pp:[30,72], ex:[72,40],
-    icons:["🩺","🌱"], comfort:["🌺",18,62,"blooming flowers"] },
+    icons:["🩺","🌱"] },
   { name:"Your Corner", ref:"Your Corner",     theme:"Caring for yourself",   floor:"#a58a6a", deco:[["🧸",18,30],["🎵",82,30],["📖",84,80]], spots:[[48,46],[34,74]], pp:[64,74], ex:[20,56], rest:[56,22],
-    icons:["🛁","📱"], comfort:["🍵",80,54,"a warm cup of tea"] },
+    icons:["🛁","📱"] },
   { name:"Bedroom",     ref:"the Bedroom",     theme:"In the darkest moments",floor:"#8a6a9a", deco:[["🛏️",30,64],["🪞",84,26],["🖼️",16,26]], spots:[[56,42],[72,72]], pp:[30,52], ex:[80,50],
-    icons:["💭","☎️"], comfort:null }
+    icons:["💭","☎️"] }
 ];
 
 // Furniture drawn as flat shapes so it reads as part of the house,
@@ -1114,7 +1111,6 @@ function renderHouse(){
       const cls = (v === 2 ? "done" : v === 1 ? "dim" : v === -1 ? "out" : "") + (PLAY.justLit === i ? " pop" : "");
       const badge = v === -1 ? '<span class="bd">🌧️</span>' : v === 2 ? '<span class="bd ok">✓</span>' : v === 1 ? '<span class="bd half">½</span>' : '<span class="bd talk">💬</span>';
       return `<button class="spot obj ${cls}" data-q="${i}" style="left:${x}%;top:${y}%" aria-label="${rm.name} moment"><span class="ic">${rm.icons[k]}</span>${badge}</button>`; }).join("");
-    if (open && rm.comfort && roomComplete(r)) spots += `<div class="comfort ${PLAY.newComfort === r ? 'pop' : ''}" style="left:${rm.comfort[1]}%;top:${rm.comfort[2]}%" title="${rm.comfort[3]}">${rm.comfort[0]}</div>`;
     // trust moments
     PLAY.tm.forEach((m, k) => { if (m.shown && !m.done && r === partnerRoom()) spots += `<button class="spot heart" data-tm="${k}" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Trust moment">💗</button>`; });
     if (r === 0 && qtOn) spots += `<button class="spot heart" data-qt="1" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Spend time together">🫶</button>`;
@@ -1127,7 +1123,7 @@ function renderHouse(){
       ${open ? "" : `<div class="lock ${r===4?'small':''}">🔒<small>${escH(lockText(r))}</small></div>`}
     </div>`;
   }).join("") + `<div class="token love" id="tokLove">${partnerAvatar("tl")}</div><div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm","happy")}</div>`;
-  PLAY.justLit = -1; PLAY.newComfort = -1;
+  PLAY.justLit = -1;
   house.querySelectorAll(".spot[data-q]").forEach(b => b.onclick = e => { e.stopPropagation(); tapLight(+b.dataset.q); });
   house.querySelectorAll(".spot[data-tm]").forEach(b => b.onclick = e => { e.stopPropagation(); tapTrustMoment(+b.dataset.tm, b); });
   house.querySelectorAll(".spot[data-qt]").forEach(b => b.onclick = e => { e.stopPropagation(); tapQualityTime(b); });
@@ -1267,7 +1263,7 @@ function answer(i, btn){
     else if (o.g === "okay" && !Q.critical) nv = Math.max(cur, 1);
     if (t.kind === "setback" && nv >= 1) PLAY.setbacksFixed++;
     PLAY.light[t.idx] = nv; lightNow = nv;
-    if (nv > cur || (nv >= 1 && cur === -1)) { PLAY.justLit = t.idx; const rr = Math.floor(t.idx / 2); if (roomComplete(rr) && !PLAY.msShown.includes(rr)) PLAY.newComfort = rr; }
+    if (nv > cur || (nv >= 1 && cur === -1)) { PLAY.justLit = t.idx; }
     const objName = ROOMS[t.room].icons[t.idx % 2];
     lightMsg = nv === 2 && cur !== 2 ? `✨ ${objName} glows back to life.` : nv === 1 && cur < 1 ? `${objName} warms up a little. Come back later to bring it fully to life.` : nv === cur && nv < 2 ? "It stays dark for now. You can come back and try again." : "";
     t.collect = nv > cur || (nv === 1 && cur === -1);
@@ -1317,7 +1313,7 @@ function afterTalk(){
   refreshUnlocks();
   renderHouse();
   const cards = [];
-  for (let r = 0; r < 5; r++) if (roomComplete(r) && !PLAY.msShown.includes(r)) { PLAY.msShown.push(r); const c = ROOMS[r].comfort; cards.push(milestoneCard(MILESTONES[r], "MILESTONE · " + ROOMS[r].name.toUpperCase(), c ? `New in ${ROOMS[r].ref}: ${c[0]} ${c[3]}` : "")); }
+  for (let r = 0; r < 5; r++) if (roomComplete(r) && !PLAY.msShown.includes(r)) { PLAY.msShown.push(r); cards.push(milestoneCard(MILESTONES[r], "MILESTONE · " + ROOMS[r].name.toUpperCase(), "")); }
   if (PLAY.bedOpen && !PLAY.doorShown) { PLAY.doorShown = true; cards.push(milestoneCard(DOOR, "THE FINAL ROOM", "The Bedroom is now open.")); }
   if (PLAY.pendingPhase != null) { const ph = PLAY.pendingPhase; PLAY.pendingPhase = null; cards.push(phaseCard(ph)); }
   if (PLAY.chap + "/" + PLAY.bedOpen !== prevKey) setTimeout(() => placeTokens(false), 300);
