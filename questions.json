@@ -1756,7 +1756,7 @@
        },
        {
         "g": "okay",
-        "t": "Decide not to bring it up: “Mentioning it might upset them more.”",
+        "t": "Sit back down without mentioning it: “Let's just wait for them to pick up.”",
         "why": "Avoiding the topic to keep the peace leaves dangerous things within reach.",
         "re": "…Is someone answering? I'm so tired."
        },
@@ -1785,7 +1785,7 @@
        },
        {
         "g": "okay",
-        "t": "Take the phone and explain everything yourself while {they} sit{s} silently.",
+        "t": "Take the phone and do all the talking: “Hi, I'm calling for someone I love. They've been having thoughts of suicide, and…”",
         "why": "Taking over completely gets help moving, but they may feel talked about instead of supported.",
         "re": "…You told them everything. I feel like a case file."
        },
