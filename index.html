@@ -412,7 +412,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
     </div>
     <div class="hud2">
       <span class="phase" id="hPhase">WEEK 1</span>
-      <span class="lights" id="hLights">✨ 0/12</span>
+      <span class="lights" id="hLights">✨ 0/12</span><span class="lights" id="hHeartN">💗 0/5</span>
       <span class="energy" id="hEnergy" title="Your energy"></span>
       <button class="restbtn" id="restBtn">🔋 Recharge</button>
     </div>
@@ -713,10 +713,11 @@ function anim(el, c){ if (!el) return; el.classList.remove(c); void el.offsetWid
 // ---------------- tuning ----------------
 // Heart milestones on the trust bar. Reaching one for the first time gives a small bonus.
 const HEARTS = [
-  { at:50, name:"Opening Up",  tip:"{P} starts to share more with you." },
-  { at:60, name:"Ready to Talk", tip:"Trust needed for the hardest conversation in the Bedroom." },
-  { at:75, name:"Deep Trust",  tip:"{P} trusts you with {their} fears." },
-  { at:85, name:"Safe Harbor", tip:"The deepest ending is within reach." }
+  { at:20,  name:"Feeling Seen",    tip:"{P} notices that you notice." },
+  { at:40,  name:"Opening Up",      tip:"{P} starts to share more with you." },
+  { at:60,  name:"Ready to Talk",   tip:"Trust needed for the hardest conversation in the Bedroom." },
+  { at:80,  name:"Deep Trust",      tip:"{P} trusts you with {their} fears." },
+  { at:100, name:"Unbreakable Bond",tip:"Complete trust — you're a safe place for {them}." }
 ];
 const HEART_BONUS = 5;
 function checkHearts(){
@@ -732,7 +733,7 @@ function checkHearts(){
   return got;
 }
 const heartHTML = got => got.map(h => `<div class="lm hg">💗 Heart milestone: <b>${h.name}</b> · +${HEART_BONUS} trust</div>`).join("");
-const MAX_ENERGY = 3, START_TRUST = 30, BEDROOM_TRUST = 60;
+const MAX_ENERGY = 3, START_TRUST = 10, BEDROOM_TRUST = 60;
 const GRADE = {
   help:{ trust:6, cls:"good", head:"💛 Supportive" },
   okay:{ trust:1,  cls:"mid",  head:"🙂 Well-meant, but not quite" },
@@ -957,8 +958,18 @@ const SETBACKS = [
 ];
 
 // Trust moments: appear when trust grows. They show {p} opening up.
+// Heart questions: one per heart milestone, answered once.
 const TRUST_MOMENTS = [
-  { at:50, scene:"{P} sits beside you, quiet for a long while.", line:"Can I tell you something? I've been feeling like this for a lot longer than I let on.",
+  { at:20, scene:"After dinner, {p} lingers in the kitchen doorway.", line:"Thanks for… noticing. I didn't think anyone did.",
+    ask:"A small moment of trust. What do you say?",
+    opts:[
+      { g:"help", t:"“I'll always notice. You matter to me.”",
+        why:"Simple, warm words tell them they're seen — and that it's safe to let you in." },
+      { g:"okay", t:"“Of course — it was pretty obvious something was wrong.”",
+        why:"Honest, but it can make someone feel exposed, as if they failed to hide it." },
+      { g:"hurt", t:"“Well, you weren't exactly hiding it.”",
+        why:"This turns a moment of thanks into a criticism. They may close up again." } ] },
+  { at:40, scene:"{P} sits beside you, quiet for a long while.", line:"Can I tell you something? I've been feeling like this for a lot longer than I let on.",
     ask:"{P} is opening up. What do you say?",
     opts:[
       { g:"help", t:"“Thank you for trusting me with that. I'm listening — take all the time you need.”",
@@ -967,7 +978,16 @@ const TRUST_MOMENTS = [
         why:"A natural question, but it can sound like blame. What matters is that they're telling you now." },
       { g:"hurt", t:"“Wow. So you've been hiding this from me?”",
         why:"This turns their courage into a fault. They may regret opening up." } ] },
-  { at:75, scene:"Before an appointment, {p} grips your hand.", line:"I'm scared that if I tell the counselor everything, it'll all become real.",
+  { at:60, scene:"{P} sits on the edge of the sofa, fidgeting with {their} sleeve.", line:"I want to tell you something, but I'm scared you'll look at me differently.",
+    ask:"{P} is almost ready. What do you say?",
+    opts:[
+      { g:"help", t:"“Nothing you tell me will change how much I care about you. Take your time — I'm not going anywhere.”",
+        why:"Promising steady care, without pressure, makes the scariest things easier to say." },
+      { g:"okay", t:"“You can tell me anything. Just say it.”",
+        why:"Kind, but “just say it” adds pressure. Let them set the pace." },
+      { g:"hurt", t:"“Ugh, just tell me already.”",
+        why:"Impatience at a vulnerable moment can make someone decide it isn't safe to share." } ] },
+  { at:80, scene:"Before an appointment, {p} grips your hand.", line:"I'm scared that if I tell the counselor everything, it'll all become real.",
     ask:"{P} trusts you with a fear. What do you say?",
     opts:[
       { g:"help", t:"“That makes so much sense. You can go at your own pace — and whatever you share, I'll still be right here.”",
@@ -975,7 +995,16 @@ const TRUST_MOMENTS = [
       { g:"okay", t:"“Just tell them everything. It's for the best.”",
         why:"Probably true — but rushing past the fear can make it feel unheard." },
       { g:"hurt", t:"“It's already real. You need to face it.”",
-        why:"Harsh truth delivered without warmth can push someone away from help." } ] }
+        why:"Harsh truth delivered without warmth can push someone away from help." } ] },
+  { at:100, scene:"On a quiet evening, {p} smiles — a real, easy smile.", line:"I think I'm starting to feel like me again. I couldn't have done this without you.",
+    ask:"How do you respond?",
+    opts:[
+      { g:"help", t:"“I'm so proud of you. You did the hard work — I'm just glad I got to be beside you.”",
+        why:"Giving credit back to them builds their confidence for the road ahead." },
+      { g:"okay", t:"“Yeah — you really couldn't have done it without me.”",
+        why:"Meant playfully, but recovery is their achievement. Let them own it." },
+      { g:"hurt", t:"“Finally! I was getting so tired of all this.”",
+        why:"Your exhaustion is real, but saying it now can make them feel like a burden again." } ] }
 ];
 
 // Recharge moments: a different situation each time (no repeats until all have been seen).
@@ -1140,7 +1169,8 @@ function renderHouse(){
       const badge = v === -1 ? '<span class="bd">🌧️</span>' : v === 2 ? '<span class="bd ok">✓</span>' : v === 1 ? '<span class="bd half">½</span>' : '<span class="bd talk">💬</span>';
       return `<button class="spot obj ${cls}" data-q="${i}" style="left:${x}%;top:${y}%" aria-label="${rm.name} moment"><span class="ic">${rm.icons[k]}</span>${badge}</button>`; }).join("");
     // trust moments
-    PLAY.tm.forEach((m, k) => { if (m.shown && !m.done && r === partnerRoom()) spots += `<button class="spot heart" data-tm="${k}" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Trust moment">💗</button>`; });
+    const nextTm = PLAY.tm.findIndex(m => m.shown && !m.done);
+    PLAY.tm.forEach((m, k) => { if (k === nextTm && r === partnerRoom()) spots += `<button class="spot heart" data-tm="${k}" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Trust moment">💗</button>`; });
     if (r === 0 && qtOn) spots += `<button class="spot heart" data-qt="1" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Spend time together">🫶</button>`;
     if (r === 4) spots += `<button class="spot rest" id="restSpot" style="left:${rm.rest[0]}%;top:${rm.rest[1]}%" aria-label="Recharge">🔋</button>`;
     return `<div class="room ${n>=2?'lit':''} ${open && !roomComplete(r) ? 'cur' : ''}" data-room="${r}" style="--floor:${rm.floor}">
@@ -1178,11 +1208,12 @@ function updateHUD(){
   $("hName").textContent = showName("partner");
   $("hPct").textContent = `Trust ${PLAY.trust}`;
   $("hFill").style.width = PLAY.trust + "%";
-  $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${PLAY.trust >= h.at ? 'on' : ''} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${h.at}%" data-h="${k}">${PLAY.trust >= h.at ? '💗' : '🤍'}</span>`).join("");
+  $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${PLAY.trust >= h.at ? 'on' : ''} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${Math.min(h.at, 96)}%" data-h="${k}">${PLAY.trust >= h.at ? '💗' : '🤍'}</span>`).join("");
   PLAY.heartNew = [];
   $("hHearts").querySelectorAll(".hm").forEach(el => el.onclick = () => { const h = HEARTS[+el.dataset.h]; toast(`${PLAY.trust >= h.at ? "💗" : "🤍"} ${h.at} · ${h.name}: ${fill(h.tip)}`); });
   $("hPhase").textContent = PHASES[PLAY.phase].label;
   $("hLights").textContent = `✨ ${litN}/12`;
+  $("hHeartN").textContent = `💗 ${HEARTS.filter(h => PLAY.trust >= h.at).length}/${HEARTS.length}`;
   $("hEnergy").innerHTML = Array.from({length:MAX_ENERGY}, (_,i) => `<i class="${i < PLAY.energy ? 'on' : ''}"></i>`).join("");
   $("hEnergy").classList.toggle("low", PLAY.energy <= 1);
   $("restBtn").classList.toggle("urge", PLAY.energy <= 1);
@@ -1482,7 +1513,7 @@ $("helpSheet").addEventListener("click", e => { if (e.target.id === "helpSheet")
 // ---------------- endings ----------------
 function renderEnd(){
   if (!PLAY) return go("s-title");
-  const tr = PLAY.trust, tier = tr >= 85 ? 2 : tr >= 68 ? 1 : 0;
+  const tr = PLAY.trust, tier = tr >= 80 ? 2 : tr >= 60 ? 1 : 0;
   $("pair3").innerHTML = pairHTML(tier === 0 ? "calm" : "happy");
   const title = ["A Growing Spark", "A Steady Light", "A Safe Harbor"][tier];
   const lines = [
@@ -1496,7 +1527,7 @@ function renderEnd(){
   $("endBadge").textContent = title.toUpperCase();
   const bright = PLAY.light.filter(v => v === 2).length;
   $("endResult").innerHTML = `<div><b>${tr}</b><span>TRUST</span></div><div><b>${bright}/12</b><span>BRIGHT LIGHTS</span></div><div><b>${PLAY.restsGood}</b><span>GOOD RESTS</span></div>`;
-  $("endNext").textContent = tier < 2 ? `Play again to reach a deeper ending — trust 85+ unlocks “A Safe Harbor”.` : `You reached the deepest ending. 💛`;
+  $("endNext").textContent = tier < 2 ? `Play again to reach a deeper ending — trust 80+ unlocks “A Safe Harbor”.` : `You reached the deepest ending. 💛`;
   $("learned").innerHTML = LEARNED.map(t => `<li>${escH(t)}</li>`).join("");
   setTimeout(() => { const r = $("pair3").getBoundingClientRect(); burstHearts(r.left + r.width/2, r.top + r.height/3, 30); }, 300);
 }
