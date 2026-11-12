@@ -952,7 +952,7 @@ function renderConfirm(){
   const L = GAME.partner, pr = CHAR[L.kind].pron;
   const e = document.createElement("div");
   const named = !!GAME.player.name.trim();
-  e.innerHTML = (named ? `<b></b>, ` : ``) + `${named ? "you" : "You"} share a roof with <b></b>, the person you adore most. Lately, ${pr.s === "they" ? "they've" : pr.s + "'s"} been running on an emotional 2% battery life. This is a masterclass in reading subtext, dodging toxic positivity, and surviving together.`;
+  e.innerHTML = (named ? `<b></b>, ` : ``) + `${named ? "you" : "You"} share your home with <b></b>, the person you love most. Lately, something feels different—${pr.s === "they" ? "they seem" : pr.s + " seems"} emotionally drained and ${pr.s === "they" ? "need" : "needs"} you more than ever. This is a story about noticing the subtle signs, listening without judgment, and staying by ${pr.p} side through the hard days.`;
   const bs = e.querySelectorAll("b");
   if (named) bs[0].textContent = GAME.player.name.trim();
   bs[bs.length - 1].textContent = inSentence("partner");
