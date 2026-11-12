@@ -255,6 +255,8 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .chap .sub{font-family:"Playfair Display",serif;font-style:italic;color:var(--rose2);font-size:18px;margin:-6px 0 14px}
 .chap.ms h2{font-size:38px}
 .chap.dark h2{font-size:38px;background:linear-gradient(180deg,#fff,#9aa3c7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.chap.warn h2{font-size:34px;color:#ffd27a}
+.chap.warn p.sb{color:#ffd27a;font-weight:800}
 .house.blackout{animation:blackout 2.6s ease}
 @keyframes blackout{0%{filter:none}25%{filter:brightness(.15) saturate(.2)}100%{filter:none}}
 .msface{position:relative;width:96px;height:96px;margin:12px auto 4px;border-radius:50%;overflow:visible}
@@ -2042,7 +2044,8 @@ function answer(i, btn){
   if (o.g === "help") { PLAY.streak = (PLAY.streak || 0) + 1; streakBonus = Math.min(3, PLAY.streak - 1); dt += streakBonus; PLAY.bestStreak = Math.max(PLAY.bestStreak || 0, PLAY.streak); }
   else PLAY.streak = 0;
   const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
-  if (PLAY.trust === 0 && before > 0) PLAY.darkPending = true;
+  // At 0: first time is a warning. Any further minus answer after that ends the game.
+  if (PLAY.trust === 0 && dt < 0) { if (PLAY.zeroWarned) PLAY.collapsePending = true; else { PLAY.zeroWarned = true; PLAY.warnPending = true; } }
   let heartsGot = [];
   if (t.kind === "moment") {
     PLAY.tm[t.idx].won = o.g === "help";
@@ -2132,7 +2135,8 @@ function afterTalk(){
   // trust moments become available
   const heartCards = [];
   PLAY.tm.forEach((m, k) => { if (!m.shown && PLAY.trust >= TRUST_MOMENTS[k].at && PLAY.light.filter(v => v >= 1).length >= 2) { m.shown = true; heartCards.push(heartRevealCard(k)); } });
-  if (PLAY.darkPending) { PLAY.darkPending = false; houseGoesDark(); return; }
+  if (PLAY.collapsePending) { PLAY.collapsePending = false; houseCollapse(); return; }
+  if (PLAY.warnPending) { PLAY.warnPending = false; renderHouse(); zeroWarning(); return; }
   const prevKey = PLAY.chap + "/" + PLAY.bedOpen;
   refreshUnlocks();
   renderHouse();
@@ -2180,24 +2184,28 @@ function finishChoiceCard(){
 
 // ---------------- trust breaks: the house goes dark ----------------
 const DARK_TRUST = 10;
-function houseGoesDark(){
-  PLAY.light = PLAY.light.map(() => 0);   // every light goes out
-  PLAY.pos = ROOMS.map((_, r) => scatter(r));   // and everything is moved to new places
-  PLAY.tried = {};
-  PLAY.setback = {};
-  PLAY.trust = DARK_TRUST;
-  PLAY.darkTimes = (PLAY.darkTimes || 0) + 1;
-  renderHouse();
+function zeroWarning(){
+  tone(330,.25,.07,0,"triangle"); tone(262,.35,.07,.2,"triangle");
+  showCards([() => ({
+    html:`<div class="chap story warn"><small>⚠️ ${PART === 2 ? "HOPE IS EMPTY" : "TRUST IS EMPTY"}</small><div class="msface">${PART === 2 ? avatar(GAME.player.kind, null, "zw" + Math.random().toString(36).slice(2,6), "sad") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "zw" + Math.random().toString(36).slice(2,6), "sad")}<span>⚠️</span></div>
+      <h2>${PART === 2 ? "Running on Empty" : "On the Edge"}</h2>
+      ${paras(PART === 2 ? "Your hope has dropped to 0. You've pushed {p} away so many times that {their} is not sure how to reach you anymore.\n\nNothing is lost yet — your rooms and lights stay as they are." : "{P}'s trust has dropped to 0, and {their} is close to shutting you out completely.\n\nNothing is lost yet — your rooms and lights stay as they are.")}
+      <p class="sb">⚠️ Last warning: one more hurtful answer while ${tw()} is at 0 and the story ends.</p>
+      <p class="gain">${PART === 2 ? "Try an honest, open answer next — let {p} in a little." : "Try a supportive answer next — listen, stay calm, stay close."}</p>`,
+    btn:"I understand" })]);
+}
+function houseCollapse(){
+  PLAY.ending = true;
   $("house").classList.add("blackout");
-  setTimeout(() => $("house").classList.remove("blackout"), 2600);
-  tone(196,.8,.08,0,"sine"); tone(147,1.2,.07,.3,"sine");
+  tone(196,.8,.08,0,"sine"); tone(147,1.2,.07,.3,"sine"); tone(98,1.6,.07,.6,"sine");
   setTimeout(() => showCards([() => ({
-    html:`<div class="chap story dark"><small>${PART === 2 ? "HOPE HAS RUN OUT" : "TRUST SYSTEM COLLAPSE"}</small><div class="msface">${PART === 2 ? avatar(GAME.player.kind, null, "dk" + Math.random().toString(36).slice(2,6), "sad") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "dk" + Math.random().toString(36).slice(2,6), "sad")}<span>🌑</span></div>
-      <h2>${PART === 2 ? "The House Goes Quiet" : "Total System Blackout"}</h2>
-      ${paras(PART === 2 ? "After pushing {p} away too many times, {they} stop{s} asking how you are. The house goes quiet, and one by one, every light goes out.\n\nThis happens in real life too: when we shut people out again and again, they can lose track of how to reach us.\n\nBut it's never too late. Trust comes back through small, honest moments of letting someone in." : "Following too many clumsy or wounding responses, {p} initiates total emotional withdrawal. The bedroom door stays locked. Every light in the house blows out one by one.\n\nThis mirrors reality: persistent judgment pushes people to build defensive walls.\n\nBut trust can be rebuilt — not through grand sweeping gestures, but via relentless, micro-doses of steady, authentic empathy.")}
-      <p class="sb">🌑 Complete blackout. ${Tw()} has bottomed out at ${DARK_TRUST}.</p>
-      <p class="gain">${PART === 2 ? "The rooms you opened stay open. Walk back through the house and let the light in again — you know more about yourself now." : "Unlocked rooms remain accessible. Traverse the dark house and relight it — you possess infinitely more wisdom now than when you first stepped inside!"}</p>`,
-    btn:"Start rebuilding" })]), 900);
+    html:`<div class="chap story dark"><small>${PART === 2 ? "HOPE HAS RUN OUT" : "TRUST HAS RUN OUT"}</small><div class="msface">${PART === 2 ? avatar(GAME.player.kind, null, "dk" + Math.random().toString(36).slice(2,6), "sad") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "dk" + Math.random().toString(36).slice(2,6), "sad")}<span>🌑</span></div>
+      <h2>${PART === 2 ? "The House Goes Quiet" : "The Door Closes"}</h2>
+      ${paras(PART === 2 ? "After being pushed away again and again, {p} stops asking how you are. The house goes quiet, and every light goes out.\n\nThis happens in real life too: when we keep shutting people out, they can lose track of how to reach us.\n\nBut it's never too late to start again — one honest moment at a time." : "After one hurtful answer too many, {p} shuts {their} bedroom door and stops letting you in. Every light in the house goes out.\n\nThis happens in real life too: repeated judgment teaches people to stop sharing.\n\nBut trust can be rebuilt — one small, kind moment at a time.")}
+      <p class="sb">🌑 ${Tw()} stayed at 0 after the warning. This story ends here.</p>
+      <p class="gain">Choose a part and try again — you know more now than when you started.</p>`,
+    btn:"Back to choose a part",
+    onGo: () => { $("chapterCard").classList.remove("show"); $("house").classList.remove("blackout"); PLAY = null; audio(); sfx.tap(); go("s-confirm"); } })]), 1200);
 }
 
 // ---------------- RELIGHT EVENT: a bad day ----------------
