@@ -645,7 +645,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="sup-title" id="endTitle"></div>
       <p class="note" id="endNext" style="color:#ffe7ef;font-weight:800"></p>
       <div class="teaser" id="endTeaser" hidden><small>TO BE CONTINUED…</small><b>Part 2: Your Turn</b><p>Months later, something in you quietly runs out. This time, it's your turn to let someone help.</p></div>
-      <div class="learned"><h3>What you practised</h3><ol id="learned"></ol></div>
+      <div class="learned"><h3 id="learnedH">What you practised</h3><ol id="learned"></ol></div>
       <div class="brand-sign"><div class="brand"><div class="brand-mark"><span class="brand-logo" role="img" aria-label="W4GZ"></span><span class="brand-spark">✦</span></div><div class="brand-sub">Writing for <i>Gen Z</i></div></div><p class="vision">“Create narratives worth living.”</p><p class="mission">We learn how to do things. We do things, seriously and kindly. We share how to do it so others can learn.</p></div>
       <div class="note">This experience is educational and cannot replace clinical psychiatric care. If someone faces imminent danger, contact emergency services immediately. Locate confidential global hotlines at <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</div>
     </div>
@@ -1383,12 +1383,8 @@ const PART1 = JSON.parse(JSON.stringify({
   HEARTS: HEARTS.map(h => ({ name:h.name, tip:h.tip })), GRADE: { help:GRADE.help.head, okay:GRADE.okay.head, hurt:GRADE.hurt.head },
   PHASES: PHASES.map(p => ({ sub:p.sub, story:p.story, tip:p.tip })), MILESTONES, DOOR, ROOMS: ROOMS.map(r => ({ theme:r.theme, icons:r.icons })),
   QUESTIONS, SETBACKS, TRUST_MOMENTS, LEARNED, REACT, RECHARGE }));
-PART2.RECHARGE = JSON.parse(JSON.stringify(PART1.RECHARGE));
-Object.entries(PART2.RECHARGE_PATCH).forEach(([i, pt]) => {
-  const R = PART2.RECHARGE[+i];
-  if (pt.q) R.q = pt.q;
-  if (pt.opts) Object.entries(pt.opts).forEach(([k, o]) => Object.assign(R.opts[+k], o));
-});
+// Part 2's breaks are self-love actions, written fresh for the one who is struggling.
+PART2.RECHARGE = [{"q": "You catch your reflection, and the first thing you think is: “Ugh, look at you.”", "opts": [{"g": "best", "t": "Pause and say one kind thing to yourself instead — out loud if you can.", "tip": "How you talk to yourself shapes how you feel. A kinder inner voice is a real self-love skill."}, {"g": "okay", "t": "Look away quickly and try not to think about it.", "tip": "Avoiding helps for a moment, but the harsh voice stays in charge."}, {"g": "poor", "t": "Make a mental list of everything wrong with how you look.", "tip": "Feeding the inner critic drains you and deepens low mood."}]}, {"q": "You finished one small task today: you did the laundry.", "opts": [{"g": "best", "t": "Celebrate it: “Today was hard, and I still did that.”", "tip": "Noticing small wins builds momentum. On low days, small things really count."}, {"g": "okay", "t": "Shrug: “It's just laundry.”", "tip": "Fair — but brushing off every win makes your progress invisible."}, {"g": "poor", "t": "Remind yourself of the ten things you didn't do.", "tip": "Measuring yourself against a perfect day turns a win into another failure."}]}, {"q": "Someone asks you to take on an extra project, and you have no energy left.", "opts": [{"g": "best", "t": "Say kindly: “I can't take that on right now.”", "tip": "Saying no to protect your energy is a form of self-respect."}, {"g": "okay", "t": "Say yes, then plan to stay up late to squeeze it in.", "tip": "Helping is good, but not at the cost of the rest you need to recover."}, {"g": "poor", "t": "Say yes to everything so nobody notices you're struggling.", "tip": "Overloading yourself to look fine usually ends in a crash."}]}, {"q": "You haven't showered in two days, and you feel heavy.", "opts": [{"g": "best", "t": "Take a slow, warm shower and put on clean, comfy clothes.", "tip": "Simple body care is self-love in action. Small routines help lift your mood."}, {"g": "okay", "t": "Wash your face and call it enough for today.", "tip": "A small step still counts — maybe tomorrow you'll manage a little more."}, {"g": "poor", "t": "Tell yourself you don't deserve to feel nice until you're better.", "tip": "Care isn't a reward for getting better. It's part of how you get better."}]}, {"q": "It's 1 AM, and you're still scrolling — feeling worse with every post.", "opts": [{"g": "best", "t": "Put the phone across the room and do a short wind-down routine.", "tip": "Good sleep is one of the strongest supports for your mood. Protecting it is self-love."}, {"g": "okay", "t": "Switch to a calmer app, but keep scrolling.", "tip": "Gentler content helps a little, but the screen still steals your sleep."}, {"g": "poor", "t": "Keep comparing your life to everyone's highlight reels.", "tip": "Comparison feeds the feeling that you're falling behind."}]}, {"q": "You made a mistake, and your mind says: “You always mess everything up.”", "opts": [{"g": "best", "t": "Answer back: “I made a mistake. That doesn't make me a mistake.”", "tip": "Separating what you did from who you are is at the heart of self-compassion."}, {"g": "okay", "t": "Distract yourself with a game until the feeling fades.", "tip": "Distraction gives you a break, but the harsh thought may come back."}, {"g": "poor", "t": "Agree with the voice and replay the mistake all evening.", "tip": "Believing every harsh thought makes low mood stronger."}]}, {"q": "You have a free afternoon and nothing planned.", "opts": [{"g": "best", "t": "Do something you used to love, even for just 20 minutes.", "tip": "Doing enjoyable things — even before you feel like it — is a proven way to lift low mood."}, {"g": "okay", "t": "Lie in bed watching videos all afternoon.", "tip": "Rest is okay, but a little enjoyable activity often helps more than you'd expect."}, {"g": "poor", "t": "Spend it worrying about everything you should be doing.", "tip": "Worry takes your free time and gives nothing back."}]}, {"q": "You've eaten nothing but snacks all day.", "opts": [{"g": "best", "t": "Make a simple, real meal — even toast and eggs counts.", "tip": "Eating regularly is basic self-care, and it steadies your energy and mood."}, {"g": "okay", "t": "Order fast food and eat it standing up.", "tip": "Eating beats not eating — next time, try sitting down and slowing down."}, {"g": "poor", "t": "Skip dinner because you feel you don't deserve a proper meal.", "tip": "You deserve care on hard days too. Food isn't something you have to earn."}]}, {"q": "A friend texts: “Thinking of you. Want to talk?”", "opts": [{"g": "best", "t": "Reply honestly: “It's been a hard week. A call would be nice.”", "tip": "Letting friends in is self-love too. Connection is one of the strongest protectors of mental health."}, {"g": "okay", "t": "Send a heart emoji and leave it there.", "tip": "A small reply keeps the door open — even better if you can say a little more."}, {"g": "poor", "t": "Leave it on read because you don't want to bother anyone.", "tip": "Pulling away from people who care makes everything feel heavier."}]}, {"q": "Your counselor suggested writing down three good moments each day.", "opts": [{"g": "best", "t": "Write them tonight — even tiny ones, like a warm cup of tea.", "tip": "Noticing small good moments trains your attention away from only the bad ones."}, {"g": "okay", "t": "Plan to start tomorrow instead.", "tip": "Starting later is okay — just don't let “tomorrow” keep moving."}, {"g": "poor", "t": "Tell yourself nothing good ever happens anyway.", "tip": "When you're low, good moments are easy to miss. Looking for them helps you see them."}]}, {"q": "You've been inside all week, and the sun is finally out.", "opts": [{"g": "best", "t": "Step outside for a 10-minute walk, even just around the block.", "tip": "Daylight and gentle movement are simple, proven mood boosters."}, {"g": "okay", "t": "Open the curtains and sit by the window.", "tip": "Some light is better than none — a short walk would help even more."}, {"g": "poor", "t": "Close the curtains. The sunshine just makes you feel worse.", "tip": "Shutting out light and movement tends to keep low mood stuck."}]}, {"q": "You feel guilty for needing so much help lately.", "opts": [{"g": "best", "t": "Remind yourself: “Needing help is human. I'd help someone I love, too.”", "tip": "Treating yourself the way you'd treat a friend is the heart of self-love."}, {"g": "okay", "t": "Promise yourself you'll stop asking for help soon.", "tip": "Wanting independence is natural, but recovery goes better with support."}, {"g": "poor", "t": "Decide you're a burden and pull away from everyone.", "tip": "Feeling like a burden is part of how you feel right now — not the truth."}]}];
 const fillIn = (arr, src) => { arr.splice(0, arr.length, ...JSON.parse(JSON.stringify(src))); };
 function applyPart(n){
   PART = n;
@@ -1611,7 +1607,7 @@ function updateHUD(){
   $("house").classList.toggle("raining", outs.length > 0);
   let msg;
   if (PLAY.energy === 0) msg = PART === 2 ? "🪫 Running on empty — tap Self-love and do something kind for yourself." : "🪫 System Critical — tap Recharge to salvage your sanity!";
-  else if (outs.length) msg = `🌧️ Setback alert: an object in ${ROOMS[Math.floor(outs[0]/2)].ref} went dark again. Time for damage control!`;
+  else if (outs.length) msg = PART === 2 ? `🌧️ A heavy day: the light in ${ROOMS[Math.floor(outs[0]/2)].ref} went out. Find it and get through it together.` : `🌧️ Setback alert: an object in ${ROOMS[Math.floor(outs[0]/2)].ref} went dark again. Time for damage control!`;
   else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill(PART === 2 ? "💗 {P} has something on {their} mind." : "💗 {P} has an unexpressed breakthrough waiting to drop.");
   else if (PLAY.chap === 2 && !PLAY.bedOpen && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit half-lit things.");
   else if (PLAY.energy === 1) msg = PART === 2 ? "⚠️ Battery low — after your next talk, take a self-love break." : "⚠️ Battery Low — your next dialogue interaction triggers a mandatory recharge.";
@@ -1646,11 +1642,15 @@ function needEnergy(){
   if (PLAY.energy > 0) return true;
   sfx.tap();
   const c = $("chapterCard");
-  c.innerHTML = `<div class="chap empty"><div class="bat">🪫</div><small>YOUR ENERGY</small><h2>Running on Empty</h2>
+  c.innerHTML = `${PART === 2 ? `<div class="chap empty"><div class="bat">🪫</div><small>YOUR ENERGY</small><h2>Running Low</h2>
+    <p>When you're struggling, everything costs more energy — getting up, answering messages, even deciding what to eat.</p>
+    <p>Low energy isn't laziness. It's often part of how low mood and stress affect your body and mind.</p>
+    <p class="gain">Self-love isn't selfish or silly. Small, kind actions for yourself help you keep going — and help you heal.</p>
+    ` : `<div class="chap empty"><div class="bat">🪫</div><small>YOUR ENERGY</small><h2>Running on Empty</h2>
     <p>${escH(fill("Supporting someone through mental health struggles consumes massive psychological bandwidth — deep listening, radical patience, and holding hope."))}</p>
     <p>When your battery hits absolute zero, empathy evaporates, leaving irritability, numbness, and <b>caregiver burnout</b>. It happens to anyone carrying heavy loads without systemic breaks.</p>
     <p class="gain">Stepping away to recharge isn't selfish abandonment. It's the mechanism that keeps you upright — for ${escH(inSentence("partner"))} and for yourself.</p>
-    <button class="cta" id="emptyGo">${PART === 2 ? "Choose a self-love action 💖" : "Go recharge 🔋"}</button><button class="ghost" id="emptyLater">Not now</button></div>`;
+    `}<button class="cta" id="emptyGo">${PART === 2 ? "Choose a self-love action 💖" : "Go recharge 🔋"}</button><button class="ghost" id="emptyLater">Not now</button></div>`;
   c.classList.add("show");
   $("emptyGo").onclick = () => { c.classList.remove("show"); setTimeout(goRest, 300); };
   $("emptyLater").onclick = () => { c.classList.remove("show"); anim($("restBtn"), "shake"); };
@@ -1749,7 +1749,7 @@ function answer(i, btn){
     if (o.g !== "help") (PLAY.tried = PLAY.tried || {})[t.idx] = true;
     if (nv > cur || (nv >= 1 && cur === -1)) { PLAY.justLit = t.idx; }
     const objName = ROOMS[t.room].icons[t.idx % 2];
-    lightMsg = nv === 2 && cur !== 2 ? `✨ ${objName} sparks back to vibrant life!` : nv === 1 && cur < 1 ? `${objName} warms up partially. Return later to bring it to full illumination.` : nv === cur && nv < 2 ? "It remains dark. Recalibrate your approach and try again!" : "";
+    lightMsg = nv === 2 && cur !== 2 ? (PART === 2 ? `✨ ${objName} glows again — you let someone in.` : `✨ ${objName} sparks back to vibrant life!`) : nv === 1 && cur < 1 ? (PART === 2 ? `${objName} warms up a little. Come back when you're ready to open up more.` : `${objName} warms up partially. Return later to bring it to full illumination.`) : nv === cur && nv < 2 ? (PART === 2 ? "It stays dark for now. Try a more open, honest answer when you're ready." : "It remains dark. Recalibrate your approach and try again!") : "";
     t.collect = nv > cur || (nv === 1 && cur === -1);
   }
   if (t.kind === "moment") PLAY.tm[t.idx].done = true;
@@ -1763,7 +1763,7 @@ function answer(i, btn){
   why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${baseDt>0?'up':baseDt<0?'down':''}">${baseDt>0?'+':''}${baseDt} ${tw()}</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
     ${streakBonus ? streakCard(PLAY.streak, streakBonus) : lostStreak >= 2 ? `<div class="streak-lost">🔥 Your ${lostStreak}-answer streak ended — the next supportive answer starts a new one.</div>` : ""}
     <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
-    <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? "Resurrect ✨" : t.collect ? "Warm it up" : "Continue"}</button>`;
+    <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? (PART === 2 ? "Let the light in ✨" : "Resurrect ✨") : t.collect ? "Warm it up" : "Continue"}</button>`;
   why.querySelector(".w").textContent = T(o.why);
   if (lightMsg) why.querySelector(".lm").textContent = lightMsg;
   why.querySelector(".bubble").textContent = "“" + T(react) + "”";
@@ -1831,7 +1831,7 @@ function afterTalk(){
       ${paras("Every room is lit — but {p} isn't ready for the hardest conversation yet.\n\nThe Bedroom opens when trust reaches " + BEDROOM_TRUST + ". Right now it's " + PLAY.trust + ".")}
       <div class="retrybox"><b>How to build trust</b>🫶 Spend time together — tap the hug in the Living Room (+8)<br>🕯️ Go back to half-lit objects and choose a better answer (+3)<br>💗 Win any heart that appears (+5)</div>`, btn:"Got it" }));
   }
-  if (PLAY.bedOpen && !PLAY.doorShown) { PLAY.doorShown = true; cards.push(milestoneCard(DOOR, "THE FINAL SECTOR", "The Bedroom is now unlocked.")); }
+  if (PLAY.bedOpen && !PLAY.doorShown) { PLAY.doorShown = true; cards.push(milestoneCard(DOOR, PART === 2 ? "THE LAST ROOM" : "THE FINAL SECTOR", PART === 2 ? "The Bedroom is open. Take it one breath at a time." : "The Bedroom is now unlocked.")); }
   if (PLAY.pendingPhase != null) { const ph = PLAY.pendingPhase; PLAY.pendingPhase = null; cards.push(phaseCard(ph)); if (ph > 0) { const bd = startBadDay(ph); if (bd != null) cards.push(badDayCard(bd)); } }
   if (PLAY.chap + "/" + PLAY.bedOpen !== prevKey) setTimeout(() => placeTokens(false), 300);
   cards.push(...heartCards);
@@ -1854,10 +1854,10 @@ function houseGoesDark(){
   tone(196,.8,.08,0,"sine"); tone(147,1.2,.07,.3,"sine");
   setTimeout(() => showCards([() => ({
     html:`<div class="chap story dark"><small>${PART === 2 ? "HOPE HAS RUN OUT" : "TRUST SYSTEM COLLAPSE"}</small><div class="msface">${PART === 2 ? avatar(GAME.player.kind, null, "dk" + Math.random().toString(36).slice(2,6), "sad") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "dk" + Math.random().toString(36).slice(2,6), "sad")}<span>🌑</span></div>
-      <h2>Total System Blackout</h2>
+      <h2>${PART === 2 ? "The House Goes Quiet" : "Total System Blackout"}</h2>
       ${paras(PART === 2 ? "After pushing {p} away too many times, {they} stop{s} asking how you are. The house goes quiet, and one by one, every light goes out.\n\nThis happens in real life too: when we shut people out again and again, they can lose track of how to reach us.\n\nBut it's never too late. Trust comes back through small, honest moments of letting someone in." : "Following too many clumsy or wounding responses, {p} initiates total emotional withdrawal. The bedroom door stays locked. Every light in the house blows out one by one.\n\nThis mirrors reality: persistent judgment pushes people to build defensive walls.\n\nBut trust can be rebuilt — not through grand sweeping gestures, but via relentless, micro-doses of steady, authentic empathy.")}
       <p class="sb">🌑 Complete blackout. ${Tw()} has bottomed out at ${DARK_TRUST}.</p>
-      <p class="gain">Unlocked rooms remain accessible. Traverse the dark house and relight it — you possess infinitely more wisdom now than when you first stepped inside!</p>`,
+      <p class="gain">${PART === 2 ? "The rooms you opened stay open. Walk back through the house and let the light in again — you know more about yourself now." : "Unlocked rooms remain accessible. Traverse the dark house and relight it — you possess infinitely more wisdom now than when you first stepped inside!"}</p>`,
     btn:"Start rebuilding" })]), 900);
 }
 
@@ -1880,13 +1880,13 @@ function badDayCard(i){
     return { html:`<div class="chap story storm">${rainHTML(28)}<div class="flash"></div>
       <small>🌧️ RELIGHT EVENT</small>
       <div class="bd-scene"><div class="bd-cloud">🌧️</div><div class="bd-obj"><span>${obj}</span></div></div>
-      <h2>A Bad Day</h2>
-      <div class="sub">The light goes out</div>
+      <h2>${PART === 2 ? "A Heavy Day" : "A Bad Day"}</h2>
+      <div class="sub">${PART === 2 ? "Hope flickers" : "The light goes out"}</div>
       ${paras(PART === 2 ? "You had been doing better. Then, one grey morning, everything felt heavy again.\n\nSetbacks are part of healing — not the end of it." : "{P} had been doing better. Then, one grey morning, the curtains stayed closed again.\n\nSetbacks are part of healing — not the end of it.")}
       <div class="bd-mission"><b>Your mission</b>
         <div class="bd-row"><span class="bd-ic">${obj}</span><span>${escH(fill(PART === 2 ? `Then came a bad day. A light in ${ROOMS[r].ref} went out — find it and get through it with {p}.` : `Then came a bad day. A light in ${ROOMS[r].ref} went out — locate it and help {p} relight it.`))}</span></div>
         <div class="bd-reward">🌤️ Relight it with care: <b>+${RELIGHT_BONUS} relight bonus</b></div>
-      </div>`, btn: fill("Go to {them} ☔") };
+      </div>`, btn: PART === 2 ? "Face the day ☔" : fill("Go to {them} ☔") };
   };
 }
 function lightReturnsCard(R){
@@ -1896,7 +1896,7 @@ function lightReturnsCard(R){
     return { html:`<div class="chap story sunny"><div class="rays"></div>
       <small>🌤️ RELIGHT EVENT · COMPLETE</small>
       <div class="bd-scene"><div class="bd-sun">☀️</div><div class="bd-obj lit"><span>${obj}</span></div></div>
-      <h2>The Light Returns</h2>
+      <h2>${PART === 2 ? "Hope Returns" : "The Light Returns"}</h2>
       ${paras(R.full
         ? PART === 2 ? "The rain eases. By evening, you open the curtains and sit beside {p}.\n\n“Thanks for letting me help — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress." : "The rain eases. By evening, {p} opens the curtains and sits beside you.\n\n“Thanks for not giving up on me — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress."
         : "The rain softens, but it hasn't quite stopped. The light flickers back — still a little dim.\n\nCome back later and help it glow fully again.")}
@@ -1911,8 +1911,8 @@ function phaseCard(ph){
     const P = PHASES[ph];
     let extra = "";
     const rooms = ph === 0 ? ""
-      : ph === 1 ? "🚪 New sectors unlocked: Study and Balcony."
-      : "🚪 Your Corner is active. The Bedroom unlocks once the entire house is lit.";
+      : ph === 1 ? (PART === 2 ? "🚪 New rooms open: the Study and the Balcony — places to say it out loud and reach out for help." : "🚪 New sectors unlocked: Study and Balcony.")
+      : (PART === 2 ? "🚪 Your Corner is open — a place to be kind to yourself. The Bedroom opens once the rest of the house is lit." : "🚪 Your Corner is active. The Bedroom unlocks once the entire house is lit.");
     if (rooms) extra += `<p class="gain">${rooms}</p>`;
     if (ph > 0) {
       PLAY.energy = Math.min(MAX_ENERGY, PLAY.energy + 2);
@@ -2052,6 +2052,7 @@ function renderEnd(){
   $("endTeaser").hidden = two; $("nextPartBtn").hidden = two;
   $("againBtn").textContent = two ? "Play Part 2 again ♥" : "Play again ♥";
   $("againBtn").className = two ? "cta" : "ghost";
+  $("learnedH").textContent = two ? "What you learned about yourself" : "What you practised";
   $("learned").innerHTML = LEARNED.map(t => `<li>${escH(t)}</li>`).join("");
   setTimeout(() => { const r = $("pair3").getBoundingClientRect(); burstHearts(r.left + r.width/2, r.top + r.height/3, 30); }, 300);
 }
