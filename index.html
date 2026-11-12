@@ -380,6 +380,29 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
 .sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite}
 @keyframes sway{50%{transform:rotate(1.2deg)}}
+/* ---------- heart message on your loved one ---------- */
+.token.love{overflow:visible;border:0;background:none;box-shadow:none}
+.token.love .tk-face{width:100%;height:100%;border-radius:50%;overflow:hidden;border:3px solid #ffb3cc;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.45)}
+.token.love.has-msg{pointer-events:auto;cursor:pointer;z-index:9}
+.token.love.has-msg .tk-face{border-color:#ff6b9a;animation:msgGlow 1.6s ease-in-out infinite}
+@keyframes msgGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,107,154,.75),0 6px 14px rgba(0,0,0,.45)}60%{box-shadow:0 0 0 12px rgba(255,107,154,0),0 6px 14px rgba(0,0,0,.45)}}
+.love-msg{position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:5px 9px 5px 7px;border-radius:16px;
+  background:#fff;border:2px solid #ff6b9a;box-shadow:0 6px 16px rgba(255,80,140,.5);cursor:pointer;font:inherit;animation:msgPop .6s cubic-bezier(.2,1.6,.4,1) both, msgBob 2.2s ease-in-out infinite .6s;white-space:nowrap}
+.love-msg::after{content:"";position:absolute;left:50%;bottom:-7px;width:10px;height:10px;margin-left:-6px;background:#fff;border-right:2px solid #ff6b9a;border-bottom:2px solid #ff6b9a;transform:rotate(45deg)}
+.lm-heart{font-size:19px;line-height:1;display:block;animation:beat 1.1s ease-in-out infinite}
+.lm-dots{display:flex;gap:3px}
+.lm-dots i{width:5px;height:5px;border-radius:50%;background:#ff6b9a;animation:dotBlink 1.2s ease-in-out infinite}
+.lm-dots i:nth-child(2){animation-delay:.2s}.lm-dots i:nth-child(3){animation-delay:.4s}
+.love-msg .rise{position:absolute;left:50%;top:-6px;font-size:12px;opacity:0;pointer-events:none;animation:riseUp 2.4s ease-out infinite}
+.love-msg .rise.r2{left:20%;animation-delay:1.2s}
+@keyframes msgPop{from{transform:translateX(-50%) scale(0);opacity:0}}
+@keyframes msgBob{50%{margin-bottom:4px}}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(.95)}45%{transform:scale(1.15)}}
+@keyframes dotBlink{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes riseUp{0%{transform:translate(-50%,0);opacity:0}15%{opacity:1}100%{transform:translate(-50%,-34px);opacity:0}}
+.token.love.opening .love-msg{animation:msgOpen .5s ease-in forwards}
+@keyframes msgOpen{to{transform:translateX(-50%) translateY(-14px) scale(1.4);opacity:0}}
+@media (prefers-reduced-motion:reduce){.love-msg,.lm-heart,.lm-dots i,.love-msg .rise,.token.love.has-msg .tk-face{animation:none}}
 /* ---------- relight event ---------- */
 .chap.storm,.chap.sunny{position:relative;overflow:hidden;border-radius:26px;padding:18px 16px 8px}
 .chap.storm{background:linear-gradient(180deg,rgba(40,48,96,.75),rgba(20,20,48,.6));border:1px solid rgba(170,180,255,.35)}
@@ -1420,6 +1443,7 @@ function lockText(r){
 function renderHouse(){
   if (!PLAY) newPlay();
   const house = $("house"), keep = [$("tokMe"), $("tokLove")].map(t => t ? [t.style.left, t.style.top] : null);
+  const nextTmAll = PLAY.tm.findIndex(m => m.shown && !m.done);
   const qtOn = PLAY.chap === 2 && !PLAY.bedOpen && bedroomGate() === "trust";
   house.innerHTML = ROOMS.map((rm, r) => {
     const open = isUnlocked(r);
@@ -1437,7 +1461,6 @@ function renderHouse(){
       return `<button class="spot obj ${cls}" data-q="${i}" style="left:${x}%;top:${y}%" aria-label="${rm.name} moment"><span class="ic">${rm.icons[k]}</span>${badge}</button>`; }).join("");
     // trust moments
     const nextTm = PLAY.tm.findIndex(m => m.shown && !m.done);
-    PLAY.tm.forEach((m, k) => { if (k === nextTm && r === partnerRoom()) spots += `<button class="spot heart special" data-tm="${k}" style="left:${heartPos(r)[0]}%;top:${heartPos(r)[1]}%" aria-label="Heart moment"><span class="aura"></span><span class="hh">💗</span><span class="rise r1">💗</span><span class="rise r2">💕</span><span class="rise r3">💗</span><span class="lbl">Heart</span></button>`; });
     if (r === 0 && qtOn) spots += `<button class="spot heart qt" data-qt="1" style="left:${heartPos(r)[0]}%;top:${heartPos(r)[1]}%" aria-label="Spend time together">🫶<span class="lbl">Time together</span></button>`;
     return `<div class="room ${n>=2?'lit':''} ${open && !roomComplete(r) ? 'cur' : ''}" data-room="${r}" style="--floor:${rm.floor}">
       <svg class="furn" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${FURNITURE[r]}</svg>
@@ -1448,10 +1471,11 @@ function renderHouse(){
         ? `<div class="lock trustlock">🔒<b>Needs trust ${BEDROOM_TRUST}</b><div class="tl"><i id="bedTrustFill" style="width:${Math.min(100, PLAY.trust / BEDROOM_TRUST * 100)}%"></i></div><small id="bedTrustTxt">Now ${PLAY.trust} — spend time together or brighten half-lit objects</small></div>`
         : `<div class="lock">🔒<small>${escH(lockText(r))}</small></div>`}
     </div>`;
-  }).join("") + `<div class="token love" id="tokLove">${partnerAvatar("tl")}</div><div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm","happy")}</div>`;
+  }).join("") + `<div class="token love${nextTmAll >= 0 ? " has-msg" : ""}" id="tokLove"><div class="tk-face">${partnerAvatar("tl")}</div>${nextTmAll >= 0 ? `<button class="love-msg" data-tm="${nextTmAll}" aria-label="${escH(fill("{P} has a message for you"))}"><span class="lm-heart">💗</span><span class="lm-dots"><i></i><i></i><i></i></span><span class="rise r1">💗</span><span class="rise r2">💕</span></button>` : ""}</div><div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm","happy")}</div>`;
   PLAY.justLit = -1;
   house.querySelectorAll(".spot[data-q]").forEach(b => b.onclick = e => { e.stopPropagation(); tapLight(+b.dataset.q); });
-  house.querySelectorAll(".spot[data-tm]").forEach(b => b.onclick = e => { e.stopPropagation(); tapTrustMoment(+b.dataset.tm, b); });
+  const lt = $("tokLove");
+  if (lt.classList.contains("has-msg")) lt.onclick = e => { e.stopPropagation(); tapTrustMoment(+lt.querySelector(".love-msg").dataset.tm); };
   house.querySelectorAll(".spot[data-qt]").forEach(b => b.onclick = e => { e.stopPropagation(); tapQualityTime(b); });
   house.querySelectorAll(".room").forEach(el => el.onclick = () => { const r = +el.dataset.room; if (!isUnlocked(r)) { toast("🔒 " + lockText(r)); sfx.tap(); } });
   updateHUD();
@@ -1481,7 +1505,7 @@ function updateHUD(){
   $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${hState(k)} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${Math.min(h.at, 96)}%" data-h="${k}">${hIcon[hState(k)]}</span>`).join("");
   PLAY.heartNew = [];
   $("hHearts").querySelectorAll(".hm").forEach(el => el.onclick = () => { const k = +el.dataset.h, h = HEARTS[k], st = hState(k);
-    const note = { won:"Heart secured!", lost:"Heart missed.", ready:"Find the 💗 in the house and respond with total care.", far:`Reach trust ${h.at} to unlock this heart.` }[st];
+    const note = { won:"Heart secured!", lost:"Heart missed.", ready:"Tap the 💗 on your loved one and respond with total care.", far:`Reach trust ${h.at} to unlock this heart.` }[st];
     toast(`${hIcon[st]} ${h.name} — ${note}`); });
   $("hPhase").textContent = PHASES[PLAY.phase].label;
   $("hLights").textContent = `✨ ${litN}/12`;
@@ -1552,10 +1576,19 @@ function tapLight(i){
     else openTalk({ kind:"light", idx:i, data:QUESTIONS[i], room:r, revisit: v === 1 });
   });
 }
-function tapTrustMoment(k, el){
-  if (!needEnergy()) return;
-  const r = partnerRoom(), [x, y] = heartPos(r);
-  walkTo(r, x, y, () => openTalk({ kind:"moment", idx:k, data:TRUST_MOMENTS[k], room:r }));
+function tapTrustMoment(k){
+  if (PLAY.ending || !needEnergy()) return;
+  audio(); sfx.tap();
+  const pr = partnerRoom(), L = PLAY.love || { r:pr, x:ROOMS[pr].pp[0], y:ROOMS[pr].pp[1] };
+  const c = v => Math.max(12, Math.min(88, v)), cy = v => Math.max(26, Math.min(88, v));
+  const d = (p, q) => Math.hypot((p[0]-q[0]) * 1.7, (p[1]-q[1]) * 2.15);
+  const avoid = [0,1].map(i => spotPos(L.r, i)).concat([[L.x, L.y]]);
+  const meP = [[-25,0],[25,0],[-20,-14],[20,-14],[0,-18]].map(([dx, dy]) => [c(L.x + dx), cy(L.y + dy)])
+    .map(p => ({ p, s: Math.min(...avoid.map(o => d(o, p))) })).sort((A, B) => B.s - A.s)[0].p;
+  PLAY.me = { r:L.r, x:meP[0], y:meP[1] };
+  const me = $("tokMe"); setTok(me, posIn(L.r, meP[0], meP[1])); anim(me, "walk");
+  const lt = $("tokLove"); lt.classList.add("opening");
+  setTimeout(() => openTalk({ kind:"moment", idx:k, data:TRUST_MOMENTS[k], room:L.r }), 800);
 }
 
 function openTalk(t){
@@ -1814,7 +1847,7 @@ function heartRevealCard(k){
         <path d="M30 18 C22 20 16 27 16 35" stroke="rgba(255,255,255,.7)" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
         <div class="hface">${avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "hr" + k, k >= 3 ? "happy" : "calm")}</div></div>
       <h2>${H.name}</h2>
-      ${paras(H.tip + "\n\n{P} is ready to confess a secret. Locate the 💗 in the house — this event happens once!")}`, btn: fill("Go to {them} 💗") };
+      ${paras(H.tip + "\n\n{P} is ready to confess a secret. Tap the 💗 message on {them} — this event happens once!")}`, btn: fill("Go to {them} 💗") };
   };
 }
 function showCards(list){
