@@ -934,7 +934,7 @@ function pickReact(g, tier){ const pool = REACT[g][tier].filter(x => x !== LAST_
 
 // ================= VOICE =================
 // The main character "talks" in soft musical blips while their words type out — made in the game
-// itself, so it sounds the same on every device. Part 1: your loved one. Part 2: you.
+// itself, so it sounds the same on every device. Your loved one and (in Part 2) you each have a voice.
 const VOICE = { on: true };
 try { const v = localStorage.getItem("hq_voice"); if (v !== null) VOICE.on = v === "1"; } catch (e) {}
 const VOICE_BASE = { man:150, woman:285, nonbinary:215 };
@@ -1879,7 +1879,7 @@ function openTalk(t){
     typeStep(card.querySelector(".scene"), T(Q.scene), 16, null),
     showEl(card.querySelector(".cue")),
     showEl(say),
-    typeStep(say && say.querySelector(".bubble"), Q.line ? "“" + T(Q.line) + "”" : "", 30, PART === 1 ? { kind:GAME.partner.kind, mood:partnerMood() } : null),
+    typeStep(say && say.querySelector(".bubble"), Q.line ? "“" + T(Q.line) + "”" : "", 30, { kind:GAME.partner.kind, mood:partnerMood() }),
     showEl(card.querySelector(".ask")),
     popOpts(card)
   ]);
@@ -1936,7 +1936,7 @@ function answer(i, btn){
   why.querySelector(".w").textContent = T(o.why);
   if (lightMsg) why.querySelector(".lm").textContent = lightMsg;
   { const rb = why.querySelector(".say:not(.mine) .bubble"), mb = why.querySelector(".say.mine .bubble");
-    const sayReact = () => typeText(rb, "“" + T(react) + "”", 28, PART === 1 ? { kind:GAME.partner.kind, mood:partnerMood() } : null);
+    const sayReact = () => typeText(rb, "“" + T(react) + "”", 28, { kind:GAME.partner.kind, mood:partnerMood() });
     if (mb) { rb.textContent = ""; typeText(mb, "“" + spokenPart(T(o.t)) + "”", 28, { kind:GAME.player.kind, mood:playerMood() }, () => setTimeout(sayReact, 250)); }
     else setTimeout(sayReact, 250); }
   if (streakBonus) { setTimeout(() => { [523,659,784,1047,1319].slice(0, 2 + streakBonus).forEach((f,i) => tone(f,.18,.06,i*.08,"triangle")); const c = why.querySelector(".streak-card"); if (c) { const r = c.getBoundingClientRect(); emberBurst(c, 14 + streakBonus * 6); } }, 650); }
