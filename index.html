@@ -254,6 +254,21 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .chap.empty h2{font-size:40px;background:linear-gradient(180deg,#fff,#ffb59a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .chap.empty p{font-size:15px;text-align:left}
 .chap.empty p b{color:#ffd6c7}
+/* ---------- objects instead of lights ---------- */
+.spot.obj{width:50px;height:50px;margin:-25px 0 0 -25px}
+.spot.obj .ic{position:relative;z-index:1;font-size:clamp(24px,7vw,32px);line-height:1;filter:grayscale(1) brightness(.5) contrast(.9);transition:filter .8s,transform .4s}
+.spot.obj::before{inset:2px;background:radial-gradient(circle,rgba(255,230,170,.35),rgba(255,200,120,.12) 50%,transparent 70%)}
+.spot.obj.dim .ic{filter:grayscale(.45) brightness(.85)}
+.spot.obj.dim::before{background:radial-gradient(circle,rgba(255,220,160,.45),transparent 65%);transform:scale(.9)}
+.spot.obj.done .ic{filter:none;transform:scale(1.08)}
+.spot.obj.done::before{background:radial-gradient(circle,rgba(255,235,190,.75),rgba(255,200,110,.25) 50%,transparent 70%);opacity:1;transform:scale(1.4)}
+.spot.obj.out .ic{filter:grayscale(1) brightness(.45)}
+.spot.obj .bd{position:absolute;right:-4px;top:-6px;z-index:2;font-size:15px}
+.spot.obj.pop .ic{animation:objpop .9s cubic-bezier(.2,1.6,.4,1)}
+@keyframes objpop{0%{transform:scale(.4);filter:grayscale(1) brightness(.5)}60%{transform:scale(1.4)}100%{transform:scale(1.08)}}
+.comfort{position:absolute;z-index:4;transform:translate(-50%,-50%);font-size:clamp(20px,6vw,28px);filter:drop-shadow(0 3px 6px rgba(0,0,0,.35)) drop-shadow(0 0 10px rgba(255,220,150,.6));pointer-events:none}
+.comfort.pop{animation:comfortIn 1.2s cubic-bezier(.2,1.5,.4,1)}
+@keyframes comfortIn{0%{transform:translate(-50%,-50%) scale(0) rotate(-30deg);opacity:0}70%{transform:translate(-50%,-50%) scale(1.3)}100%{transform:translate(-50%,-50%) scale(1)}}
 /* ---------- question sheet ---------- */
 .sheet-bg{position:fixed;inset:0;z-index:20;background:rgba(15,6,22,.6);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .sheet-bg.show{opacity:1;pointer-events:auto}
@@ -361,11 +376,12 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="pair" id="pair2" style="margin-top:0"></div>
       <div class="story" id="introLine"></div>
       <div class="howto">
-        <div><span>💡</span><em>Each room hides <b>2 lights</b>. Each one is a moment with your loved one — choose how to respond.</em></div>
+        <div><span>🎸</span><em>Each room has <b>2 things</b> gone dark and grey. Tap one: it's a moment with your loved one. Respond well and it comes back to life — finish a room to bring in something cosy.</em></div>
         <div><span>💗</span><em><b>Trust</b> grows with supportive answers and drops with hurtful ones. The more trust, the more they open up.</em></div>
         <div><span>🔋</span><em>Every talk costs <b>energy</b>. Run empty and the kindest words get hard to find — recharge in Your Corner.</em></div>
         <div><span>👀</span><em><b>Read the moment.</b> Sometimes they need quiet company, sometimes your full attention.</em></div>
-        <div><span>🌧️</span><em>Weeks pass. On <b>bad days</b> a light may go out — help relight it.</em></div>
+        <div><span>🗺️</span><em><b>Choose your path.</b> Each chapter opens new rooms — visit them in any order.</em></div>
+        <div><span>🌧️</span><em>Weeks pass. On <b>bad days</b> something may go dark again — help bring it back.</em></div>
       </div>
     </div>
     <button class="cta" id="enterBtn">Enter the house</button>
@@ -383,7 +399,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
     </div>
     <div class="hud2">
       <span class="phase" id="hPhase">WEEK 1</span>
-      <span class="lights" id="hLights">💡 0/12</span>
+      <span class="lights" id="hLights">✨ 0/12</span>
       <span class="energy" id="hEnergy" title="Your energy"></span>
       <button class="restbtn" id="restBtn">🔋 Recharge</button>
     </div>
@@ -699,7 +715,7 @@ const PHASES = [
 ];
 // A short story when each room fills with light.
 const MILESTONES = [
-  { icon:"🛋️", title:"The First Light", mood:"sad",
+  { icon:"🛋️", title:"Being Noticed", mood:"sad",
     story:"For the first time in weeks, {p} let you sit close on the sofa. Nothing was fixed — but something shifted.\n\nWhen you said goodnight, {P} whispered: “Thanks for noticing.”\n\nNoticing is the first light." },
   { icon:"🍲", title:"Warm Bowls", mood:"calm",
     story:"The kitchen smells like ginger soup again. {P} finished half a bowl — more than all week.\n\nSometimes love isn't a speech. It's a warm meal set down quietly, and staying to keep {them} company." },
@@ -714,12 +730,18 @@ const DOOR = { icon:"🚪", title:"The Door Opens", mood:"sad",
   story:"That night, there's a soft knock on your door. It's {p}.\n\n“Can we talk? There's something I haven't told anyone.”\n\nEverything you've practised has led to this moment. Take a breath. Stay calm. Stay close." };
 
 const ROOMS = [
-  { name:"Living Room", ref:"the Living Room", theme:"Noticing the signs",    floor:"#a8746a", deco:[["🛋️",26,72],["📺",78,26],["🪴",88,80]], spots:[[34,40],[66,62]], pp:[52,82], ex:[18,44] },
-  { name:"Kitchen",     ref:"the Kitchen",     theme:"Small acts of care",    floor:"#8f9a7a", deco:[["🍳",18,30],["☕",84,74],["🧺",16,80]], spots:[[48,36],[62,70]], pp:[38,66], ex:[80,40] },
-  { name:"Study",       ref:"the Study",       theme:"Listening well",        floor:"#7b7fa8", deco:[["📚",16,30],["💻",82,30],["🕯️",18,78]], spots:[[50,46],[72,74]], pp:[40,70], ex:[28,50] },
-  { name:"Balcony",     ref:"the Balcony",     theme:"Finding help",          floor:"#6f9aa3", deco:[["🌙",84,22],["🪴",14,30],["🌿",86,80]], spots:[[40,40],[62,70]], pp:[30,72], ex:[72,40] },
-  { name:"Your Corner", ref:"Your Corner",     theme:"Caring for yourself",   floor:"#a58a6a", deco:[["🧸",18,30],["🎧",82,30],["🛁",80,78]], spots:[[48,46],[34,74]], pp:[64,74], ex:[20,56], rest:[56,22] },
-  { name:"Bedroom",     ref:"the Bedroom",     theme:"In the darkest moments",floor:"#8a6a9a", deco:[["🛏️",30,64],["🕯️",84,26],["🖼️",16,26]], spots:[[56,42],[72,72]], pp:[30,52], ex:[80,50] }
+  { name:"Living Room", ref:"the Living Room", theme:"Noticing the signs",    floor:"#a8746a", deco:[["🛋️",26,72],["📺",78,26],["🪴",88,80]], spots:[[34,40],[66,62]], pp:[52,82], ex:[18,44],
+    icons:["🎸","🎧"], comfort:["🌻",56,22,"fresh sunflowers"] },
+  { name:"Kitchen",     ref:"the Kitchen",     theme:"Small acts of care",    floor:"#8f9a7a", deco:[["🍳",18,30],["☕",84,74],["🧺",16,80]], spots:[[48,36],[62,70]], pp:[38,66], ex:[80,40],
+    icons:["🍲","🍽️"], comfort:["🧁",30,56,"a tray of cupcakes"] },
+  { name:"Study",       ref:"the Study",       theme:"Listening well",        floor:"#7b7fa8", deco:[["📚",16,30],["💻",82,30],["🗂️",18,78]], spots:[[50,46],[72,74]], pp:[40,70], ex:[28,50],
+    icons:["🫖","🚪"], comfort:["🧶",84,56,"a cosy knitted throw"] },
+  { name:"Balcony",     ref:"the Balcony",     theme:"Finding help",          floor:"#6f9aa3", deco:[["🌙",84,22],["🪴",14,30],["🌿",86,80]], spots:[[40,40],[62,70]], pp:[30,72], ex:[72,40],
+    icons:["🩺","🌱"], comfort:["🌺",18,62,"blooming flowers"] },
+  { name:"Your Corner", ref:"Your Corner",     theme:"Caring for yourself",   floor:"#a58a6a", deco:[["🧸",18,30],["🎵",82,30],["📖",84,80]], spots:[[48,46],[34,74]], pp:[64,74], ex:[20,56], rest:[56,22],
+    icons:["🛁","📱"], comfort:["🍵",80,54,"a warm cup of tea"] },
+  { name:"Bedroom",     ref:"the Bedroom",     theme:"In the darkest moments",floor:"#8a6a9a", deco:[["🛏️",30,64],["🪞",84,26],["🖼️",16,26]], spots:[[56,42],[72,72]], pp:[30,52], ex:[80,50],
+    icons:["💭","☎️"], comfort:null }
 ];
 
 // g: help = most supportive, okay = well-meant but not ideal, hurt = hurtful.
@@ -965,7 +987,7 @@ const REACT = {
 // light: 0 = dark, 1 = dim (okay answer — can be revisited), 2 = bright, -1 = gone out (setback)
 let PLAY = null;
 function newPlay(){
-  PLAY = { light:Array(12).fill(0), trust:START_TRUST, energy:MAX_ENERGY, maxRoom:0, phase:0,
+  PLAY = { light:Array(12).fill(0), trust:START_TRUST, energy:MAX_ENERGY, chap:0, bedOpen:false, phase:0, justLit:-1,
            setback:{}, setbacksFixed:0, tm:TRUST_MOMENTS.map(() => ({ shown:false, done:false })),
            restsGood:0, rests:0, qt:0, msShown:[], doorShown:false, me:{ r:0, x:18, y:90 }, q:null, pendingPhase:null };
 }
@@ -973,22 +995,22 @@ const lit = i => PLAY.light[i] >= 1;
 const roomComplete = r => lit(r*2) && lit(r*2+1);
 const outLights = () => PLAY.light.map((v,i) => v === -1 ? i : -1).filter(i => i >= 0);
 function bedroomGate(){ // reason the bedroom is closed, or "" if open
-  if (!roomComplete(4)) return "lights";
+  for (let r = 0; r < 5; r++) if (!roomComplete(r)) return "lights";
   if (outLights().length) return "out";
   if (PLAY.trust < BEDROOM_TRUST) return "trust";
   return "";
 }
-function isUnlocked(r){ if (r === 5) return PLAY.maxRoom >= 5; return r <= PLAY.maxRoom; }
+// Rooms open by chapter: Week 1 = Living Room + Kitchen, Week 3 = Study + Balcony,
+// Month 2 = Your Corner (+ the Bedroom once everything else is lit and trust is high enough).
+const chapterOf = r => Math.floor(r / 2);
+function isUnlocked(r){ if (r === 5) return PLAY.bedOpen; return chapterOf(r) <= PLAY.chap; }
 function refreshUnlocks(){
   let changed = false;
-  while (PLAY.maxRoom < 5) {
-    const r = PLAY.maxRoom;
-    if (!roomComplete(r)) break;
-    if (r + 1 === 5 && bedroomGate()) break;
-    PLAY.maxRoom++; changed = true;
-    const ph = PHASES.findIndex(p => p.from === PLAY.maxRoom);
-    if (ph > PLAY.phase) { PLAY.phase = ph; PLAY.pendingPhase = ph; }
+  while (PLAY.chap < 2 && roomComplete(PLAY.chap*2) && roomComplete(PLAY.chap*2+1)) {
+    PLAY.chap++; changed = true;
+    if (PLAY.chap > PLAY.phase) { PLAY.phase = PLAY.chap; PLAY.pendingPhase = PLAY.chap; }
   }
+  if (PLAY.chap === 2 && !PLAY.bedOpen && !bedroomGate()) { PLAY.bedOpen = true; changed = true; }
   return changed;
 }
 function trustTier(){ return PLAY.trust < 40 ? 0 : PLAY.trust < 70 ? 1 : 2; }
@@ -1019,34 +1041,37 @@ function setTok(el, p, instant){
   if (instant) { void el.offsetWidth; el.style.transition = ""; }
 }
 function partnerRoom(){
-  for (let r = 0; r <= PLAY.maxRoom; r++) if (!roomComplete(r)) return r;
-  if (PLAY.maxRoom < 5 && bedroomGate() === "trust") return 0;   // waiting to spend time together
-  return PLAY.maxRoom;
+  for (let r = 0; r < 6; r++) if (isUnlocked(r) && !roomComplete(r)) return r;
+  if (!PLAY.bedOpen && bedroomGate() === "trust") return 0;   // waiting to spend time together
+  return 5;
 }
 function lockText(r){
-  if (r !== 5) return `Light up ${ROOMS[r-1].ref} first`;
-  const g = bedroomGate();
-  if (g === "out") return "Relight every light first";
-  if (g === "trust") return fill(`{P} isn't ready to let you in yet. Build trust (${PLAY.trust}/${BEDROOM_TRUST}).`);
-  return `Light up ${ROOMS[4].ref} first`;
+  if (r === 5) {
+    const g = bedroomGate();
+    if (g === "out") return "Relight every light first";
+    if (g === "trust") return fill(`{P} isn't ready to let you in yet. Build trust (${PLAY.trust}/${BEDROOM_TRUST}).`);
+    return PLAY.chap < 2 ? "Opens in Month 2" : "Opens when the rest of the house is lit";
+  }
+  return `Opens in ${PHASES[chapterOf(r)].title}`;
 }
 function renderHouse(){
   if (!PLAY) newPlay();
   const house = $("house"), keep = [$("tokMe"), $("tokLove")].map(t => t ? [t.style.left, t.style.top] : null);
-  const qtOn = PLAY.maxRoom === 4 && roomComplete(4) && !outLights().length && PLAY.trust < BEDROOM_TRUST;
+  const qtOn = PLAY.chap === 2 && !PLAY.bedOpen && bedroomGate() === "trust";
   house.innerHTML = ROOMS.map((rm, r) => {
     const open = isUnlocked(r);
     const n = [r*2, r*2+1].reduce((s,i) => s + (PLAY.light[i] === 2 ? 1 : PLAY.light[i] === 1 ? .6 : 0), 0);
     const d0 = open ? 0.55 - n * 0.27 : 0.8, d1 = open ? 0.88 - n * 0.44 : 0.92;
     let spots = "";
     if (open) spots = rm.spots.map(([x,y],k) => { const i = r*2+k, v = PLAY.light[i];
-      const cls = v === 2 ? "done" : v === 1 ? "dim" : v === -1 ? "out" : "";
-      return `<button class="spot ${cls}" data-q="${i}" style="left:${x}%;top:${y}%" aria-label="Light"></button>`; }).join("");
+      const cls = (v === 2 ? "done" : v === 1 ? "dim" : v === -1 ? "out" : "") + (PLAY.justLit === i ? " pop" : "");
+      return `<button class="spot obj ${cls}" data-q="${i}" style="left:${x}%;top:${y}%" aria-label="${rm.name} moment"><span class="ic">${rm.icons[k]}</span>${v === -1 ? '<span class="bd">🌧️</span>' : ''}</button>`; }).join("");
+    if (open && rm.comfort && roomComplete(r)) spots += `<div class="comfort ${PLAY.newComfort === r ? 'pop' : ''}" style="left:${rm.comfort[1]}%;top:${rm.comfort[2]}%" title="${rm.comfort[3]}">${rm.comfort[0]}</div>`;
     // trust moments
     PLAY.tm.forEach((m, k) => { if (m.shown && !m.done && r === partnerRoom()) spots += `<button class="spot heart" data-tm="${k}" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Trust moment">💗</button>`; });
     if (r === 0 && qtOn) spots += `<button class="spot heart" data-qt="1" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Spend time together">🫶</button>`;
     if (r === 4) spots += `<button class="spot rest" id="restSpot" style="left:${rm.rest[0]}%;top:${rm.rest[1]}%" aria-label="Recharge">🔋</button>`;
-    return `<div class="room ${n>=2?'lit':''} ${r===partnerRoom() && open ? 'cur' : ''}" data-room="${r}" style="--floor:${rm.floor}">
+    return `<div class="room ${n>=2?'lit':''} ${open && !roomComplete(r) ? 'cur' : ''}" data-room="${r}" style="--floor:${rm.floor}">
       ${rm.deco.map(([e,x,y]) => `<div class="deco" style="left:${x}%;top:${y}%">${e}</div>`).join("")}
       <div class="dark" style="--d0:${Math.max(0,d0)};--d1:${Math.max(0,d1)}"></div>
       <div class="rname">${rm.name}<small>${open ? rm.theme : ""}</small></div>
@@ -1054,6 +1079,7 @@ function renderHouse(){
       ${open ? "" : `<div class="lock ${r===4?'small':''}">🔒<small>${escH(lockText(r))}</small></div>`}
     </div>`;
   }).join("") + `<div class="token love" id="tokLove">${partnerAvatar("tl")}</div><div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm","happy")}</div>`;
+  PLAY.justLit = -1; PLAY.newComfort = -1;
   house.querySelectorAll(".spot[data-q]").forEach(b => b.onclick = e => { e.stopPropagation(); tapLight(+b.dataset.q); });
   house.querySelectorAll(".spot[data-tm]").forEach(b => b.onclick = e => { e.stopPropagation(); tapTrustMoment(+b.dataset.tm, b); });
   house.querySelectorAll(".spot[data-qt]").forEach(b => b.onclick = e => { e.stopPropagation(); tapQualityTime(b); });
@@ -1082,7 +1108,7 @@ function updateHUD(){
   $("hFill").style.width = PLAY.trust + "%";
   $("hMark").style.left = BEDROOM_TRUST + "%";
   $("hPhase").textContent = PHASES[PLAY.phase].label;
-  $("hLights").textContent = `💡 ${litN}/12`;
+  $("hLights").textContent = `✨ ${litN}/12`;
   $("hEnergy").innerHTML = Array.from({length:MAX_ENERGY}, (_,i) => `<i class="${i < PLAY.energy ? 'on' : ''}"></i>`).join("");
   $("hEnergy").classList.toggle("low", PLAY.energy <= 1);
   $("restBtn").classList.toggle("urge", PLAY.energy <= 1);
@@ -1090,12 +1116,15 @@ function updateHUD(){
   const outs = outLights(), g = bedroomGate();
   let msg;
   if (PLAY.energy === 0) msg = "🪫 Running on Empty — tap Recharge to look after yourself.";
-  else if (outs.length) msg = `🌧️ A light went out on a bad day. Find it in ${ROOMS[Math.floor(outs[0]/2)].ref} and relight it.`;
+  else if (outs.length) msg = `🌧️ A bad day: something in ${ROOMS[Math.floor(outs[0]/2)].ref} went dark again. Find it and help.`;
   else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill("💗 {P} wants to tell you something.");
-  else if (PLAY.maxRoom === 4 && roomComplete(4) && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit dim 🕯️ lights.");
+  else if (PLAY.chap === 2 && !PLAY.bedOpen && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit half-lit things.");
   else if (PLAY.energy === 1) msg = "⚠️ Energy is low — the kindest words get harder to find. Consider recharging.";
-  else { const r = partnerRoom(), left = [r*2, r*2+1].filter(i => !lit(i)).length;
-    msg = left ? `${ROOMS[r].name} · ${ROOMS[r].theme} — ${left} light${left>1?'s':''} left.` : "Tap a glowing light 💡 to talk."; }
+  else {
+    const open = ROOMS.map((rm, r) => ({ rm, r, left:[r*2, r*2+1].filter(i => !lit(i)).length })).filter(o => isUnlocked(o.r) && o.left);
+    msg = open.length > 1 ? `${PHASES[PLAY.phase].title} — choose a room: ` + open.map(o => `${o.rm.name} (${o.left})`).join(" · ")
+        : open.length ? `${open[0].rm.name} · ${open[0].rm.theme} — ${open[0].left} left.` : "Tap something in the house to begin.";
+  }
   $("guide").textContent = msg;
 }
 
@@ -1144,7 +1173,8 @@ function openTalk(t){
   PLAY.q = t;
   const Q = t.data, rm = ROOMS[t.room];
   const order = shuffleArr([0,1,2]);
-  const chip = t.kind === "setback" ? "🌧️ A BAD DAY" : t.kind === "moment" ? "💗 TRUST MOMENT" : `${rm.name.toUpperCase()} · ${rm.theme.toUpperCase()}`;
+  const icon = (t.kind === "light" || t.kind === "setback") ? rm.icons[t.idx % 2] + " " : "";
+  const chip = t.kind === "setback" ? icon + "A BAD DAY" : t.kind === "moment" ? "💗 TRUST MOMENT" : `${icon}${rm.name.toUpperCase()} · ${rm.theme.toUpperCase()}`;
   const tag = t.kind === "light" ? (t.revisit ? "Revisit 🕯️" : `Light ${t.idx+1} / 12`) : "";
   const card = $("qCard");
   card.innerHTML = `<div class="qhead"><span class="chip">${chip}</span><span class="n">${tag}</span></div>
@@ -1193,7 +1223,9 @@ function answer(i, btn){
     else if (o.g === "okay" && !Q.critical) nv = Math.max(cur, 1);
     if (t.kind === "setback" && nv >= 1) PLAY.setbacksFixed++;
     PLAY.light[t.idx] = nv; lightNow = nv;
-    lightMsg = nv === 2 && cur !== 2 ? "✨ The light shines bright." : nv === 1 && cur < 1 ? "🕯️ The light flickers on, dimly. You can come back and brighten it." : nv === cur && nv < 2 ? "The light stays dark. You can come back and try again." : "";
+    if (nv > cur || (nv >= 1 && cur === -1)) { PLAY.justLit = t.idx; const rr = Math.floor(t.idx / 2); if (roomComplete(rr) && !PLAY.msShown.includes(rr)) PLAY.newComfort = rr; }
+    const objName = ROOMS[t.room].icons[t.idx % 2];
+    lightMsg = nv === 2 && cur !== 2 ? `✨ ${objName} glows back to life.` : nv === 1 && cur < 1 ? `${objName} warms up a little. Come back later to bring it fully to life.` : nv === cur && nv < 2 ? "It stays dark for now. You can come back and try again." : "";
     t.collect = nv > cur || (nv === 1 && cur === -1);
   }
   if (t.kind === "moment") PLAY.tm[t.idx].done = true;
@@ -1206,7 +1238,7 @@ function answer(i, btn){
   const why = $("qWhy");
   why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${dt>0?'up':dt<0?'down':''}">${dt>0?'+':''}${dt} trust</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}</div>
     <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
-    <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? "Collect the light ✨" : t.collect ? "Light the candle 🕯️" : "Continue"}</button>`;
+    <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? "Bring it back to life ✨" : t.collect ? "Warm it up" : "Continue"}</button>`;
   why.querySelector(".w").textContent = T(o.why);
   if (lightMsg) why.querySelector(".lm").textContent = lightMsg;
   why.querySelector(".bubble").textContent = "“" + T(react) + "”";
@@ -1235,16 +1267,16 @@ function finishTalk(){
 
 function afterTalk(){
   // trust moments become available
-  PLAY.tm.forEach((m, k) => { if (!m.shown && PLAY.trust >= TRUST_MOMENTS[k].at && PLAY.maxRoom >= 1) { m.shown = true; setTimeout(() => toast(fill("💗 {P} wants to tell you something")), 600); } });
+  PLAY.tm.forEach((m, k) => { if (!m.shown && PLAY.trust >= TRUST_MOMENTS[k].at && PLAY.light.filter(v => v >= 1).length >= 2) { m.shown = true; setTimeout(() => toast(fill("💗 {P} wants to tell you something")), 600); } });
   if (PLAY.darkPending) { PLAY.darkPending = false; houseGoesDark(); return; }
-  const prevMax = PLAY.maxRoom;
+  const prevKey = PLAY.chap + "/" + PLAY.bedOpen;
   refreshUnlocks();
   renderHouse();
   const cards = [];
-  for (let r = 0; r < 5; r++) if (roomComplete(r) && !PLAY.msShown.includes(r)) { PLAY.msShown.push(r); cards.push(milestoneCard(MILESTONES[r], "MILESTONE · " + ROOMS[r].name.toUpperCase(), r + 1 < 5 && isUnlocked(r + 1) ? `${cap(ROOMS[r+1].ref)} is now open.` : "")); }
-  if (PLAY.maxRoom === 5 && !PLAY.doorShown) { PLAY.doorShown = true; cards.push(milestoneCard(DOOR, "THE FINAL ROOM", "The Bedroom is now open.")); }
+  for (let r = 0; r < 5; r++) if (roomComplete(r) && !PLAY.msShown.includes(r)) { PLAY.msShown.push(r); const c = ROOMS[r].comfort; cards.push(milestoneCard(MILESTONES[r], "MILESTONE · " + ROOMS[r].name.toUpperCase(), c ? `New in ${ROOMS[r].ref}: ${c[0]} ${c[3]}` : "")); }
+  if (PLAY.bedOpen && !PLAY.doorShown) { PLAY.doorShown = true; cards.push(milestoneCard(DOOR, "THE FINAL ROOM", "The Bedroom is now open.")); }
   if (PLAY.pendingPhase != null) { const ph = PLAY.pendingPhase; PLAY.pendingPhase = null; cards.push(phaseCard(ph)); }
-  if (PLAY.maxRoom > prevMax) setTimeout(() => placeTokens(false), 300);
+  if (PLAY.chap + "/" + PLAY.bedOpen !== prevKey) setTimeout(() => placeTokens(false), 300);
   if (cards.length) setTimeout(() => showCards(cards), 600);
   if (PLAY.light.every(v => v >= 1) && roomComplete(5)) { PLAY.ending = true; setTimeout(() => { sfx.love(); go("s-end"); }, 1100); }
 }
@@ -1275,6 +1307,10 @@ function phaseCard(ph){
   return () => {
     const P = PHASES[ph];
     let extra = "";
+    const rooms = ph === 0 ? "Choose where to begin: the Living Room or the Kitchen."
+      : ph === 1 ? "🚪 New rooms are open: the Study and the Balcony. Visit them in any order."
+      : "🚪 Your Corner is open. The Bedroom will open when the rest of the house is lit.";
+    extra += `<p class="gain">${rooms}</p>`;
     if (ph > 0) {
       PLAY.energy = Math.min(MAX_ENERGY, PLAY.energy + 2);
       extra += `<p class="gain">🔋 Time passes. You catch your breath: +2 energy</p>`;
