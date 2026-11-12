@@ -380,6 +380,46 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
 .sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite}
 @keyframes sway{50%{transform:rotate(1.2deg)}}
+/* ---------- relight event ---------- */
+.chap.storm,.chap.sunny{position:relative;overflow:hidden;border-radius:26px;padding:18px 16px 8px}
+.chap.storm{background:linear-gradient(180deg,rgba(40,48,96,.75),rgba(20,20,48,.6));border:1px solid rgba(170,180,255,.35)}
+.chap.storm h2{background:linear-gradient(180deg,#fff,#a9b4ff);-webkit-background-clip:text;background-clip:text}
+.chap.storm small,.chap.storm .sub{color:#b9c2ff}
+.chap.storm>*:not(.rain):not(.flash){position:relative;z-index:1}
+.rain{position:absolute;inset:0;pointer-events:none;z-index:0}
+.rain i{position:absolute;top:-20%;width:1.5px;height:16%;background:linear-gradient(transparent,rgba(190,205,255,.55));animation:rainFall .7s linear infinite}
+@keyframes rainFall{to{transform:translateY(720%)}}
+.flash{position:absolute;inset:0;background:#e8ecff;opacity:0;pointer-events:none;z-index:2;animation:flash 6s ease-out infinite .6s}
+@keyframes flash{0%,100%{opacity:0}2%{opacity:.55}4%{opacity:0}6%{opacity:.3}9%{opacity:0}}
+.bd-scene{position:relative;height:96px;margin:10px auto 4px;width:120px}
+.bd-cloud{position:absolute;left:50%;top:-4px;transform:translateX(-50%);font-size:40px;animation:cloudBob 3s ease-in-out infinite;z-index:2}
+@keyframes cloudBob{50%{transform:translate(-50%,4px)}}
+.bd-obj{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:62px;height:62px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 40%,#2c2e52,#151428);border:2px solid rgba(170,180,255,.7);box-shadow:0 0 18px rgba(150,160,255,.45)}
+.bd-obj span{font-size:30px;animation:goOut 1.6s ease-in forwards .5s}
+@keyframes goOut{0%{filter:none}30%{filter:brightness(1.6)}45%{filter:grayscale(1) brightness(.5)}55%{filter:brightness(1.3)}100%{filter:grayscale(1) brightness(.4)}}
+.bd-mission{font-family:Nunito,system-ui,sans-serif;font-style:normal;margin:6px 0 12px;padding:12px;border-radius:18px;background:rgba(169,180,255,.14);border:1px solid rgba(169,180,255,.5);text-align:left}
+.bd-mission>b{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c8cfff;margin-bottom:8px}
+.bd-row{display:flex;gap:10px;align-items:center;font-weight:800;font-size:14px;color:#eef0ff}
+.bd-ic{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#1c1d3a;border:1px dashed #a9b4ff;filter:grayscale(1)}
+.bd-reward{margin-top:10px;font-size:13px;font-weight:800;color:#ffe7a8}
+.bd-reward b{color:#fff2c4}
+.chap.sunny{background:linear-gradient(180deg,rgba(255,210,122,.22),rgba(255,140,170,.12));border:1px solid rgba(255,210,122,.5)}
+.chap.sunny>*:not(.rays){position:relative;z-index:1}
+.rays{position:absolute;left:50%;top:70px;width:520px;height:520px;margin:-260px 0 0 -260px;z-index:0;pointer-events:none;opacity:.35;
+  background:repeating-conic-gradient(from 0deg,rgba(255,226,150,.55) 0 8deg,transparent 8deg 22deg);border-radius:50%;
+  -webkit-mask:radial-gradient(circle,#000 0,transparent 65%);mask:radial-gradient(circle,#000 0,transparent 65%);animation:spin 30s linear infinite}
+.bd-sun{position:absolute;left:50%;top:-6px;transform:translateX(-50%);font-size:40px;animation:sunUp .9s cubic-bezier(.2,1.5,.4,1) both .2s;z-index:2}
+@keyframes sunUp{from{transform:translate(-50%,30px) scale(.3);opacity:0}}
+.bd-obj.lit{background:radial-gradient(circle at 50% 40%,#fff3c9,#ffb84d);border-color:#fff2c4;box-shadow:0 0 30px rgba(255,210,122,.9);animation:litPop .8s cubic-bezier(.2,1.6,.4,1) both .5s}
+.bd-obj.lit span{animation:none}
+@keyframes litPop{0%{transform:translateX(-50%) scale(.6);filter:grayscale(1) brightness(.5)}100%{transform:translateX(-50%) scale(1)}}
+.qcard.stormq{background:linear-gradient(180deg,#2a2f5e,#1d1b3d 60%,#241838);border-color:rgba(170,180,255,.45)}
+.qcard.stormq .chip{background:rgba(169,180,255,.22);color:#dfe3ff;border-color:rgba(169,180,255,.5)}
+.house.raining::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:5;border-radius:inherit;opacity:.5;
+  background:repeating-linear-gradient(105deg,transparent 0 14px,rgba(190,205,255,.18) 14px 15px,transparent 15px 34px);background-size:200% 200%;animation:houseRain .6s linear infinite}
+@keyframes houseRain{to{background-position:-34px 120px}}
+@media (prefers-reduced-motion:reduce){.rain,.flash,.house.raining::after,.rays,.bd-cloud{animation:none}.rain{display:none}}
 /* ---------- streak bonus card ---------- */
 .streak-card{position:relative;display:flex;align-items:center;gap:12px;margin:12px 0 4px;padding:12px 14px;border-radius:20px;overflow:hidden;
   background:linear-gradient(120deg,#5a1a1a,#a8321f 45%,#ff7a2e 100%);border:1px solid rgba(255,210,122,.7);
@@ -1440,9 +1480,10 @@ function updateHUD(){
   $("restBtn").classList.toggle("urge", PLAY.energy <= 1);
   // guide text
   const outs = outLights(), g = bedroomGate();
+  $("house").classList.toggle("raining", outs.length > 0);
   let msg;
   if (PLAY.energy === 0) msg = "🪫 Running on Empty — tap Recharge to look after yourself.";
-  else if (outs.length) msg = `🌧️ A bad day: something in ${ROOMS[Math.floor(outs[0]/2)].ref} went dark again. Find it and help.`;
+  else if (outs.length) msg = `🌧️ Relight event: the light in ${ROOMS[Math.floor(outs[0]/2)].ref} went out. Find it and help.`;
   else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill("💗 {P} wants to tell you something.");
   else if (PLAY.chap === 2 && !PLAY.bedOpen && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit half-lit things.");
   else if (PLAY.energy === 1) msg = "⚠️ Last bit of energy — after your next talk, you'll need to recharge.";
@@ -1511,10 +1552,10 @@ function openTalk(t){
   const Q = t.data, rm = ROOMS[t.room];
   const order = shuffleArr([0,1,2]);
   const icon = (t.kind === "light" || t.kind === "setback") ? rm.icons[t.idx % 2] + " " : "";
-  const chip = t.kind === "setback" ? icon + "A BAD DAY" : t.kind === "moment" ? `💗 HEART MILESTONE · ${HEARTS[t.idx].name.toUpperCase()}` : `${icon}${rm.name.toUpperCase()} · ${rm.theme.toUpperCase()}`;
-  const tag = t.kind === "light" ? (t.revisit ? "Revisit" : `Light ${t.idx+1} / 12`) : t.kind === "moment" ? "Only once" : "";
+  const chip = t.kind === "setback" ? "🌧️ RELIGHT EVENT · A BAD DAY" : t.kind === "moment" ? `💗 HEART MILESTONE · ${HEARTS[t.idx].name.toUpperCase()}` : `${icon}${rm.name.toUpperCase()} · ${rm.theme.toUpperCase()}`;
+  const tag = t.kind === "light" ? (t.revisit ? "Revisit" : `Light ${t.idx+1} / 12`) : t.kind === "moment" ? "Only once" : `${icon}+${RELIGHT_BONUS} bonus`;
   const card = $("qCard");
-  card.className = "qcard" + (t.kind === "moment" ? " heartq" : "");
+  card.className = "qcard" + (t.kind === "moment" ? " heartq" : t.kind === "setback" ? " stormq" : "");
   card.innerHTML = `<div class="qhead"><span class="chip">${chip}</span><span class="n">${tag}</span></div>
     ${t.drained ? `<div class="drain">🔋 This talk uses your last bit of energy. Recharge afterwards.</div>` : ""}
     <p class="scene"></p>
@@ -1550,6 +1591,7 @@ function answer(i, btn){
   let streakBonus = 0; const baseDt = dt, lostStreak = o.g !== "help" ? (PLAY.streak || 0) : 0;
   if (o.g === "help") { PLAY.streak = (PLAY.streak || 0) + 1; streakBonus = Math.min(3, PLAY.streak - 1); dt += streakBonus; PLAY.bestStreak = Math.max(PLAY.bestStreak || 0, PLAY.streak); }
   else PLAY.streak = 0;
+  if (t.kind === "setback" && o.g === "help") dt += RELIGHT_BONUS;
   const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
   if (PLAY.trust === 0 && before > 0) PLAY.darkPending = true;
   let heartsGot = [];
@@ -1565,7 +1607,7 @@ function answer(i, btn){
     let nv = cur;
     if (o.g === "help") nv = 2;
     else if (o.g === "okay" && !Q.critical) nv = Math.max(cur, 1);
-    if (t.kind === "setback" && nv >= 1) PLAY.setbacksFixed++;
+    if (t.kind === "setback" && nv >= 1) { PLAY.setbacksFixed++; PLAY.relit = { idx:t.idx, full: nv === 2, bonus: o.g === "help" ? RELIGHT_BONUS : 0 }; }
     PLAY.light[t.idx] = nv; lightNow = nv;
     if (o.g !== "help") (PLAY.tried = PLAY.tried || {})[t.idx] = true;
     if (nv > cur || (nv >= 1 && cur === -1)) { PLAY.justLit = t.idx; }
@@ -1643,6 +1685,7 @@ function afterTalk(){
   refreshUnlocks();
   renderHouse();
   const cards = [];
+  if (PLAY.relit) { const R = PLAY.relit; PLAY.relit = null; cards.push(lightReturnsCard(R)); }
   for (let r = 0; r < 5; r++) if (roomComplete(r) && !PLAY.msShown.includes(r)) { PLAY.msShown.push(r); cards.push(milestoneCard(MILESTONES[r], "MILESTONE · " + ROOMS[r].name.toUpperCase(), "")); }
   if (!PLAY.bedOpen && PLAY.chap === 2 && bedroomGate() === "trust" && !PLAY.almostShown) {
     PLAY.almostShown = true;
@@ -1652,7 +1695,7 @@ function afterTalk(){
       <div class="retrybox"><b>How to build trust</b>🫶 Spend time together — tap the hug in the Living Room (+8)<br>🕯️ Go back to half-lit objects and choose a better answer (+3)<br>💗 Win any heart that appears (+5)</div>`, btn:"Got it" }));
   }
   if (PLAY.bedOpen && !PLAY.doorShown) { PLAY.doorShown = true; cards.push(milestoneCard(DOOR, "THE FINAL ROOM", "The Bedroom is now open.")); }
-  if (PLAY.pendingPhase != null) { const ph = PLAY.pendingPhase; PLAY.pendingPhase = null; cards.push(phaseCard(ph)); }
+  if (PLAY.pendingPhase != null) { const ph = PLAY.pendingPhase; PLAY.pendingPhase = null; cards.push(phaseCard(ph)); if (ph > 0) { const bd = startBadDay(ph); if (bd != null) cards.push(badDayCard(bd)); } }
   if (PLAY.chap + "/" + PLAY.bedOpen !== prevKey) setTimeout(() => placeTokens(false), 300);
   cards.push(...heartCards);
   if (cards.length) setTimeout(() => showCards(cards), 600);
@@ -1681,6 +1724,49 @@ function houseGoesDark(){
     btn:"Start rebuilding" })]), 900);
 }
 
+// ---------------- RELIGHT EVENT: a bad day ----------------
+const RELIGHT_BONUS = 3;
+function startBadDay(ph){
+  const from = PHASES[ph].from;
+  const cands = PLAY.light.map((v,i) => (v >= 1 && Math.floor(i/2) < from) ? i : -1).filter(i => i >= 0);
+  const brightC = cands.filter(i => PLAY.light[i] === 2), pool = brightC.length ? brightC : cands;
+  if (!pool.length) return null;
+  const i = pool[Math.floor(Math.random() * pool.length)];
+  PLAY.light[i] = -1; PLAY.setback[i] = ph - 1;
+  return i;
+}
+function rainHTML(n){ return `<div class="rain" aria-hidden="true">${Array.from({length:n}, (_, k) => `<i style="left:${(k*37)%100}%;animation-delay:${((k*0.173)%1).toFixed(2)}s;animation-duration:${(.55 + (k%5)*.08).toFixed(2)}s"></i>`).join("")}</div>`; }
+function badDayCard(i){
+  return () => {
+    const r = Math.floor(i/2), obj = ROOMS[r].icons[i % 2];
+    setTimeout(() => { tone(82,1.4,.09,0,"sine"); tone(65,1.8,.08,.15,"sine"); tone(110,.5,.04,.05,"triangle"); }, 350);
+    return { html:`<div class="chap story storm">${rainHTML(28)}<div class="flash"></div>
+      <small>🌧️ RELIGHT EVENT</small>
+      <div class="bd-scene"><div class="bd-cloud">🌧️</div><div class="bd-obj"><span>${obj}</span></div></div>
+      <h2>A Bad Day</h2>
+      <div class="sub">The light goes out</div>
+      ${paras("{P} had been doing better. Then, one grey morning, the curtains stayed closed again.\n\nSetbacks are part of healing — not the end of it.")}
+      <div class="bd-mission"><b>Your mission</b>
+        <div class="bd-row"><span class="bd-ic">${obj}</span><span>${escH(fill(`The light in ${ROOMS[r].ref} has gone out. Find it and help {p} through the hard day.`))}</span></div>
+        <div class="bd-reward">🌤️ Relight it with care: <b>+${RELIGHT_BONUS} relight bonus</b></div>
+      </div>`, btn: fill("Go to {them} ☔") };
+  };
+}
+function lightReturnsCard(R){
+  return () => {
+    const obj = ROOMS[Math.floor(R.idx/2)].icons[R.idx % 2];
+    setTimeout(() => { burstHearts(innerWidth/2, innerHeight*0.3, 18); [392,523,659,784,1047].forEach((f,k) => tone(f,.3,.06,k*.1)); }, 300);
+    return { html:`<div class="chap story sunny"><div class="rays"></div>
+      <small>🌤️ RELIGHT EVENT · COMPLETE</small>
+      <div class="bd-scene"><div class="bd-sun">☀️</div><div class="bd-obj lit"><span>${obj}</span></div></div>
+      <h2>The Light Returns</h2>
+      ${paras(R.full
+        ? "The rain eases. By evening, {p} opens the curtains and sits beside you.\n\n“Thanks for not giving up on me — even today.”\n\nA hard day doesn't erase progress. Getting through it together is progress."
+        : "The rain softens, but it hasn't quite stopped. The light flickers back — still a little dim.\n\nCome back later and help it glow fully again.")}
+      ${R.bonus ? `<p class="gain">🌤️ Relight bonus: +${R.bonus} trust</p>` : ""}`, btn:"Continue" };
+  };
+}
+
 // ---------------- timeline + setbacks ----------------
 const paras = t => fill(t).split("\n\n").map(p => `<p>${escH(p)}</p>`).join("");
 function phaseCard(ph){
@@ -1694,14 +1780,6 @@ function phaseCard(ph){
     if (ph > 0) {
       PLAY.energy = Math.min(MAX_ENERGY, PLAY.energy + 2);
       extra += `<p class="gain">🔋 Time passes. You catch your breath: +2 energy</p>`;
-      // a bad day: one earlier light goes out
-      const cands = PLAY.light.map((v,i) => (v >= 1 && Math.floor(i/2) < P.from) ? i : -1).filter(i => i >= 0);
-      const brightC = cands.filter(i => PLAY.light[i] === 2), pool = brightC.length ? brightC : cands;
-      if (pool.length) {
-        const i = pool[Math.floor(Math.random() * pool.length)];
-        PLAY.light[i] = -1; PLAY.setback[i] = ph - 1;
-        extra += `<p class="sb">${escH(fill(`🌧️ Then came a bad day. A light in ${ROOMS[Math.floor(i/2)].ref} has gone out — find it and help {p} relight it.`))}</p>`;
-      }
     }
     return { html:`<div class="chap story"><small>${ph === 0 ? "CHAPTER 1" : "TIME PASSES"}</small><h2>${P.title}</h2><div class="sub">${P.sub}</div>${paras(P.story)}<div class="retrybox"><b>🔁 Try again</b>${escH(P.tip)}</div>${extra}`,
              btn: ph === 0 ? "Let's begin" : "Continue" };
