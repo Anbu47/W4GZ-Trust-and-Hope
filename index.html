@@ -1128,7 +1128,8 @@ function scatter(r){
     // fresh random points anywhere in the room (away from the title and the edges)
     const cand = Array.from({length:40}, () => [Math.round(24 + Math.random() * 54), Math.round(34 + Math.random() * 42)]);
     const below = (h, p) => p[1] > h[1] && Math.abs(p[0] - h[0]) * A < 62 && (p[1] - h[1]) * B < 100;   // under the HEART label
-    const heart = cand.find(p => p[1] <= 70 && block.every(b => dist(p, b) > 64 && !below(p, b)));
+    const labelHitsToken = (h, b) => b[1] > h[1] && Math.abs(b[0] - h[0]) * A < 45 && (b[1] - h[1]) * B < 70;
+    const heart = cand.find(p => p[1] <= 70 && block.every(b => dist(p, b) > 64 && !labelHitsToken(p, b)));
     if (!heart) continue;
     const picked = [];
     for (const p of cand) {
