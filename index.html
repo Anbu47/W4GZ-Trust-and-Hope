@@ -436,7 +436,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="howto">
         <div><span>🎸</span><em>Each room has <b>2 things</b> gone dark and grey. Tap one: it's a moment with your loved one. Respond well and it comes back to life.</em></div>
         <div><span>💗</span><em><b>Trust</b> grows with supportive answers and drops with hurtful ones. The more trust, the more they open up.</em></div>
-        <div><span>🔋</span><em>Every talk costs <b>energy</b>. When it runs out, recharge in Your Corner before your next talk.</em></div>
+        <div><span>🔋</span><em>Every talk costs <b>energy</b>. When it runs out, tap <b>Recharge</b> before your next talk.</em></div>
         <div><span>👀</span><em><b>Read the moment.</b> Sometimes they need quiet company, sometimes your full attention.</em></div>
         <div><span>🗺️</span><em><b>Choose your path.</b> Each chapter opens new rooms.</em></div>
         <div><span>🌧️</span><em>Weeks pass. On <b>bad days</b> something may go dark again — help bring it back.</em></div>
@@ -805,7 +805,7 @@ const ROOMS = [
     icons:["🫖","🚪"] },
   { name:"Balcony",     ref:"the Balcony",     theme:"Finding help",          floor:"#6f9aa3", deco:[["🌙",84,22],["🪴",14,30],["🌿",86,80]], spots:[[40,40],[62,70]], pp:[16,86], ex:[72,40], hx:[74,36],
     icons:["🩺","🌱"] },
-  { name:"Your Corner", ref:"Your Corner",     theme:"Caring for yourself",   floor:"#a58a6a", deco:[["🧸",18,30],["🎵",82,30],["📖",84,80]], spots:[[48,46],[34,74]], pp:[16,86], ex:[20,56], hx:[76,50], rest:[56,22],
+  { name:"Your Corner", ref:"Your Corner",     theme:"Caring for yourself",   floor:"#a58a6a", deco:[["🧸",18,30],["🎵",82,30],["📖",84,80]], spots:[[48,46],[34,74]], pp:[16,86], ex:[20,56], hx:[76,50],
     icons:["🛁","📱"] },
   { name:"Bedroom",     ref:"the Bedroom",     theme:"In the darkest moments",floor:"#8a6a9a", deco:[["🛏️",30,64],["🪞",84,26],["🖼️",16,26]], spots:[[56,42],[72,72]], pp:[84,86], ex:[80,50], hx:[26,30],
     icons:["💭","☎️"] }
@@ -1123,7 +1123,7 @@ let PLAY = null;
 function scatter(r){
   const rm = ROOMS[r], A = 1.7, B = 2.15;                 // rough px per % (rooms are taller than wide)
   const dist = (p, q) => Math.hypot((p[0]-q[0]) * A, (p[1]-q[1]) * B);
-  const block = [rm.pp].concat(rm.rest ? [rm.rest] : []);
+  const block = [rm.pp].concat(r === 0 ? [[18, 90]] : []);   // keep clear of your loved one (and your starting spot)
   for (let tries = 0; tries < 600; tries++) {
     // fresh random points anywhere in the room (away from the title and the edges)
     const cand = Array.from({length:40}, () => [Math.round(24 + Math.random() * 54), Math.round(34 + Math.random() * 42)]);
@@ -1232,20 +1232,18 @@ function renderHouse(){
     const nextTm = PLAY.tm.findIndex(m => m.shown && !m.done);
     PLAY.tm.forEach((m, k) => { if (k === nextTm && r === partnerRoom()) spots += `<button class="spot heart special" data-tm="${k}" style="left:${heartPos(r)[0]}%;top:${heartPos(r)[1]}%" aria-label="Heart moment"><span class="aura"></span><span class="hh">💗</span><span class="rise r1">💗</span><span class="rise r2">💕</span><span class="rise r3">💗</span><span class="lbl">Heart</span></button>`; });
     if (r === 0 && qtOn) spots += `<button class="spot heart" data-qt="1" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Spend time together">🫶</button>`;
-    if (r === 4) spots += `<button class="spot rest" id="restSpot" style="left:${rm.rest[0]}%;top:${rm.rest[1]}%" aria-label="Recharge">🔋</button>`;
     return `<div class="room ${n>=2?'lit':''} ${open && !roomComplete(r) ? 'cur' : ''}" data-room="${r}" style="--floor:${rm.floor}">
       <svg class="furn" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${FURNITURE[r]}</svg>
       <div class="dark" style="--d0:${Math.max(0,d0)};--d1:${Math.max(0,d1)}"></div>
       <div class="rname">${rm.name}<small>${open ? rm.theme : ""}</small></div>
       ${spots}
-      ${open ? "" : `<div class="lock ${r===4?'small':''}">🔒<small>${escH(lockText(r))}</small></div>`}
+      ${open ? "" : `<div class="lock">🔒<small>${escH(lockText(r))}</small></div>`}
     </div>`;
   }).join("") + `<div class="token love" id="tokLove">${partnerAvatar("tl")}</div><div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm","happy")}</div>`;
   PLAY.justLit = -1;
   house.querySelectorAll(".spot[data-q]").forEach(b => b.onclick = e => { e.stopPropagation(); tapLight(+b.dataset.q); });
   house.querySelectorAll(".spot[data-tm]").forEach(b => b.onclick = e => { e.stopPropagation(); tapTrustMoment(+b.dataset.tm, b); });
   house.querySelectorAll(".spot[data-qt]").forEach(b => b.onclick = e => { e.stopPropagation(); tapQualityTime(b); });
-  const rs = $("restSpot"); if (rs) rs.onclick = e => { e.stopPropagation(); goRest(); };
   house.querySelectorAll(".room").forEach(el => el.onclick = () => { const r = +el.dataset.room; if (!isUnlocked(r)) { toast("🔒 " + lockText(r)); sfx.tap(); } });
   updateHUD();
   requestAnimationFrame(() => {
@@ -1530,15 +1528,12 @@ function showCards(list){
 function showPhase(ph){ showCards([phaseCard(ph)]); }
 
 // ---------------- energy: recharge ----------------
-function goRest(){
-  const [x, y] = ROOMS[4].rest;
-  walkTo(4, x, y + 14, openRest);
-}
+function goRest(){ if (PLAY.ending) return; audio(); sfx.tap(); openRest(); }
 $("restBtn").onclick = () => { if ($("qSheet").classList.contains("show")) return; goRest(); };
 function openRest(){
   const R = nextRecharge(), opts = shuffleArr(R.opts.slice());
   const card = $("qCard"); card.className = "qcard";
-  card.innerHTML = `<div class="qhead"><span class="chip">🔋 YOUR CORNER · RECHARGE</span><span class="n">Energy ${PLAY.energy}/${MAX_ENERGY}</span></div>
+  card.innerHTML = `<div class="qhead"><span class="chip">🔋 RECHARGE</span><span class="n">Energy ${PLAY.energy}/${MAX_ENERGY}</span></div>
     <p class="scene"></p>
     <div class="ask">How will you recharge?</div>
     <div class="qopts" id="qOpts">${opts.map((o,k) => `<button class="qopt" data-k="${k}"><span class="dot"></span><span class="t"></span></button>`).join("")}</div>
