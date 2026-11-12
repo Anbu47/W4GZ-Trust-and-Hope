@@ -447,6 +447,18 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .rank .st-body b{color:#fff}
 @media (prefers-reduced-motion:reduce){.rank-legend .st-medal,.rank-legend .st-medal span{animation:none}}
 /* ---------- part 2 ---------- */
+/* ---------- typing + popping reveal ---------- */
+.qcard.staged .cue,.qcard.staged .say:not(.small),.qcard.staged .ask{opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s}
+.qcard.staged .cue.in,.qcard.staged .say.in,.qcard.staged .ask.in{opacity:1;transform:none}
+.qcard.staged .qopt{opacity:0;transform:scale(.85) translateY(10px);pointer-events:none}
+.qcard.staged .qopt.in{animation:optPop .42s cubic-bezier(.2,1.6,.4,1) forwards;pointer-events:auto}
+@keyframes optPop{0%{opacity:0;transform:scale(.85) translateY(10px)}100%{opacity:1;transform:none}}
+.typing::after{content:"▍";margin-left:1px;opacity:.7;animation:caret .7s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+.say.mine{justify-content:flex-end}
+.say.mine .bubble{border-radius:18px 18px 4px 18px;background:#ffe3ef}
+@media (prefers-reduced-motion:reduce){.qcard.staged .qopt.in{animation:none;opacity:1;transform:none}}
+
 .finishbtn{flex:none;align-self:center;margin:6px auto 2px;font:inherit;font-size:14px;font-weight:900;color:#3a1530;padding:9px 18px;border:0;border-radius:999px;cursor:pointer;
   background:linear-gradient(90deg,#ffd27a,#ff9ec0);box-shadow:0 6px 16px rgba(255,150,170,.45);animation:bob 2.4s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-3px)}}
@@ -807,7 +819,7 @@ window.HEART_QUEST = { get state(){ return GAME; }, showName: k => showName(k), 
 
 // ================= SOUND =================
 let AC = null;
-function audio(){ unlockVoice(); try { if (!AC) AC = new (window.AudioContext||window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume(); } catch(e){} }
+function audio(){ try { if (!AC) AC = new (window.AudioContext||window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume(); } catch(e){} }
 function tone(f,d,v=.12,delay=0,type="sine"){ if(!AC) return; const t=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();
   o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);
   o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.05); }
@@ -917,43 +929,69 @@ let lt = performance.now();
 
 
 // ================= VOICE =================
-// Reads the main character's words aloud with the device's built-in voice.
-// Part 1: your loved one's lines. Part 2: your own words (the quoted part of the answer you choose).
-const VOICE = { on: true, ok: "speechSynthesis" in window, unlocked: false };
+// The main character "talks" in soft musical blips while their words type out — made in the game
+// itself, so it sounds the same on every device. Part 1: your loved one. Part 2: you.
+const VOICE = { on: true };
 try { const v = localStorage.getItem("hq_voice"); if (v !== null) VOICE.on = v === "1"; } catch (e) {}
-function pickVoice(kind){
-  if (!VOICE.ok) return null;
-  const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
-  if (!vs.length) return null;
-  const fem = /female|samantha|victoria|karen|moira|tessa|fiona|zira|susan|serena|allison|ava|google uk english female|google us english/i;
-  const mal = /\bmale|daniel|alex|fred|david|mark|george|rishi|aaron|arthur|tom|google uk english male/i;
-  const want = kind === "woman" ? fem : kind === "man" ? mal : null;
-  return (want && vs.find(v => want.test(v.name) && !(kind === "woman" && /\bmale/i.test(v.name) && !/female/i.test(v.name)))) || vs.find(v => v.default) || vs[0];
-}
-function speakAs(kind, text){
-  if (!VOICE.ok || !VOICE.on || !text) return;
+const VOICE_BASE = { man:150, woman:285, nonbinary:215 };
+function blip(kind, mood){
+  if (!VOICE.on || !AC) return;
   try {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text.replace(/[“”"]/g, ""));
-    const v = pickVoice(kind); if (v) u.voice = v;
-    u.lang = (v && v.lang) || "en-US";
-    u.rate = 0.95; u.pitch = kind === "woman" ? 1.15 : kind === "man" ? 0.85 : 1.0;
-    u.onstart = () => { if (MUSIC.master && AC) MUSIC.master.gain.setTargetAtTime(MUSIC.on ? 0.45 : 0, AC.currentTime, 0.2); };
-    u.onend = u.onerror = () => { if (MUSIC.master && AC && MUSIC.on) MUSIC.master.gain.setTargetAtTime(1.5, AC.currentTime, 0.6); };
-    speechSynthesis.speak(u);
+    const f = (VOICE_BASE[kind] || 210) * (mood === "sad" ? 0.9 : mood === "happy" ? 1.1 : 1) * (0.9 + Math.random() * 0.28);
+    const t = AC.currentTime, o = AC.createOscillator(), o2 = AC.createOscillator(), g = AC.createGain();
+    o.type = "triangle"; o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(f * 1.06, t + 0.05);
+    o2.type = "sine"; o2.frequency.setValueAtTime(f * 2, t);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.075);
+    o.connect(g); o2.connect(g); g.connect(AC.destination);
+    o.start(t); o2.start(t); o.stop(t + 0.09); o2.stop(t + 0.09);
   } catch (e) {}
 }
-function stopVoice(){ try { if (VOICE.ok) speechSynthesis.cancel(); } catch (e) {} }
-function unlockVoice(){ if (!VOICE.ok || VOICE.unlocked) return; VOICE.unlocked = true; try { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } catch (e) {} }
-if (VOICE.ok) { try { speechSynthesis.onvoiceschanged = () => {}; speechSynthesis.getVoices(); } catch (e) {} }
-// Only the part inside quotes is spoken (actions like "Shut the door" are not read).
+// Types text into an element. voice = {kind, mood} adds blips; returns a function that finishes instantly.
+function typeText(el, text, speed, voice, done){
+  let k = 0, stopped = false; el.textContent = ""; el.classList.add("typing");
+  const finish = () => { if (stopped) return; stopped = true; clearTimeout(tm); el.textContent = text; el.classList.remove("typing"); if (done) done(); };
+  let tm;
+  const step = () => {
+    if (stopped) return;
+    k = Math.min(text.length, k + 1); el.textContent = text.slice(0, k);
+    const ch = text[k - 1];
+    if (voice && k % 2 === 0 && /[A-Za-zÀ-ỹ0-9]/.test(ch)) blip(voice.kind, voice.mood);
+    if (k >= text.length) return finish();
+    tm = setTimeout(step, /[.,!?…—]/.test(ch) ? speed * 6 : speed);
+  };
+  step();
+  return finish;
+}
+// Only the part inside quotes is spoken (actions like "Shut the door" stay silent).
 function spokenPart(t){ const m = t.match(/“([^”]+)”/g); return m ? m.map(x => x.slice(1, -1)).join(" ") : ""; }
+function stopVoice(){ if (window.__typeSkip) window.__typeSkip(); }
 function voiceToggle(){
   VOICE.on = !VOICE.on; try { localStorage.setItem("hq_voice", VOICE.on ? "1" : "0"); } catch (e) {}
-  if (!VOICE.on) stopVoice();
   document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🗣️" : "🔇"; b.setAttribute("aria-label", VOICE.on ? "Voice on" : "Voice off"); });
-  toast(VOICE.on ? "🗣️ Voice on" : "🔇 Voice off");
+  toast(VOICE.on ? "🗣️ Character voices on" : "🔇 Character voices off");
 }
+// Reveal a question card step by step: the situation types out, the speaker talks, then the answers pop up.
+function revealCard(card, steps){
+  let i = 0, skip = null, done = false;
+  const next = () => {
+    if (i >= steps.length) { done = true; skip = null; card.onclick = null; window.__typeSkip = null; return; }
+    const st = steps[i++], my = i;
+    const r = st(() => next());
+    if (my === i && !done) skip = r;   // only keep it if no later step has started yet
+  };
+  card.onclick = e => { if (done || e.target.closest(".qopt")) return; // tap to skip ahead
+    while (!done) { if (skip) { const f = skip; skip = null; f(); } else break; } };
+  window.__typeSkip = () => { while (!done) { if (skip) { const f = skip; skip = null; f(); } else break; } };
+  next();
+}
+const popOpts = (card) => (go) => {
+  const bs = [...card.querySelectorAll(".qopt")];
+  bs.forEach((b, k) => setTimeout(() => b.classList.add("in"), k * 130));
+  const t = setTimeout(go, bs.length * 130);
+  return () => { clearTimeout(t); bs.forEach(b => b.classList.add("in")); go(); };
+};
+const showEl = (el) => (go) => { if (!el) { go(); return null; } el.classList.add("in"); const t = setTimeout(go, 220); return () => { clearTimeout(t); if (el) el.classList.add("in"); go(); }; };
+const typeStep = (el, text, speed, voice) => (go) => el ? typeText(el, text, speed, voice, go) : (go(), null);
 
 // ================= NAVIGATION =================
 function go(id){
@@ -1824,19 +1862,25 @@ function openTalk(t){
     <div class="ask"></div>
     <div class="qopts" id="qOpts">${order.map(i => `<button class="qopt" data-i="${i}"><span class="dot"></span><span class="t"></span></button>`).join("")}</div>
     <div id="qWhy"></div>`;
-  card.querySelector(".scene").textContent = T(Q.scene);
   if (Q.cue) card.querySelector(".cue span").textContent = T(Q.cue);
-  if (Q.line) card.querySelector(".bubble").textContent = "“" + T(Q.line) + "”";
-  if (Q.line && PART === 1) setTimeout(() => speakAs(GAME.partner.kind, T(Q.line)), 450);
   card.querySelector(".ask").textContent = T(Q.ask);
+  card.classList.add("staged");
   card.querySelectorAll(".qopt").forEach(b => {
     const o = Q.opts[+b.dataset.i];
     b.querySelector(".t").textContent = T(o.t);
     b.onclick = () => answer(+b.dataset.i, b);
   });
-
   $("qSheet").classList.add("show");
   card.scrollTop = 0;
+  const say = card.querySelector(".say");
+  revealCard(card, [
+    typeStep(card.querySelector(".scene"), T(Q.scene), 16, null),
+    showEl(card.querySelector(".cue")),
+    showEl(say),
+    typeStep(say && say.querySelector(".bubble"), Q.line ? "“" + T(Q.line) + "”" : "", 30, PART === 1 ? { kind:GAME.partner.kind, mood:partnerMood() } : null),
+    showEl(card.querySelector(".ask")),
+    popOpts(card)
+  ]);
 }
 
 function answer(i, btn){
@@ -1884,13 +1928,15 @@ function answer(i, btn){
   const why = $("qWhy");
   why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${baseDt>0?'up':baseDt<0?'down':''}">${baseDt>0?'+':''}${baseDt} ${tw()}</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
     ${streakBonus ? streakCard(PLAY.streak, streakBonus) : lostStreak >= 2 ? `<div class="streak-lost">🔥 Your ${lostStreak}-answer streak ended — the next supportive answer starts a new one.</div>` : ""}
+    ${PART === 2 && spokenPart(T(o.t)) ? `<div class="say small mine"><div class="bubble"></div><div class="face">${avatar(GAME.player.kind, null, "mf", playerMood())}</div></div>` : ""}
     <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
     <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? (PART === 2 ? "Let the light in ✨" : "Resurrect ✨") : t.collect ? "Warm it up" : "Continue"}</button>`;
   why.querySelector(".w").textContent = T(o.why);
   if (lightMsg) why.querySelector(".lm").textContent = lightMsg;
-  why.querySelector(".bubble").textContent = "“" + T(react) + "”";
-  if (PART === 1) setTimeout(() => speakAs(GAME.partner.kind, T(react)), 350);
-  else { const mine = spokenPart(T(o.t)); if (mine) speakAs(GAME.player.kind, mine); }
+  { const rb = why.querySelector(".say:not(.mine) .bubble"), mb = why.querySelector(".say.mine .bubble");
+    const sayReact = () => typeText(rb, "“" + T(react) + "”", 28, PART === 1 ? { kind:GAME.partner.kind, mood:partnerMood() } : null);
+    if (mb) { rb.textContent = ""; typeText(mb, "“" + spokenPart(T(o.t)) + "”", 28, { kind:GAME.player.kind, mood:playerMood() }, () => setTimeout(sayReact, 250)); }
+    else setTimeout(sayReact, 250); }
   if (streakBonus) { setTimeout(() => { [523,659,784,1047,1319].slice(0, 2 + streakBonus).forEach((f,i) => tone(f,.18,.06,i*.08,"triangle")); const c = why.querySelector(".streak-card"); if (c) { const r = c.getBoundingClientRect(); emberBurst(c, 14 + streakBonus * 6); } }, 650); }
   if (o.g === "help") sfx.love(); else if (o.g === "okay") { tone(440,.2,.07,0,"triangle"); } else { tone(330,.25,.08,0,"triangle"); tone(247,.35,.06,.12,"triangle"); }
   $("doneBtn").onclick = finishTalk;
@@ -2110,7 +2156,7 @@ function openRest(){
     <div class="ask">${PART === 2 ? "Which self-love action will you choose?" : "How will you restore your baseline?"}</div>
     <div class="qopts" id="qOpts">${opts.map((o,k) => `<button class="qopt" data-k="${k}"><span class="dot"></span><span class="t"></span></button>`).join("")}</div>
     <div id="qWhy"></div>`;
-  card.querySelector(".scene").textContent = fill(R.q);
+  card.classList.add("staged");
   card.querySelectorAll(".qopt").forEach(b => {
     const o = opts[+b.dataset.k];
     b.querySelector(".t").textContent = fill(o.t);
@@ -2130,6 +2176,7 @@ function openRest(){
     };
   });
   $("qSheet").classList.add("show"); card.scrollTop = 0;
+  revealCard(card, [ typeStep(card.querySelector(".scene"), fill(R.q), 16, null), showEl(card.querySelector(".ask")), popOpts(card) ]);
 }
 
 // ---------------- quality time (builds trust gently) ----------------
@@ -2212,7 +2259,7 @@ $("againBtn").onclick = () => { audio(); sfx.next(); go("s-intro"); };
 $("nextPartBtn").onclick = () => { applyPart(2); audio(); sfx.next(); go("s-intro"); };
 
 document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.onclick = e => { e.stopPropagation(); audio(); musicToggle(); }; });
-document.querySelectorAll(".voicebtn").forEach(b => { b.hidden = !VOICE.ok; b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🗣️" : "🔇"; b.onclick = e => { e.stopPropagation(); audio(); voiceToggle(); }; });
+document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🗣️" : "🔇"; b.onclick = e => { e.stopPropagation(); audio(); voiceToggle(); }; });
 renderTitle();
 })();
 </script>
