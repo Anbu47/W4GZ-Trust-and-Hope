@@ -422,6 +422,10 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .qcard.restq .scene::before{content:"🌿 SITUATION"}
 @media (prefers-reduced-motion:reduce){.qcard .scene{animation:none}}
 /* ---------- part 2 ---------- */
+.partsel{display:inline-flex;gap:4px;margin:12px auto 0;padding:4px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)}
+.partsel button{font:inherit;font-size:12px;font-weight:800;color:#f3dfe9;background:none;border:0;padding:7px 12px;border-radius:999px;cursor:pointer}
+.partsel button.on{background:linear-gradient(90deg,#ff8fb3,#ffb38a);color:#3a1530;box-shadow:0 4px 12px rgba(255,120,160,.4)}
+
 .teaser{margin:14px 0 4px;padding:14px;border-radius:20px;text-align:center;background:linear-gradient(135deg,rgba(150,170,255,.22),rgba(255,140,190,.18));border:1px solid rgba(190,200,255,.55)}
 .teaser small{display:block;font-size:10px;font-weight:900;letter-spacing:.22em;color:#c9d0ff}
 .teaser b{display:block;font-family:"Playfair Display",serif;font-size:22px;color:#fff;margin:4px 0}
@@ -556,15 +560,15 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
         <div class="couple" id="titleCouple"></div>
         <div class="brand" aria-label="A W4GZ story — Writing for Gen Z"><div class="brand-mark"><span class="brand-logo" role="img" aria-label="W4GZ"></span><span class="brand-spark">✦</span></div><div class="brand-sub">A story by <i>Writing for Gen Z</i></div></div>
         <h1>Hold the Light</h1>
-        <p class="tagline">A survival guide for loving someone through a mental health slump without losing your own sanity.</p>
+        <div class="partsel" id="partSel" hidden><button data-part="1">Part 1 · Hold the Light</button><button data-part="2">Part 2 · Your Turn</button></div>
+        <p class="tagline" id="titleTag">A survival guide for loving someone through a mental health slump without losing your own sanity.</p>
         <div class="divider"></div>
-        <p class="lead">Someone you love is orbiting a black hole of low energy. Walk through your house, decode their confusing signals, and learn how to help them without faceplanting into burnout.</p>
-        <div class="pillars"><span>NOTICE</span><span>LISTEN</span><span>SUPPORT</span><span>REST</span></div>
+        <p class="lead" id="titleLead">Someone you love is orbiting a black hole of low energy. Walk through your house, decode their confusing signals, and learn how to help them without faceplanting into burnout.</p>
+        <div class="pillars" id="titlePillars"><span>NOTICE</span><span>LISTEN</span><span>SUPPORT</span><span>REST</span></div>
         <p class="safe">For learning purposes only, not a substitute for professional help. Crisis resources are always just a tap away.</p>
       </div>
     </div>
     <button class="cta" id="startBtn">Begin your story</button>
-    <button class="ghost p2btn" id="part2Btn" hidden>▶ Part 2: Your Turn</button>
   </section>
 
   <!-- STEP 1: PLAYER -->
@@ -883,21 +887,42 @@ document.addEventListener("click", e => { const b = e.target.closest("[data-go]"
 function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show"); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove("show"),1600); }
 
 // ================= TITLE =================
+// Title text for each part. Once Part 2 is unlocked, the title lets you pick which part to play.
+const TITLE_TXT = {
+  1: { tag:"A survival guide for loving someone through a mental health slump without losing your own sanity.",
+       lead:"Someone you love is orbiting a black hole of low energy. Walk through your house, decode their confusing signals, and learn how to help them without faceplanting into burnout.",
+       pillars:["NOTICE","LISTEN","SUPPORT","REST"], btn:"Begin your story" },
+  2: { tag:"Part 2 · Your Turn — a story about letting someone help you, and learning to be kind to yourself.",
+       lead:"Months after you helped someone you love, you're the one running on empty. Walk through your home, let your loved one in, and grow your hope one honest moment at a time.",
+       pillars:["ADMIT","OPEN UP","ACCEPT HELP","SELF-LOVE"], btn:"Begin Part 2: Your Turn" }
+};
+let TITLE_PART = 1;
+function setTitlePart(n){
+  TITLE_PART = n; const T = TITLE_TXT[n];
+  $("titleTag").textContent = T.tag; $("titleLead").textContent = T.lead;
+  $("titlePillars").innerHTML = T.pillars.map(x => `<span>${x}</span>`).join("");
+  $("startBtn").textContent = T.btn;
+  $("partSel").querySelectorAll("button").forEach(b => b.classList.toggle("on", +b.dataset.part === n));
+}
+let TITLE_CHOSEN = 0;
+$("partSel").querySelectorAll("button").forEach(b => b.onclick = () => { audio(); sfx.tap(); TITLE_CHOSEN = +b.dataset.part; setTitlePart(TITLE_CHOSEN); });
 function renderTitle(){
-  $("part2Btn").hidden = !(P2_SAVE && P2_SAVE.unlocked);
+  const un = !!(P2_SAVE && P2_SAVE.unlocked);
+  $("partSel").hidden = !un;
+  setTitlePart(un ? (TITLE_CHOSEN || 2) : 1);
   $("titleCouple").innerHTML = `<div class="halo"></div><div class="ring"></div><div class="ring r2"></div><div class="p r">${avatar("man",PARTNER_VARIANT.man,"t2","calm")}</div><div class="p l">${avatar("woman",null,"t1")}</div>`;
 }
 // "Begin your story" always starts fresh: no leftover names or choices from an earlier player.
 $("startBtn").onclick = () => {
+  if (TITLE_PART === 2) {               // Part 2 keeps your characters (or asks for them if there are none)
+    applyPart(2); audio(); sfx.next();
+    return go(GAME.player.kind && GAME.partner.kind ? "s-intro" : "s-player");
+  }
   GAME.player = { kind:null, name:"" }; GAME.partner = { kind:null, name:"" }; save(); applyPart(1);
   $("playerName").value = ""; $("partnerName").value = "";
   audio(); sfx.next(); go("s-player");
 };
 
-$("part2Btn").onclick = () => {
-  applyPart(2); audio(); sfx.next();
-  go(GAME.player.kind && GAME.partner.kind ? "s-intro" : "s-player");
-};
 // ================= STEP 1 =================
 function choiceCard(kind, variant, uid, selected, delay){
   const c = CHAR[kind], v = Object.assign({}, c, variant||{});
@@ -1479,7 +1504,7 @@ function renderIntro(){
   $("pair2").innerHTML = two ? pairHTML("calm", "sad") : pairHTML("sad");
   const d = document.createElement("div");
   d.innerHTML = two
-    ? fill(`Lately, <b>you</b> have been running on empty. You laugh less, sleep badly, and keep telling <b>{p}</b> “I'm fine.”<br><br>This time, {p} is the one who notices. Your job: let {them} in — one moment at a time.`)
+    ? fill(`Lately, <b>you</b> don't seem like your usual self. You laugh less, sleep badly, and keep telling <b>{p}</b> “I'm fine.”<br><br>This time, {p} is the one who notices. Your job: let {them} in — one moment at a time.`)
       + (PLAY.carry ? `<br><br><span class="carry">💞 Because you stood by ${escH(inSentence("partner"))} in Part 1, you start with <b>${PLAY.trust} hope</b>.</span>` : "")
     : fill(`Lately, <b>{p}</b> doesn't seem like {their} usual self. {They} laugh{s} less, sleep{s} more, and spend{s} a lot of time alone.<br><br>Your job: help bring the light back to your home, one moment at a time.`);
   $("introLine").innerHTML = d.innerHTML;
