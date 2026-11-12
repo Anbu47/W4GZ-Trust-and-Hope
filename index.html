@@ -2191,7 +2191,7 @@ function zeroWarning(){
       <h2>${PART === 2 ? "Running on Empty" : "On the Edge"}</h2>
       ${paras(PART === 2 ? "Your hope has dropped to 0. You've pushed {p} away so many times that {their} is not sure how to reach you anymore.\n\nNothing is lost yet — your rooms and lights stay as they are." : "{P}'s trust has dropped to 0, and {their} is close to shutting you out completely.\n\nNothing is lost yet — your rooms and lights stay as they are.")}
       <p class="sb">⚠️ Last warning: one more hurtful answer while ${tw()} is at 0 and the story ends.</p>
-      <p class="gain">${PART === 2 ? "Try an honest, open answer next — let {p} in a little." : "Try a supportive answer next — listen, stay calm, stay close."}</p>`,
+      <p class="gain">${T(PART === 2 ? "Try an honest, open answer next — let {p} in a little." : "Try a supportive answer next — listen, stay calm, stay close.")}</p>`,
     btn:"I understand" })]);
 }
 function houseCollapse(){
