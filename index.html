@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Hold the Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#2a1238;--bg2:#4a1d4f;--rose:#ff6b9a;--rose2:#ff9ec0;--gold:#ffd27a;--fg:#fff5f8;--dim:#e3c2d6;--card:rgba(255,255,255,.08);--line:rgba(255,255,255,.14)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;color:var(--fg);font-family:Nunito,system-ui,sans-serif;
+  background:radial-gradient(120% 80% at 50% 0%,#6a2a6b 0%,var(--bg2) 35%,var(--bg1) 75%,#160920 100%);
+  -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+button,input{font:inherit;color:inherit}
+button{border:0;background:none;cursor:pointer;padding:0}
+#hearts{position:fixed;inset:0;pointer-events:none;z-index:0}
+.app{position:fixed;inset:0;z-index:1;display:flex;justify-content:center;
+  padding:max(14px,env(safe-area-inset-top)) 16px max(14px,env(safe-area-inset-bottom))}
+.screen{display:none;flex-direction:column;width:100%;max-width:560px;height:100%;min-height:0}
+.screen.active{display:flex;animation:enter .5s cubic-bezier(.2,.9,.3,1)}
+@keyframes enter{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.scroll{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column}
+.scroll::-webkit-scrollbar{display:none}
+.scroll>:first-child{margin-top:auto}.scroll>:last-child{margin-bottom:auto}
+
+/* ---------- title ---------- */
+.title-wrap{text-align:center;padding:10px 0}
+.couple{position:relative;width:min(300px,78vw);margin:0 auto 6px;display:flex;justify-content:center;align-items:flex-end}
+.couple svg{width:50%;height:auto;border-radius:28px;border:3px solid rgba(255,255,255,.85);box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.couple .l{transform:rotate(-4deg) translateX(10px)}
+.couple .r{transform:rotate(4deg) translateX(-10px)}
+.couple .bigheart{position:absolute;left:50%;top:6%;transform:translateX(-50%);font-size:40px;animation:beat 2.4s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(255,210,122,.9))}
+@keyframes beat{0%,100%{transform:translateX(-50%) scale(1)}15%{transform:translateX(-50%) scale(1.25)}30%{transform:translateX(-50%) scale(1)}45%{transform:translateX(-50%) scale(1.18)}}
+h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(44px,13vw,68px);line-height:1;margin:6px 0 0;
+  background:linear-gradient(180deg,#fff 0%,#ffd1e1 45%,var(--rose) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 22px rgba(255,107,154,.45))}
+.safe{font-size:12.5px;color:var(--dim);max-width:340px;margin:12px auto 0;line-height:1.5;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:9px 12px}
+.tagline{font-family:"Playfair Display",serif;font-style:italic;font-size:17px;color:var(--dim);margin:10px 0 0}
+.lead{color:var(--dim);font-size:15px;line-height:1.55;max-width:360px;margin:16px auto 0}
+.cta{width:100%;padding:17px;border-radius:999px;font-weight:900;font-size:18px;letter-spacing:.03em;color:#4a0d27;
+  background:linear-gradient(90deg,#ffb3cc,var(--rose) 55%,#ff8a6b);box-shadow:0 12px 30px rgba(255,107,154,.45),inset 0 -3px 0 rgba(0,0,0,.12);
+  transition:transform .15s,opacity .2s,filter .2s;flex:none}
+.cta:active{transform:translateY(2px) scale(.99)}
+.cta:disabled{opacity:.35;filter:grayscale(.6);box-shadow:none;cursor:default}
+.ghost{display:block;margin:12px auto 0;font-size:13px;font-weight:700;color:var(--dim);padding:6px 10px}
+
+/* ---------- step header ---------- */
+.top{display:flex;align-items:center;gap:10px;height:42px;flex:none}
+.back{width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:18px}
+.dots{flex:1;display:flex;justify-content:center;gap:8px}
+.dots i{width:8px;height:8px;border-radius:99px;background:rgba(255,255,255,.2);transition:all .3s}
+.dots i.on{width:26px;background:var(--rose)}
+.dots i.done{background:var(--rose2)}
+.spacer{width:40px}
+.step-title{text-align:center;margin:12px 0 4px}
+.step-title small{display:block;font-weight:900;font-size:12px;letter-spacing:.2em;color:var(--rose2);text-transform:uppercase}
+.step-title h2{font-family:"Playfair Display",serif;font-size:clamp(28px,8vw,36px);margin:6px 0 4px;font-weight:800}
+.step-title p{margin:0;color:var(--dim);font-size:14.5px}
+
+/* ---------- choice cards ---------- */
+.choices{display:grid;gap:12px;margin:18px 0 6px}
+.choices.c2{grid-template-columns:1fr 1fr}
+.choices.c3{grid-template-columns:repeat(3,1fr);gap:9px}
+.choice{position:relative;border-radius:24px;padding:10px 6px 14px;background:var(--card);border:2px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;
+  animation:pop .5s cubic-bezier(.2,1.3,.4,1) backwards}
+@keyframes pop{from{opacity:0;transform:translateY(20px) scale(.9)}}
+.choice:active{transform:scale(.97)}
+.choice .portrait{width:100%;aspect-ratio:1/1.08;border-radius:18px;overflow:hidden;background:var(--pbg,rgba(255,255,255,.06));position:relative}
+.choice .portrait svg{width:100%;height:100%;display:block;transition:transform .35s cubic-bezier(.2,1.3,.4,1)}
+.choice b{margin-top:10px;font-size:17px;font-weight:900}
+.choice span{font-size:12px;color:var(--dim);font-weight:700;margin-top:2px}
+.choices.c3 .choice b{font-size:14.5px}
+.choices.c3 .choice span{font-size:11px}
+.choice .tick{position:absolute;top:-8px;right:-8px;width:30px;height:30px;border-radius:50%;background:var(--rose);color:#fff;display:grid;place-items:center;
+  font-weight:900;font-size:15px;box-shadow:0 4px 14px rgba(255,107,154,.6);transform:scale(0);transition:transform .3s cubic-bezier(.2,1.6,.4,1)}
+.choice.sel{border-color:var(--rose);background:rgba(255,107,154,.16);box-shadow:0 0 0 4px rgba(255,107,154,.18),0 14px 30px rgba(0,0,0,.3)}
+.choice.sel .tick{transform:scale(1)}
+.choice.sel .portrait svg{transform:scale(1.06) translateY(-2px)}
+.choices.has-sel .choice:not(.sel){opacity:.55}
+
+.namebox{margin:14px 0 4px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 14px;display:flex;align-items:center;gap:10px;
+  transition:opacity .3s,max-height .3s}
+.namebox label{font-size:12px;font-weight:900;letter-spacing:.08em;color:var(--rose2);white-space:nowrap}
+.namebox input{flex:1;min-width:0;background:transparent;border:0;outline:none;font-size:17px;font-weight:800;padding:4px 0;-webkit-user-select:text;user-select:text}
+.namebox input::placeholder{color:rgba(255,255,255,.35)}
+.namebox.off{opacity:.35;pointer-events:none}
+.hint{font-size:12px;color:var(--dim);text-align:center;margin:8px 0 12px;min-height:16px}
+
+/* ---------- confirm ---------- */
+.pair{display:flex;align-items:center;justify-content:center;gap:4px;margin:18px 0 6px}
+.who{flex:1;max-width:190px;text-align:center}
+.who .portrait{border-radius:50%;overflow:hidden;aspect-ratio:1;border:4px solid rgba(255,255,255,.9);box-shadow:0 14px 34px rgba(0,0,0,.4);background:var(--pbg)}
+.who .portrait svg{width:100%;height:100%;display:block}
+.who b{display:block;font-family:"Playfair Display",serif;font-size:22px;margin-top:10px}
+.who span{font-size:12.5px;color:var(--dim);font-weight:700}
+.who .role{display:inline-block;margin-top:6px;font-size:10.5px;font-weight:900;letter-spacing:.12em;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.1)}
+.link{font-size:34px;animation:beat2 1.2s ease-in-out infinite;margin-bottom:46px}
+@keyframes beat2{0%,100%{transform:scale(1)}15%{transform:scale(1.3)}30%{transform:scale(1)}45%{transform:scale(1.2)}}
+.story{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 18px;margin:16px 0 14px;
+  font-family:"Playfair Display",serif;font-style:italic;font-size:16.5px;line-height:1.6;color:#ffe7ef;text-align:center}
+.story b{font-style:normal;color:#fff}
+.soon{text-align:center}
+.soon .badge{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.16em;padding:6px 12px;border-radius:999px;background:var(--gold);color:#4a2c00;margin-bottom:12px}
+.toast{position:fixed;left:50%;bottom:76px;text-align:center;max-width:88vw;transform:translate(-50%,90px);background:#fff;color:#4a0d27;font-weight:800;padding:11px 16px;border-radius:14px;z-index:10;transition:transform .35s;font-size:14px}
+.toast.show{transform:translate(-50%,0)}
+/* ---------- intro / end ---------- */
+.howto{display:grid;gap:8px;margin:0 0 12px;text-align:left}
+.howto div{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:14px;line-height:1.45;color:#f5e3ec}
+.howto span{font-size:18px;flex:none}
+.howto em{font-style:normal}
+.result{display:flex;justify-content:center;gap:10px;margin:0 0 14px}
+.result div{flex:1;max-width:150px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 6px;text-align:center}
+.result b{display:block;font-family:"Playfair Display",serif;font-size:24px}
+.result span{font-size:11px;color:var(--dim);font-weight:800;letter-spacing:.06em}
+.learned{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:12px;text-align:left}
+.learned h3{margin:0 0 8px;font-family:"Playfair Display",serif;font-size:18px}
+.learned ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px;line-height:1.45;color:#f5e3ec}
+.note{font-size:12.5px;line-height:1.5;color:var(--dim);text-align:center;margin:0 4px 12px}
+.note a,.help a{color:#ffc2d6;font-weight:800}
+
+/* ---------- house HUD ---------- */
+.hud{display:flex;align-items:center;gap:10px;flex:none;padding:4px 0 10px}
+.hmood{width:52px;height:52px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.85);flex:none;background:#3a2346;transition:transform .3s}
+.hmood svg{width:100%;height:100%;display:block}
+.hmood.bump{animation:beat2 .7s ease}
+.hmeter{flex:1;min-width:0}
+.hlabel{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
+.hlabel b{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hlabel span{color:var(--gold);font-weight:900;font-size:12px;white-space:nowrap}
+.hbar{height:12px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin:5px 0 4px}
+.hbar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#ffd27a,#ff9ec0);box-shadow:0 0 12px rgba(255,210,122,.7);transition:width .8s cubic-bezier(.2,.9,.3,1)}
+.hsub{font-size:11.5px;color:var(--dim);font-weight:700}
+.helpbtn{width:52px;height:52px;border-radius:16px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:18px;line-height:1;flex:none;color:#ffc2d6}
+.helpbtn small{font-size:10px;font-weight:900;margin-top:3px;color:var(--dim)}
+
+/* ---------- house map ---------- */
+.house{position:relative;flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);gap:6px;padding:6px;
+  border-radius:22px;background:#2b1a2f;border:3px solid #4d3352;box-shadow:inset 0 0 30px rgba(0,0,0,.5),0 16px 40px rgba(0,0,0,.35)}
+.room{position:relative;border-radius:14px;overflow:hidden;background:var(--floor);transition:box-shadow .8s}
+.room::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 2px,transparent 2px 22px)}
+.room .dark{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(14,8,24,var(--d0)),rgba(8,4,16,var(--d1)));transition:background 1s;pointer-events:none;z-index:2}
+.room.lit{box-shadow:inset 0 0 40px rgba(255,210,122,.45),0 0 18px rgba(255,210,122,.25)}
+.room .rname{position:absolute;left:8px;top:6px;z-index:4;font-size:11px;font-weight:900;letter-spacing:.04em;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.room .rname small{display:block;font-size:9.5px;font-weight:700;opacity:.8;letter-spacing:0}
+.room .deco{position:absolute;font-size:clamp(20px,6vw,30px);transform:translate(-50%,-50%);z-index:1;filter:drop-shadow(0 3px 3px rgba(0,0,0,.3))}
+.room .lock{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:22px;color:rgba(255,255,255,.7)}
+.room .lock small{font-size:10px;font-weight:800;color:rgba(255,255,255,.55);text-align:center;padding:0 8px;line-height:1.3}
+.room.cur{outline:2px solid rgba(255,210,122,.55);outline-offset:-2px}
+.spot{position:absolute;z-index:6;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;display:grid;place-items:center}
+.spot::before{content:"";position:absolute;inset:6px;border-radius:50%;background:radial-gradient(circle,#fff 0,#ffe7a6 30%,rgba(255,200,90,.6) 55%,transparent 72%);animation:glow 1.6s ease-in-out infinite}
+.spot::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,220,140,.6);animation:ring 1.6s ease-out infinite}
+@keyframes glow{50%{transform:scale(1.18);filter:brightness(1.2)}}
+@keyframes ring{from{transform:scale(.5);opacity:1}to{transform:scale(1.2);opacity:0}}
+.spot.done{pointer-events:none}
+.spot.done::before{background:radial-gradient(circle,rgba(255,240,200,.9),rgba(255,200,90,.25) 50%,transparent 70%);animation:none;transform:scale(1.6);opacity:.6}
+.spot.done::after{display:none}
+.token{position:absolute;z-index:8;width:40px;height:40px;margin:-34px 0 0 -20px;border-radius:50%;overflow:hidden;border:3px solid #fff;
+  box-shadow:0 6px 14px rgba(0,0,0,.45);transition:left .6s cubic-bezier(.4,.1,.3,1),top .6s cubic-bezier(.4,.1,.3,1);background:#fff;pointer-events:none}
+.token svg{width:100%;height:100%;display:block}
+.token.walk{animation:hop .3s ease-in-out 2}
+@keyframes hop{50%{transform:translateY(-6px)}}
+.token.love{border-color:#ffb3cc;width:36px;height:36px;margin:-30px 0 0 -18px}
+.token .tag{display:none}
+.guide{flex:none;text-align:center;font-size:13.5px;font-weight:700;color:#f5e3ec;padding:10px 6px 2px;min-height:40px}
+.orb{position:fixed;z-index:30;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,#fff,#ffd27a 45%,rgba(255,180,80,0) 70%);transition:left .8s cubic-bezier(.5,0,.3,1),top .8s cubic-bezier(.5,-.4,.3,1),transform .8s;box-shadow:0 0 20px #ffd27a}
+
+/* ---------- v2 mechanics ---------- */
+.hbar{position:relative}
+.hbar i{background:linear-gradient(90deg,#ff7aa8,#ffd27a)}
+.hbar em{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff;opacity:.7;border-radius:2px}
+.hud2{display:flex;align-items:center;gap:8px;flex:none;margin:-2px 0 8px}
+.hud2 .phase{font-size:10.5px;font-weight:900;letter-spacing:.12em;padding:5px 9px;border-radius:999px;background:var(--gold);color:#4a2c00}
+.hud2 .lights{font-size:12px;font-weight:800;color:#f5e3ec}
+.energy{display:flex;gap:3px;margin-left:auto}
+.energy i{width:10px;height:16px;border-radius:3px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18)}
+.energy i.on{background:linear-gradient(180deg,#9df5c4,#36c98a);border-color:#9df5c4}
+.energy.low i.on{background:#ff9f7a;border-color:#ffb59a;animation:pulse2 .8s ease infinite alternate}
+@keyframes pulse2{to{opacity:.5}}
+.restbtn{font-size:12px;font-weight:900;padding:8px 10px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.restbtn.urge{background:#36c98a;color:#063322;border-color:#9df5c4;animation:pulse2 .9s ease infinite alternate}
+.restbtn.shake,.shake{animation:shk .4s ease}
+@keyframes shk{25%,75%{transform:translateX(-5px)}50%{transform:translateX(5px)}}
+.spot.dim::before{background:radial-gradient(circle,#ffe9c2 0,rgba(255,190,120,.55) 35%,transparent 65%);animation:glow 2.6s ease-in-out infinite;transform:scale(.85)}
+.spot.dim::after{border-color:rgba(255,220,160,.35);animation-duration:2.6s}
+.spot.out::before{background:radial-gradient(circle,#a9b4ff 0,rgba(120,130,220,.45) 35%,transparent 65%);animation:flick 1.1s steps(2) infinite}
+.spot.out::after{border-color:rgba(170,180,255,.6)}
+@keyframes flick{0%{opacity:.25}50%{opacity:1}}
+.spot.heart,.spot.rest{font-size:22px;line-height:1}
+.spot.heart::before{background:radial-gradient(circle,rgba(255,180,210,.9),rgba(255,107,154,.35) 50%,transparent 72%)}
+.spot.heart::after{border-color:rgba(255,160,200,.7)}
+.spot.rest{z-index:7}
+.spot.rest::before{background:radial-gradient(circle,rgba(160,255,200,.7),rgba(54,201,138,.25) 50%,transparent 72%)}
+.spot.rest::after{border-color:rgba(157,245,196,.6)}
+.room .lock.small{inset:auto 0 0 0;height:62%}
+.orb.dimorb{background:radial-gradient(circle,#fff3dd,#ffc98a 45%,rgba(255,180,80,0) 70%);box-shadow:0 0 10px #ffc98a}
+.qopt.mid{border-color:#ffd27a;background:rgba(255,210,122,.12)}
+.qopt.mid .dot{border-color:#ffd27a;background:#ffd27a;color:#4a2c00}
+.qopts.done .qopt.mid{opacity:1}
+.qopt.locked{opacity:.4;filter:grayscale(.8);position:relative}
+.qopt .lk{position:absolute;right:10px;top:-9px;font-style:normal;font-size:10px;font-weight:900;background:#ff9f7a;color:#3a1230;padding:2px 7px;border-radius:999px}
+.why.mid{background:rgba(255,210,122,.1);border:1px solid rgba(255,210,122,.45)}
+.why.mid h4{color:#ffd27a}
+.why h4{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.delta{margin-left:auto;font-size:12px;font-weight:900;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff}
+.delta.up{background:rgba(123,224,176,.25);color:#b6f5d6}
+.delta.down{background:rgba(255,120,120,.25);color:#ffc0c0}
+.why .lm{margin-top:6px;font-weight:800;color:#ffe7ef}
+.say.small{margin:12px 0 0}
+.say.small .face{width:42px;height:42px}
+.say.small .bubble{font-size:14.5px}
+.cue{background:rgba(160,180,255,.12);border:1px dashed rgba(170,190,255,.55);border-radius:14px;padding:10px 12px;margin:0 0 12px;font-size:14px;line-height:1.5;color:#e8ebff}
+.cue b{display:block;font-size:11px;letter-spacing:.12em;color:#b9c4ff;margin-bottom:3px;text-transform:uppercase}
+.drain{background:rgba(255,159,122,.15);border:1px solid rgba(255,159,122,.5);color:#ffd6c7;border-radius:14px;padding:9px 12px;font-size:13px;font-weight:700;margin-bottom:10px}
+.chapter{position:fixed;inset:0;z-index:25;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(15,6,22,.93);opacity:0;pointer-events:none;transition:opacity .4s}
+.chapter.show{opacity:1;pointer-events:auto}
+.chap{width:100%;max-width:400px;text-align:center;animation:enter .6s ease}
+.chap small{font-weight:900;letter-spacing:.24em;color:var(--rose2);font-size:12px}
+.chap h2{font-family:"Playfair Display",serif;font-size:48px;margin:6px 0 10px;background:linear-gradient(180deg,#fff,#ffd27a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.chap p{font-size:16px;line-height:1.55;color:#f5e3ec;margin:0 0 12px}
+.chap .gain{color:#9df5c4;font-weight:800;font-size:14px}
+.chap .sb{background:rgba(120,130,220,.18);border:1px solid rgba(170,180,255,.5);border-radius:14px;padding:10px 12px;font-weight:800;font-size:14.5px}
+.chapter{overflow-y:auto;align-items:flex-start}
+.chapter::-webkit-scrollbar{display:none}
+.chap{margin:auto 0}
+.chap.story p{text-align:left;font-family:"Playfair Display",serif;font-style:italic;font-size:17px;line-height:1.6;color:#ffe7ef}
+.chap.story p.gain,.chap.story p.sb{font-family:Nunito,sans-serif;font-style:normal;font-size:14px;text-align:center}
+.chap .sub{font-family:"Playfair Display",serif;font-style:italic;color:var(--rose2);font-size:18px;margin:-6px 0 14px}
+.chap.ms h2{font-size:38px}
+.msface{position:relative;width:96px;height:96px;margin:12px auto 4px;border-radius:50%;overflow:visible}
+.msface svg{width:96px;height:96px;border-radius:50%;border:3px solid rgba(255,255,255,.9);display:block}
+.msface span{position:absolute;right:-8px;bottom:-4px;font-size:30px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4))}
+.chap.empty .bat{font-size:46px;margin-bottom:4px;animation:pulse2 1s ease infinite alternate}
+.chap.empty h2{font-size:40px;background:linear-gradient(180deg,#fff,#ffb59a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.chap.empty p{font-size:15px;text-align:left}
+.chap.empty p b{color:#ffd6c7}
+/* ---------- question sheet ---------- */
+.sheet-bg{position:fixed;inset:0;z-index:20;background:rgba(15,6,22,.6);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.sheet-bg.show{opacity:1;pointer-events:auto}
+.qcard{width:100%;max-width:560px;max-height:92%;overflow-y:auto;background:linear-gradient(180deg,#3a1a43,#2a1238);border:1px solid var(--line);border-bottom:0;
+  border-radius:26px 26px 0 0;padding:16px 16px max(16px,env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .4s cubic-bezier(.2,.9,.3,1);box-shadow:0 -20px 50px rgba(0,0,0,.5)}
+.sheet-bg.show .qcard{transform:none}
+.qcard::-webkit-scrollbar{display:none}
+.qhead{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.qhead .chip{font-size:11px;font-weight:900;letter-spacing:.06em;padding:5px 10px;border-radius:999px;background:rgba(255,210,122,.15);color:var(--gold)}
+.qhead .n{margin-left:auto;font-size:12px;color:var(--dim);font-weight:800}
+.scene{font-size:15px;line-height:1.55;color:#f5e3ec;margin:0 0 12px}
+.scene b{color:#fff}
+.say{display:flex;gap:10px;align-items:flex-end;margin:0 0 12px}
+.say .face{width:54px;height:54px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.85);flex:none}
+.say .face svg{width:100%;height:100%;display:block}
+.bubble{position:relative;background:#fff;color:#3a1230;border-radius:18px 18px 18px 4px;padding:11px 14px;font-family:"Playfair Display",serif;font-style:italic;font-size:16px;line-height:1.45;font-weight:700}
+.ask{font-weight:900;font-size:15.5px;margin:4px 0 10px}
+.qopts{display:grid;gap:9px}
+.qopt{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:13px 14px;border-radius:16px;background:rgba(255,255,255,.08);border:2px solid var(--line);
+  font-size:14.5px;line-height:1.45;font-weight:700;transition:transform .12s,background .2s,border-color .2s,opacity .2s}
+.qopt:active{transform:scale(.985)}
+.qopt .dot{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.4);flex:none;margin-top:1px;display:grid;place-items:center;font-size:12px}
+.qopt.no{border-color:#ff9f7a;background:rgba(255,120,90,.12);opacity:.65;pointer-events:none}
+.qopt.no .dot{border-color:#ff9f7a;background:#ff9f7a;color:#3a1230}
+.qopt.yes{border-color:#7be0b0;background:rgba(80,220,160,.16)}
+.qopt.yes .dot{border-color:#7be0b0;background:#7be0b0;color:#0d3a26}
+.qopts.done .qopt:not(.yes){opacity:.35;pointer-events:none}
+.why{margin-top:12px;border-radius:16px;padding:12px 14px;font-size:14px;line-height:1.55;animation:enter .35s ease}
+.why.good{background:rgba(80,220,160,.14);border:1px solid rgba(123,224,176,.5)}
+.why.bad{background:rgba(255,160,120,.12);border:1px solid rgba(255,159,122,.45)}
+.why h4{margin:0 0 4px;font-size:15px}
+.why.good h4{color:#7be0b0} .why.bad h4{color:#ffb59a}
+.qcard .cta{margin-top:12px}
+.help h3{font-family:"Playfair Display",serif;font-size:24px;margin:4px 0 10px}
+.help p{font-size:14.5px;line-height:1.55;color:#f5e3ec;margin:0 0 10px}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(1.2deg)}}
+</style>
+</head>
+<body>
+<canvas id="hearts"></canvas>
+<div class="app">
+
+  <!-- TITLE -->
+  <section class="screen active" id="s-title">
+    <div class="scroll">
+      <div class="title-wrap">
+        <div class="couple" id="titleCouple"></div>
+        <h1>Hold the Light</h1>
+        <p class="tagline">A story about caring for someone you love — and yourself.</p>
+        <p class="lead">Someone you love is going through a hard time. Walk through your home, find the moments that matter, and learn how to support their mental health — by noticing, listening, encouraging help, and looking after yourself too.</p>
+        <p class="safe">💛 For learning, not a substitute for professional help. Support resources are available any time in the game.</p>
+      </div>
+    </div>
+    <button class="cta" id="startBtn">Begin your story 🕯️</button>
+    <button class="ghost" id="resumeBtn" style="display:none"></button>
+  </section>
+
+  <!-- STEP 1: PLAYER -->
+  <section class="screen" id="s-player">
+    <div class="top"><button class="back" data-go="s-title" aria-label="Back">←</button><div class="dots"><i class="on"></i><i></i><i></i></div><div class="spacer"></div></div>
+    <div class="scroll">
+      <div class="step-title"><small>Step 1 · You</small><h2>Who are you?</h2><p>Choose the character you'll play as.</p></div>
+      <div class="choices c3" id="playerChoices"></div>
+      <div class="namebox off" id="playerNameBox"><label>YOUR NAME</label><input id="playerName" maxlength="14" placeholder="Type a name" autocomplete="off"></div>
+      <div class="hint" id="playerHint">Tap a character to choose</div>
+    </div>
+    <button class="cta" id="playerNext" disabled>Next →</button>
+  </section>
+
+  <!-- STEP 2: LOVED ONE -->
+  <section class="screen" id="s-partner">
+    <div class="top"><button class="back" data-go="s-player" aria-label="Back">←</button><div class="dots"><i class="done"></i><i class="on"></i><i></i></div><div class="spacer"></div></div>
+    <div class="scroll">
+      <div class="step-title"><small>Step 2 · Your loved one</small><h2>Who do you love?</h2><p>Choose the person your heart is set on.</p></div>
+      <div class="choices c3" id="partnerChoices"></div>
+      <div class="namebox off" id="partnerNameBox"><label>THEIR NAME</label><input id="partnerName" maxlength="14" placeholder="Type a name" autocomplete="off"></div>
+      <div class="hint" id="partnerHint">Tap a character to choose</div>
+    </div>
+    <button class="cta" id="partnerNext" disabled>Next →</button>
+  </section>
+
+  <!-- STEP 3: CONFIRM -->
+  <section class="screen" id="s-confirm">
+    <div class="top"><button class="back" data-go="s-partner" aria-label="Back">←</button><div class="dots"><i class="done"></i><i class="done"></i><i class="on"></i></div><div class="spacer"></div></div>
+    <div class="scroll">
+      <div class="step-title"><small>Step 3 · Your story</small><h2>Your story begins</h2></div>
+      <div class="pair" id="pair"></div>
+      <div class="story" id="storyLine"></div>
+    </div>
+    <button class="cta" id="beginBtn">Start the game ♥</button>
+    <button class="ghost" data-go="s-player">Change my choices</button>
+  </section>
+
+  <!-- PLACEHOLDER: game content comes next -->
+  <!-- CHAPTER INTRO -->
+  <section class="screen" id="s-intro">
+    <div class="scroll soon">
+      <div><span class="badge">CHAPTER 1 · THE DIMMING HOUSE</span></div>
+      <div class="pair" id="pair2" style="margin-top:0"></div>
+      <div class="story" id="introLine"></div>
+      <div class="howto">
+        <div><span>💡</span><em>Each room hides <b>2 lights</b>. Each one is a moment with your loved one — choose how to respond.</em></div>
+        <div><span>💗</span><em><b>Trust</b> grows with supportive answers and drops with hurtful ones. The more trust, the more they open up.</em></div>
+        <div><span>🔋</span><em>Every talk costs <b>energy</b>. Run empty and the kindest words get hard to find — recharge in Your Corner.</em></div>
+        <div><span>👀</span><em><b>Read the moment.</b> Sometimes they need quiet company, sometimes your full attention.</em></div>
+        <div><span>🌧️</span><em>Weeks pass. On <b>bad days</b> a light may go out — help relight it.</em></div>
+      </div>
+    </div>
+    <button class="cta" id="enterBtn">Enter the house</button>
+  </section>
+
+  <!-- HOUSE -->
+  <section class="screen" id="s-house">
+    <div class="hud">
+      <div class="hmood" id="hMood"></div>
+      <div class="hmeter">
+        <div class="hlabel"><b id="hName"></b><span id="hPct"></span></div>
+        <div class="hbar"><i id="hFill"></i><em id="hMark" title="Trust needed for the Bedroom"></em></div>
+      </div>
+      <button class="helpbtn" id="helpBtn" aria-label="Get help">♡<small>Help</small></button>
+    </div>
+    <div class="hud2">
+      <span class="phase" id="hPhase">WEEK 1</span>
+      <span class="lights" id="hLights">💡 0/12</span>
+      <span class="energy" id="hEnergy" title="Your energy"></span>
+      <button class="restbtn" id="restBtn">🔋 Recharge</button>
+    </div>
+    <div class="house" id="house"></div>
+    <div class="guide" id="guide"></div>
+  </section>
+
+  <!-- ENDING -->
+  <section class="screen" id="s-end">
+    <div class="scroll soon">
+      <div><span class="badge" id="endBadge">THE HOUSE IS BRIGHT AGAIN</span></div>
+      <div class="pair" id="pair3" style="margin-top:0"></div>
+      <div class="story" id="endLine"></div>
+      <div class="result" id="endResult"></div>
+      <p class="note" id="endNext" style="color:#ffe7ef;font-weight:800"></p>
+      <div class="learned"><h3>What you practised</h3><ol id="learned"></ol></div>
+      <div class="note">This game is for learning and isn't a substitute for professional care. If someone may be in danger, contact your local emergency number. Find a free, confidential helpline in your country at <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</div>
+    </div>
+    <button class="cta" id="againBtn">Play again ♥</button>
+    <button class="ghost" data-go="s-title">Back to title</button>
+  </section>
+</div>
+<div class="sheet-bg" id="qSheet"><div class="qcard" id="qCard"></div></div>
+<div class="sheet-bg" id="helpSheet"><div class="qcard help">
+  <h3>♡ Need support now?</h3>
+  <p>This game is for learning. It isn't a substitute for a doctor, counselor or crisis service.</p>
+  <p><b>If you or someone you love might be in danger</b>, contact your local emergency number right away.</p>
+  <p>To find a free, confidential helpline in your country, visit <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</p>
+  <p>Talking to a doctor, a counselor, or someone you trust is a strong first step.</p>
+  <button class="cta" id="helpClose">Back to the game</button>
+</div></div>
+<div class="chapter" id="chapterCard"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+"use strict";
+const $ = id => document.getElementById(id);
+
+// ================= CHARACTER ART (inline SVG) =================
+// Each character is drawn in code so it scales crisply and needs no downloads.
+const SKIN = { light:"#f6d2b4", mid:"#e3a985", deep:"#a8694a" };
+const CHAR = {
+  man:      { label:"Man",        sub:"he / him",   pron:{s:"he",o:"him",p:"his"},  skin:SKIN.mid,   hair:"#2b1d1a", top:"#3d6fd9", top2:"#2d55b3", bg:"#8ec5ff" },
+  woman:    { label:"Woman",      sub:"she / her",  pron:{s:"she",o:"her",p:"her"},  skin:SKIN.light, hair:"#6b3424", top:"#ff6b9a", top2:"#e24c80", bg:"#ffc2d6" },
+  nonbinary:{ label:"Non-binary", sub:"they / them",pron:{s:"they",o:"them",p:"their"},skin:SKIN.deep, hair:"#2a1f3d", top:"#2fb7a1", top2:"#22917f", bg:"#b9a3ff", tint:"#9b7bff" }
+};
+// partner variants use different colours so the two characters never look identical
+const PARTNER_VARIANT = {
+  man:      { skin:SKIN.light, hair:"#8a5a2b", top:"#f2a73b", top2:"#d48a1f", bg:"#ffe0a3" },
+  woman:    { skin:SKIN.deep,  hair:"#1f1412", top:"#8f5cff", top2:"#7340e0", bg:"#d8c4ff" },
+  nonbinary:{ skin:SKIN.light, hair:"#5a2d1e", tint:"#ff9a4d", top:"#e5484d", top2:"#b8262c", bg:"#ffc9c9" }
+};
+
+function avatar(kind, variant, uid, mood){
+  mood = mood || "happy";
+  const c = Object.assign({}, CHAR[kind], variant || {});
+  const id = uid || kind;
+  const shade = "rgba(0,0,0,.12)";
+  const cheeks = `<ellipse cx="72" cy="122" rx="9" ry="5.5" fill="#ff7a9c" opacity=".35"/><ellipse cx="128" cy="122" rx="9" ry="5.5" fill="#ff7a9c" opacity=".35"/>`;
+  const eyes = `<g class="eye"><ellipse cx="80" cy="108" rx="5.6" ry="7" fill="#2a1a22"/><circle cx="82" cy="105.5" r="2" fill="#fff"/></g>
+                <g class="eye"><ellipse cx="120" cy="108" rx="5.6" ry="7" fill="#2a1a22"/><circle cx="122" cy="105.5" r="2" fill="#fff"/></g>`;
+  const nose = `<path d="M100 114 q-3 8 1 10" stroke="${shade}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  const smile = mood === "sad" ? `<path d="M89 137 q11 -7 22 0" stroke="#7a2a3a" stroke-width="3.6" fill="none" stroke-linecap="round"/>`
+              : mood === "calm" ? `<path d="M90 133 q10 4 20 0" stroke="#7a2a3a" stroke-width="3.6" fill="none" stroke-linecap="round"/>`
+              : `<path d="M88 132 q12 10 24 0" stroke="#7a2a3a" stroke-width="3.6" fill="none" stroke-linecap="round"/>`;
+  // tired, half-closed eyelids when sad
+  const lids = mood === "sad" ? `<path d="M73 99 h15 v6 q-7 -3 -15 0z" fill="${c.skin}"/><path d="M113 99 h15 v6 q-8 -3 -15 0z" fill="${c.skin}"/>` : "";
+  const ears = `<ellipse cx="57" cy="110" rx="8" ry="11" fill="${c.skin}"/><ellipse cx="143" cy="110" rx="8" ry="11" fill="${c.skin}"/>`;
+  const neck = `<path d="M86 140 h28 v26 q-14 8 -28 0z" fill="${c.skin}"/><path d="M86 150 q14 8 28 0 v-6 h-28z" fill="${shade}"/>`;
+  const head = `<path d="M58 104 q0 -46 42 -46 q42 0 42 46 q0 44 -42 46 q-42 -2 -42 -46z" fill="${c.skin}"/>`;
+  let back = "", body = "", front = "", brows = "", extra = "";
+
+  if (kind === "man") {
+    body = `<path d="M30 220 q4 -50 56 -60 h28 q52 10 56 60z" fill="${c.top}"/>
+            <path d="M86 160 l14 22 l14 -22" fill="#fff"/><path d="M86 160 l14 22 l-10 4 l-12 -22z" fill="#eef2ff"/><path d="M114 160 l-14 22 l10 4 l12 -22z" fill="#eef2ff"/>
+            <path d="M100 182 v38" stroke="${c.top2}" stroke-width="3"/><circle cx="100" cy="196" r="2.4" fill="${c.top2}"/><circle cx="100" cy="210" r="2.4" fill="${c.top2}"/>`;
+    front = `<path d="M56 100 q-4 -50 46 -52 q44 0 44 46 q-6 -18 -22 -22 q-20 6 -44 4 q-14 4 -24 24z" fill="${c.hair}"/>
+             <path d="M78 58 q22 -10 46 2 q-18 -2 -30 6z" fill="rgba(255,255,255,.12)"/>`;
+    brows = `<path d="M71 95 q9 -5 18 0" stroke="${c.hair}" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M111 95 q9 -5 18 0" stroke="${c.hair}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  }
+  if (kind === "woman") {
+    back = `<path d="M50 104 q-6 -60 50 -62 q56 2 50 62 q4 50 14 92 q-30 14 -64 10 q-34 4 -64 -10 q10 -42 14 -92z" fill="${c.hair}"/>`;
+    body = `<path d="M34 220 q6 -48 56 -58 h20 q50 10 56 58z" fill="${c.top}"/>
+            <path d="M84 162 q16 18 32 0" stroke="${c.top2}" stroke-width="4" fill="none"/>
+            <circle cx="100" cy="178" r="4" fill="#ffd27a"/>`;
+    front = `<path d="M58 106 q-2 -50 44 -52 q40 2 42 50 q-16 -26 -46 -30 q-8 18 -40 32z" fill="${c.hair}"/>
+             <path d="M74 62 q24 -14 50 0 q-22 -4 -36 8z" fill="rgba(255,255,255,.14)"/>`;
+    brows = `<path d="M72 94 q8 -5 16 -1" stroke="${c.hair}" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M112 93 q8 -4 16 1" stroke="${c.hair}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`;
+    extra = `<circle cx="57" cy="124" r="3.6" fill="#ffd27a"/><circle cx="143" cy="124" r="3.6" fill="#ffd27a"/>
+             <path d="M74 103 l-5 -3 M126 103 l5 -3" stroke="#2a1a22" stroke-width="2" stroke-linecap="round"/>`;
+  }
+  if (kind === "nonbinary") {
+    body = `<path d="M30 220 q4 -50 56 -60 h28 q52 10 56 60z" fill="${c.top}"/>
+            <path d="M80 158 q20 14 40 0 v10 q-20 14 -40 0z" fill="${c.top2}"/>
+            <path d="M66 176 v44 M134 176 v44" stroke="${c.top2}" stroke-width="3" opacity=".6"/>
+            <circle cx="132" cy="190" r="7" fill="#fff"/><path d="M128 190 h8 M132 186 v8" stroke="${c.tint}" stroke-width="2.2"/>`;
+    front = `<path d="M56 108 q-8 -56 48 -58 q44 2 42 44 l-4 10 q-4 -18 -16 -22 q-34 -2 -54 10 q-10 6 -16 16z" fill="${c.hair}"/>
+             <path d="M60 90 q20 -36 64 -34 q-26 4 -40 22 q-10 10 -24 12z" fill="${c.tint}" opacity=".85"/>
+             <path d="M142 96 q2 6 0 14 l-2 -12z" fill="${c.hair}"/>`;
+    brows = `<path d="M71 95 q9 -4 17 -1" stroke="${c.hair}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M112 94 q9 -3 17 1" stroke="${c.hair}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+    extra = `<circle cx="143" cy="120" r="3" fill="#e6e6f0"/><path d="M140 112 a3 3 0 1 1 6 0" stroke="#e6e6f0" stroke-width="2" fill="none"/>`;
+  }
+  return `<svg viewBox="0 0 200 216" xmlns="http://www.w3.org/2000/svg" aria-label="${c.label}">
+    <defs><radialGradient id="g_${id}" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="${c.bg}"/><stop offset="1" stop-color="${c.bg}" stop-opacity=".25"/></radialGradient></defs>
+    <rect width="200" height="216" fill="url(#g_${id})"/>
+    <g class="sway">${back}${neck}${body}${ears}${head}${mood === "sad" ? "" : cheeks}${eyes}${lids}${nose}${smile}${brows}${front}${extra}</g>
+  </svg>`;
+}
+
+// ================= STATE =================
+const PARTNER_TITLE = { man:"Your Prince", woman:"Your Princess", nonbinary:"Your Beloved" };
+// Name shown on screen: the typed name, or the default when left blank.
+const showName = who => who === "player" ? (GAME.player.name.trim() || "You") : (GAME.partner.name.trim() || PARTNER_TITLE[GAME.partner.kind] || "Your Beloved");
+// Same, but for use in the middle of a sentence ("your Prince" rather than "Your Prince").
+const inSentence = who => who === "player" ? (GAME.player.name.trim() || "you") : (GAME.partner.name.trim() || showName("partner").replace(/^Your/, "your"));
+// Tidy a typed name: drop control characters and < >, collapse spaces, limit length.
+const cleanName = v => String(v || "").replace(/[\u0000-\u001f\u007f<>]/g, "").replace(/\s+/g, " ").trimStart().slice(0, 14);
+const save = () => { try { localStorage.setItem("hq_setup", JSON.stringify(GAME)); } catch (e) {} };
+let GAME = { player:{ kind:null, name:"" }, partner:{ kind:null, name:"" } };
+try { const s = JSON.parse(localStorage.getItem("hq_setup")); if (s && s.player && s.partner) GAME = s; } catch (e) {}
+// Exposed so the next part of the game can read the player's choices.
+window.HEART_QUEST = { get state(){ return GAME; }, showName: k => showName(k), inSentence: k => inSentence(k) };
+
+// ================= SOUND =================
+let AC = null;
+function audio(){ try { if (!AC) AC = new (window.AudioContext||window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume(); } catch(e){} }
+function tone(f,d,v=.12,delay=0,type="sine"){ if(!AC) return; const t=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();
+  o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.05); }
+const sfx = {
+  tap(){ tone(660,.08,.08,0,"triangle"); },
+  select(){ tone(523,.14,.1); tone(784,.2,.09,.07); },
+  next(){ [523,659,784].forEach((f,i)=>tone(f,.16,.08,i*.06,"triangle")); },
+  love(){ [523,659,784,1047,1319].forEach((f,i)=>tone(f,.3,.08,i*.09)); }
+};
+
+// ================= FLOATING HEARTS =================
+const cv = $("hearts"), cx = cv.getContext("2d"); let hs = [];
+function size(){ const d=Math.min(2,devicePixelRatio||1); cv.width=innerWidth*d; cv.height=innerHeight*d; cx.setTransform(d,0,0,d,0,0); }
+addEventListener("resize", size); size();
+function heartPath(x,y,s){ cx.beginPath(); cx.moveTo(x,y+s*.3); cx.bezierCurveTo(x,y,x-s*.5,y,x-s*.5,y+s*.3); cx.bezierCurveTo(x-s*.5,y+s*.6,x,y+s*.8,x,y+s); cx.bezierCurveTo(x,y+s*.8,x+s*.5,y+s*.6,x+s*.5,y+s*.3); cx.bezierCurveTo(x+s*.5,y,x,y,x,y+s*.3); }
+for (let i=0;i<22;i++) hs.push(newHeart(true));
+function newHeart(any){ return { x:Math.random()*innerWidth, y: any ? Math.random()*innerHeight : innerHeight+30, s:6+Math.random()*16, v:12+Math.random()*28, w:Math.random()*6.28, a:.08+Math.random()*.22, burst:false }; }
+function burstHearts(x,y,n){ for(let i=0;i<n;i++){ const a=Math.random()*6.28, sp=80+Math.random()*220; hs.push({x,y,s:8+Math.random()*14,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-120,a:.9,burst:true,life:1}); } }
+let lt = performance.now();
+(function loop(now){
+  const dt = Math.min(.05,(now-lt)/1000); lt = now;
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  for (const h of hs) {
+    if (h.burst) { h.vy += 300*dt; h.x += h.vx*dt; h.y += h.vy*dt; h.life -= dt*.9; h.a = Math.max(0,h.life); }
+    else { h.y -= h.v*dt; h.w += dt; h.x += Math.sin(h.w)*.3; if (h.y < -30) Object.assign(h, newHeart(false)); }
+    cx.globalAlpha = h.a; cx.fillStyle = h.burst ? "#ff6b9a" : "#ffb3cc"; heartPath(h.x,h.y,h.s); cx.fill();
+  }
+  hs = hs.filter(h => !h.burst || h.life > 0);
+  requestAnimationFrame(loop);
+})(lt);
+
+// ================= NAVIGATION =================
+function go(id){
+  ["qSheet","chapterCard","helpSheet","toast"].forEach(k => { const el = $(k); if (el) el.classList.remove("show"); });
+  document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
+  if (id === "s-player") renderPlayer();
+  if (id === "s-partner") renderPartner();
+  if (id === "s-confirm") renderConfirm();
+  if (id === "s-intro") renderIntro();
+  if (id === "s-house") renderHouse();
+  if (id === "s-end") renderEnd();
+  if (id === "s-title") renderTitle();
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) { audio(); sfx.tap(); go(b.dataset.go); } });
+function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show"); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove("show"),1600); }
+
+// ================= TITLE =================
+function renderTitle(){
+  $("titleCouple").innerHTML = `<div class="l">${avatar("woman",null,"t1")}</div><div class="bigheart">🕯️</div><div class="r">${avatar("man",PARTNER_VARIANT.man,"t2","calm")}</div>`;
+  $("titleCouple").querySelectorAll(".l,.r").forEach(d => d.firstElementChild.style.width="100%");
+  $("titleCouple").querySelectorAll(".l,.r").forEach(d => d.style.width="50%");
+  const ready = GAME.player.kind && GAME.partner.kind;
+  $("resumeBtn").style.display = ready ? "block" : "none";
+  if (ready) $("resumeBtn").textContent = `Continue as ${showName("player")} ♥ ${showName("partner")}`;
+}
+// "Begin your story" always starts fresh: no leftover names or choices from an earlier player.
+$("startBtn").onclick = () => {
+  GAME.player = { kind:null, name:"" }; GAME.partner = { kind:null, name:"" }; save();
+  $("playerName").value = ""; $("partnerName").value = "";
+  audio(); sfx.next(); go("s-player");
+};
+$("resumeBtn").onclick = () => { audio(); sfx.next(); go("s-confirm"); };
+
+// ================= STEP 1 =================
+function choiceCard(kind, variant, uid, selected, delay){
+  const c = CHAR[kind], v = Object.assign({}, c, variant||{});
+  return `<button class="choice ${selected?'sel':''}" data-kind="${kind}" style="animation-delay:${delay}ms">
+    <div class="tick">✓</div><div class="portrait">${avatar(kind, variant, uid)}</div><b>${c.label}</b><span>${c.sub}</span></button>`;
+}
+function renderPlayer(){
+  const box = $("playerChoices");
+  box.innerHTML = ["man","woman","nonbinary"].map((k,i) => choiceCard(k, null, "p_"+k, GAME.player.kind===k, i*90)).join("");
+  box.classList.toggle("has-sel", !!GAME.player.kind);
+  box.querySelectorAll(".choice").forEach(b => b.onclick = () => choosePlayer(b.dataset.kind, b));
+  $("playerName").value = GAME.player.name || "";
+  updatePlayerUI();
+}
+function choosePlayer(kind, el){
+  audio(); sfx.select();
+  const changed = GAME.player.kind !== kind;
+  GAME.player.kind = kind;
+  document.querySelectorAll("#playerChoices .choice").forEach(b => b.classList.toggle("sel", b.dataset.kind === kind));
+  $("playerChoices").classList.add("has-sel");
+  const r = el.getBoundingClientRect(); burstHearts(r.left+r.width/2, r.top+r.height/3, 14);
+  save(); updatePlayerUI();
+}
+function updatePlayerUI(){
+  const k = GAME.player.kind;
+  $("playerNameBox").classList.toggle("off", !k);
+  $("playerNext").disabled = !k;
+  $("playerName").placeholder = "Optional";
+  $("playerHint").textContent = !k ? "Tap a character to choose" : !GAME.player.name.trim() ? `No name needed — you'll simply be “You” (${CHAR[k].sub})` : `You'll play as ${GAME.player.name.trim()} (${CHAR[k].sub})`;
+}
+$("playerName").addEventListener("input", e => { GAME.player.name = cleanName(e.target.value); if (e.target.value !== GAME.player.name) e.target.value = GAME.player.name; save(); updatePlayerUI(); });
+$("playerNext").onclick = () => { GAME.player.name = GAME.player.name.trim(); save(); audio(); sfx.next(); go("s-partner"); };
+
+// ================= STEP 2 =================
+function renderPartner(){
+  const box = $("partnerChoices");
+  box.innerHTML = ["man","woman","nonbinary"].map((k,i) => choiceCard(k, PARTNER_VARIANT[k], "l_"+k, GAME.partner.kind===k, i*90)).join("");
+  box.classList.toggle("has-sel", !!GAME.partner.kind);
+  box.querySelectorAll(".choice").forEach(b => b.onclick = () => choosePartner(b.dataset.kind, b));
+  $("partnerName").value = GAME.partner.name || "";
+  updatePartnerUI();
+}
+function choosePartner(kind, el){
+  audio(); sfx.select();
+  const changed = GAME.partner.kind !== kind;
+  GAME.partner.kind = kind;
+  document.querySelectorAll("#partnerChoices .choice").forEach(b => b.classList.toggle("sel", b.dataset.kind === kind));
+  $("partnerChoices").classList.add("has-sel");
+  const r = el.getBoundingClientRect(); burstHearts(r.left+r.width/2, r.top+r.height/3, 14);
+  save(); updatePartnerUI();
+}
+function updatePartnerUI(){
+  const k = GAME.partner.kind;
+  $("partnerNameBox").classList.toggle("off", !k);
+  $("partnerNext").disabled = !k;
+  $("partnerName").placeholder = "Optional";
+  $("partnerHint").textContent = !k ? "Tap a character to choose" : !GAME.partner.name.trim() ? `No name? They'll be called “${PARTNER_TITLE[k]}” (${CHAR[k].sub})` : `Your loved one is ${GAME.partner.name.trim()} (${CHAR[k].sub})`;
+}
+$("partnerName").addEventListener("input", e => { GAME.partner.name = cleanName(e.target.value); if (e.target.value !== GAME.partner.name) e.target.value = GAME.partner.name; save(); updatePartnerUI(); });
+$("partnerNext").onclick = () => {
+  GAME.partner.name = GAME.partner.name.trim();
+  if (GAME.partner.name && GAME.partner.name.toLowerCase() === GAME.player.name.toLowerCase()) { toast("Pick a different name from yours 💕"); return; }
+  save(); audio(); sfx.next(); go("s-confirm");
+};
+
+// ================= STEP 3 =================
+function pairHTML(partnerMood){
+  const P = GAME.player, L = GAME.partner;
+  const pv = CHAR[P.kind], lv = Object.assign({}, CHAR[L.kind], PARTNER_VARIANT[L.kind]);
+  const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  return `<div class="who"><div class="portrait" style="--pbg:${pv.bg}">${avatar(P.kind,null,"c_p"+Math.random().toString(36).slice(2,6))}</div><b>${esc(showName("player"))}</b><span>${pv.sub}</span><br><span class="role">YOU</span></div>
+          <div class="link">💞</div>
+          <div class="who"><div class="portrait" style="--pbg:${lv.bg}">${avatar(L.kind,PARTNER_VARIANT[L.kind],"c_l"+Math.random().toString(36).slice(2,6),partnerMood)}</div><b>${esc(showName("partner"))}</b><span>${CHAR[L.kind].sub}</span><br><span class="role">LOVED ONE</span></div>`;
+}
+function renderConfirm(){
+  if (!GAME.player.kind || !GAME.partner.kind) return go("s-player");
+  $("pair").innerHTML = pairHTML();
+  const L = GAME.partner, pr = CHAR[L.kind].pron;
+  const e = document.createElement("div");
+  const named = !!GAME.player.name.trim();
+  e.innerHTML = (named ? `<b></b>, ` : ``) + `${named ? "you" : "You"} share a home with <b></b>, the person you love most. Lately, something feels different — and ${pr.s === "they" ? "they need" : pr.s + " needs"} you more than ever. This is a story about noticing, listening, and staying.`;
+  const bs = e.querySelectorAll("b");
+  if (named) bs[0].textContent = GAME.player.name.trim();
+  bs[bs.length - 1].textContent = inSentence("partner");
+  $("storyLine").innerHTML = e.innerHTML;
+  setTimeout(() => { const r = $("pair").getBoundingClientRect(); burstHearts(r.left+r.width/2, r.top+r.height/3, 24); audio(); sfx.love(); }, 250);
+}
+$("beginBtn").onclick = () => { audio(); sfx.love(); go("s-intro"); };
+
+// ================= GAME: THE DIMMING HOUSE =================
+// Text tokens: {P} loved one's name (sentence start), {p} (mid-sentence),
+// {they} {them} {their} pronouns, "{their} is/has/should" -> correct subject + verb.
+function grammar(t){
+  const pr = CHAR[GAME.partner.kind].pron;
+  return t.replace(/\{their\} (is|has|should|was)\b/g, (_, v) => pr.s === "they" ? "they " + ({is:"are",has:"have",should:"should",was:"were"}[v]) : pr.s + " " + v);
+}
+function fill(t){
+  const pr = CHAR[GAME.partner.kind].pron;
+  return grammar(t).replace(/\{P\}/g, showName("partner")).replace(/\{p\}/g, inSentence("partner"))
+    .replace(/\{They\}/g, pr.s.charAt(0).toUpperCase() + pr.s.slice(1)).replace(/\{they\}/g, pr.s)
+    .replace(/\{them\}/g, pr.o).replace(/\{their\}/g, pr.p);
+}
+const T = fill;
+const escH = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+function shuffleArr(a){ for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function anim(el, c){ if (!el) return; el.classList.remove(c); void el.offsetWidth; el.classList.add(c); }
+
+// ---------------- tuning ----------------
+const MAX_ENERGY = 3, START_TRUST = 30, BEDROOM_TRUST = 60;
+const GRADE = {
+  help:{ trust:6, cls:"good", head:"💛 Supportive" },
+  okay:{ trust:1,  cls:"mid",  head:"🙂 Well-meant, but not quite" },
+  hurt:{ trust:-10, cls:"bad",  head:"💔 That stung" }
+};
+// Story told at each turning point. Paragraphs are separated by "\n\n".
+const PHASES = [
+  { from:0, label:"WEEK 1", title:"Week 1", sub:"The Dimming House",
+    story:"It started small. {P} stopped answering messages so quickly. Laughed a little less. Said “I'm just tired” a lot.\n\nTonight the only light on is a lamp in the living room, and {p} is a quiet shape under a blanket on the sofa.\n\nYou don't know what's wrong yet. But you know something is. Maybe that's where caring begins — with noticing." },
+  { from:2, label:"WEEK 3", title:"Week 3", sub:"Good Days, Hard Days",
+    story:"Three weeks in. Some mornings {p} makes coffee and hums along to the radio, and hope rushes in like sunlight.\n\nOther mornings the curtains stay closed until noon.\n\nYou're learning that healing isn't a straight road. It loops back. It stalls. Then, slowly, it moves forward again." },
+  { from:4, label:"MONTH 2", title:"Month 2", sub:"Two Lights to Tend",
+    story:"Two months. The counseling sessions are hard, and some weeks feel like starting over. But {p} keeps going.\n\nYou notice something too: a tiredness that sleep doesn't fix. You've been so focused on {p} that you forgot about yourself.\n\nThis chapter is about both of you." }
+];
+// A short story when each room fills with light.
+const MILESTONES = [
+  { icon:"🛋️", title:"The First Light", mood:"sad",
+    story:"For the first time in weeks, {p} let you sit close on the sofa. Nothing was fixed — but something shifted.\n\nWhen you said goodnight, {P} whispered: “Thanks for noticing.”\n\nNoticing is the first light." },
+  { icon:"🍲", title:"Warm Bowls", mood:"calm",
+    story:"The kitchen smells like ginger soup again. {P} finished half a bowl — more than all week.\n\nSometimes love isn't a speech. It's a warm meal set down quietly, and staying to keep {them} company." },
+  { icon:"🕯️", title:"Words in the Dark", mood:"calm",
+    story:"Late one night, {p} talked for an hour — about the heaviness, the guilt, the fear of being “too much.”\n\nYou didn't fix any of it. You just listened.\n\nAfterwards, {p} slept through the night for the first time in weeks." },
+  { icon:"📞", title:"The Phone Call", mood:"calm",
+    story:"Out on the balcony, with the city lights below, {p} held the phone for a long, long time. Then made the call.\n\nThe first counseling appointment is on Thursday.\n\nAsking for help was {their} brave step — and you were right there beside {them}." },
+  { icon:"🌿", title:"Your Own Light", mood:"happy",
+    story:"You called your best friend and cried for the first time in weeks. Then, somehow, you laughed.\n\nYou set a gentle boundary, and {p} understood.\n\nYou can't be someone's whole world — but you can be a steady, rested part of it." }
+];
+const DOOR = { icon:"🚪", title:"The Door Opens", mood:"sad",
+  story:"That night, there's a soft knock on your door. It's {p}.\n\n“Can we talk? There's something I haven't told anyone.”\n\nEverything you've practised has led to this moment. Take a breath. Stay calm. Stay close." };
+
+const ROOMS = [
+  { name:"Living Room", ref:"the Living Room", theme:"Noticing the signs",    floor:"#a8746a", deco:[["🛋️",26,72],["📺",78,26],["🪴",88,80]], spots:[[34,40],[66,62]], pp:[52,82], ex:[18,44] },
+  { name:"Kitchen",     ref:"the Kitchen",     theme:"Small acts of care",    floor:"#8f9a7a", deco:[["🍳",18,30],["☕",84,74],["🧺",16,80]], spots:[[48,36],[62,70]], pp:[38,66], ex:[80,40] },
+  { name:"Study",       ref:"the Study",       theme:"Listening well",        floor:"#7b7fa8", deco:[["📚",16,30],["💻",82,30],["🕯️",18,78]], spots:[[50,46],[72,74]], pp:[40,70], ex:[28,50] },
+  { name:"Balcony",     ref:"the Balcony",     theme:"Finding help",          floor:"#6f9aa3", deco:[["🌙",84,22],["🪴",14,30],["🌿",86,80]], spots:[[40,40],[62,70]], pp:[30,72], ex:[72,40] },
+  { name:"Your Corner", ref:"Your Corner",     theme:"Caring for yourself",   floor:"#a58a6a", deco:[["🧸",18,30],["🎧",82,30],["🛁",80,78]], spots:[[48,46],[34,74]], pp:[64,74], ex:[20,56], rest:[56,22] },
+  { name:"Bedroom",     ref:"the Bedroom",     theme:"In the darkest moments",floor:"#8a6a9a", deco:[["🛏️",30,64],["🕯️",84,26],["🖼️",16,26]], spots:[[56,42],[72,72]], pp:[30,52], ex:[80,50] }
+];
+
+// g: help = most supportive, okay = well-meant but not ideal, hurt = hurtful.
+// cue = "read the moment" body-language clue. critical = only the supportive answer lights it.
+const QUESTIONS = [
+  { scene:"For weeks now, {p} has stopped joining movie nights, sleeps until noon, and hasn't touched {their} guitar in days.",
+    ask:"What's the best first step?",
+    opts:[
+      { g:"help", t:"Find a calm, private moment and gently say what you've noticed: “You've seemed really tired lately. How are you doing — really?”",
+        why:"Lasting changes in sleep, energy and interests can be signs that someone is struggling. Naming what you've noticed, kindly and privately, opens the door without pressure." },
+      { g:"okay", t:"Wait it out. It's probably just a phase and will pass on its own.",
+        why:"Sometimes it does pass — but changes that last for weeks deserve a gentle check-in. Waiting can leave someone feeling unseen." },
+      { g:"hurt", t:"Tell {them} to snap out of it and get back to normal.",
+        why:"Low mood isn't a switch someone can flip. Pressure like this adds guilt and makes people hide how they feel." } ] },
+  { scene:"You find {p} on the sofa.", cue:"🎧 Headphones in, curled under a blanket. A small, tired smile when you walk in — but {their} eyes drift back to the window.",
+    line:"I'm fine. Just tired.", ask:"Read the moment. What does {p} need right now?",
+    opts:[
+      { g:"help", t:"“Okay. Mind if I sit with you for a bit? We don't have to talk — I'm here whenever you want to.”",
+        why:"The cues say “I don't have words right now.” Quiet company respects that, and still says “you're not alone.” You can gently check in again later." },
+      { g:"okay", t:"Ask what's wrong, when it started, and whether something happened.",
+        why:"Caring questions — but a wave of them right now can feel like pressure when {p} is clearly low on energy. Go at {their} pace." },
+      { g:"hurt", t:"“Fine, I'll leave you alone then.”",
+        why:"Said with a sigh, this can sound like rejection. Giving space is okay; making someone feel like a bother isn't." } ] },
+
+  { scene:"{P} hasn't eaten much today and says even making toast feels impossible.",
+    ask:"How can you help?",
+    opts:[
+      { g:"help", t:"Make something simple, bring it over, and sit with {them} — no lecture needed.",
+        why:"When energy is low, everyday tasks can feel huge. Quiet, practical help eases the load and shows care without judgment." },
+      { g:"okay", t:"Take over everything — cooking, plans, decisions — so {p} doesn't have to do anything at all.",
+        why:"Help is great, but taking over completely can make someone feel powerless. Offer help and let them keep some choices." },
+      { g:"hurt", t:"Remind {them} that skipping meals is unhealthy and {their} should know better.",
+        why:"They probably already know. Lectures add shame; small, kind actions help more." } ] },
+  { scene:"While you wash the dishes together, {p} goes quiet.", line:"I'm sorry I'm such a burden.",
+    ask:"What do you say?",
+    opts:[
+      { g:"help", t:"“You're not a burden. I'm here because I care about you, and we'll figure this out together.”",
+        why:"Feeling like a burden is common when someone is struggling. Warm, direct reassurance helps them feel less alone." },
+      { g:"okay", t:"“Well… it has been hard for me too, you know.”",
+        why:"Honest — your feelings matter. But in reply to this, it can confirm their fear. Share your own load with a friend or someone you trust too." },
+      { g:"hurt", t:"“Don't say that. Lots of people have it way worse than you.”",
+        why:"Comparing pain makes people feel their struggle doesn't count — and less likely to share again." } ] },
+
+  { scene:"Late at night, {p} finally starts to talk.", line:"Everything just feels… pointless. I can't even explain it.",
+    ask:"How do you respond?",
+    opts:[
+      { g:"help", t:"“That sounds really heavy. Can you tell me more about what it feels like?”",
+        why:"Acknowledging the feeling and asking an open question invites them to keep going. You don't need perfect words — listening is the help." },
+      { g:"okay", t:"“Try to think positive! Look on the bright side.”",
+        why:"Well-meant, but it can feel like their pain isn't allowed. Validation comes before encouragement." },
+      { g:"hurt", t:"“But you have a great life. What do you have to be sad about?”",
+        why:"Struggling isn't about deserving it. This can make someone feel guilty for how they feel." } ] },
+  { scene:"You're busy at your desk when {p} appears in the doorway.", cue:"👀 Shifting from foot to foot, glancing at you, then away. {They} came looking for you.",
+    line:"Hey… are you busy?", ask:"Read the moment. What do you do?",
+    opts:[
+      { g:"help", t:"Put everything down and turn to face {them}: “Not too busy for you. What's up?”",
+        why:"Coming to find you is a bid for connection. Full attention right now tells {them} it was safe to reach out." },
+      { g:"okay", t:"“Sure — can we make it quick? I'm in the middle of something.”",
+        why:"Honest about your time, but “quick” can make someone shrink what they came to say. If you truly can't stop, offer a specific time soon." },
+      { g:"hurt", t:"“Can it wait? I'm exhausted.”",
+        why:"You might really be tired — but brushing off a rare reach-out can make someone stop trying. Recharge before you run empty." } ] },
+
+  { scene:"It's been more than two weeks, and {p} still feels low most days. Sleep and appetite are off too.",
+    ask:"What do you do?",
+    opts:[
+      { g:"help", t:"Gently suggest talking to a doctor or counselor, and offer to help find one or go along.",
+        why:"When low mood lasts most days for two weeks or more, professional support can really help. Offering practical help — finding someone, booking, going together — makes the step easier." },
+      { g:"okay", t:"Look up {their} symptoms online and tell {them} what you think {their} has.",
+        why:"Caring, but only a professional can assess what's going on. Internet labels can scare or mislead." },
+      { g:"hurt", t:"Tell {them} therapy is only for “really serious” problems.",
+        why:"You don't need to reach a crisis to get help. Earlier support often works better." } ] },
+  { scene:"You mention seeing a counselor.", line:"What if they think I'm weak? Or crazy?",
+    ask:"How do you respond?",
+    opts:[
+      { g:"help", t:"“Asking for help takes strength. It's like seeing a doctor for a sprained ankle — it's just taking care of yourself.”",
+        why:"Fear of judgment (stigma) stops many people from getting help. Calmly normalising it makes the step feel possible." },
+      { g:"okay", t:"“Maybe keep it quiet so people don't judge you.”",
+        why:"Privacy is their choice — but suggesting it's shameful can deepen the fear that something is wrong with them." },
+      { g:"hurt", t:"“You don't need help. You just need to try harder.”",
+        why:"Struggling isn't about effort. This can make them feel they've failed and stop them seeking support." } ] },
+
+  { scene:"You've been supporting {p} for weeks. Tonight you feel drained, short-tempered and close to tears.",
+    ask:"What's the healthiest choice?", self:true,
+    opts:[
+      { g:"help", t:"Take time to rest, and talk to a friend or someone you trust about how you're feeling.",
+        why:"Supporters need support too. Looking after yourself isn't selfish — it's what lets you keep showing up. (+2 energy)" },
+      { g:"okay", t:"Push your own feelings aside. {P} needs you more right now.",
+        why:"Loving, but ignoring your needs for too long leads to burnout — and then it's harder to help anyone." },
+      { g:"hurt", t:"Pull away from {p} completely until {their} is better.",
+        why:"Breaks are healthy, but disappearing completely can feel like abandonment. Balance is the goal." } ] },
+  { scene:"{P} has started calling you every night until 3 a.m. You're barely sleeping and struggling at work.",
+    ask:"What do you do?",
+    opts:[
+      { g:"help", t:"Kindly explain your limits, agree on times to talk, and help {them} build other support too — friends, family or a professional.",
+        why:"Healthy boundaries keep support sustainable. One person can't be someone's only support — and that's okay." },
+      { g:"okay", t:"Keep answering every call, however exhausted you are.",
+        why:"Devoted — but running yourself into the ground isn't sustainable, and it means {p} has no other support if you burn out." },
+      { g:"hurt", t:"Tell {them} {their} is being too needy.",
+        why:"Labels like this add shame. Talk about your needs, not their flaws." } ] },
+
+  { scene:"In the dim bedroom, {p} says quietly:", line:"Sometimes I think everyone would be better off without me.",
+    ask:"What do you do?", critical:true,
+    opts:[
+      { g:"help", t:"Stay calm, take it seriously, and ask directly: “Are you having thoughts of ending your life?”",
+        why:"Asking directly does not put the idea in someone's head. It shows you're taking them seriously and makes it easier to be honest — and to get help." },
+      { g:"okay", t:"“Please don't say that. I love you, and I hope you feel better soon.”",
+        why:"Loving words — but this moment needs more. A statement like this should be taken seriously and asked about directly." },
+      { g:"hurt", t:"“Don't talk like that. That's silly.”",
+        why:"Brushing it off can make someone stop talking about it — when talking is exactly what's needed." } ] },
+  { scene:"{P} nods slowly and admits {their} has been having those thoughts.",
+    ask:"What's the right next step?", critical:true,
+    opts:[
+      { g:"help", t:"Thank {them} for telling you, stay with {them}, and get help now — a crisis line, a doctor, or emergency services if {their} is in immediate danger.",
+        why:"Don't leave someone alone if they may be at risk, and don't carry this alone. Professional and crisis services are there for exactly this moment." },
+      { g:"okay", t:"Give {them} a helpline number and ask {them} to call whenever {their} is ready.",
+        why:"Sharing a helpline is good — but right now, stay with {them} and help make that call together, now." },
+      { g:"hurt", t:"Promise to keep it a secret so {p} keeps trusting you.",
+        why:"Their safety matters more than secrecy. You can say: “I care about you too much to keep this to myself.”" } ] }
+];
+
+// Bad days: a light goes out and must be relit.
+const SETBACKS = [
+  { scene:"After a few better days, {p} couldn't get out of bed this morning.", line:"I thought I was getting better. I've ruined everything.",
+    ask:"What do you say?",
+    opts:[
+      { g:"help", t:"“Bad days are part of getting better. One hard day doesn't erase your progress — and I'm still here.”",
+        why:"Recovery is rarely a straight line. Naming setbacks as normal eases the shame that can make them worse." },
+      { g:"okay", t:"“Come on, you were doing so well yesterday!”",
+        why:"Meant as encouragement, but it can sound like disappointment. Meet {them} where {their} is today." },
+      { g:"hurt", t:"“I knew it wouldn't last.”",
+        why:"This confirms {their} worst fear. Hope is something you can hold for {them} on hard days." } ] },
+  { scene:"{P} skipped today's counseling appointment.", line:"I couldn't face going today.",
+    ask:"How do you respond?",
+    opts:[
+      { g:"help", t:"“That's okay. Want help rescheduling? I can sit with you while you call.”",
+        why:"Missing one appointment is common. Making the next step small and shared keeps support going." },
+      { g:"okay", t:"“You have to go — it's important. No more excuses.”",
+        why:"You're right that it matters, but pressure can make avoidance stronger. Problem-solve together instead." },
+      { g:"hurt", t:"“Then why did we even bother finding someone?”",
+        why:"Frustration is understandable, but this can make {them} want to give up on help altogether." } ] }
+];
+
+// Trust moments: appear when trust grows. They show {p} opening up.
+const TRUST_MOMENTS = [
+  { at:50, scene:"{P} sits beside you, quiet for a long while.", line:"Can I tell you something? I've been feeling like this for a lot longer than I let on.",
+    ask:"{P} is opening up. What do you say?",
+    opts:[
+      { g:"help", t:"“Thank you for trusting me with that. I'm listening — take all the time you need.”",
+        why:"Opening up takes courage. Thanking them makes it more likely they'll keep sharing." },
+      { g:"okay", t:"“Why didn't you tell me sooner?”",
+        why:"A natural question, but it can sound like blame. What matters is that they're telling you now." },
+      { g:"hurt", t:"“Wow. So you've been hiding this from me?”",
+        why:"This turns their courage into a fault. They may regret opening up." } ] },
+  { at:75, scene:"Before an appointment, {p} grips your hand.", line:"I'm scared that if I tell the counselor everything, it'll all become real.",
+    ask:"{P} trusts you with a fear. What do you say?",
+    opts:[
+      { g:"help", t:"“That makes so much sense. You can go at your own pace — and whatever you share, I'll still be right here.”",
+        why:"Validating fear and offering steady presence helps people take brave steps." },
+      { g:"okay", t:"“Just tell them everything. It's for the best.”",
+        why:"Probably true — but rushing past the fear can make it feel unheard." },
+      { g:"hurt", t:"“It's already real. You need to face it.”",
+        why:"Harsh truth delivered without warmth can push someone away from help." } ] }
+];
+
+// Recharge moments: a different situation each time (no repeats until all have been seen).
+// g: best = truly restful, okay = some rest, poor = feels like rest but isn't.
+const RECHARGE = [
+  { q:"It's late, and your mind won't stop racing about {p}.", opts:[
+    { g:"best", t:"Write your worries down, then take a few slow breaths before bed.", tip:"Getting worries onto paper helps your mind let go of them for the night." },
+    { g:"okay", t:"Watch one episode of a comfort show to unwind.", tip:"A gentle distraction helps a little — just keep it to one episode." },
+    { g:"poor", t:"Read articles about mental illness until 2 a.m.", tip:"Wanting to understand is loving, but late-night reading feeds worry and steals sleep." } ] },
+  { q:"A friend texts: “Want to grab coffee this weekend?”", opts:[
+    { g:"best", t:"Say yes — and be honest that things have been hard lately.", tip:"Letting a friend in means you don't carry everything alone." },
+    { g:"okay", t:"Say yes, but pretend everything is fine.", tip:"Seeing a friend helps, even if you don't share. Next time, you could let them in a little." },
+    { g:"poor", t:"Ignore it. You don't have time for friends right now.", tip:"Pulling away from your own support makes caring for someone else much harder." } ] },
+  { q:"You realise you haven't eaten a proper meal all day.", opts:[
+    { g:"best", t:"Make a real meal and sit down to eat it slowly.", tip:"Your body is your energy source. Feeding it well is part of showing up." },
+    { g:"okay", t:"Grab a quick snack on the go.", tip:"Better than nothing — but a real meal would refill you more." },
+    { g:"poor", t:"Skip it and have another coffee instead.", tip:"Caffeine can mask tiredness for a while, but it doesn't refill your tank." } ] },
+  { q:"You feel guilty for wanting some time alone.", opts:[
+    { g:"best", t:"Remind yourself that rest isn't selfish, and take an hour just for you.", tip:"You can't pour from an empty cup. Taking time for yourself is part of caring well." },
+    { g:"okay", t:"Take ten minutes, but feel bad the whole time.", tip:"A short break still counts. Try to let go of the guilt — you deserve rest." },
+    { g:"poor", t:"Push the guilt down and keep going without a break.", tip:"Ignoring your needs builds up exhaustion that comes out later." } ] },
+  { q:"Your body feels stiff and heavy after weeks of worry.", opts:[
+    { g:"best", t:"Go for a walk or do some gentle stretching.", tip:"Moving your body releases tension and lifts your mood." },
+    { g:"okay", t:"Lie on the sofa and listen to music.", tip:"Resting helps — a little movement would help even more." },
+    { g:"poor", t:"Stay up late doing chores to feel productive.", tip:"Busyness can feel like control, but it leaves you even more drained." } ] },
+  { q:"You keep thinking you should be able to fix everything for {p}.", opts:[
+    { g:"best", t:"Talk to a counselor or join a support group for people supporting a loved one.", tip:"Supporters deserve support too. You don't have to be the whole solution." },
+    { g:"okay", t:"Read a guide about how to support someone who is struggling.", tip:"Learning helps — but talking with others who understand helps even more." },
+    { g:"poor", t:"Tell yourself to just try harder.", tip:"Their recovery isn't something you can force. Your job is to support, not to fix." } ] },
+  { q:"It's Sunday morning, and you have a free hour.", opts:[
+    { g:"best", t:"Spend it on a hobby you love.", tip:"Doing something just for you reminds you who you are outside this hard time." },
+    { g:"okay", t:"Catch up on emails and messages.", tip:"Useful, but it isn't really rest." },
+    { g:"poor", t:"Spend it worrying about what might happen next.", tip:"Worry feels like doing something, but it drains you without changing anything." } ] },
+  { q:"You snapped at a coworker today and feel awful about it.", opts:[
+    { g:"best", t:"Be kind to yourself, plan to apologise tomorrow, and get an early night.", tip:"Everyone has hard days. Self-compassion helps you recover faster than self-blame." },
+    { g:"okay", t:"Go to bed, but replay the moment over and over.", tip:"Sleep helps — try to let the moment go so your mind can rest too." },
+    { g:"poor", t:"Stay up listing everything you've done wrong lately.", tip:"Harsh self-criticism keeps you stuck and exhausted." } ] },
+  { q:"You haven't been outside in days.", opts:[
+    { g:"best", t:"Sit in the sun or walk to a nearby park.", tip:"Daylight and fresh air can lift mood and help you sleep better." },
+    { g:"okay", t:"Open the windows and let some fresh air in.", tip:"A small step in the right direction." },
+    { g:"poor", t:"Keep the blinds closed and stay in.", tip:"Shutting yourself in can quietly lower your own mood too." } ] },
+  { q:"A family member offers to help.", opts:[
+    { g:"best", t:"Say yes — ask them to spend an afternoon with {p} so you can rest.", tip:"Sharing care builds a stronger support network for everyone." },
+    { g:"okay", t:"Say “Thanks, maybe later.”", tip:"Keeping the door open is good. Accepting help sooner is even better." },
+    { g:"poor", t:"Refuse. You should be able to handle this alone.", tip:"No one should carry this alone. Accepting help is a strength." } ] },
+  { q:"After a hard conversation, you feel tired but wired.", opts:[
+    { g:"best", t:"Breathe slowly for a few minutes — in for 4, out for 6.", tip:"Longer out-breaths help your body shift into a calmer state." },
+    { g:"okay", t:"Take a warm shower.", tip:"Warmth can help you relax and wind down." },
+    { g:"poor", t:"Drink an energy drink and push on.", tip:"It might keep you going tonight, but you'll pay for it tomorrow." } ] },
+  { q:"You realise you haven't laughed in a long time.", opts:[
+    { g:"best", t:"Call the friend who always makes you laugh.", tip:"Laughter and connection are some of the best ways to recharge." },
+    { g:"okay", t:"Watch a few funny videos.", tip:"A quick laugh helps — sharing it with someone helps even more." },
+    { g:"poor", t:"Tell yourself you'll laugh again once all this is over.", tip:"Joy doesn't have to wait. Small good moments keep you going." } ] }
+];
+const REST_GAIN = { best:3, okay:2, poor:0 };
+const REST_HEAD = { best:["🌿 Fully recharged","good"], okay:["🙂 A little rest","mid"], poor:["😮‍💨 Not much rest","bad"] };
+let restQueue = [];
+function nextRecharge(){ if (!restQueue.length) restQueue = shuffleArr(RECHARGE.map((_, i) => i)); return RECHARGE[restQueue.pop()]; }
+const QUALITY_TIME = [
+  { t:"Watch {their} favourite comfort show together", r:"{P} laughs — just once, but it's real." },
+  { t:"Cook a simple meal side by side", r:"{P} hums while stirring the pot." },
+  { t:"Take a slow walk around the block together", r:"{P} points out a cat on a wall and smiles." }
+];
+const LEARNED = [
+  "Notice changes, and check in gently and privately.",
+  "Read the moment: sometimes quiet company, sometimes full attention.",
+  "Offer practical help without taking over.",
+  "Listen and validate before giving advice.",
+  "Encourage professional help — and offer to help find it.",
+  "Setbacks are normal. One bad day doesn't erase progress.",
+  "Care for yourself and set kind boundaries — you can't pour from an empty cup.",
+  "Take talk of suicide seriously: ask directly, stay with them, get help right away."
+];
+const REACT = {
+  help:[ "…Thanks. That actually helps a little.", "Thank you. I really needed to hear that.", "I'm so glad it's you here with me." ],
+  okay:[ "…Yeah. Okay.", "I guess. I don't know.", "I know you mean well." ],
+  hurt:[ "Forget it. I shouldn't have said anything.", "…Never mind.", "That hurt a bit, honestly." ]
+};
+
+// ---------------- state ----------------
+// light: 0 = dark, 1 = dim (okay answer — can be revisited), 2 = bright, -1 = gone out (setback)
+let PLAY = null;
+function newPlay(){
+  PLAY = { light:Array(12).fill(0), trust:START_TRUST, energy:MAX_ENERGY, maxRoom:0, phase:0,
+           setback:{}, setbacksFixed:0, tm:TRUST_MOMENTS.map(() => ({ shown:false, done:false })),
+           restsGood:0, rests:0, qt:0, msShown:[], doorShown:false, me:{ r:0, x:18, y:90 }, q:null, pendingPhase:null };
+}
+const lit = i => PLAY.light[i] >= 1;
+const roomComplete = r => lit(r*2) && lit(r*2+1);
+const outLights = () => PLAY.light.map((v,i) => v === -1 ? i : -1).filter(i => i >= 0);
+function bedroomGate(){ // reason the bedroom is closed, or "" if open
+  if (!roomComplete(4)) return "lights";
+  if (outLights().length) return "out";
+  if (PLAY.trust < BEDROOM_TRUST) return "trust";
+  return "";
+}
+function isUnlocked(r){ if (r === 5) return PLAY.maxRoom >= 5; return r <= PLAY.maxRoom; }
+function refreshUnlocks(){
+  let changed = false;
+  while (PLAY.maxRoom < 5) {
+    const r = PLAY.maxRoom;
+    if (!roomComplete(r)) break;
+    if (r + 1 === 5 && bedroomGate()) break;
+    PLAY.maxRoom++; changed = true;
+    const ph = PHASES.findIndex(p => p.from === PLAY.maxRoom);
+    if (ph > PLAY.phase) { PLAY.phase = ph; PLAY.pendingPhase = ph; }
+  }
+  return changed;
+}
+function trustTier(){ return PLAY.trust < 40 ? 0 : PLAY.trust < 70 ? 1 : 2; }
+function partnerMood(){ return !PLAY ? "sad" : PLAY.trust >= 70 ? "happy" : PLAY.trust >= 45 ? "calm" : "sad"; }
+function partnerAvatar(uid){ return avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], uid, partnerMood()); }
+
+// ---------------- intro ----------------
+function renderIntro(){
+  if (!GAME.player.kind || !GAME.partner.kind) return go("s-player");
+  newPlay();
+  $("pair2").innerHTML = pairHTML("sad");
+  const d = document.createElement("div");
+  d.innerHTML = fill(`Lately, <b>{p}</b> hasn't seemed like {their} usual self. Less laughter. Less energy. More time alone in the dark.<br><br>The house feels dimmer every day. Bring the light back — one moment at a time.`);
+  $("introLine").innerHTML = d.innerHTML;
+}
+$("enterBtn").onclick = () => { audio(); sfx.next(); go("s-house"); setTimeout(() => showPhase(0), 450); };
+
+// ---------------- house rendering ----------------
+function roomEl(r){ return document.querySelector(`.room[data-room="${r}"]`); }
+function posIn(r, x, y){
+  const h = $("house").getBoundingClientRect(), b = roomEl(r).getBoundingClientRect();
+  return [b.left - h.left + b.width * x / 100, b.top - h.top + b.height * y / 100];
+}
+function setTok(el, p, instant){
+  if (!el) return;
+  if (instant) el.style.transition = "none";
+  el.style.left = p[0] + "px"; el.style.top = p[1] + "px";
+  if (instant) { void el.offsetWidth; el.style.transition = ""; }
+}
+function partnerRoom(){
+  for (let r = 0; r <= PLAY.maxRoom; r++) if (!roomComplete(r)) return r;
+  if (PLAY.maxRoom < 5 && bedroomGate() === "trust") return 0;   // waiting to spend time together
+  return PLAY.maxRoom;
+}
+function lockText(r){
+  if (r !== 5) return `Light up ${ROOMS[r-1].ref} first`;
+  const g = bedroomGate();
+  if (g === "out") return "Relight every light first";
+  if (g === "trust") return fill(`{P} isn't ready to let you in yet. Build trust (${PLAY.trust}/${BEDROOM_TRUST}).`);
+  return `Light up ${ROOMS[4].ref} first`;
+}
+function renderHouse(){
+  if (!PLAY) newPlay();
+  const house = $("house"), keep = [$("tokMe"), $("tokLove")].map(t => t ? [t.style.left, t.style.top] : null);
+  const qtOn = PLAY.maxRoom === 4 && roomComplete(4) && !outLights().length && PLAY.trust < BEDROOM_TRUST;
+  house.innerHTML = ROOMS.map((rm, r) => {
+    const open = isUnlocked(r);
+    const n = [r*2, r*2+1].reduce((s,i) => s + (PLAY.light[i] === 2 ? 1 : PLAY.light[i] === 1 ? .6 : 0), 0);
+    const d0 = open ? 0.55 - n * 0.27 : 0.8, d1 = open ? 0.88 - n * 0.44 : 0.92;
+    let spots = "";
+    if (open) spots = rm.spots.map(([x,y],k) => { const i = r*2+k, v = PLAY.light[i];
+      const cls = v === 2 ? "done" : v === 1 ? "dim" : v === -1 ? "out" : "";
+      return `<button class="spot ${cls}" data-q="${i}" style="left:${x}%;top:${y}%" aria-label="Light"></button>`; }).join("");
+    // trust moments
+    PLAY.tm.forEach((m, k) => { if (m.shown && !m.done && r === partnerRoom()) spots += `<button class="spot heart" data-tm="${k}" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Trust moment">💗</button>`; });
+    if (r === 0 && qtOn) spots += `<button class="spot heart" data-qt="1" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Spend time together">🫶</button>`;
+    if (r === 4) spots += `<button class="spot rest" id="restSpot" style="left:${rm.rest[0]}%;top:${rm.rest[1]}%" aria-label="Recharge">🔋</button>`;
+    return `<div class="room ${n>=2?'lit':''} ${r===partnerRoom() && open ? 'cur' : ''}" data-room="${r}" style="--floor:${rm.floor}">
+      ${rm.deco.map(([e,x,y]) => `<div class="deco" style="left:${x}%;top:${y}%">${e}</div>`).join("")}
+      <div class="dark" style="--d0:${Math.max(0,d0)};--d1:${Math.max(0,d1)}"></div>
+      <div class="rname">${rm.name}<small>${open ? rm.theme : ""}</small></div>
+      ${spots}
+      ${open ? "" : `<div class="lock ${r===4?'small':''}">🔒<small>${escH(lockText(r))}</small></div>`}
+    </div>`;
+  }).join("") + `<div class="token love" id="tokLove">${partnerAvatar("tl")}</div><div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm","happy")}</div>`;
+  house.querySelectorAll(".spot[data-q]").forEach(b => b.onclick = e => { e.stopPropagation(); tapLight(+b.dataset.q); });
+  house.querySelectorAll(".spot[data-tm]").forEach(b => b.onclick = e => { e.stopPropagation(); tapTrustMoment(+b.dataset.tm, b); });
+  house.querySelectorAll(".spot[data-qt]").forEach(b => b.onclick = e => { e.stopPropagation(); tapQualityTime(b); });
+  const rs = $("restSpot"); if (rs) rs.onclick = e => { e.stopPropagation(); goRest(); };
+  house.querySelectorAll(".room").forEach(el => el.onclick = () => { const r = +el.dataset.room; if (!isUnlocked(r)) { toast("🔒 " + lockText(r)); sfx.tap(); } });
+  updateHUD();
+  requestAnimationFrame(() => {
+    if (keep[0] && keep[0][0]) { setTok($("tokMe"), [parseFloat(keep[0][0]), parseFloat(keep[0][1])], true); setTok($("tokLove"), [parseFloat(keep[1][0]), parseFloat(keep[1][1])], true); }
+    placeTokens(!keep[0] || !keep[0][0]);
+  });
+}
+function placeTokens(instant){
+  const pr = partnerRoom(), rm = ROOMS[pr];
+  const love = $("tokLove"), before = love.style.left;
+  setTok(love, posIn(pr, rm.pp[0], rm.pp[1]), instant);
+  if (!instant && before && before !== love.style.left) anim(love, "walk");
+  setTok($("tokMe"), posIn(PLAY.me.r, PLAY.me.x, PLAY.me.y), instant);
+}
+addEventListener("resize", () => { if ($("s-house").classList.contains("active")) placeTokens(true); });
+
+function updateHUD(){
+  const litN = PLAY.light.filter(v => v >= 1).length;
+  $("hMood").innerHTML = partnerAvatar("hm");
+  $("hName").textContent = showName("partner");
+  $("hPct").textContent = `Trust ${PLAY.trust}`;
+  $("hFill").style.width = PLAY.trust + "%";
+  $("hMark").style.left = BEDROOM_TRUST + "%";
+  $("hPhase").textContent = PHASES[PLAY.phase].label;
+  $("hLights").textContent = `💡 ${litN}/12`;
+  $("hEnergy").innerHTML = Array.from({length:MAX_ENERGY}, (_,i) => `<i class="${i < PLAY.energy ? 'on' : ''}"></i>`).join("");
+  $("hEnergy").classList.toggle("low", PLAY.energy <= 1);
+  $("restBtn").classList.toggle("urge", PLAY.energy <= 1);
+  // guide text
+  const outs = outLights(), g = bedroomGate();
+  let msg;
+  if (PLAY.energy === 0) msg = "🪫 Running on Empty — tap Recharge to look after yourself.";
+  else if (outs.length) msg = `🌧️ A light went out on a bad day. Find it in ${ROOMS[Math.floor(outs[0]/2)].ref} and relight it.`;
+  else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill("💗 {P} wants to tell you something.");
+  else if (PLAY.maxRoom === 4 && roomComplete(4) && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit dim 🕯️ lights.");
+  else if (PLAY.energy === 1) msg = "⚠️ Energy is low — the kindest words get harder to find. Consider recharging.";
+  else { const r = partnerRoom(), left = [r*2, r*2+1].filter(i => !lit(i)).length;
+    msg = left ? `${ROOMS[r].name} · ${ROOMS[r].theme} — ${left} light${left>1?'s':''} left.` : "Tap a glowing light 💡 to talk."; }
+  $("guide").textContent = msg;
+}
+
+// ---------------- walking + conversations ----------------
+function walkTo(r, x, y, then){
+  if (PLAY.ending) return;
+  audio(); sfx.tap();
+  PLAY.me = { r, x, y };
+  const me = $("tokMe"); setTok(me, posIn(r, x, y)); anim(me, "walk");
+  setTimeout(then, 620);
+}
+function needEnergy(){
+  if (PLAY.energy > 0) return true;
+  sfx.tap();
+  const c = $("chapterCard");
+  c.innerHTML = `<div class="chap empty"><div class="bat">🪫</div><small>YOUR ENERGY</small><h2>Running on Empty</h2>
+    <p>${escH(fill("Supporting someone you love takes real energy — listening closely, staying patient, holding on to hope for {them}."))}</p>
+    <p>When your energy runs out, it gets harder to find kind words. You may feel impatient, numb or overwhelmed. This is sometimes called <b>caregiver burnout</b>, and it can happen to anyone who cares deeply.</p>
+    <p class="gain">Taking time to recharge isn't selfish. It's how you keep showing up — for ${escH(inSentence("partner"))} and for yourself.</p>
+    <button class="cta" id="emptyGo">Go recharge 🔋</button><button class="ghost" id="emptyLater">Not now</button></div>`;
+  c.classList.add("show");
+  $("emptyGo").onclick = () => { c.classList.remove("show"); setTimeout(goRest, 300); };
+  $("emptyLater").onclick = () => { c.classList.remove("show"); anim($("restBtn"), "shake"); };
+  return false;
+}
+function tapLight(i){
+  if (PLAY.ending) return;
+  const v = PLAY.light[i];
+  if (v === 2) return;
+  if (!needEnergy()) return;
+  const r = Math.floor(i / 2), [x, y] = ROOMS[r].spots[i % 2];
+  walkTo(r, x + 10, y + 6, () => {
+    if (v === -1) openTalk({ kind:"setback", idx:i, data:SETBACKS[PLAY.setback[i]], room:r });
+    else openTalk({ kind:"light", idx:i, data:QUESTIONS[i], room:r, revisit: v === 1 });
+  });
+}
+function tapTrustMoment(k, el){
+  if (!needEnergy()) return;
+  const r = partnerRoom(), [x, y] = ROOMS[r].ex;
+  walkTo(r, x + 10, y + 6, () => openTalk({ kind:"moment", idx:k, data:TRUST_MOMENTS[k], room:r }));
+}
+
+function openTalk(t){
+  PLAY.energy--; updateHUD();
+  t.drained = PLAY.energy === 0;     // this talk took your last energy
+  PLAY.q = t;
+  const Q = t.data, rm = ROOMS[t.room];
+  const order = shuffleArr([0,1,2]);
+  const chip = t.kind === "setback" ? "🌧️ A BAD DAY" : t.kind === "moment" ? "💗 TRUST MOMENT" : `${rm.name.toUpperCase()} · ${rm.theme.toUpperCase()}`;
+  const tag = t.kind === "light" ? (t.revisit ? "Revisit 🕯️" : `Light ${t.idx+1} / 12`) : "";
+  const card = $("qCard");
+  card.innerHTML = `<div class="qhead"><span class="chip">${chip}</span><span class="n">${tag}</span></div>
+    ${t.drained ? `<div class="drain">🔋 You're running on empty. The kindest words are hard to find right now — rest before your next talk.</div>` : ""}
+    <p class="scene"></p>
+    ${Q.cue ? `<div class="cue"><b>Read the moment</b><span></span></div>` : ""}
+    ${Q.line ? `<div class="say"><div class="face">${partnerAvatar("qf")}</div><div class="bubble"></div></div>` : ""}
+    <div class="ask"></div>
+    <div class="qopts" id="qOpts">${order.map(i => `<button class="qopt" data-i="${i}"><span class="dot"></span><span class="t"></span></button>`).join("")}</div>
+    <div id="qWhy"></div>`;
+  card.querySelector(".scene").textContent = T(Q.scene);
+  if (Q.cue) card.querySelector(".cue span").textContent = T(Q.cue);
+  if (Q.line) card.querySelector(".bubble").textContent = "“" + T(Q.line) + "”";
+  card.querySelector(".ask").textContent = T(Q.ask);
+  card.querySelectorAll(".qopt").forEach(b => {
+    const o = Q.opts[+b.dataset.i];
+    b.querySelector(".t").textContent = T(o.t);
+    if (t.drained && o.g === "help") { b.classList.add("locked"); b.querySelector(".dot").textContent = "🔋"; b.insertAdjacentHTML("beforeend", `<em class="lk">Too drained</em>`); }
+    b.onclick = () => { if (b.classList.contains("locked")) { toast("🔋 Too drained to find these words. Recharge first."); return; } answer(+b.dataset.i, b); };
+  });
+  if (t.drained && card.querySelectorAll(".qopt:not(.locked)").length) {
+    card.querySelector("#qWhy").innerHTML = `<button class="ghost" id="stepAway" style="margin-top:10px">Step away and recharge instead</button>`;
+    $("stepAway").onclick = () => { $("qSheet").classList.remove("show"); PLAY.q = null; renderHouse(); setTimeout(goRest, 350); };
+  }
+  $("qSheet").classList.add("show");
+  card.scrollTop = 0;
+}
+
+function answer(i, btn){
+  const t = PLAY.q; if (!t || t.answered) return;
+  t.answered = true;
+  const Q = t.data, o = Q.opts[i], G = GRADE[o.g];
+  // trust change
+  let dt = G.trust;
+  if (t.kind === "light" && t.revisit) dt = o.g === "help" ? 4 : o.g === "okay" ? 0 : -10;
+  if (t.kind === "moment") dt = o.g === "help" ? 8 : o.g === "okay" ? 1 : -8;
+  if (Q.critical && o.g === "okay") dt = 0;
+  const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
+  // light change
+  let lightNow = null, lightMsg = "";
+  if (t.kind === "light" || t.kind === "setback") {
+    const cur = PLAY.light[t.idx];
+    let nv = cur;
+    if (o.g === "help") nv = 2;
+    else if (o.g === "okay" && !Q.critical) nv = Math.max(cur, 1);
+    if (t.kind === "setback" && nv >= 1) PLAY.setbacksFixed++;
+    PLAY.light[t.idx] = nv; lightNow = nv;
+    lightMsg = nv === 2 && cur !== 2 ? "✨ The light shines bright." : nv === 1 && cur < 1 ? "🕯️ The light flickers on, dimly. You can come back and brighten it." : nv === cur && nv < 2 ? "The light stays dark. You can come back and try again." : "";
+    t.collect = nv > cur || (nv === 1 && cur === -1);
+  }
+  if (t.kind === "moment") PLAY.tm[t.idx].done = true;
+  if (Q.self && o.g === "help") PLAY.energy = Math.min(MAX_ENERGY, PLAY.energy + 2);
+  // show result
+  btn.classList.add(o.g === "help" ? "yes" : o.g === "okay" ? "mid" : "no");
+  btn.querySelector(".dot").textContent = o.g === "help" ? "✓" : o.g === "okay" ? "~" : "✕";
+  $("qOpts").classList.add("done");
+  const react = REACT[o.g][trustTier()];
+  const why = $("qWhy");
+  why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${dt>0?'up':dt<0?'down':''}">${dt>0?'+':''}${dt} trust</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}</div>
+    <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
+    <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? "Collect the light ✨" : t.collect ? "Light the candle 🕯️" : "Continue"}</button>`;
+  why.querySelector(".w").textContent = T(o.why);
+  if (lightMsg) why.querySelector(".lm").textContent = lightMsg;
+  why.querySelector(".bubble").textContent = "“" + T(react) + "”";
+  if (o.g === "help") sfx.love(); else if (o.g === "okay") { tone(440,.2,.07,0,"triangle"); } else { tone(330,.25,.08,0,"triangle"); tone(247,.35,.06,.12,"triangle"); }
+  $("doneBtn").onclick = finishTalk;
+  setTimeout(() => why.scrollIntoView({ behavior:"smooth", block:"nearest" }), 60);
+  updateHUD(); anim($("hMood"), "bump");
+}
+
+function finishTalk(){
+  const t = PLAY.q; PLAY.q = null;
+  $("qSheet").classList.remove("show");
+  if (t && t.collect) {
+    const spot = document.querySelector(`.spot[data-q="${t.idx}"]`), to = $("hLights").getBoundingClientRect();
+    if (spot) {
+      const sr = spot.getBoundingClientRect(), orb = document.createElement("div");
+      orb.className = "orb" + (PLAY.light[t.idx] === 1 ? " dimorb" : "");
+      orb.style.left = (sr.left + sr.width/2) + "px"; orb.style.top = (sr.top + sr.height/2) + "px";
+      document.body.appendChild(orb);
+      requestAnimationFrame(() => requestAnimationFrame(() => { orb.style.left = (to.left + to.width/2) + "px"; orb.style.top = (to.top + to.height/2) + "px"; orb.style.transform = "scale(.6)"; }));
+      setTimeout(() => { orb.remove(); burstHearts(to.left + to.width/2, to.top, 8); [784,988,1175].forEach((f,k) => tone(f,.25,.07,k*.07)); }, 850);
+    }
+  }
+  setTimeout(afterTalk, t && t.collect ? 900 : 250);
+}
+
+function afterTalk(){
+  // trust moments become available
+  PLAY.tm.forEach((m, k) => { if (!m.shown && PLAY.trust >= TRUST_MOMENTS[k].at && PLAY.maxRoom >= 1) { m.shown = true; setTimeout(() => toast(fill("💗 {P} wants to tell you something")), 600); } });
+  const prevMax = PLAY.maxRoom;
+  refreshUnlocks();
+  renderHouse();
+  const cards = [];
+  for (let r = 0; r < 5; r++) if (roomComplete(r) && !PLAY.msShown.includes(r)) { PLAY.msShown.push(r); cards.push(milestoneCard(MILESTONES[r], "MILESTONE · " + ROOMS[r].name.toUpperCase(), r + 1 < 5 && isUnlocked(r + 1) ? `${cap(ROOMS[r+1].ref)} is now open.` : "")); }
+  if (PLAY.maxRoom === 5 && !PLAY.doorShown) { PLAY.doorShown = true; cards.push(milestoneCard(DOOR, "THE FINAL ROOM", "The Bedroom is now open.")); }
+  if (PLAY.pendingPhase != null) { const ph = PLAY.pendingPhase; PLAY.pendingPhase = null; cards.push(phaseCard(ph)); }
+  if (PLAY.maxRoom > prevMax) setTimeout(() => placeTokens(false), 300);
+  if (cards.length) setTimeout(() => showCards(cards), 600);
+  if (PLAY.light.every(v => v >= 1) && roomComplete(5)) { PLAY.ending = true; setTimeout(() => { sfx.love(); go("s-end"); }, 1100); }
+}
+
+// ---------------- timeline + setbacks ----------------
+const paras = t => fill(t).split("\n\n").map(p => `<p>${escH(p)}</p>`).join("");
+function phaseCard(ph){
+  return () => {
+    const P = PHASES[ph];
+    let extra = "";
+    if (ph > 0) {
+      PLAY.energy = Math.min(MAX_ENERGY, PLAY.energy + 2);
+      extra += `<p class="gain">🔋 Time passes. You catch your breath: +2 energy</p>`;
+      // a bad day: one earlier light goes out
+      const cands = PLAY.light.map((v,i) => (v >= 1 && Math.floor(i/2) < P.from) ? i : -1).filter(i => i >= 0);
+      const brightC = cands.filter(i => PLAY.light[i] === 2), pool = brightC.length ? brightC : cands;
+      if (pool.length) {
+        const i = pool[Math.floor(Math.random() * pool.length)];
+        PLAY.light[i] = -1; PLAY.setback[i] = ph - 1;
+        extra += `<p class="sb">${escH(fill(`🌧️ Then came a bad day. A light in ${ROOMS[Math.floor(i/2)].ref} has gone out — find it and help {p} relight it.`))}</p>`;
+      }
+    }
+    return { html:`<div class="chap story"><small>${ph === 0 ? "CHAPTER 1" : "TIME PASSES"}</small><h2>${P.title}</h2><div class="sub">${P.sub}</div>${paras(P.story)}${extra}`,
+             btn: ph === 0 ? "Let's begin" : "Continue" };
+  };
+}
+function milestoneCard(M, label, note){
+  return () => ({ html:`<div class="chap story ms"><small>${label}</small><div class="msface">${avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "ms" + Math.random().toString(36).slice(2,6), M.mood)}<span>${M.icon}</span></div>
+      <h2>${M.title}</h2>${paras(M.story)}${note ? `<p class="gain">✨ ${escH(note)}</p>` : ""}`, btn:"Continue" });
+}
+function showCards(list){
+  const c = $("chapterCard");
+  if (!list.length) { c.classList.remove("show"); renderHouse(); return; }
+  const it = list.shift()();
+  c.innerHTML = it.html + `<button class="cta" id="chapGo">${it.btn}</button></div>`;
+  c.classList.add("show"); c.scrollTop = 0; sfx.next();
+  $("chapGo").onclick = () => showCards(list);
+}
+function showPhase(ph){ showCards([phaseCard(ph)]); }
+
+// ---------------- energy: recharge ----------------
+function goRest(){
+  const [x, y] = ROOMS[4].rest;
+  walkTo(4, x, y + 14, openRest);
+}
+$("restBtn").onclick = () => { if ($("qSheet").classList.contains("show")) return; goRest(); };
+function openRest(){
+  const R = nextRecharge(), opts = shuffleArr(R.opts.slice());
+  const card = $("qCard");
+  card.innerHTML = `<div class="qhead"><span class="chip">🔋 YOUR CORNER · RECHARGE</span><span class="n">Energy ${PLAY.energy}/${MAX_ENERGY}</span></div>
+    <p class="scene"></p>
+    <div class="ask">How will you recharge?</div>
+    <div class="qopts" id="qOpts">${opts.map((o,k) => `<button class="qopt" data-k="${k}"><span class="dot"></span><span class="t"></span></button>`).join("")}</div>
+    <div id="qWhy"></div>`;
+  card.querySelector(".scene").textContent = fill(R.q);
+  card.querySelectorAll(".qopt").forEach(b => {
+    const o = opts[+b.dataset.k];
+    b.querySelector(".t").textContent = fill(o.t);
+    b.onclick = () => {
+      if ($("qOpts").classList.contains("done")) return;
+      const gain = Math.min(REST_GAIN[o.g], MAX_ENERGY - PLAY.energy), [head, cls] = REST_HEAD[o.g];
+      PLAY.energy += gain; PLAY.rests++; if (o.g === "best") PLAY.restsGood++;
+      b.classList.add(o.g === "best" ? "yes" : o.g === "okay" ? "mid" : "no");
+      b.querySelector(".dot").textContent = o.g === "best" ? "✓" : o.g === "okay" ? "~" : "✕";
+      $("qOpts").classList.add("done");
+      $("qWhy").innerHTML = `<div class="why ${cls}"><h4>${head}<span class="delta ${gain>0?'up':''}">+${gain} energy</span></h4><span class="w"></span></div><button class="cta" id="doneBtn">Back to the house</button>`;
+      $("qWhy").querySelector(".w").textContent = fill(o.tip);
+      o.g === "best" ? sfx.love() : tone(392,.2,.07,0,"triangle");
+      updateHUD();
+      $("doneBtn").onclick = () => { $("qSheet").classList.remove("show"); renderHouse(); };
+      setTimeout(() => $("qWhy").scrollIntoView({ behavior:"smooth", block:"nearest" }), 60);
+    };
+  });
+  $("qSheet").classList.add("show"); card.scrollTop = 0;
+}
+
+// ---------------- quality time (builds trust gently) ----------------
+function tapQualityTime(){
+  if (!needEnergy()) return;
+  const [x, y] = ROOMS[0].ex;
+  walkTo(0, x + 10, y + 6, () => {
+    PLAY.energy--;
+    const card = $("qCard");
+    card.innerHTML = `<div class="qhead"><span class="chip">🫶 SPEND TIME TOGETHER</span><span class="n">+8 trust</span></div>
+      <p class="scene">${escH(fill("Not every moment needs the right words. Sometimes trust grows from simply being together. What will you do with {p} tonight?"))}</p>
+      <div class="qopts" id="qOpts">${QUALITY_TIME.map((o,k) => `<button class="qopt" data-k="${k}"><span class="dot"></span><span class="t">${escH(fill(o.t))}</span></button>`).join("")}</div><div id="qWhy"></div>`;
+    card.querySelectorAll(".qopt").forEach(b => b.onclick = () => {
+      if ($("qOpts").classList.contains("done")) return;
+      const o = QUALITY_TIME[+b.dataset.k];
+      PLAY.trust = clamp(PLAY.trust + 8, 0, 100); PLAY.qt++;
+      b.classList.add("yes"); b.querySelector(".dot").textContent = "✓"; $("qOpts").classList.add("done");
+      $("qWhy").innerHTML = `<div class="why good"><h4>💛 A quiet, good evening<span class="delta up">+8 trust</span></h4><span class="w"></span></div><button class="cta" id="doneBtn">Continue</button>`;
+      $("qWhy").querySelector(".w").textContent = fill(o.r) + " Small, steady moments build the safety people need to open up.";
+      sfx.love(); updateHUD(); anim($("hMood"), "bump");
+      $("doneBtn").onclick = () => { $("qSheet").classList.remove("show"); setTimeout(afterTalk, 250); };
+    });
+    $("qSheet").classList.add("show"); card.scrollTop = 0; updateHUD();
+  });
+}
+$("qSheet").addEventListener("click", e => { if (e.target.id === "qSheet" && !PLAY.q) $("qSheet").classList.remove("show"); });
+
+// ---------------- help ----------------
+$("helpBtn").onclick = () => { audio(); sfx.tap(); $("helpSheet").classList.add("show"); };
+$("helpClose").onclick = () => $("helpSheet").classList.remove("show");
+$("helpSheet").addEventListener("click", e => { if (e.target.id === "helpSheet") $("helpSheet").classList.remove("show"); });
+
+// ---------------- endings ----------------
+function renderEnd(){
+  if (!PLAY) return go("s-title");
+  const tr = PLAY.trust, tier = tr >= 85 ? 2 : tr >= 68 ? 1 : 0;
+  $("pair3").innerHTML = pairHTML(tier === 0 ? "calm" : "happy");
+  const title = ["A Growing Spark", "A Steady Light", "A Safe Harbor"][tier];
+  const lines = [
+    `Months later, the house is lit again. <b>{P}</b> is still finding {their} way, but {they} {go} to counseling and the bad days come less often. <br><b>“Thanks for not giving up on me.”</b><br><br>Trust grows slowly — and you planted it.`,
+    `Light spills through every window. <b>{P}</b> squeezes your hand: <br><b>“Thank you for staying with me.”</b><br><br>Healing takes time, and it isn't something one person can do alone. But because you noticed, listened and helped {them} find support, {they} {arent} facing it alone anymore.`,
+    `The house glows warm and golden. <b>{P}</b> rests {their} head on your shoulder: <br><b>“With you, I never have to pretend. I feel safe telling you anything.”</b><br><br>You became a safe place — steady on good days and bad ones, while caring for yourself too.`
+  ];
+  const pr = CHAR[GAME.partner.kind].pron;
+  const txt = lines[tier].replace("{go}", pr.s === "they" ? "go" : "goes").replace("{arent}", pr.s === "they" ? "aren't" : "isn't");
+  $("endLine").innerHTML = fill(txt);
+  $("endBadge").textContent = title.toUpperCase();
+  const bright = PLAY.light.filter(v => v === 2).length;
+  $("endResult").innerHTML = `<div><b>${tr}</b><span>TRUST</span></div><div><b>${bright}/12</b><span>BRIGHT LIGHTS</span></div><div><b>${PLAY.restsGood}</b><span>GOOD RESTS</span></div>`;
+  $("endNext").textContent = tier < 2 ? `Play again to reach a deeper ending — trust 85+ unlocks “A Safe Harbor”.` : `You reached the deepest ending. 💛`;
+  $("learned").innerHTML = LEARNED.map(t => `<li>${escH(t)}</li>`).join("");
+  setTimeout(() => { const r = $("pair3").getBoundingClientRect(); burstHearts(r.left + r.width/2, r.top + r.height/3, 30); }, 300);
+}
+$("againBtn").onclick = () => { audio(); sfx.next(); go("s-intro"); };
+
+renderTitle();
+})();
+</script>
+</body>
+</html>
