@@ -670,6 +670,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
         <div class="hwrap"><div class="hbar"><i id="hFill"></i></div><div class="hearts" id="hHearts"></div></div>
       </div>
       <button class="musicbtn" aria-label="Music on">🎵</button>
+      <button class="musicbtn voicebtn" aria-label="Voice on">🗣️</button>
       <button class="helpbtn" id="helpBtn" aria-label="Get help">♡<small>Help</small></button>
     </div>
     <div class="hud2">
@@ -806,7 +807,7 @@ window.HEART_QUEST = { get state(){ return GAME; }, showName: k => showName(k), 
 
 // ================= SOUND =================
 let AC = null;
-function audio(){ try { if (!AC) AC = new (window.AudioContext||window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume(); } catch(e){} }
+function audio(){ unlockVoice(); try { if (!AC) AC = new (window.AudioContext||window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume(); } catch(e){} }
 function tone(f,d,v=.12,delay=0,type="sine"){ if(!AC) return; const t=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();
   o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);
   o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.05); }
@@ -880,7 +881,7 @@ function musicToggle(){
   MUSIC.on = !MUSIC.on;
   try { localStorage.setItem("hq_music", MUSIC.on ? "on" : "off"); } catch(e) {}
   MUSIC.on ? musicStart() : musicStop();
-  document.querySelectorAll(".musicbtn").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.setAttribute("aria-label", MUSIC.on ? "Music on" : "Music off"); });
+  document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.setAttribute("aria-label", MUSIC.on ? "Music on" : "Music off"); });
 }
 document.addEventListener("visibilitychange", () => { if (document.hidden) musicStop(); else if (MUSIC.on && AC) musicStart(); });
 // start softly on the first tap anywhere
@@ -913,6 +914,46 @@ let lt = performance.now();
   hs = hs.filter(h => !h.burst || h.life > 0);
   requestAnimationFrame(loop);
 })(lt);
+
+
+// ================= VOICE =================
+// Reads the main character's words aloud with the device's built-in voice.
+// Part 1: your loved one's lines. Part 2: your own words (the quoted part of the answer you choose).
+const VOICE = { on: true, ok: "speechSynthesis" in window, unlocked: false };
+try { const v = localStorage.getItem("hq_voice"); if (v !== null) VOICE.on = v === "1"; } catch (e) {}
+function pickVoice(kind){
+  if (!VOICE.ok) return null;
+  const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+  if (!vs.length) return null;
+  const fem = /female|samantha|victoria|karen|moira|tessa|fiona|zira|susan|serena|allison|ava|google uk english female|google us english/i;
+  const mal = /\bmale|daniel|alex|fred|david|mark|george|rishi|aaron|arthur|tom|google uk english male/i;
+  const want = kind === "woman" ? fem : kind === "man" ? mal : null;
+  return (want && vs.find(v => want.test(v.name) && !(kind === "woman" && /\bmale/i.test(v.name) && !/female/i.test(v.name)))) || vs.find(v => v.default) || vs[0];
+}
+function speakAs(kind, text){
+  if (!VOICE.ok || !VOICE.on || !text) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text.replace(/[“”"]/g, ""));
+    const v = pickVoice(kind); if (v) u.voice = v;
+    u.lang = (v && v.lang) || "en-US";
+    u.rate = 0.95; u.pitch = kind === "woman" ? 1.15 : kind === "man" ? 0.85 : 1.0;
+    u.onstart = () => { if (MUSIC.master && AC) MUSIC.master.gain.setTargetAtTime(MUSIC.on ? 0.45 : 0, AC.currentTime, 0.2); };
+    u.onend = u.onerror = () => { if (MUSIC.master && AC && MUSIC.on) MUSIC.master.gain.setTargetAtTime(1.5, AC.currentTime, 0.6); };
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+function stopVoice(){ try { if (VOICE.ok) speechSynthesis.cancel(); } catch (e) {} }
+function unlockVoice(){ if (!VOICE.ok || VOICE.unlocked) return; VOICE.unlocked = true; try { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } catch (e) {} }
+if (VOICE.ok) { try { speechSynthesis.onvoiceschanged = () => {}; speechSynthesis.getVoices(); } catch (e) {} }
+// Only the part inside quotes is spoken (actions like "Shut the door" are not read).
+function spokenPart(t){ const m = t.match(/“([^”]+)”/g); return m ? m.map(x => x.slice(1, -1)).join(" ") : ""; }
+function voiceToggle(){
+  VOICE.on = !VOICE.on; try { localStorage.setItem("hq_voice", VOICE.on ? "1" : "0"); } catch (e) {}
+  if (!VOICE.on) stopVoice();
+  document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🗣️" : "🔇"; b.setAttribute("aria-label", VOICE.on ? "Voice on" : "Voice off"); });
+  toast(VOICE.on ? "🗣️ Voice on" : "🔇 Voice off");
+}
 
 // ================= NAVIGATION =================
 function go(id){
@@ -1786,6 +1827,7 @@ function openTalk(t){
   card.querySelector(".scene").textContent = T(Q.scene);
   if (Q.cue) card.querySelector(".cue span").textContent = T(Q.cue);
   if (Q.line) card.querySelector(".bubble").textContent = "“" + T(Q.line) + "”";
+  if (Q.line && PART === 1) setTimeout(() => speakAs(GAME.partner.kind, T(Q.line)), 450);
   card.querySelector(".ask").textContent = T(Q.ask);
   card.querySelectorAll(".qopt").forEach(b => {
     const o = Q.opts[+b.dataset.i];
@@ -1847,6 +1889,8 @@ function answer(i, btn){
   why.querySelector(".w").textContent = T(o.why);
   if (lightMsg) why.querySelector(".lm").textContent = lightMsg;
   why.querySelector(".bubble").textContent = "“" + T(react) + "”";
+  if (PART === 1) setTimeout(() => speakAs(GAME.partner.kind, T(react)), 350);
+  else { const mine = spokenPart(T(o.t)); if (mine) speakAs(GAME.player.kind, mine); }
   if (streakBonus) { setTimeout(() => { [523,659,784,1047,1319].slice(0, 2 + streakBonus).forEach((f,i) => tone(f,.18,.06,i*.08,"triangle")); const c = why.querySelector(".streak-card"); if (c) { const r = c.getBoundingClientRect(); emberBurst(c, 14 + streakBonus * 6); } }, 650); }
   if (o.g === "help") sfx.love(); else if (o.g === "okay") { tone(440,.2,.07,0,"triangle"); } else { tone(330,.25,.08,0,"triangle"); tone(247,.35,.06,.12,"triangle"); }
   $("doneBtn").onclick = finishTalk;
@@ -1878,7 +1922,7 @@ function emberBurst(host, n){
 
 function finishTalk(){
   const t = PLAY.q; PLAY.q = null;
-  $("qSheet").classList.remove("show");
+  $("qSheet").classList.remove("show"); stopVoice();
   if (t && t.collect) {
     const spot = document.querySelector(`.spot[data-q="${t.idx}"]`), to = $("hLights").getBoundingClientRect();
     if (spot) {
@@ -2167,7 +2211,8 @@ function renderEnd(){
 $("againBtn").onclick = () => { audio(); sfx.next(); go("s-intro"); };
 $("nextPartBtn").onclick = () => { applyPart(2); audio(); sfx.next(); go("s-intro"); };
 
-document.querySelectorAll(".musicbtn").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.onclick = e => { e.stopPropagation(); audio(); musicToggle(); }; });
+document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.onclick = e => { e.stopPropagation(); audio(); musicToggle(); }; });
+document.querySelectorAll(".voicebtn").forEach(b => { b.hidden = !VOICE.ok; b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🗣️" : "🔇"; b.onclick = e => { e.stopPropagation(); audio(); voiceToggle(); }; });
 renderTitle();
 })();
 </script>
