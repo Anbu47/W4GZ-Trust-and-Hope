@@ -381,10 +381,11 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite}
 @keyframes sway{50%{transform:rotate(1.2deg)}}
 /* ---------- heart message on your loved one ---------- */
-.token.love{overflow:visible;border:0;background:none;box-shadow:none}
+.token.love,.token.mine{overflow:visible;border:0;background:none;box-shadow:none}
+.token.mine .tk-face{width:100%;height:100%;border-radius:50%;overflow:hidden;border:3px solid #fff;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.45)}
 .token.love .tk-face{width:100%;height:100%;border-radius:50%;overflow:hidden;border:3px solid #ffb3cc;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.45)}
-.token.love.has-msg{pointer-events:auto;cursor:pointer;z-index:9}
-.token.love.has-msg .tk-face{border-color:#ff6b9a;animation:msgGlow 1.6s ease-in-out infinite}
+.token.has-msg{pointer-events:auto;cursor:pointer;z-index:9}
+.token.has-msg .tk-face{border-color:#ff6b9a;animation:msgGlow 1.6s ease-in-out infinite}
 @keyframes msgGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,107,154,.75),0 6px 14px rgba(0,0,0,.45)}60%{box-shadow:0 0 0 12px rgba(255,107,154,0),0 6px 14px rgba(0,0,0,.45)}}
 .love-msg{position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:5px 9px 5px 7px;border-radius:16px;
   background:#fff;border:2px solid #ff6b9a;box-shadow:0 6px 16px rgba(255,80,140,.5);cursor:pointer;font:inherit;animation:msgPop .6s cubic-bezier(.2,1.6,.4,1) both, msgBob 2.2s ease-in-out infinite .6s;white-space:nowrap}
@@ -400,9 +401,9 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(.95)}45%{transform:scale(1.15)}}
 @keyframes dotBlink{0%,100%{opacity:.3}50%{opacity:1}}
 @keyframes riseUp{0%{transform:translate(-50%,0);opacity:0}15%{opacity:1}100%{transform:translate(-50%,-34px);opacity:0}}
-.token.love.opening .love-msg{animation:msgOpen .5s ease-in forwards}
+.token.opening .love-msg{animation:msgOpen .5s ease-in forwards}
 @keyframes msgOpen{to{transform:translateX(-50%) translateY(-14px) scale(1.4);opacity:0}}
-@media (prefers-reduced-motion:reduce){.love-msg,.lm-heart,.lm-dots i,.love-msg .rise,.token.love.has-msg .tk-face{animation:none}}
+@media (prefers-reduced-motion:reduce){.love-msg,.lm-heart,.lm-dots i,.love-msg .rise,.token.has-msg .tk-face{animation:none}}
 /* ---------- situation text: read this first ---------- */
 .qcard .scene{position:relative;font-size:16.5px;line-height:1.5;font-weight:700;color:#fff;margin:4px 0 14px;padding:26px 14px 13px 16px;
   border-radius:16px;background:linear-gradient(135deg,rgba(255,210,122,.16),rgba(255,255,255,.05));border:1px solid rgba(255,210,122,.38);border-left:5px solid var(--gold);
@@ -1383,6 +1384,9 @@ const PART1 = JSON.parse(JSON.stringify({
   HEARTS: HEARTS.map(h => ({ name:h.name, tip:h.tip })), GRADE: { help:GRADE.help.head, okay:GRADE.okay.head, hurt:GRADE.hurt.head },
   PHASES: PHASES.map(p => ({ sub:p.sub, story:p.story, tip:p.tip })), MILESTONES, DOOR, ROOMS: ROOMS.map(r => ({ theme:r.theme, icons:r.icons })),
   QUESTIONS, SETBACKS, TRUST_MOMENTS, LEARNED, REACT, RECHARGE }));
+// Part 2's hearts are your own moments of hope, shown on your own hope bar.
+PART2.HEARTS = [{"name": "A Tiny Spark", "tip": "You notice a small good moment for the first time in weeks."}, {"name": "Enjoying the Good Moments", "tip": "You let yourself enjoy a good moment without bracing for the bad."}, {"name": "A Kinder Inner Voice", "tip": "You start talking to yourself like you'd talk to a friend."}, {"name": "A Plan for Hard Days", "tip": "You know what helps you — and you can ask for it."}, {"name": "Hope Is Back", "tip": "You feel like yourself again, with people beside you."}];
+PART2.TRUST_MOMENTS = [{"scene": "For the first time in weeks, you wake up and notice the morning light — and you don't immediately want to hide from it.", "ask": "A tiny spark of hope. What do you do with it?", "opts": [{"g": "help", "t": "Tell {p}: “I noticed the sunlight today. It felt… a little bit nice.”", "why": "Noticing small good moments — and sharing them — helps hope grow."}, {"g": "okay", "t": "Keep it to yourself, in case it doesn't last.", "why": "Protecting yourself from disappointment is understandable, but sharing good moments makes them stronger."}, {"g": "hurt", "t": "Tell yourself it doesn't count, because you still feel bad.", "why": "Dismissing small progress stops hope from taking root."}]}, {"scene": "You catch yourself humming while making tea. Then an old thought arrives: “Don't get your hopes up.”", "ask": "How do you answer that thought?", "opts": [{"g": "help", "t": "Let yourself enjoy it: “Right now, this is nice. That's enough.”", "why": "Staying in a good moment, instead of bracing for the next bad one, gives hope room to grow."}, {"g": "okay", "t": "Stop humming, just in case.", "why": "Bracing for disappointment can feel safer, but it quietly steals your good moments."}, {"g": "hurt", "t": "Remind yourself of every time things went wrong before.", "why": "Replaying past pain teaches your mind to expect only the worst."}]}, {"scene": "Your counselor asks: “What would you say to a friend who felt the way you do?”", "ask": "What do you answer?", "opts": [{"g": "help", "t": "“I'd tell them they're doing their best, and that it's okay to rest.” Then you try saying it to yourself.", "why": "Self-compassion means offering yourself the same kindness you'd give a friend — and it supports recovery."}, {"g": "okay", "t": "“I'd be kind to them. But I'm different — I should know better.”", "why": "Holding yourself to harsher rules than everyone else keeps the inner critic in charge."}, {"g": "hurt", "t": "“I'd tell them to stop complaining.”", "why": "Being harsh — to yourself or others — usually comes from pain, and it makes healing harder."}]}, {"scene": "A tough week is coming: deadlines, a family visit, and less sleep than usual.", "ask": "How do you prepare?", "opts": [{"g": "help", "t": "Make a simple plan: tell {p} what helps, keep your counseling session, and protect your sleep.", "why": "Planning for stress — and telling people how to help — can stop a hard week from turning into a setback."}, {"g": "okay", "t": "Hope for the best and deal with it when it comes.", "why": "Sometimes that works, but a little planning makes hard weeks much easier."}, {"g": "hurt", "t": "Cancel your counseling session to make time for everything else.", "why": "Dropping support when stress rises means losing it exactly when you need it most."}]}, {"scene": "Months later, you laugh at a silly joke on the sofa and realise: you feel like yourself again.", "line": "I missed that laugh.", "ask": "How do you mark this moment?", "opts": [{"g": "help", "t": "Tell {p}: “I'm proud of us — and of me.” Then write the moment down to read on harder days.", "why": "Celebrating your progress, and keeping reminders for hard days, helps you stay well."}, {"g": "okay", "t": "“Let's not jinx it.”", "why": "Caution is natural, but you're allowed to enjoy how far you've come."}, {"g": "hurt", "t": "“It's probably just a good day. It won't last.”", "why": "Hope can feel scary, but expecting the worst can quietly pull you back down."}]}];
 // Part 2's breaks are self-love actions, written fresh for the one who is struggling.
 PART2.RECHARGE = [{"q": "You catch your reflection, and the first thing you think is: “Ugh, look at you.”", "opts": [{"g": "best", "t": "Pause and say one kind thing to yourself instead — out loud if you can.", "tip": "How you talk to yourself shapes how you feel. A kinder inner voice is a real self-love skill."}, {"g": "okay", "t": "Look away quickly and try not to think about it.", "tip": "Avoiding helps for a moment, but the harsh voice stays in charge."}, {"g": "poor", "t": "Make a mental list of everything wrong with how you look.", "tip": "Feeding the inner critic drains you and deepens low mood."}]}, {"q": "You finished one small task today: you did the laundry.", "opts": [{"g": "best", "t": "Celebrate it: “Today was hard, and I still did that.”", "tip": "Noticing small wins builds momentum. On low days, small things really count."}, {"g": "okay", "t": "Shrug: “It's just laundry.”", "tip": "Fair — but brushing off every win makes your progress invisible."}, {"g": "poor", "t": "Remind yourself of the ten things you didn't do.", "tip": "Measuring yourself against a perfect day turns a win into another failure."}]}, {"q": "Someone asks you to take on an extra project, and you have no energy left.", "opts": [{"g": "best", "t": "Say kindly: “I can't take that on right now.”", "tip": "Saying no to protect your energy is a form of self-respect."}, {"g": "okay", "t": "Say yes, then plan to stay up late to squeeze it in.", "tip": "Helping is good, but not at the cost of the rest you need to recover."}, {"g": "poor", "t": "Say yes to everything so nobody notices you're struggling.", "tip": "Overloading yourself to look fine usually ends in a crash."}]}, {"q": "You haven't showered in two days, and you feel heavy.", "opts": [{"g": "best", "t": "Take a slow, warm shower and put on clean, comfy clothes.", "tip": "Simple body care is self-love in action. Small routines help lift your mood."}, {"g": "okay", "t": "Wash your face and call it enough for today.", "tip": "A small step still counts — maybe tomorrow you'll manage a little more."}, {"g": "poor", "t": "Tell yourself you don't deserve to feel nice until you're better.", "tip": "Care isn't a reward for getting better. It's part of how you get better."}]}, {"q": "It's 1 AM, and you're still scrolling — feeling worse with every post.", "opts": [{"g": "best", "t": "Put the phone across the room and do a short wind-down routine.", "tip": "Good sleep is one of the strongest supports for your mood. Protecting it is self-love."}, {"g": "okay", "t": "Switch to a calmer app, but keep scrolling.", "tip": "Gentler content helps a little, but the screen still steals your sleep."}, {"g": "poor", "t": "Keep comparing your life to everyone's highlight reels.", "tip": "Comparison feeds the feeling that you're falling behind."}]}, {"q": "You made a mistake, and your mind says: “You always mess everything up.”", "opts": [{"g": "best", "t": "Answer back: “I made a mistake. That doesn't make me a mistake.”", "tip": "Separating what you did from who you are is at the heart of self-compassion."}, {"g": "okay", "t": "Distract yourself with a game until the feeling fades.", "tip": "Distraction gives you a break, but the harsh thought may come back."}, {"g": "poor", "t": "Agree with the voice and replay the mistake all evening.", "tip": "Believing every harsh thought makes low mood stronger."}]}, {"q": "You have a free afternoon and nothing planned.", "opts": [{"g": "best", "t": "Do something you used to love, even for just 20 minutes.", "tip": "Doing enjoyable things — even before you feel like it — is a proven way to lift low mood."}, {"g": "okay", "t": "Lie in bed watching videos all afternoon.", "tip": "Rest is okay, but a little enjoyable activity often helps more than you'd expect."}, {"g": "poor", "t": "Spend it worrying about everything you should be doing.", "tip": "Worry takes your free time and gives nothing back."}]}, {"q": "You've eaten nothing but snacks all day.", "opts": [{"g": "best", "t": "Make a simple, real meal — even toast and eggs counts.", "tip": "Eating regularly is basic self-care, and it steadies your energy and mood."}, {"g": "okay", "t": "Order fast food and eat it standing up.", "tip": "Eating beats not eating — next time, try sitting down and slowing down."}, {"g": "poor", "t": "Skip dinner because you feel you don't deserve a proper meal.", "tip": "You deserve care on hard days too. Food isn't something you have to earn."}]}, {"q": "A friend texts: “Thinking of you. Want to talk?”", "opts": [{"g": "best", "t": "Reply honestly: “It's been a hard week. A call would be nice.”", "tip": "Letting friends in is self-love too. Connection is one of the strongest protectors of mental health."}, {"g": "okay", "t": "Send a heart emoji and leave it there.", "tip": "A small reply keeps the door open — even better if you can say a little more."}, {"g": "poor", "t": "Leave it on read because you don't want to bother anyone.", "tip": "Pulling away from people who care makes everything feel heavier."}]}, {"q": "Your counselor suggested writing down three good moments each day.", "opts": [{"g": "best", "t": "Write them tonight — even tiny ones, like a warm cup of tea.", "tip": "Noticing small good moments trains your attention away from only the bad ones."}, {"g": "okay", "t": "Plan to start tomorrow instead.", "tip": "Starting later is okay — just don't let “tomorrow” keep moving."}, {"g": "poor", "t": "Tell yourself nothing good ever happens anyway.", "tip": "When you're low, good moments are easy to miss. Looking for them helps you see them."}]}, {"q": "You've been inside all week, and the sun is finally out.", "opts": [{"g": "best", "t": "Step outside for a 10-minute walk, even just around the block.", "tip": "Daylight and gentle movement are simple, proven mood boosters."}, {"g": "okay", "t": "Open the curtains and sit by the window.", "tip": "Some light is better than none — a short walk would help even more."}, {"g": "poor", "t": "Close the curtains. The sunshine just makes you feel worse.", "tip": "Shutting out light and movement tends to keep low mood stuck."}]}, {"q": "You feel guilty for needing so much help lately.", "opts": [{"g": "best", "t": "Remind yourself: “Needing help is human. I'd help someone I love, too.”", "tip": "Treating yourself the way you'd treat a friend is the heart of self-love."}, {"g": "okay", "t": "Promise yourself you'll stop asking for help soon.", "tip": "Wanting independence is natural, but recovery goes better with support."}, {"g": "poor", "t": "Decide you're a burden and pull away from everyone.", "tip": "Feeling like a burden is part of how you feel right now — not the truth."}]}];
 const fillIn = (arr, src) => { arr.splice(0, arr.length, ...JSON.parse(JSON.stringify(src))); };
@@ -1482,7 +1486,7 @@ function renderIntro(){
   const H = two ? [
     ["🎸","Light up the house.","Each room has 2 dark objects. Tap one and your loved one reaches out to you. Choose an honest, open answer and the object lights up again."],
     ["💗","Build hope.","Letting them in raises your hope; pushing them away lowers it. The more hope you have, the more you both open up."],
-    ["💌","Watch for hearts.","When a 💗 message appears on your loved one, tap it. It's a special moment that only happens once."],
+    ["💌","Watch for hearts.","As your hope grows, a 💗 appears on your own character. Tap it — it's a moment of hope that only happens once."],
     ["🔥","Keep a streak.","Several open answers in a row give you bonus hope."],
     ["💖","Practice self-love.","Every talk uses energy. When it runs out, tap Self-love and choose a kind action for yourself."],
     ["🗺️","Unlock new rooms.","Light up the rooms that are open and new ones will appear."],
@@ -1557,11 +1561,13 @@ function renderHouse(){
         ? `<div class="lock trustlock">🔒<b>Needs trust ${BEDROOM_TRUST}</b><div class="tl"><i id="bedTrustFill" style="width:${Math.min(100, PLAY.trust / BEDROOM_TRUST * 100)}%"></i></div><small id="bedTrustTxt">Now ${PLAY.trust} — spend time together or brighten half-lit objects</small></div>`
         : `<div class="lock">🔒<small>${escH(lockText(r))}</small></div>`}
     </div>`;
-  }).join("") + `<div class="token love${nextTmAll >= 0 ? " has-msg" : ""}" id="tokLove"><div class="tk-face">${partnerAvatar("tl")}</div>${nextTmAll >= 0 ? `<button class="love-msg" data-tm="${nextTmAll}" aria-label="${escH(fill("{P} has a message for you"))}"><span class="lm-heart">💗</span><span class="lm-dots"><i></i><i></i><i></i></span><span class="rise r1">💗</span><span class="rise r2">💕</span></button>` : ""}</div><div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm",playerMood())}</div>`;
+  }).join("") + tokensHTML(nextTmAll);
   PLAY.justLit = -1;
   house.querySelectorAll(".spot[data-q]").forEach(b => b.onclick = e => { e.stopPropagation(); tapLight(+b.dataset.q); });
   const lt = $("tokLove");
   if (lt.classList.contains("has-msg")) lt.onclick = e => { e.stopPropagation(); tapTrustMoment(+lt.querySelector(".love-msg").dataset.tm); };
+  const mt = $("tokMe");
+  if (mt.classList.contains("has-msg")) mt.onclick = e => { e.stopPropagation(); tapHopeMoment(+mt.querySelector(".love-msg").dataset.tm); };
   house.querySelectorAll(".spot[data-qt]").forEach(b => b.onclick = e => { e.stopPropagation(); tapQualityTime(b); });
   house.querySelectorAll(".room").forEach(el => el.onclick = () => { const r = +el.dataset.room; if (!isUnlocked(r)) { toast("🔒 " + lockText(r)); sfx.tap(); } });
   updateHUD();
@@ -1592,7 +1598,7 @@ function updateHUD(){
   $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${hState(k)} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${Math.min(h.at, 96)}%" data-h="${k}">${hIcon[hState(k)]}</span>`).join("");
   PLAY.heartNew = [];
   $("hHearts").querySelectorAll(".hm").forEach(el => el.onclick = () => { const k = +el.dataset.h, h = HEARTS[k], st = hState(k);
-    const note = { won:"Heart secured!", lost:"Heart missed.", ready:"Tap the 💗 on your loved one and respond with total care.", far:`Reach ${tw()} ${h.at} to unlock this heart.` }[st];
+    const note = { won:"Heart secured!", lost:"Heart missed.", ready: PART === 2 ? "Tap the 💗 on your character and choose with care." : "Tap the 💗 on your loved one and respond with total care.", far:`Reach ${tw()} ${h.at} to unlock this heart.` }[st];
     toast(`${hIcon[st]} ${h.name} — ${note}`); });
   $("hPhase").textContent = PHASES[PLAY.phase].label;
   $("hLights").textContent = `✨ ${litN}/12`;
@@ -1608,11 +1614,36 @@ function updateHUD(){
   let msg;
   if (PLAY.energy === 0) msg = PART === 2 ? "🪫 Running on empty — tap Self-love and do something kind for yourself." : "🪫 System Critical — tap Recharge to salvage your sanity!";
   else if (outs.length) msg = PART === 2 ? `🌧️ A heavy day: the light in ${ROOMS[Math.floor(outs[0]/2)].ref} went out. Find it and get through it together.` : `🌧️ Setback alert: an object in ${ROOMS[Math.floor(outs[0]/2)].ref} went dark again. Time for damage control!`;
-  else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill(PART === 2 ? "💗 {P} has something on {their} mind." : "💗 {P} has an unexpressed breakthrough waiting to drop.");
+  else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill(PART === 2 ? "💗 You have a new moment of hope. Tap the 💗 on yourself." : "💗 {P} has an unexpressed breakthrough waiting to drop.");
   else if (PLAY.chap === 2 && !PLAY.bedOpen && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit half-lit things.");
   else if (PLAY.energy === 1) msg = PART === 2 ? "⚠️ Battery low — after your next talk, take a self-love break." : "⚠️ Battery Low — your next dialogue interaction triggers a mandatory recharge.";
   else msg = "";
   $("guide").textContent = msg;
+}
+
+// Tokens. Part 1: the 💗 message sits on your loved one. Part 2: it sits on you — it's your own moment of hope.
+function msgBubble(k, label){ return `<button class="love-msg" data-tm="${k}" aria-label="${escH(label)}"><span class="lm-heart">💗</span><span class="lm-dots"><i></i><i></i><i></i></span><span class="rise r1">💗</span><span class="rise r2">💕</span></button>`; }
+function tokensHTML(k){
+  const two = PART === 2, has = k >= 0;
+  const love = `<div class="token love${has && !two ? " has-msg" : ""}" id="tokLove"><div class="tk-face">${partnerAvatar("tl")}</div>${has && !two ? msgBubble(k, fill("{P} has a message for you")) : ""}</div>`;
+  const me = two
+    ? `<div class="token mine${has ? " has-msg" : ""}" id="tokMe"><div class="tk-face">${avatar(GAME.player.kind,null,"tm",playerMood())}</div>${has ? msgBubble(k, "A moment of hope for you") : ""}</div>`
+    : `<div class="token" id="tokMe">${avatar(GAME.player.kind,null,"tm",playerMood())}</div>`;
+  return love + me;
+}
+// Part 2: your loved one comes over to sit with you for your moment of hope.
+function tapHopeMoment(k){
+  if (PLAY.ending || !needEnergy()) return;
+  audio(); sfx.tap();
+  const M = PLAY.me, c = v => Math.max(12, Math.min(88, v)), cy = v => Math.max(26, Math.min(88, v));
+  const d = (p, q) => Math.hypot((p[0]-q[0]) * 1.7, (p[1]-q[1]) * 2.15);
+  const avoid = [0,1].map(i => spotPos(M.r, i)).concat([[M.x, M.y]]);
+  const lp = [[25,0],[-25,0],[20,-14],[-20,-14],[0,-18]].map(([dx, dy]) => [c(M.x + dx), cy(M.y + dy)])
+    .map(p => ({ p, s: Math.min(...avoid.map(o => d(o, p))) })).sort((A, B) => B.s - A.s)[0].p;
+  PLAY.love = { r:M.r, x:lp[0], y:lp[1] };
+  const love = $("tokLove"); setTok(love, posIn(M.r, lp[0], lp[1])); anim(love, "walk");
+  $("tokMe").classList.add("opening");
+  setTimeout(() => openTalk({ kind:"moment", idx:k, data:TRUST_MOMENTS[k], room:M.r }), 800);
 }
 
 // ---------------- walking + conversations ----------------
@@ -1936,9 +1967,9 @@ function heartRevealCard(k){
       <div class="bigheart2"><svg viewBox="0 0 120 108" aria-hidden="true"><defs><radialGradient id="hg${k}" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="#ffd1e3"/><stop offset=".55" stop-color="#ff6b9a"/><stop offset="1" stop-color="#d63c74"/></radialGradient></defs>
         <path d="M60 104 C20 76 2 54 2 32 C2 14 16 2 33 2 C45 2 54 9 60 19 C66 9 75 2 87 2 C104 2 118 14 118 32 C118 54 100 76 60 104Z" fill="url(#hg${k})" stroke="#fff" stroke-width="3"/>
         <path d="M30 18 C22 20 16 27 16 35" stroke="rgba(255,255,255,.7)" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
-        <div class="hface">${avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "hr" + k, k >= 3 ? "happy" : "calm")}</div></div>
+        <div class="hface">${PART === 2 ? avatar(GAME.player.kind, null, "hr" + k, k >= 2 ? "happy" : "calm") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "hr" + k, k >= 3 ? "happy" : "calm")}</div></div>
       <h2>${H.name}</h2>
-      ${paras(H.tip + (PART === 2 ? "\n\n{P} has something to say. Tap the 💗 message on {them} — this moment happens once!" : "\n\n{P} is ready to confess a secret. Tap the 💗 message on {them} — this event happens once!"))}`, btn: fill("Go to {them} 💗") };
+      ${paras(H.tip + (PART === 2 ? "\n\nA moment of hope, just for you. Tap the 💗 on your character — it only happens once!" : "\n\n{P} is ready to confess a secret. Tap the 💗 message on {them} — this event happens once!"))}`, btn: PART === 2 ? "My moment 💗" : fill("Go to {them} 💗") };
   };
 }
 function showCards(list){
