@@ -380,6 +380,30 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
 .sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite}
 @keyframes sway{50%{transform:rotate(1.2deg)}}
+/* ---------- W4GZ brand ---------- */
+.brand{display:inline-flex;flex-direction:column;align-items:center;gap:6px;margin:0 0 16px;animation:brandIn 1s cubic-bezier(.2,.9,.3,1.2) both .15s}
+.brand-mark{position:relative;display:inline-flex;align-items:center;gap:1px;padding:7px 16px 7px 14px;border-radius:999px;
+  background:linear-gradient(135deg,rgba(255,210,122,.18),rgba(255,107,154,.22));border:1px solid rgba(255,210,122,.55);
+  box-shadow:0 0 0 4px rgba(255,210,122,.07),0 8px 26px rgba(255,107,154,.35),inset 0 1px 0 rgba(255,255,255,.25);overflow:hidden}
+.brand-mark::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);
+  transform:translateX(-120%);animation:shine 4.5s ease-in-out infinite 1.2s}
+.brand-mark b{font-family:"Playfair Display",serif;font-weight:900;font-size:22px;letter-spacing:.04em;line-height:1;
+  background:linear-gradient(180deg,#fff7df,var(--gold) 55%,#ff9a6b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand-mark b.four{font-size:26px;margin:0 1px;background:linear-gradient(180deg,#ffe0ec,var(--rose));-webkit-background-clip:text;background-clip:text;
+  display:inline-block;animation:fourBeat 3s ease-in-out infinite 1.6s}
+.brand-spark{margin-left:6px;font-size:13px;color:var(--gold);text-shadow:0 0 8px rgba(255,210,122,.9);animation:twinkle 2.2s ease-in-out infinite}
+.brand-sub{font-size:10.5px;font-weight:900;letter-spacing:.3em;color:#ffcf9f;text-transform:uppercase}
+.brand-sub i{font-style:normal;color:var(--rose2)}
+@keyframes brandIn{from{opacity:0;transform:translateY(-10px) scale(.85)}}
+@keyframes shine{0%{transform:translateX(-120%)}35%,100%{transform:translateX(120%)}}
+@keyframes fourBeat{0%,70%,100%{transform:none}78%{transform:scale(1.25) rotate(-6deg)}86%{transform:scale(.95)}}
+@keyframes twinkle{50%{opacity:.35;transform:scale(.7) rotate(45deg)}}
+.brand-sign{margin:22px auto 6px;max-width:340px;text-align:center;padding:18px 16px 16px;border-radius:22px;
+  background:linear-gradient(160deg,rgba(255,210,122,.12),rgba(255,107,154,.12));border:1px solid rgba(255,210,122,.35)}
+.brand-sign .brand{margin:0 0 10px;animation:none}
+.brand-sign .vision{font-family:"Playfair Display",serif;font-style:italic;font-size:19px;color:#fff1d6;margin:4px 0 6px;line-height:1.35}
+.brand-sign .mission{font-size:12.5px;color:var(--dim);line-height:1.55;margin:0}
+@media (prefers-reduced-motion:reduce){.brand,.brand-mark::after,.brand-mark b.four,.brand-spark{animation:none}}
 </style>
 </head>
 <body>
@@ -392,7 +416,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
     <div class="scroll">
       <div class="title-wrap">
         <div class="couple" id="titleCouple"></div>
-        <div class="overline">A W4GZ STORY</div>
+        <div class="brand" aria-label="A W4GZ story — Writing for Gen Z"><div class="brand-mark"><b>W</b><b class="four">4</b><b>GZ</b><span class="brand-spark">✦</span></div><div class="brand-sub">A story by <i>Writing for Gen Z</i></div></div>
         <h1>Hold the Light</h1>
         <p class="tagline">A story about caring for someone you love — and yourself.</p>
         <div class="divider"></div>
@@ -489,6 +513,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="result" id="endResult"></div>
       <p class="note" id="endNext" style="color:#ffe7ef;font-weight:800"></p>
       <div class="learned"><h3>What you practised</h3><ol id="learned"></ol></div>
+      <div class="brand-sign"><div class="brand"><div class="brand-mark"><b>W</b><b class="four">4</b><b>GZ</b><span class="brand-spark">✦</span></div><div class="brand-sub">Writing for <i>Gen Z</i></div></div><p class="vision">“Create narratives worth living.”</p><p class="mission">We learn how to do things. We do things, seriously and kindly. We share how to do it so others can learn.</p></div>
       <div class="note">This game is for learning and isn't a substitute for professional care. If someone may be in danger, contact your local emergency number. Find a free, confidential helpline in your country at <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</div>
     </div>
     <button class="cta" id="againBtn">Play again ♥</button>
