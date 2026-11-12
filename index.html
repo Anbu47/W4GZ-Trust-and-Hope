@@ -1345,7 +1345,8 @@ function renderHouse(){
 function placeTokens(instant){
   const pr = partnerRoom(), rm = ROOMS[pr];
   const love = $("tokLove"), before = love.style.left;
-  setTok(love, posIn(pr, rm.pp[0], rm.pp[1]), instant);
+  const L = PLAY.love || { r:pr, x:rm.pp[0], y:rm.pp[1] };   // stays where you last went together
+  setTok(love, posIn(L.r, L.x, L.y), instant);
   if (!instant && before && before !== love.style.left) anim(love, "walk");
   setTok($("tokMe"), posIn(PLAY.me.r, PLAY.me.x, PLAY.me.y), instant);
 }
@@ -1384,12 +1385,27 @@ function updateHUD(){
 }
 
 // ---------------- walking + conversations ----------------
+// Your loved one walks to whatever you tap; you follow right behind and stand beside them.
 function walkTo(r, x, y, then){
   if (PLAY.ending) return;
   audio(); sfx.tap();
-  PLAY.me = { r, x, y };
-  const me = $("tokMe"); setTok(me, posIn(r, x, y)); anim(me, "walk");
-  setTimeout(then, 620);
+  const c = v => Math.max(12, Math.min(88, v));
+  // find a free spot next to the object that doesn't cover anything else in the room
+  const others = [0,1].map(k => spotPos(r, k)).concat([heartPos(r)]).filter(p => !(p[0] === x && p[1] === y));
+  const d = (p, q) => Math.hypot((p[0]-q[0]) * 1.7, (p[1]-q[1]) * 2.15);
+  const obj = [x, y], cy = v => Math.max(26, Math.min(88, v));
+  const best = (cands, avoid) => cands.map(p => ({ p, score: Math.min(...avoid.map(o => d(o, p))) })).sort((A, B) => B.score - A.score)[0].p;
+  // your loved one stands beside the object, clear of everything else…
+  const loveP = best([[1,1],[-1,1],[1,-1],[-1,-1],[0,1],[0,-1]].map(([sx, sy]) => [c(x + sx * 20 || x), cy(y + sy * (sx ? 13 : 19))]), others.concat([obj]));
+  // …and you stand next to them
+  const meP = best([[25,0],[-25,0],[0,17],[0,-17],[20,14],[-20,14]].map(([dx, dy]) => [c(loveP[0] + dx), cy(loveP[1] + dy)]), others.concat([obj, loveP]));
+  const opts = [{ love:loveP, me:meP }];
+  PLAY.love = { r, x:opts[0].love[0], y:opts[0].love[1] };
+  PLAY.me   = { r, x:opts[0].me[0],   y:opts[0].me[1] };
+  const love = $("tokLove"), me = $("tokMe");
+  setTok(love, posIn(r, PLAY.love.x, PLAY.love.y)); anim(love, "walk");
+  setTimeout(() => { setTok(me, posIn(r, PLAY.me.x, PLAY.me.y)); anim(me, "walk"); }, 260);
+  setTimeout(then, 900);
 }
 function needEnergy(){
   if (PLAY.energy > 0) return true;
@@ -1411,7 +1427,7 @@ function tapLight(i){
   if (v === 2) return;
   if (!needEnergy()) return;
   const r = Math.floor(i / 2), [x, y] = spotPos(r, i % 2);
-  walkTo(r, x + 10, y + 6, () => {
+  walkTo(r, x, y, () => {
     if (v === -1) openTalk({ kind:"setback", idx:i, data:SETBACKS[PLAY.setback[i]], room:r });
     else openTalk({ kind:"light", idx:i, data:QUESTIONS[i], room:r, revisit: v === 1 });
   });
@@ -1419,7 +1435,7 @@ function tapLight(i){
 function tapTrustMoment(k, el){
   if (!needEnergy()) return;
   const r = partnerRoom(), [x, y] = heartPos(r);
-  walkTo(r, x + (x > 50 ? -14 : 14), y + 8, () => openTalk({ kind:"moment", idx:k, data:TRUST_MOMENTS[k], room:r }));
+  walkTo(r, x, y, () => openTalk({ kind:"moment", idx:k, data:TRUST_MOMENTS[k], room:r }));
 }
 
 function openTalk(t){
@@ -1663,7 +1679,7 @@ function openRest(){
 function tapQualityTime(){
   if (!needEnergy()) return;
   const [x, y] = heartPos(0);
-  walkTo(0, x + (x > 50 ? -14 : 14), y + 8, () => {
+  walkTo(0, x, y, () => {
     PLAY.energy--;
     const card = $("qCard"); card.className = "qcard";
     card.innerHTML = `<div class="qhead"><span class="chip">🫶 SPEND TIME TOGETHER</span><span class="n">+8 trust</span></div>
