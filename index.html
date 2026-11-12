@@ -1107,7 +1107,7 @@ const QUESTIONS = [
     ask:"How do you intervene?",
     opts:[
       { g:"help", t:"Quietly whip up something basic, place it nearby without commentary, and sit quietly without pressuring {them} to perform.",
-        why:"Executive dysfunction makes basic tasks feel mountainous. Quiet, low-friction help removes the logistical barrier." },
+        why:"Depression can make basic tasks feel mountainous. Quiet, low-friction help removes the barrier without adding pressure." },
       { g:"okay", t:"Confiscate all domestic responsibilities entirely—cooking, cleaning, and scheduling—so {p} never has to make a choice again.",
         why:"Over-functioning for someone strips away their last shreds of autonomy and breeds resentment on your end." },
       { g:"hurt", t:"Lean against the counter and lecture: “Skipping meals is objectively childish. You're an adult, you need to fuel your body properly.”",
@@ -1116,9 +1116,9 @@ const QUESTIONS = [
     ask:"How do you counter this emotional trap?",
     opts:[
       { g:"help", t:"Look {them} straight in the eye: “You aren't an anchor. We're riding out a brutal storm, and I'm right here in this boat with you voluntarily.”",
-        why:"Imposter syndrome and burden-guilt run wild in depression. Direct, unconditional reassurance cuts through the static." },
+        why:"Feeling like a burden is extremely common in depression. Direct, unconditional reassurance cuts through the static." },
       { g:"okay", t:"Reply honestly: “I won't sugarcoat it, managing all your extra emotional weight on top of my own workload has been pretty taxing lately.”",
-        why:"Honesty is important, but dropping that truth bomb right when they feel worthless confirms their darkest fears. Vent to a therapist instead." },
+        why:"Honesty is important, but dropping that truth bomb right when they feel worthless confirms their darkest fears. Vent to a friend or counselor instead." },
       { g:"hurt", t:"Nod grimly: “At least you're self-aware. Do you have any idea how much harder you're making things for me right now?”",
         why:"Validating their fear that they are a burden is a catastrophic tactical error that shuts down communication permanently." } ] },
 
@@ -1130,7 +1130,7 @@ const QUESTIONS = [
       { g:"okay", t:"Flash an encouraging grin: “Stop that! Let's pull out a whiteboard right now and map out all your blessings and future goals!”",
         why:"Toxic positivity invalidates their acute pain, signaling that you only accept happy versions of them." },
       { g:"hurt", t:"Scold {them}: “Stop talking like a melodramatic teenager. You have a great life, what do you even have to mope about?”",
-        why:"Chemical depression doesn't care about your resume or checklist. Dismissing their pain triggers total shutdown." } ] },
+        why:"Depression doesn't care how good a life looks on paper. Dismissing their pain triggers total shutdown." } ] },
   { scene:"You're frantically typing a work report when {p} materializes in the doorway.", cue:"👀 Tapping a nervous rhythm against the doorframe, shifting weight, opening {their} mouth, then snapping it shut. Major hesitation detected.",
     line:"Hey… are you in the middle of something urgent?", ask:"Read the subtext. How do you execute this?",
     opts:[
@@ -1141,11 +1141,11 @@ const QUESTIONS = [
       { g:"hurt", t:"Snap impatiently: “Can this possibly wait? I'm completely underwater here and my brain is fried.”",
         why:"Rejecting a rare bid for connection teaches them that their timing is always an inconvenience." } ] },
 
-  { scene:"Weeks have stretched into a month. {P}'s sleep schedule is broken and {their} mood remains trapped in grayscale.",
+  { scene:"Three weeks in, and nothing has lifted. {P}'s sleep schedule is broken and {their} mood remains trapped in grayscale most days.",
     ask:"What is your next evolutionary step?",
     opts:[
       { g:"help", t:"Gently broach external options: “We've tried white-knuckling this ourselves for a while. Want me to help research a counselor we can trust?”",
-        why:"Chronic low mood exceeding two weeks requires professional reinforcement. Doing the logistical heavy lifting makes getting help less intimidating." },
+        why:"Low mood on most days for two weeks or more is a signal to bring in professional support. Doing the logistical heavy lifting makes getting help less intimidating." },
       { g:"okay", t:"Order twenty self-help psychology textbooks online, highlight the dense chapters, and stack them neatly by {their} bed.",
         why:"Handing an exhausted person academic homework feels like assigning an impossible exam they're destined to fail." },
       { g:"hurt", t:"Lay down the law: “Therapy is a total waste of money for weak people. You just need to push through it with willpower.”",
@@ -1164,12 +1164,12 @@ const QUESTIONS = [
     ask:"What is the only sustainable survival move?", self:true,
     opts:[
       { g:"help", t:"Call an external friend to vent, establish an evening blackout window, and genuinely rest. (+2 energy)",
-        why:"Caregiver burnout is lethal to relationships. Defending your boundaries isn't selfish; it's the anchor that keeps you both afloat." },
+        why:"Caregiver burnout can quietly wreck relationships. Defending your boundaries isn't selfish; it's the anchor that keeps you both afloat." },
       { g:"okay", t:"Swallow your tears, lock your own needs in a vault, and double down on martyrdom because {p} needs you more.",
         why:"Martyrdom always ends in a fiery collapse. If you crash too, nobody is left to hold the light." },
       { g:"hurt", t:"Pack a sudden overnight bag, vanish without text notifications, and leave a furious note about how exhausting {their} is.",
-        why:"Executing a stealth evacuation triggers abandonment trauma. Balance requires communication, not sudden ghosting." } ] },
-  { scene:"{P} has started treating you like an all-night crisis hotline, calling you at 3:00 AM every single night. You're losing your job performance.",
+        why:"Vanishing without warning feels like abandonment and can spark real panic. Breaks are healthy; balance requires communication, not sudden ghosting." } ] },
+  { scene:"{P} has started treating you like an all-night crisis hotline, calling you at 3:00 AM every single night. Your work is starting to slip.",
     ask:"How do you regulate this dynamic?",
     opts:[
       { g:"help", t:"Establish compassionate boundaries: set defined check-in windows while helping {them} build a wider external support network.",
@@ -1183,7 +1183,7 @@ const QUESTIONS = [
     ask:"What is your critical protocol?", critical:true,
     opts:[
       { g:"help", t:"Stay completely grounded and ask without hesitation: “Are you having active thoughts of ending your life?”",
-        why:"Direct inquiry never plants suicidal ideation; it validates gravity, shatters secrecy, and invites immediate safety interventions." },
+        why:"Asking directly does not plant the idea of suicide. It shows you take them seriously, breaks the secrecy, and opens the door to urgent help." },
       { g:"okay", t:"Pull {them} into a desperate hug: “Don't say scary things like that! Let's put on a sitcom right now to change your mood!”",
         why:"Diverting away from explicit suicidal cues out of fear sweeps a life-threatening crisis under the carpet." },
       { g:"hurt", t:"Dismiss it defensively: “Stop playing psychological games with me, that's a toxic thing to say out loud.”",
@@ -1193,7 +1193,7 @@ const QUESTIONS = [
     opts:[
       { g:"help", t:"Thank {them} for {their} terrifying honesty, refuse to leave {their} side, and contact crisis professionals immediately.",
         why:"Imminent safety risks require immediate professional intervention and physical presence. Never carry acute crisis alone." },
-      { g:"okay", t:"Scribble a helpline URL on a sticky note and instruct {them} to call it whenever {they} feel{s} brave later this week.",
+      { g:"okay", t:"Scribble a helpline number on a sticky note and instruct {them} to call it whenever {they} feel{s} brave later this week.",
         why:"Handing off crisis management as homework leaves a vulnerable person completely exposed to danger." },
       { g:"hurt", t:"Swear an absolute blood oath of secrecy: “I promise I'll never tell a soul as long as you promise not to do it.”",
         why:"Secrecy kills. Their survival infinitely supersedes keeping an unsafe promise." } ] }
@@ -1210,7 +1210,7 @@ const SETBACKS = [
         why:"Expecting linear perfection turns bad days into personal moral failures." },
       { g:"hurt", t:"“I knew that temporary good mood was a fluke. Back to square one again.”",
         why:"Confirming their cynical fear destroys whatever fragile motivation they had left." } ] },
-  { scene:"{P} chickened out and skipped today's scheduled therapy session.", line:"I drove into the parking lot, panicked, and drove straight back home. I'm a coward.",
+  { scene:"{P} panicked and skipped today's scheduled therapy session.", line:"I drove into the parking lot, panicked, and drove straight back home. I'm a coward.",
     ask:"How do you respond to the avoidance loop?",
     opts:[
       { g:"help", t:"“Starting is terrifying. Want me to sit right beside you while we call to reschedule?”",
@@ -1251,16 +1251,16 @@ const TRUST_MOMENTS = [
         why:"Impatience disguised as encouragement freezes a nervous system." },
       { g:"hurt", t:"“Ugh, if it's more heavy drama, maybe just write it in a journal instead.”",
         why:"Expressing fatigue right at the threshold of vulnerability slams the door shut forever." } ] },
-  { at:80, scene:"Outside the clinic doors, {p}'s grip on your hand turns white-knuckle tight.", line:"I'm terrified that saying my fears out loud makes them permanently real. I feel weak.",
+  { at:80, scene:"Late at night, {p} reaches for your hand and grips it white-knuckle tight.", line:"I'm terrified that saying my fears out loud makes them permanently real. I feel weak.",
     ask:"The threshold test. What do you say?",
     opts:[
       { g:"help", t:"“It makes total sense to be scared. Go at your exact speed—I'm holding the line with you.”",
         why:"Validating fear while anchoring their stability provides the courage to step forward." },
-      { g:"okay", t:"“You're brave! Just march right in there like a warrior and conquer it.”",
+      { g:"okay", t:"“You're brave! Just say it all out loud like a warrior and get it over with.”",
         why:"Forced cheerleading bypasses valid terror instead of processing it." },
       { g:"hurt", t:"“It's already real whether you voice it or not. Stop stalling.”",
-        why:"Cold, unfeeling logic right before a psychological breakthrough induces panic." } ] },
-  { at:100, scene:"On a sunlit afternoon, {p} looks at you and breaks into an effortless, genuine smile.", line:"I think I finally feel like myself again. I seriously couldn't have crossed this finish line without you.",
+        why:"Cold, unfeeling logic right when they're finally opening up can trigger panic." } ] },
+  { at:100, scene:"On a sunlit afternoon, {p} looks at you and breaks into an effortless, genuine smile.", line:"I think I'm finally starting to feel like myself again. I seriously couldn't have come this far without you.",
     ask:"The ultimate victory response?",
     opts:[
       { g:"help", t:"“I'm endlessly proud of you. You did the heavy lifting—I just held the map.”",
@@ -1277,7 +1277,7 @@ const RECHARGE = [
   { q:"It's midnight, and your brain is projecting an IMAX horror movie of worst-case scenarios about {p}.", opts:[
     { g:"best", t:"Dump all racing thoughts onto a physical notepad and execute slow breathing cycles.", tip:"Externalizing catastrophe onto paper tricks your overworked nervous system into clocking out." },
     { g:"okay", t:"Put on one mindless comfort sitcom episode to distract your racing mind.", tip:"A mild distraction works—just don't accidentally binge three seasons until 3 AM." },
-    { g:"poor", t:"Stay awake deep-diving into dark psychological forums about clinical depression.", tip:"Midnight doom-scrolling feels proactive, but it's just emotional self-harming disguised as research." } ] },
+    { g:"poor", t:"Stay awake deep-diving into dark psychological forums about clinical depression.", tip:"Midnight doom-scrolling feels proactive, but it's really anxiety fuel disguised as research." } ] },
   { q:"A friend texts: “Coffee this Saturday? Miss your face!”", opts:[
     { g:"best", t:"Accept enthusiastically, and admit honestly that things have been heavy lately.", tip:"Allowing external friendships to feed you ensures you aren't isolated in an echo chamber." },
     { g:"okay", t:"Accept, slap on a glossy fake smile, and pretend your household is a joyful paradise.", tip:"Social contact helps, though masking your reality keeps you feeling lonely in a crowded room." },
@@ -1307,7 +1307,7 @@ const RECHARGE = [
     { g:"okay", t:"Go to bed on time, but mentally replay the awkward outburst twenty times in HD.", tip:"Sleep is essential—now force your brain to stop looping the cringey highlight reel." },
     { g:"poor", t:"Stay awake cataloging every single social mistake you've made over the last decade.", tip:"Chronic self-audit keeps your adrenaline pumping and destroys sleep quality." } ] },
   { q:"You realize you haven't laid eyes on natural sunlight in four consecutive days.", opts:[
-    { g:"best", t:"Take a sunlit walk around the perimeter block or sit in a local green park.", tip:"Natural photons and fresh oxygen regulate circadian rhythms and naturally elevate neurochemistry." },
+    { g:"best", t:"Take a sunlit walk around the perimeter block or sit in a local green park.", tip:"Daylight helps reset your body clock and lift your mood, and a little movement outdoors helps you sleep better tonight." },
     { g:"okay", t:"Unlatch the living room window for sixty seconds to inhale a gust of fresh air.", tip:"A cute micro-step, though an actual outdoor excursion yields vastly superior results." },
     { g:"poor", t:"Draw all the blackout blinds tighter and remain cocooned inside your cave.", tip:"Voluntary sensory deprivation slowly drags your own baseline mood into the basement." } ] },
   { q:"A relative calls offering: “Can I take over home watch this weekend so you can escape?”", opts:[
@@ -1315,7 +1315,7 @@ const RECHARGE = [
     { g:"okay", t:"Respond politely: “That's so sweet of you, maybe we can coordinate something next month!”", tip:"Keeping doors open is polite, but accepting immediate rescue is vastly smarter." },
     { g:"poor", t:"Decline flatly: “No thanks, I'm obligated to handle this entirely on my own.”", tip:"Rejecting help out of pride turns a capable partner into a clinical casualty." } ] },
   { q:"Following an intense emotional confrontation, your mind is exhausted but your nervous system is vibrating.", opts:[
-    { g:"best", t:"Execute deliberate box-breathing cycles — 4 seconds in, 6 seconds out.", tip:"Extended exhalations trigger the vagus nerve, manually shifting your body out of fight-or-flight mode." },
+    { g:"best", t:"Do slow breathing cycles — 4 seconds in, 6 seconds out.", tip:"Longer exhales switch on your body's built-in calming system and help ease you out of fight-or-flight mode." },
     { g:"okay", t:"Take a scorching hot shower before climbing into bed.", tip:"Thermal immersion relaxes surface tension, helping wind down physical agitation." },
     { g:"poor", t:"Slam an energy drink and plow through a pile of household chores.", tip:"Pushing past exhaustion guarantees an explosive physiological crash tomorrow." } ] },
   { q:"A sudden realization hits that you haven't experienced genuine laughter in an age.", opts:[
@@ -1340,7 +1340,7 @@ const LEARNED = [
   "Champion professional health resources proactively and compassionately.",
   "Accept volatility. Individual setbacks never invalidate overarching progress.",
   "Defend personal boundaries—you cannot pour from a depleted reservoir.",
-  "Take suicide threats with absolute gravity: inquire directly, stay present, secure help instantly."
+  "Take any talk of suicide with absolute gravity: ask directly, stay present, and get crisis help right away."
 ];
 const REACT = {
   help:[ "…Huh. Okay. Thanks, that actually helps.", "Thank you. I genuinely needed to hear that right now.", "I am so infinitely glad it's you here in my corner." ],
@@ -1764,7 +1764,7 @@ function houseGoesDark(){
   setTimeout(() => showCards([() => ({
     html:`<div class="chap story dark"><small>TRUST SYSTEM COLLAPSE</small><div class="msface">${avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "dk" + Math.random().toString(36).slice(2,6), "sad")}<span>🌑</span></div>
       <h2>Total System Blackout</h2>
-      ${paras("Following too many clumsy or wounding responses, {p} initiates total emotional withdrawal. The bedroom door locks permanently. Every light in the house blows out one by one.\n\nThis mirrors reality: persistent judgment forces humans to erect impenetrable defensive fortresses.\n\nBut trust is mechanical; it can be reconstructed not through grand sweeping gestures, but via relentless, micro-doses of steady, authentic empathy.")}
+      ${paras("Following too many clumsy or wounding responses, {p} initiates total emotional withdrawal. The bedroom door stays locked. Every light in the house blows out one by one.\n\nThis mirrors reality: persistent judgment pushes people to build defensive walls.\n\nBut trust can be rebuilt — not through grand sweeping gestures, but via relentless, micro-doses of steady, authentic empathy.")}
       <p class="sb">🌑 Complete blackout. Trust has bottomed out at ${DARK_TRUST}.</p>
       <p class="gain">Unlocked rooms remain accessible. Traverse the dark house and relight it — you possess infinitely more wisdom now than when you first stepped inside!</p>`,
     btn:"Start rebuilding" })]), 900);
