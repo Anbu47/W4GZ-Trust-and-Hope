@@ -758,7 +758,7 @@
        },
        {
         "g": "hurt",
-        "t": "Turn the page: “Well, at least you're not dealing with that.”",
+        "t": "Keep scrolling your own phone: “Well, at least you're not dealing with that.”",
         "why": "“At least you're not dealing with that” confirms their comparison instead of easing it.",
         "re": "Right. Ignore me. I'm just talking nonsense anyway."
        }
@@ -910,9 +910,9 @@
        },
        {
         "g": "hurt",
-        "t": "Turn back to the sink: “Okay, no worries.”",
+        "t": "Glance back at your phone: “Okay, no worries.”",
         "why": "Resuming chores immediately signals the moment has passed.",
-        "re": "Right back to the dishes. Classic."
+        "re": "Right back to your phone. Classic."
        }
       ]
      }
@@ -1382,9 +1382,9 @@
        },
        {
         "g": "hurt",
-        "t": "Clear your plate: “That was a long time ago. Maybe it's better to leave it there.”",
+        "t": "Stand up to leave: “That was a long time ago. Maybe it's better to leave it there.”",
         "why": "Telling them to leave the past alone shuts down a painful disclosure.",
-        "re": "Clearing the plate right while I'm talking about trauma. Classy."
+        "re": "Getting up while I'm talking about trauma. Classy."
        }
       ]
      },
@@ -2037,7 +2037,7 @@
        },
        {
         "g": "hurt",
-        "t": "Turn away from the mirror: “Why bother. It's not like it makes a difference.”",
+        "t": "Look away: “Why bother. It's not like it makes a difference.”",
         "why": "Averting gaze avoids reality.",
         "re": "…Hey, come eat something with me?"
        }
@@ -2095,9 +2095,9 @@
        },
        {
         "g": "hurt",
-        "t": "Push your plate away: “I'm fine. Just not hungry.”",
-        "why": "Shifting plates terminates meal engagement.",
-        "re": "…Okay. I'll let you eat."
+        "t": "Look away: “Quiet? I'm fine. Can we not do this right now?”",
+        "why": "Brushing off a gentle check-in teaches them to stop asking, right when you need them.",
+        "re": "…Okay. I'm here whenever you want to talk."
        }
       ]
      },
@@ -2761,11 +2761,12 @@
        },
        {
         "g": "hurt",
-        "t": "Step back inside: “It's not that bad. Other people have it worse.”",
+        "t": "Change the subject: “It's not that bad. Other people have it worse.”",
         "why": "Stepping indoors closes the threshold.",
-        "re": "…Okay. I'll be inside if you change your mind."
+        "re": "…Okay. I'm here if you change your mind."
        }
-      ]
+      ],
+      "line": "I think talking to a counselor could really help. I can help you find one."
      },
      {
       "n": 74,
