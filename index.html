@@ -421,6 +421,31 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .qcard.loveq .scene::before{content:"💖 SITUATION";color:#ffb3d9}
 .qcard.restq .scene::before{content:"🌿 SITUATION"}
 @media (prefers-reduced-motion:reduce){.qcard .scene{animation:none}}
+/* ---------- end rank ---------- */
+.sup-title.rank{align-items:flex-start}
+.rank .st-body b{font-size:23px}
+.rbar{display:flex;align-items:center;gap:4px;margin:8px 0 4px}
+.rbar i{flex:1;height:7px;border-radius:4px;background:rgba(255,255,255,.14)}
+.rbar i.on{background:linear-gradient(90deg,#ff8fb3,#ffd27a)}
+.rbar span{flex:none;margin-left:6px;font-size:11.5px;font-weight:900;color:#ffe3ec}
+.rnext{font-size:12px!important;font-weight:800;color:#ffe7a8!important;margin:4px 0 0!important}
+.rnext b{font-family:inherit!important;font-size:12px!important;display:inline!important;color:#fff!important}
+.rhalf{font-size:11.5px!important;color:#d8c2cf!important;margin:4px 0 0!important}
+.rank-iron{background:linear-gradient(135deg,rgba(150,150,160,.22),rgba(80,80,95,.2));border:1px solid rgba(190,190,200,.5)}
+.rank-iron .st-medal{background:radial-gradient(circle at 40% 35%,#eceef2,#8d929c);box-shadow:0 0 14px rgba(200,200,210,.4)}
+.rank-bronze{background:linear-gradient(135deg,rgba(205,127,50,.25),rgba(120,70,30,.2));border:1px solid rgba(225,150,90,.55)}
+.rank-bronze .st-medal{background:radial-gradient(circle at 40% 35%,#ffd9b0,#c8763a);box-shadow:0 0 16px rgba(220,140,70,.5)}
+.rank-silver{background:linear-gradient(135deg,rgba(200,210,225,.25),rgba(120,130,150,.18));border:1px solid rgba(215,225,240,.6)}
+.rank-silver .st-medal{background:radial-gradient(circle at 40% 35%,#ffffff,#a9b4c6);box-shadow:0 0 18px rgba(220,230,245,.55)}
+.rank-gold{background:linear-gradient(135deg,rgba(255,210,122,.28),rgba(200,140,40,.18));border:1px solid rgba(255,215,130,.7)}
+.rank-gold .st-medal{background:radial-gradient(circle at 40% 35%,#fff6d6,#f0b232);box-shadow:0 0 22px rgba(255,210,122,.8)}
+.rank-diamond{background:linear-gradient(135deg,rgba(120,220,255,.25),rgba(150,120,255,.2));border:1px solid rgba(150,230,255,.7)}
+.rank-diamond .st-medal{background:radial-gradient(circle at 40% 35%,#ffffff,#6fd3ff 55%,#8b7bff);box-shadow:0 0 24px rgba(120,210,255,.8)}
+.rank-legend{background:linear-gradient(135deg,rgba(255,120,180,.3),rgba(255,210,122,.25),rgba(150,120,255,.25));border:1px solid rgba(255,220,150,.85)}
+.rank-legend .st-medal{background:conic-gradient(from 0deg,#ffd27a,#ff8fb3,#b69bff,#7fe3ff,#ffd27a);box-shadow:0 0 28px rgba(255,190,140,.9);animation:spin 8s linear infinite}
+.rank-legend .st-medal span{display:block;animation:spin 8s linear infinite reverse}
+.rank .st-body b{color:#fff}
+@media (prefers-reduced-motion:reduce){.rank-legend .st-medal,.rank-legend .st-medal span{animation:none}}
 /* ---------- part 2 ---------- */
 .partpick{margin:14px 0 2px;display:flex;flex-direction:column;gap:8px}
 .partpick small{font-size:10.5px;font-weight:900;letter-spacing:.2em;color:var(--gold);text-align:center}
@@ -2088,13 +2113,20 @@ function renderEnd(){
   const bright = PLAY.light.filter(v => v === 2).length;
   $("endResult").innerHTML = `<div><b>${tr}</b><span>${Tw().toUpperCase()}</span></div><div><b>${bright}/12</b><span>LUMINOUS LIGHTS</span></div><div><b>${PLAY.tm.filter(m => m.won).length}/5</b><span>HEARTS SECURED</span></div>`;
   const half = PLAY.light.filter(v => v === 1).length;
-  const ST = two ? (half
-    ? { cls:"growing", ic:"🌱", name:"Learning to Lean", txt:`You lit the whole house — but ${half} ${half === 1 ? "light is" : "lights are"} still half-lit. Letting people in is a skill you're still growing. Play again to light every one fully.` }
-    : { cls:"shining", ic:"🌟", name:"Open Heart", txt:"Every light in the house shines fully. You let people in, again and again." }) : half
-    ? { cls:"growing", ic:"🌱", name:"Growing Supporter", txt:`You lit the whole house — but ${half} ${half === 1 ? "light is" : "lights are"} still half-lit. Every supporter is still learning. Play again and help every light shine fully.` }
-    : { cls:"shining", ic:"🌟", name:"Shining Supporter", txt:"Every light in the house shines fully. You chose care again and again." };
-  $("endTitle").className = "sup-title " + ST.cls;
-  $("endTitle").innerHTML = `<div class="st-medal"><span>${ST.ic}</span></div><div class="st-body"><small>${two ? "YOUR TITLE" : "YOUR SUPPORTER TITLE"}</small><b>${ST.name}</b><p>${escH(ST.txt)}</p></div>`;
+  // Rank from hearts won (0–5), like game ranks: Iron → Bronze → Silver → Gold → Diamond → Legend
+  const won = PLAY.tm.filter(m => m.won).length;
+  const RANKS = [["iron","🪨","Iron"],["bronze","🥉","Bronze"],["silver","🥈","Silver"],["gold","🥇","Gold"],["diamond","💎","Diamond"],["legend","👑","Legend"]];
+  const RLINE = two
+    ? ["Admitting you're struggling is the first brave step.","You noticed a small good moment again.","You let the good moments stay.","You've started talking to yourself like a friend.","You're ready for hard days — with help.","You found your way back to yourself."]
+    : ["You showed up — every supporter starts here.","You noticed the signs.","You listened without rushing to fix.","They felt safe letting you in.","They trusted you with their hardest fears.","You stayed steady through every storm."];
+  const [rk, ric, rname] = RANKS[won];
+  const nxt = won < 5 ? RANKS[won + 1] : null;
+  const bar = Array.from({length:5}, (_, k) => `<i class="${k < won ? "on" : ""}"></i>`).join("");
+  $("endTitle").className = "sup-title rank rank-" + rk;
+  $("endTitle").innerHTML = `<div class="st-medal"><span>${ric}</span></div><div class="st-body"><small>YOUR RANK · ${two ? "HOPE RECOVERY" : "TRUST RECOVERY"}</small><b>${rname} ${two ? "Hope" : "Supporter"}</b><p>${escH(RLINE[won])}</p>
+    <div class="rbar">${bar}<span>${won}/5 💗</span></div>
+    <p class="rnext">${nxt ? `Win 1 more heart to reach <b>${nxt[2]}</b> ${nxt[1]}` : "Max rank reached 👑"}</p>
+    ${half ? `<p class="rhalf">${half} ${half === 1 ? "light is" : "lights are"} still half-lit — play again to make every one shine.</p>` : ""}</div>`;
   $("endNext").textContent = two
     ? (tier < 2 ? `Replay Part 2 — reaching 80+ hope unlocks “Two Steady Lights”.` : `You reached the brightest ending of Part 2. 💛`)
     : (tier < 2 ? `Replay to access the deepest narrative ending — reaching 80+ trust unlocks “A Safe Harbor”.` : `You attained the ultimate golden ending. 💛`);
