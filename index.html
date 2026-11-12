@@ -159,7 +159,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .room.lit{box-shadow:inset 0 0 40px rgba(255,210,122,.45),0 0 18px rgba(255,210,122,.25)}
 .room .rname{position:absolute;left:8px;top:6px;z-index:4;font-size:11px;font-weight:900;letter-spacing:.04em;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.7)}
 .room .rname small{display:block;font-size:9.5px;font-weight:700;opacity:.8;letter-spacing:0}
-.room .deco{position:absolute;font-size:clamp(20px,6vw,30px);transform:translate(-50%,-50%);z-index:1;filter:drop-shadow(0 3px 3px rgba(0,0,0,.3))}
+.room .furn{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 .room .lock{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:22px;color:rgba(255,255,255,.7)}
 .room .lock small{font-size:10px;font-weight:800;color:rgba(255,255,255,.55);text-align:center;padding:0 8px;line-height:1.3}
 .room.cur{outline:2px solid rgba(255,210,122,.55);outline-offset:-2px}
@@ -255,6 +255,15 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .chap.empty p{font-size:15px;text-align:left}
 .chap.empty p b{color:#ffd6c7}
 /* ---------- objects instead of lights ---------- */
+.spot.obj{border-radius:50%;background:radial-gradient(circle at 50% 40%,#3a2550,#1c1029);border:2px solid rgba(255,214,150,.8);
+  box-shadow:0 6px 14px rgba(0,0,0,.45),0 0 16px rgba(255,200,120,.35)}
+.spot.obj.dim{border-style:dashed;border-color:rgba(255,214,150,.7);background:radial-gradient(circle at 50% 40%,#5a3e5e,#2a1a33)}
+.spot.obj.done{border-color:#ffd27a;background:radial-gradient(circle at 50% 40%,#fff3cf,#ffc77a 70%);box-shadow:0 6px 14px rgba(0,0,0,.3),0 0 22px rgba(255,210,122,.8)}
+.spot.obj.out{border-color:rgba(170,180,255,.8);background:radial-gradient(circle at 50% 40%,#2c2e52,#151428)}
+.spot.obj .bd.talk{right:-8px;top:-10px;font-size:14px;animation:talk 1.4s ease-in-out infinite}
+@keyframes talk{50%{transform:translateY(-3px)}}
+.spot.obj .bd.ok{right:-6px;top:-6px;width:18px;height:18px;border-radius:50%;background:#36c98a;color:#fff;font-size:11px;font-weight:900;display:grid;place-items:center;border:2px solid #fff}
+.spot.obj .bd.half{right:-6px;top:-6px;width:18px;height:18px;border-radius:50%;background:#ffd27a;color:#4a2c00;font-size:10px;font-weight:900;display:grid;place-items:center;border:2px solid #fff}
 .spot.obj{width:50px;height:50px;margin:-25px 0 0 -25px}
 .spot.obj .ic{position:relative;z-index:1;font-size:clamp(24px,7vw,32px);line-height:1;filter:grayscale(1) brightness(.5) contrast(.9);transition:filter .8s,transform .4s}
 .spot.obj::before{inset:2px;background:radial-gradient(circle,rgba(255,230,170,.35),rgba(255,200,120,.12) 50%,transparent 70%)}
@@ -744,6 +753,44 @@ const ROOMS = [
     icons:["💭","☎️"], comfort:null }
 ];
 
+// Furniture drawn as flat shapes so it reads as part of the house,
+// not as something to tap. (viewBox 0 0 100 100, stretched to the room.)
+const L = "rgba(255,255,255,.14)", L2 = "rgba(255,255,255,.24)", D = "rgba(0,0,0,.22)", D2 = "rgba(0,0,0,.34)", ST = 'stroke="rgba(0,0,0,.18)" stroke-width=".6"';
+const FURNITURE = [
+  // Living room: window, TV unit, rug, sofa, plant
+  `<rect x="6" y="3" width="26" height="5" rx="1" fill="rgba(190,225,255,.28)" ${ST}/>
+   <rect x="60" y="14" width="34" height="6" rx="1.5" fill="${D2}"/><rect x="64" y="6" width="26" height="9" rx="1" fill="rgba(25,25,45,.55)"/>
+   <rect x="10" y="50" width="44" height="28" rx="6" fill="${L}" ${ST}/>
+   <rect x="6" y="80" width="48" height="13" rx="3" fill="${D2}"/><rect x="9" y="82" width="42" height="6" rx="2" fill="${D}"/>
+   <circle cx="88" cy="86" r="6" fill="rgba(60,110,70,.45)"/><rect x="85" y="90" width="6" height="6" rx="1" fill="${D}"/>`,
+  // Kitchen: counter with stove, fridge, round table + chairs
+  `<rect x="0" y="12" width="78" height="12" fill="${L2}" ${ST}/><circle cx="12" cy="18" r="3" fill="${D2}"/><circle cx="22" cy="18" r="3" fill="${D2}"/><rect x="40" y="14" width="14" height="8" rx="1" fill="rgba(170,210,240,.25)"/>
+   <rect x="82" y="4" width="16" height="28" rx="2" fill="rgba(255,255,255,.2)" ${ST}/><rect x="95" y="10" width="1.2" height="8" fill="${D}"/>
+   <circle cx="58" cy="68" r="15" fill="${L}" ${ST}/><rect x="38" y="64" width="6" height="8" rx="1.5" fill="${D}"/><rect x="72" y="64" width="6" height="8" rx="1.5" fill="${D}"/><rect x="55" y="86" width="8" height="6" rx="1.5" fill="${D}"/>`,
+  // Study: bookshelf, desk + chair, rug
+  `<rect x="3" y="14" width="12" height="58" rx="1" fill="${D2}"/>
+   ${[18,30,42,54].map(y => `<rect x="4.5" y="${y}" width="9" height="1" fill="rgba(255,255,255,.18)"/><rect x="5" y="${y-8}" width="2" height="7" fill="rgba(240,150,120,.45)"/><rect x="8" y="${y-7}" width="2" height="6" fill="rgba(140,180,240,.45)"/><rect x="11" y="${y-8}" width="2" height="7" fill="rgba(240,220,140,.45)"/>`).join("")}
+   <rect x="58" y="14" width="38" height="12" rx="1.5" fill="${D2}"/><circle cx="76" cy="34" r="5" fill="${D}"/>
+   <ellipse cx="50" cy="72" rx="30" ry="15" fill="${L}" ${ST}/>`,
+  // Balcony: deck planks, railing, small table + chairs, pots
+  `${[20,40,60,80].map(y => `<rect x="0" y="${y}" width="100" height=".6" fill="rgba(0,0,0,.12)"/>`).join("")}
+   <rect x="0" y="94" width="100" height="2" fill="${D2}"/>${[6,18,30,42,54,66,78,90].map(x => `<rect x="${x}" y="84" width="1.2" height="10" fill="${D}"/>`).join("")}<rect x="0" y="84" width="100" height="1.5" fill="${D2}"/>
+   <circle cx="78" cy="56" r="8" fill="${L2}" ${ST}/><circle cx="66" cy="56" r="3.5" fill="${D}"/><circle cx="90" cy="56" r="3.5" fill="${D}"/>
+   <circle cx="8" cy="8" r="5" fill="rgba(60,110,70,.45)"/><circle cx="93" cy="8" r="4" fill="rgba(60,110,70,.4)"/>`,
+  // Your corner: rug, armchair, floor lamp, bathtub, shelf
+  `<circle cx="46" cy="58" r="24" fill="${L}" ${ST}/>
+   <rect x="6" y="64" width="22" height="22" rx="6" fill="${D2}"/><rect x="9" y="67" width="16" height="12" rx="4" fill="${D}"/>
+   <circle cx="88" cy="12" r="5" fill="rgba(255,230,170,.25)"/><rect x="87.4" y="16" width="1.2" height="14" fill="${D}"/>
+   <rect x="64" y="70" width="32" height="20" rx="9" fill="rgba(255,255,255,.22)" ${ST}/><rect x="67" y="73" width="26" height="14" rx="7" fill="rgba(170,215,240,.25)"/>
+   <rect x="4" y="16" width="22" height="3" rx="1" fill="${D2}"/>`,
+  // Bedroom: bed with pillows + blanket, nightstand, wardrobe, rug
+  `<rect x="8" y="40" width="42" height="50" rx="3" fill="rgba(255,255,255,.2)" ${ST}/><rect x="11" y="43" width="16" height="9" rx="3" fill="rgba(255,255,255,.3)"/><rect x="31" y="43" width="16" height="9" rx="3" fill="rgba(255,255,255,.3)"/>
+   <rect x="8" y="58" width="42" height="32" rx="3" fill="rgba(150,110,190,.35)"/>
+   <rect x="54" y="42" width="10" height="10" rx="1.5" fill="${D2}"/>
+   <rect x="82" y="4" width="16" height="30" rx="1.5" fill="${D2}"/><rect x="89.4" y="12" width="1.2" height="14" fill="rgba(255,255,255,.15)"/>
+   <ellipse cx="70" cy="80" rx="20" ry="10" fill="${L}" ${ST}/>`
+];
+
 // g: help = most supportive, okay = well-meant but not ideal, hurt = hurtful.
 // cue = "read the moment" body-language clue. critical = only the supportive answer lights it.
 const QUESTIONS = [
@@ -1065,14 +1112,15 @@ function renderHouse(){
     let spots = "";
     if (open) spots = rm.spots.map(([x,y],k) => { const i = r*2+k, v = PLAY.light[i];
       const cls = (v === 2 ? "done" : v === 1 ? "dim" : v === -1 ? "out" : "") + (PLAY.justLit === i ? " pop" : "");
-      return `<button class="spot obj ${cls}" data-q="${i}" style="left:${x}%;top:${y}%" aria-label="${rm.name} moment"><span class="ic">${rm.icons[k]}</span>${v === -1 ? '<span class="bd">🌧️</span>' : ''}</button>`; }).join("");
+      const badge = v === -1 ? '<span class="bd">🌧️</span>' : v === 2 ? '<span class="bd ok">✓</span>' : v === 1 ? '<span class="bd half">½</span>' : '<span class="bd talk">💬</span>';
+      return `<button class="spot obj ${cls}" data-q="${i}" style="left:${x}%;top:${y}%" aria-label="${rm.name} moment"><span class="ic">${rm.icons[k]}</span>${badge}</button>`; }).join("");
     if (open && rm.comfort && roomComplete(r)) spots += `<div class="comfort ${PLAY.newComfort === r ? 'pop' : ''}" style="left:${rm.comfort[1]}%;top:${rm.comfort[2]}%" title="${rm.comfort[3]}">${rm.comfort[0]}</div>`;
     // trust moments
     PLAY.tm.forEach((m, k) => { if (m.shown && !m.done && r === partnerRoom()) spots += `<button class="spot heart" data-tm="${k}" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Trust moment">💗</button>`; });
     if (r === 0 && qtOn) spots += `<button class="spot heart" data-qt="1" style="left:${rm.ex[0]}%;top:${rm.ex[1]}%" aria-label="Spend time together">🫶</button>`;
     if (r === 4) spots += `<button class="spot rest" id="restSpot" style="left:${rm.rest[0]}%;top:${rm.rest[1]}%" aria-label="Recharge">🔋</button>`;
     return `<div class="room ${n>=2?'lit':''} ${open && !roomComplete(r) ? 'cur' : ''}" data-room="${r}" style="--floor:${rm.floor}">
-      ${rm.deco.map(([e,x,y]) => `<div class="deco" style="left:${x}%;top:${y}%">${e}</div>`).join("")}
+      <svg class="furn" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${FURNITURE[r]}</svg>
       <div class="dark" style="--d0:${Math.max(0,d0)};--d1:${Math.max(0,d1)}"></div>
       <div class="rname">${rm.name}<small>${open ? rm.theme : ""}</small></div>
       ${spots}
