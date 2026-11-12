@@ -378,7 +378,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
       <div class="howto">
         <div><span>🎸</span><em>Each room has <b>2 things</b> gone dark and grey. Tap one: it's a moment with your loved one. Respond well and it comes back to life — finish a room to bring in something cosy.</em></div>
         <div><span>💗</span><em><b>Trust</b> grows with supportive answers and drops with hurtful ones. The more trust, the more they open up.</em></div>
-        <div><span>🔋</span><em>Every talk costs <b>energy</b>. Run empty and the kindest words get hard to find — recharge in Your Corner.</em></div>
+        <div><span>🔋</span><em>Every talk costs <b>energy</b>. When it runs out, recharge in Your Corner before your next talk.</em></div>
         <div><span>👀</span><em><b>Read the moment.</b> Sometimes they need quiet company, sometimes your full attention.</em></div>
         <div><span>🗺️</span><em><b>Choose your path.</b> Each chapter opens new rooms — visit them in any order.</em></div>
         <div><span>🌧️</span><em>Weeks pass. On <b>bad days</b> something may go dark again — help bring it back.</em></div>
@@ -1119,7 +1119,7 @@ function updateHUD(){
   else if (outs.length) msg = `🌧️ A bad day: something in ${ROOMS[Math.floor(outs[0]/2)].ref} went dark again. Find it and help.`;
   else if (PLAY.tm.some(m => m.shown && !m.done)) msg = fill("💗 {P} wants to tell you something.");
   else if (PLAY.chap === 2 && !PLAY.bedOpen && g === "trust") msg = fill("🫶 {P} isn't ready for the hardest talk yet. Spend time together, or revisit half-lit things.");
-  else if (PLAY.energy === 1) msg = "⚠️ Energy is low — the kindest words get harder to find. Consider recharging.";
+  else if (PLAY.energy === 1) msg = "⚠️ Last bit of energy — after your next talk, you'll need to recharge.";
   else {
     const open = ROOMS.map((rm, r) => ({ rm, r, left:[r*2, r*2+1].filter(i => !lit(i)).length })).filter(o => isUnlocked(o.r) && o.left);
     msg = open.length > 1 ? `${PHASES[PLAY.phase].title} — choose a room: ` + open.map(o => `${o.rm.name} (${o.left})`).join(" · ")
@@ -1178,7 +1178,7 @@ function openTalk(t){
   const tag = t.kind === "light" ? (t.revisit ? "Revisit 🕯️" : `Light ${t.idx+1} / 12`) : "";
   const card = $("qCard");
   card.innerHTML = `<div class="qhead"><span class="chip">${chip}</span><span class="n">${tag}</span></div>
-    ${t.drained ? `<div class="drain">🔋 You're running on empty. The kindest words are hard to find right now — rest before your next talk.</div>` : ""}
+    ${t.drained ? `<div class="drain">🔋 This talk uses your last bit of energy. Recharge afterwards.</div>` : ""}
     <p class="scene"></p>
     ${Q.cue ? `<div class="cue"><b>Read the moment</b><span></span></div>` : ""}
     ${Q.line ? `<div class="say"><div class="face">${partnerAvatar("qf")}</div><div class="bubble"></div></div>` : ""}
@@ -1192,13 +1192,9 @@ function openTalk(t){
   card.querySelectorAll(".qopt").forEach(b => {
     const o = Q.opts[+b.dataset.i];
     b.querySelector(".t").textContent = T(o.t);
-    if (t.drained && o.g === "help") { b.classList.add("locked"); b.querySelector(".dot").textContent = "🔋"; b.insertAdjacentHTML("beforeend", `<em class="lk">Too drained</em>`); }
-    b.onclick = () => { if (b.classList.contains("locked")) { toast("🔋 Too drained to find these words. Recharge first."); return; } answer(+b.dataset.i, b); };
+    b.onclick = () => answer(+b.dataset.i, b);
   });
-  if (t.drained && card.querySelectorAll(".qopt:not(.locked)").length) {
-    card.querySelector("#qWhy").innerHTML = `<button class="ghost" id="stepAway" style="margin-top:10px">Step away and recharge instead</button>`;
-    $("stepAway").onclick = () => { $("qSheet").classList.remove("show"); PLAY.q = null; renderHouse(); setTimeout(goRest, 350); };
-  }
+
   $("qSheet").classList.add("show");
   card.scrollTop = 0;
 }
