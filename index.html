@@ -362,6 +362,10 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
 .qcard.heartq .say .face{border-color:#ff9ec0;box-shadow:0 0 16px rgba(255,107,154,.8)}
 /* ---------- music button ---------- */
 .musicbtn{width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center;flex:none;position:relative}
+.safe-help{font:inherit;font-weight:900;color:#ffc2d6;background:rgba(255,194,214,.14);border:1px solid rgba(255,194,214,.45);border-radius:999px;padding:1px 9px;cursor:pointer}
+.help-tip{position:absolute;top:calc(max(14px,env(safe-area-inset-top)) + 60px);left:12px;z-index:6;background:#ffe3ee;color:#5a1a3a;font-size:12.5px;font-weight:900;padding:7px 11px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.3);opacity:0;transform:translateY(-4px);transition:opacity .4s,transform .4s;pointer-events:none}
+.help-tip::before{content:"";position:absolute;top:-6px;left:22px;border:6px solid transparent;border-top:0;border-bottom-color:#ffe3ee}
+.help-tip.on{opacity:1;transform:none}
 .helpbtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));left:16px;z-index:5}
 .musicbtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:16px;z-index:5}
 .musicbtn.off{opacity:.5;filter:grayscale(1)}
@@ -636,6 +640,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
   <section class="screen active" id="s-title">
     <button class="musicbtn floating" aria-label="Music on">🎵</button>
     <button class="helpbtn floating" id="helpBtnTitle" aria-label="Get help">♡<small>Help</small></button>
+    <div class="help-tip" id="helpTip">Need support now? Tap here 💗</div>
     <div class="scroll">
       <div class="title-wrap">
         <div class="couple" id="titleCouple"></div>
@@ -646,7 +651,7 @@ h1{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(46px,13.
         <p class="lead" id="titleLead">Someone you love is orbiting a black hole of low energy. Walk through your house, decode their confusing signals, and learn how to help them without faceplanting into burnout.</p>
         <div class="pillars" id="titlePillars"><span>NOTICE</span><span>LISTEN</span><span>SUPPORT</span><span>REST</span></div>
         <div class="qcount"><b>120</b><span><i>real-life questions</i>60 in each part. Every new game draws a fresh random set, so no two playthroughs are the same.</span></div>
-        <p class="safe">For learning purposes only, not a substitute for professional help. Crisis resources are always just a tap away.</p>
+        <p class="safe">For learning purposes only, not a substitute for professional help. <b>Struggling right now, or worried about someone?</b> Tap <button class="safe-help" id="helpLinkTitle">♡ Help</button> at any time to find a free, confidential crisis line near you.</p>
       </div>
     </div>
     <button class="cta" id="startBtn">Begin your story</button>
@@ -1052,6 +1057,7 @@ function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show
 
 // ================= TITLE =================
 function renderTitle(){
+  const tip = $("helpTip"); if (tip) { tip.classList.remove("on"); clearTimeout(renderTitle.t); setTimeout(() => tip.classList.add("on"), 900); renderTitle.t = setTimeout(() => tip.classList.remove("on"), 6500); }
   // the couple on the title follows the characters you chose (or a default pair before you've chosen)
   const P = GAME.player.kind || "woman", L = GAME.partner.kind || "man";
   $("titleCouple").innerHTML = `<div class="halo"></div><div class="ring"></div><div class="ring r2"></div><div class="p r">${avatar(L,PARTNER_VARIANT[L],"t2","calm")}</div><div class="p l">${avatar(P,null,"t1")}</div>`;
@@ -2404,7 +2410,7 @@ function tapQualityTime(){
 $("qSheet").addEventListener("click", e => { if (e.target.id === "qSheet" && !PLAY.q) $("qSheet").classList.remove("show"); });
 
 // ---------------- help ----------------
-["helpBtn","helpBtnTitle"].forEach(id => $(id).onclick = () => { audio(); sfx.tap(); $("helpSheet").classList.add("show"); });
+["helpBtn","helpBtnTitle","helpLinkTitle"].forEach(id => $(id).onclick = () => { audio(); sfx.tap(); $("helpSheet").classList.add("show"); });
 $("helpClose").onclick = () => $("helpSheet").classList.remove("show");
 $("helpSheet").addEventListener("click", e => { if (e.target.id === "helpSheet") $("helpSheet").classList.remove("show"); });
 
