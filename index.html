@@ -1328,22 +1328,20 @@ const REACT = {
 // ---------------- state ----------------
 // light: 0 = dark, 1 = dim (okay answer — can be revisited), 2 = bright, -1 = gone out (setback)
 let PLAY = null;
+const HEART_SPOT = [50, 50];
 // Each new game scatters the story objects (and the heart spot) to new places in every room.
 function scatter(r){
   const rm = ROOMS[r], A = 1.7, B = 2.15;                 // rough px per % (rooms are taller than wide)
   const dist = (p, q) => Math.hypot((p[0]-q[0]) * A, (p[1]-q[1]) * B);
-  const block = [rm.pp].concat(r === 0 ? [[18, 90]] : []);   // keep clear of your loved one (and your starting spot)
+  const heart = HEART_SPOT;                                 // the 💗 always appears in the middle of the room
+  const block = [rm.pp, heart].concat(r === 0 ? [[18, 90]] : []);   // keep clear of your loved one (and your starting spot)
+  const below = (h, p) => p[1] > h[1] && Math.abs(p[0] - h[0]) * A < 52 && (p[1] - h[1]) * B < 80;   // under a label
   for (let tries = 0; tries < 600; tries++) {
-    // fresh random points anywhere in the room (away from the title and the edges)
-    const cand = Array.from({length:40}, () => [Math.round(24 + Math.random() * 54), Math.round(34 + Math.random() * 42)]);
-    const below = (h, p) => p[1] > h[1] && Math.abs(p[0] - h[0]) * A < 62 && (p[1] - h[1]) * B < 100;   // under the HEART label
-    const labelHitsToken = (h, b) => b[1] > h[1] && Math.abs(b[0] - h[0]) * A < 45 && (b[1] - h[1]) * B < 70;
-    const heart = cand.find(p => p[1] <= 70 && block.every(b => dist(p, b) > 64 && !labelHitsToken(p, b)));
-    if (!heart) continue;
+    // fresh random points around the room (away from the title, the edges and the middle)
+    const cand = Array.from({length:60}, () => [Math.round(14 + Math.random() * 72), Math.round(30 + Math.random() * 52)]);
     const picked = [];
     for (const p of cand) {
-      const underLabel = below(heart, p);
-      if (p === heart || underLabel || block.some(b => dist(p, b) < 56) || dist(p, heart) < 72 || picked.some(q => dist(p, q) < 68 || below(q, p) || below(p, q))) continue;
+      if (below(heart, p) || block.some(b => dist(p, b) < 66) || picked.some(q => dist(p, q) < 68 || below(q, p) || below(p, q))) continue;
       picked.push(p); if (picked.length === 2) break;
     }
     if (picked.length === 2) return { spots:picked, hx:heart };
