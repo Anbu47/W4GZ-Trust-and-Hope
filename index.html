@@ -835,6 +835,17 @@ h1,.step-title h2,.who b,.lookback h3,.learned h3,.qcard h3,.st-body b{font-styl
 html.t-light .chap h2{color:#2C4463 !important;-webkit-text-fill-color:#2C4463 !important}
 html.t-dusk .chap h2{color:#F4F1EA !important;-webkit-text-fill-color:#F4F1EA !important}
 html.t-light .step-title h2,html.t-dusk .step-title h2{font-family:"Hanken Grotesk",sans-serif !important;font-style:italic !important;font-weight:500 !important;text-transform:none}
+/* chapter / event cards: full card with padding in both themes */
+html.t-light .chap,html.t-dusk .chap{box-sizing:border-box;padding:28px 22px 22px !important;border-radius:22px !important;border:1px solid}
+html.t-dusk .chap{background:#2C4463 !important;border-color:#56789F !important;color:#F4F1EA}
+html.t-light .chap.empty p b{color:#B02829 !important;font-weight:600}
+html.t-dusk .chap.empty p b{color:#E0C49E !important;font-weight:600}
+html.t-light .chap.empty .bat{color:#2C4463} html.t-dusk .chap.empty .bat{color:#F4F1EA}
+.chap.empty .bat{line-height:0}
+.chap.empty h2{font-size:40px !important}
+.chap.empty p{font-size:18px !important;line-height:1.42 !important}
+.chap.empty p.gain,.chap.empty .gain{font-size:14.5px !important}
+html.t-dusk .chap .gain{color:#F4F1EA !important}
 .themebtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:64px;z-index:5;width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center}
 html.t-light .themebtn{background:#FAF8F3 !important;border-color:#BFCDDC !important}
 html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !important}
@@ -2216,11 +2227,11 @@ function needEnergy(){
   if (PLAY.energy > 0) return true;
   sfx.tap();
   const c = $("chapterCard");
-  c.innerHTML = `${PART === 2 ? `<div class="chap empty"><div class="bat">🔋</div><small>YOUR ENERGY</small><h2>Running Low</h2>
+  c.innerHTML = `${PART === 2 ? `<div class="chap empty"><div class="bat"><svg viewBox="0 0 32 56" width="34" height="56" aria-hidden="true"><rect x="10" y="1" width="12" height="5" rx="2" fill="currentColor"/><rect x="2" y="5" width="28" height="49" rx="6" fill="none" stroke="currentColor" stroke-width="3"/><rect x="7" y="43" width="18" height="6" rx="2" fill="#B02829"/></svg></div><small>YOUR ENERGY</small><h2>Running Low</h2>
     <p>When you're struggling, everything costs more energy — getting up, answering messages, even deciding what to eat.</p>
     <p>Low energy isn't laziness. It's often part of how low mood and stress affect your body and mind.</p>
     <p class="gain">Self-love isn't selfish or silly. Small, kind actions for yourself help you keep going — and help you heal.</p>
-    ` : `<div class="chap empty"><div class="bat">🔋</div><small>YOUR ENERGY</small><h2>Running on Empty</h2>
+    ` : `<div class="chap empty"><div class="bat"><svg viewBox="0 0 32 56" width="34" height="56" aria-hidden="true"><rect x="10" y="1" width="12" height="5" rx="2" fill="currentColor"/><rect x="2" y="5" width="28" height="49" rx="6" fill="none" stroke="currentColor" stroke-width="3"/><rect x="7" y="43" width="18" height="6" rx="2" fill="#B02829"/></svg></div><small>YOUR ENERGY</small><h2>Running on Empty</h2>
     <p>${escH(fill("Supporting someone through mental health struggles consumes massive psychological bandwidth — deep listening, radical patience, and holding hope."))}</p>
     <p>When your battery hits absolute zero, empathy evaporates, leaving irritability, numbness, and <b>caregiver burnout</b>. It happens to anyone carrying heavy loads without systemic breaks.</p>
     <p class="gain">Stepping away to recharge isn't selfish abandonment. It's the mechanism that keeps you upright — for ${escH(inSentence("partner"))} and for yourself.</p>
