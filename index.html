@@ -292,6 +292,9 @@ h1.th1 .hope{background:linear-gradient(180deg,#ffd1e3,#ff7aa8);-webkit-backgrou
 .qchip{display:inline-block;margin:12px auto 0;padding:6px 14px;border-radius:999px;background:rgba(255,179,209,.14);border:1px solid rgba(255,179,209,.4);color:#ffc7dc;font-size:12.5px;font-weight:900;letter-spacing:.02em}
 #s-title .tagline{margin-top:14px}
 #s-title .safe{margin-top:14px}
+#s-intro .story{line-height:1.55;padding-top:12px;padding-bottom:12px;margin:10px 0 10px}
+#s-intro .pair{margin:6px 0 2px}
+#s-intro .story br+br{display:block;content:"";margin-top:6px}
 .house.blackout{animation:blackout 2.6s ease}
 @keyframes blackout{0%{filter:none}25%{filter:brightness(.15) saturate(.2)}100%{filter:none}}
 .msface{position:relative;width:96px;height:96px;margin:12px auto 4px;border-radius:50%;overflow:visible}
@@ -1817,26 +1820,20 @@ function renderIntro(){
   $("pair2").innerHTML = two ? pairHTML("calm", "sad") : pairHTML("sad");
   const d = document.createElement("div");
   d.innerHTML = two
-    ? fill(`Months have passed since you helped <b>{p}</b> through {their} darkest days. Now the tiredness has followed <b>you</b> home: unanswered messages, cancelled plans, and a smile you have to practise in the mirror.<br><br>You've been carrying it quietly. But {p} has started to notice — and this time, the bravest thing you can do is let {them} help.`)
+    ? fill(`Months after helping <b>{p}</b> through {their} darkest days, the tiredness has followed <b>you</b> home.<br><br>This time, the bravest thing you can do is let {them} help.`)
       + (PLAY.carry ? `<br><br><span class="carry">💞 Because you stood by ${escH(inSentence("partner"))} in Part 1, you start with <b>${PLAY.trust} hope</b>.</span>` : "")
-    : fill(`Lately, <b>{p}</b> doesn't seem like {their} usual self. {They} laugh{s} less, sleep{s} more, and spend{s} a lot of time alone.<br><br>Your job: help bring the light back to your home, one moment at a time.`);
+    : fill(`Lately, <b>{p}</b> doesn't seem like {their} usual self: laughing less, sleeping more, often alone.<br><br>Help bring the light back, one moment at a time.`);
   $("introLine").innerHTML = d.innerHTML;
   const H = two ? [
-    ["🕯️","Let the light in.",fill("Each room hides 2 dark moments from your own life. Tap one, and {p} reaches out to you. Answer openly and the light comes back.")],
-    ["🌱","Grow your hope.","Every time you let someone in, your hope grows. Shutting them out makes it shrink."],
-    ["💗","Moments of hope.","When your hope reaches a heart on your bar, a 💗 appears on you. Tap it for a moment that's just for you."],
-    ["🔥","Keep opening up.","Honest answers in a row give you bonus hope."],
-    ["💖","Be kind to yourself.","Talking takes energy. When you run low, tap Self-love and pick a kind action for yourself."],
-    ["🚪","Find your way forward.","Each chapter opens new rooms as you heal."],
-    ["🌧️","Heavy days happen.","A light may go out again. That's part of recovery, not failure."]
+    ["🕯️","Let the light in.","Tap a dark moment and answer openly to light it up."],
+    ["🌱","Grow your hope.","Honest answers raise it, with a bonus for streaks. Reach a 💗 for a special moment."],
+    ["💖","Be kind to yourself.","Low on energy? Tap Self-love."],
+    ["🌧️","Heavy days happen.","A light may go out. That's recovery, not failure."]
   ] : [
-    ["🎸","Light up the house.","Each room has 2 dark objects. Tap one to talk with your loved one. Choose a caring answer and the object lights up again."],
-    ["💗","Build trust.","Kind answers raise trust; hurtful ones lower it. The more trust you have, the more your loved one opens up to you."],
-    ["💌","Watch for hearts.","When a 💗 message appears on your loved one, tap it. It's a special moment that only happens once."],
-    ["🔥","Keep a streak.","Several caring answers in a row give you bonus trust."],
-    ["🔋","Look after yourself.","Every talk uses energy. When it runs out, tap Recharge before you talk again."],
-    ["🗺️","Unlock new rooms.","Light up the rooms that are open and new ones will appear."],
-    ["🌧️","Expect bad days.","Sometimes a light goes out again. Find it and help your loved one through it."]
+    ["🎸","Light up the house.","Tap a dark object and choose a caring answer to light it up."],
+    ["💗","Build trust.","Caring answers raise it, with a bonus for streaks. Reach a 💗 for a once-only moment."],
+    ["🔋","Look after yourself.","Low on energy? Tap Recharge."],
+    ["🌧️","Expect bad days.","A light may go out. Find it and help again."]
   ];
   $("howto").innerHTML = H.map(([ic, b, t]) => `<div><span>${ic}</span><em><b>${b}</b> ${escH(t)}</em></div>`).join("");
 }
