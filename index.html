@@ -801,6 +801,22 @@ html.t-light .pp.on{border:2px solid #2C4463 !important;background:#E4F4FA !impo
 html.t-dusk .pp.on{border:2px solid #C3E7F2 !important;background:#3A5980 !important}
 .help-tip.theme-tip{left:auto;right:44px}
 .help-tip.theme-tip::before{left:auto;right:22px}
+/* bigger story and dialogue text */
+.bubble{font-size:18.5px !important;line-height:1.45 !important}
+.say.small .bubble{font-size:17.5px !important}
+.qcard .scene{font-size:17px !important;line-height:1.55 !important}
+.story,html.t-light .story,html.t-dusk .story{font-size:19px !important;line-height:1.5 !important}
+.chap.story p{font-size:19px !important}
+.chap p{font-size:17px !important}
+@media (max-height:760px){
+  .story,html.t-light .story,html.t-dusk .story{font-size:17px !important}
+  .bubble{font-size:17px !important} .qcard .scene{font-size:16px !important}
+}
+@media (max-height:700px){
+  .who{max-width:min(190px,15vh) !important}
+  .story,html.t-light .story,html.t-dusk .story{font-size:16px !important;line-height:1.45 !important}
+  #s-intro .soon .badge{margin-bottom:6px}
+}
 .themebtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:64px;z-index:5;width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center}
 html.t-light .themebtn{background:#FAF8F3 !important;border-color:#BFCDDC !important}
 html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !important}
