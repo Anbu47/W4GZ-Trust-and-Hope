@@ -4,7 +4,7 @@
 
 A browser game about mental health, made by **W4GZ (Writing for Gen Z)**.
 
-▶️ **Play:** [anbu47.github.io/W4GZ-mental-health-supporter](https://anbu47.github.io/W4GZ-mental-health-supporter/)
+▶️ **Play:** [anbu47.github.io/W4GZ-Trust-and-Hope](https://anbu47.github.io/W4GZ-Trust-and-Hope/)
 
 ## Two parts, one story
 
