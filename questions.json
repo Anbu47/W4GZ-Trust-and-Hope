@@ -1,5 +1,5 @@
 {
- "_about": "Mental Health Support question bank: 60 per part, 10 per room. rooms[r] = [pool for object 1, pool for object 2], 5 questions each; every game picks 1 from each pool (12 per game). In the Bedroom, pool 1 = crisis openers, pool 2 = safety follow-ups. setbacks = the two bad-day events. Each option: g (help/okay/hurt), t (answer), why, re (reply), optional say (spoken line).",
+ "_about": "Trust and Hope question bank: 60 per part, 10 per room. rooms[r] = [pool for object 1, pool for object 2], 5 questions each; every game picks 1 from each pool (12 per game). In the Bedroom, pool 1 = crisis openers, pool 2 = safety follow-ups. setbacks = the two bad-day events. Each option: g (help/okay/hurt), t (answer), why, re (reply), optional say (spoken line).",
  "part1": {
   "rooms": [
    [
