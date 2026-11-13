@@ -2681,7 +2681,7 @@ function setTheme(t){
   const b = $("themeBtn"); if (b) { b.textContent = t === "t-light" ? "🌙" : "☀️"; b.setAttribute("aria-label", t === "t-light" ? "Switch to Soft dusk theme" : "Switch to Light sky theme"); }
 }
 setTheme(document.documentElement.classList.contains("t-dusk") ? "t-dusk" : "t-light");
-$("themeBtn").onclick = () => { audio(); sfx.tap(); const next = document.documentElement.classList.contains("t-light") ? "t-dusk" : "t-light"; setTheme(next); toast(next === "t-light" ? "☀️ Light sky theme" : "🌙 Soft dusk theme"); };
+$("themeBtn").onclick = () => { audio(); sfx.tap(); const next = document.documentElement.classList.contains("t-light") ? "t-dusk" : "t-light"; setTheme(next); };
 renderTitle();
 })();
 </script>
