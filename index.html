@@ -799,6 +799,8 @@ html.t-light .toast{background:#2C4463 !important;color:#FAF8F3 !important}
 
 html.t-light .pp.on{border:2px solid #2C4463 !important;background:#E4F4FA !important}
 html.t-dusk .pp.on{border:2px solid #C3E7F2 !important;background:#3A5980 !important}
+.help-tip.theme-tip{left:auto;right:44px}
+.help-tip.theme-tip::before{left:auto;right:22px}
 .themebtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:64px;z-index:5;width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center}
 html.t-light .themebtn{background:#FAF8F3 !important;border-color:#BFCDDC !important}
 html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !important}
@@ -813,6 +815,7 @@ html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !import
   <section class="screen active" id="s-title">
     <button class="musicbtn floating" aria-label="Music on">🎵</button>
     <button class="themebtn floating" id="themeBtn" aria-label="Change colour theme">🌙</button>
+    <div class="help-tip theme-tip" id="themeTip">Prefer other colours? Tap here 🎨</div>
     <button class="helpbtn floating" id="helpBtnTitle" aria-label="Get help">♡<small>Help</small></button>
     <div class="help-tip" id="helpTip">Need support now? Tap here 💗</div>
     <div class="scroll">
@@ -1233,9 +1236,15 @@ function renderTitle(){
   if (tip) {
     clearInterval(renderTitle.iv); clearTimeout(renderTitle.t); tip.classList.remove("on");
     const onTitle = () => $("s-title").classList.contains("active") && !$("helpSheet").classList.contains("show");
-    const flash = () => { if (!onTitle()) return; tip.classList.add("on"); clearTimeout(renderTitle.t); renderTitle.t = setTimeout(() => tip.classList.remove("on"), 3000); };
+    const ttip = $("themeTip");
+    // the Help hint and the colour-theme hint take turns: Help first, then the theme hint 4 s later
+    const flash = () => {
+      if (!onTitle()) return;
+      tip.classList.add("on"); clearTimeout(renderTitle.t); renderTitle.t = setTimeout(() => tip.classList.remove("on"), 3000);
+      clearTimeout(renderTitle.t2); renderTitle.t2 = setTimeout(() => { if (!onTitle() || !ttip) return; ttip.classList.add("on"); setTimeout(() => ttip.classList.remove("on"), 3000); }, 4000);
+    };
     setTimeout(flash, 900);
-    renderTitle.iv = setInterval(() => { if (!$("s-title").classList.contains("active")) { clearInterval(renderTitle.iv); tip.classList.remove("on"); return; } flash(); }, 8000);
+    renderTitle.iv = setInterval(() => { if (!$("s-title").classList.contains("active")) { clearInterval(renderTitle.iv); tip.classList.remove("on"); if (ttip) ttip.classList.remove("on"); return; } flash(); }, 8000);
   }
   // the couple on the title follows the characters you chose (or a default pair before you've chosen)
   const P = GAME.player.kind || "woman", L = GAME.partner.kind || "man";
