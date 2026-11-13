@@ -44,6 +44,13 @@ The full bank — situations, answers, spoken lines, replies and explanations �
 - **🔍 Look back:** a list of every moment where you didn't pick the best answer. Tap one to see what you chose, the reply it got, and a more supportive answer with why it works. Moments you fixed later are marked ✓ Fixed.
 - **🏁 See my result:** if every room is lit but some objects are only half-lit, you can finish early.
 
+## Colour themes
+
+Two themes built from the W4GZ brand guideline (v3.2). Tap 🌙 / ☀️ on the front page to switch; your choice is remembered.
+
+- ☀️ **Light sky** (default): pale blue page, navy text, white cards.
+- 🌙 **Soft dusk**: mid-navy page, paper-white text, pale sky-blue buttons.
+
 ## Sound
 
 Everything is made in code with the Web Audio API — no audio files.
