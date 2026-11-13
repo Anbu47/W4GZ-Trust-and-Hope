@@ -846,6 +846,25 @@ html.t-light .chap.empty .bat{color:#2C4463} html.t-dusk .chap.empty .bat{color:
 .chap.empty p{font-size:18px !important;line-height:1.42 !important}
 .chap.empty p.gain,.chap.empty .gain{font-size:14.5px !important}
 html.t-dusk .chap .gain{color:#F4F1EA !important}
+/* very small phones (320px wide or under 660px tall) */
+h1.th1{font-size:clamp(32px,11vw,50px) !important}
+@media (max-height:660px){
+  .who,#s-intro .who{max-width:min(110px,15vh) !important}
+  .who b{font-size:16px !important}
+  #s-intro .story,html.t-light #s-intro .story,html.t-dusk #s-intro .story,.story{font-size:15.5px !important;line-height:1.4 !important;padding:8px 12px !important;margin:8px 0 !important}
+  .howto{gap:5px !important;margin-bottom:8px !important} .howto div{font-size:12.5px !important;line-height:1.35 !important}
+  .partpick .pp{padding:9px 12px !important} .partpick .pp em{font-size:11.5px !important}
+  .step-title h2{font-size:24px !important}
+  .soon .badge{margin-bottom:4px !important}
+}
+@media (max-height:760px){
+  #s-intro .story,html.t-light #s-intro .story,html.t-dusk #s-intro .story{font-size:17.5px !important;line-height:1.38 !important;padding:9px 13px !important;margin:8px 0 !important}
+  #s-intro .howto{gap:6px !important} #s-intro .howto div{font-size:12.8px !important;line-height:1.38 !important}
+  #s-intro .pair{margin:2px 0 0 !important}
+}
+@media (max-height:660px){ #s-intro .story,html.t-light #s-intro .story,html.t-dusk #s-intro .story{font-size:15px !important} #s-intro .who{max-width:min(96px,14vh) !important} }
+@media (max-height:700px){ #s-confirm .who{max-width:min(110px,14vh) !important} }
+#s-intro .howto{margin-bottom:8px !important}
 .themebtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:64px;z-index:5;width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center}
 html.t-light .themebtn{background:#FAF8F3 !important;border-color:#BFCDDC !important}
 html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !important}
@@ -2294,7 +2313,7 @@ function openTalk(t){
     b.querySelector(".t").textContent = T(o.t);
     b.onclick = () => answer(+b.dataset.i, b);
   });
-  $("qSheet").classList.add("show");
+  (!$("s-end").classList.contains("active") && $("qSheet").classList.add("show"));
   card.scrollTop = 0;
   const say = card.querySelector(".say");
   revealCard(card, [
@@ -2606,7 +2625,7 @@ function openRest(){
       setTimeout(() => $("qWhy").scrollIntoView({ behavior:"smooth", block:"nearest" }), 60);
     };
   });
-  $("qSheet").classList.add("show"); card.scrollTop = 0;
+  (!$("s-end").classList.contains("active") && $("qSheet").classList.add("show")); card.scrollTop = 0;
   revealCard(card, [ typeStep(card.querySelector(".scene"), fill(R.q), 16, null), showEl(card.querySelector(".ask")), popOpts(card) ]);
 }
 
@@ -2631,7 +2650,7 @@ function tapQualityTime(){
       sfx.love(); updateHUD(); anim($("hMood"), "bump");
       $("doneBtn").onclick = () => { $("qSheet").classList.remove("show"); setTimeout(afterTalk, 250); };
     });
-    $("qSheet").classList.add("show"); card.scrollTop = 0; updateHUD();
+    (!$("s-end").classList.contains("active") && $("qSheet").classList.add("show")); card.scrollTop = 0; updateHUD();
   });
 }
 $("qSheet").addEventListener("click", e => { if (e.target.id === "qSheet" && !PLAY.q) $("qSheet").classList.remove("show"); });
