@@ -817,6 +817,10 @@ html.t-dusk .pp.on{border:2px solid #C3E7F2 !important;background:#3A5980 !impor
   .story,html.t-light .story,html.t-dusk .story{font-size:16px !important;line-height:1.45 !important}
   #s-intro .soon .badge{margin-bottom:6px}
 }
+#s-intro .story,html.t-light #s-intro .story,html.t-dusk #s-intro .story{font-size:21px !important;line-height:1.42 !important}
+#s-intro .who{max-width:min(170px,17vh) !important}
+@media (max-height:760px){ #s-intro .story,html.t-light #s-intro .story,html.t-dusk #s-intro .story{font-size:19px !important} #s-intro .who{max-width:min(150px,15vh) !important} }
+@media (max-height:700px){ #s-intro .story,html.t-light #s-intro .story,html.t-dusk #s-intro .story{font-size:18px !important} #s-intro .who{max-width:min(130px,13vh) !important} }
 .themebtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:64px;z-index:5;width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center}
 html.t-light .themebtn{background:#FAF8F3 !important;border-color:#BFCDDC !important}
 html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !important}
