@@ -8,11 +8,11 @@ A browser game about mental health, made by **W4GZ (Writing for Gen Z)**.
 
 ## Part 0 · Mental Health Basics
 
-Start from the front page or the part picker: eight multiple-choice learning questions with feedback after every answer, no score and no story penalties. Topics include everyday mental health, stress, listening and seeking support. Relevant answers and an expandable support panel include Vietnam’s Ngày Mai emotional support and HOPE suicide crisis hotline, with their respective opening hours. This activity is educational and cannot diagnose a condition.
+Start from the front page or the part picker: eight multiple-choice learning questions with feedback after every answer, no score and no story penalties. Topics include everyday mental health, stress, listening and seeking support. Relevant answers and an expandable support panel include all five services listed by Find A Helpline for Vietnam: Ngày Mai, HOPE, the National Child Helpline, CSAGA and Peace House. Each entry explains its audience and opening hours. This activity is educational and cannot diagnose a condition.
 
 The Part 0 bank is in `part0.json` and is also embedded as `PART0_QUESTIONS` in `index.html`; keep both copies in sync when editing. Parts 1 and 2 continue to use `questions.json`.
 
-Content references: [WHO mental health overview](https://www.who.int/news-room/fact-sheets/detail/mental-health-strengthening-our-response), [WHO stress Q&A](https://www.who.int/news-room/questions-and-answers/item/stress), [Ngày Mai](https://duongdaynongngaymai.vn/), and [HOPE crisis support](https://hyvongsong.com/ho-tro-khung-hoang/). Support information checked on 16 November 2026; check the provider for updates.
+Content references: [WHO mental health overview](https://www.who.int/news-room/fact-sheets/detail/mental-health-strengthening-our-response), [WHO stress Q&A](https://www.who.int/news-room/questions-and-answers/item/stress), [Ngày Mai](https://duongdaynongngaymai.vn/), and [HOPE crisis support](https://hyvongsong.com/ho-tro-khung-hoang/). Directory source: [Find A Helpline · Vietnam](https://findahelpline.com/countries/vn), including each service’s profile. Support information checked on 16 November 2026; check the provider for updates.
 
 ## Two story parts
 
