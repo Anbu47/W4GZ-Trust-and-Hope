@@ -897,6 +897,18 @@ html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !import
 #s-basics button:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.p0-pop{animation:none}}
 
+
+.p0-outcome{text-align:center;border-radius:18px;padding:18px 12px;margin-bottom:14px;background:var(--card);animation:p0-reveal .45s ease-out}
+.p0-outcome-object{font-size:32px;font-weight:800;line-height:1.5}
+.p0-outcome.lit{box-shadow:inset 0 0 30px rgba(90,210,155,.25);border:2px solid #58a68c}
+.p0-outcome.dim{box-shadow:inset 0 0 30px rgba(220,170,65,.16);border:2px solid #b78a35}
+.p0-outcome strong{display:block;font-size:19px;margin:6px 0}
+.p0-outcome p{margin:6px 0;font-weight:800}
+.p0-chosen{font-style:italic;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.p0-feedback{scroll-margin-top:10px}
+@keyframes p0-reveal{from{opacity:.3;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.p0-outcome{animation:none}}
+
 </style>
 </head>
 <body>
@@ -2856,6 +2868,20 @@ function answerBasics(i,index,button){
  if(item.support)feedback.insertAdjacentHTML("beforeend",PART0_SUPPORT);
  if(!correct){const retry=document.createElement("button");retry.className="ghost";retry.textContent="Try this moment again ↻";retry.onclick=()=>openBasicsMoment(i);feedback.appendChild(retry);}
  $("p0Next").hidden=false;$("p0Cancel").hidden=true;
+ // Show the consequence immediately, including on a short phone screen.
+ $("p0Options").style.display="none";
+ const outcome=document.createElement("div");
+ outcome.className="p0-outcome "+(BASICS.lights[i]===2?"lit":"dim");
+ const object=document.createElement("div");object.className="p0-outcome-object";object.textContent=P0_OBJECTS[i];
+ const state=document.createElement("strong");state.textContent=BASICS.lights[i]===2?"💡 Fully lit":"🕯️ Dim light · you can retry";
+ const points=document.createElement("p");points.textContent=(gain?"+"+gain+" learning points · ":"")+BASICS.points+" points total";
+ outcome.append(object,state,points);
+ const chosen=document.createElement("p");chosen.className="p0-chosen";chosen.textContent="You chose: "+item.a[index];
+ feedback.prepend(outcome,chosen);
+ feedback.setAttribute("tabindex","-1");
+ feedback.focus({preventScroll:true});
+ feedback.scrollIntoView({behavior:"instant",block:"start"});
+ toast(correct?"💡 Object lit! "+(gain?"+"+gain+" points":""):"🕯️ A dim light — try again anytime");
 }
 function finishBasics(){
  const lit=BASICS.lights.filter(x=>x===2).length;
