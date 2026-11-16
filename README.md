@@ -8,7 +8,7 @@ A browser game about mental health, made by **W4GZ (Writing for Gen Z)**.
 
 ## Part 0 · Mental Health Basics
 
-Start from the front page or the part picker: eight multiple-choice learning questions with feedback after every answer, no score and no story penalties. Topics include everyday mental health, stress, listening and seeking support. Relevant answers and an expandable support panel include all five services listed by Find A Helpline for Vietnam: Ngày Mai, HOPE, the National Child Helpline, CSAGA and Peace House. Each entry explains its audience and opening hours. This activity is educational and cannot diagnose a condition.
+Start from the front page or the part picker to explore the House of Understanding: four rooms and eight interactive objects. Explore both objects in each room to unlock the next. Helpful answers fully light objects (+10 learning points); other answers leave a dim light (+3) and can be retried for the remaining +7. Answers trigger companion reactions, sound and visual effects. Fully lit objects cannot be used to earn extra points. The ending shows lights earned and helpful first choices, with review and replay options. Learning points are not a mental health assessment. Topics include everyday mental health, stress, listening and seeking support. Relevant answers and an expandable support panel include all five services listed by Find A Helpline for Vietnam: Ngày Mai, HOPE, the National Child Helpline, CSAGA and Peace House. Each entry explains its audience and opening hours. This activity is educational and cannot diagnose a condition.
 
 The Part 0 bank is in `part0.json` and is also embedded as `PART0_QUESTIONS` in `index.html`; keep both copies in sync when editing. Parts 1 and 2 continue to use `questions.json`.
 
