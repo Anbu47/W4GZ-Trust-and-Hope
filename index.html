@@ -1052,6 +1052,7 @@ html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !import
 (() => {
 "use strict";
 const $ = id => document.getElementById(id);
+let BASICS_SELECTED = false;
 
 // ================= CHARACTER ART (inline SVG) =================
 // Each character is drawn in code so it scales crisply and needs no downloads.
@@ -1443,6 +1444,14 @@ function pairHTML(partnerMood, youMood){
 function renderConfirm(){
   if (!GAME.player.kind || !GAME.partner.kind) return go("s-player");
   $("pair").innerHTML = pairHTML();
+  $("storyLine").hidden = false;
+  if (BASICS_SELECTED) {
+    $("storyLine").textContent = "Before your story begins, explore the House of Understanding together. Discover eight moments across four rooms, bring light to the house and learn where to find support in Vietnam.";
+    $("partPick").querySelectorAll(".pp").forEach(b => { const selected = b.id === "p0Pick"; b.classList.toggle("on", selected); b.setAttribute("aria-pressed", String(selected)); });
+    $("beginBtn").textContent = "Start Part 0 💡";
+    renderConfirm.quiet = false;
+    return;
+  }
   const L = GAME.partner, pr = CHAR[L.kind].pron;
   const e = document.createElement("div");
   const named = !!GAME.player.name.trim();
@@ -1452,13 +1461,13 @@ function renderConfirm(){
   if (named) bs[0].textContent = GAME.player.name.trim();
   bs[bs.length - 1].textContent = inSentence("partner");
   $("storyLine").innerHTML = e.innerHTML;
-  $("partPick").querySelectorAll(".pp").forEach(b => b.classList.toggle("on", +b.dataset.part === PART));
+  $("partPick").querySelectorAll(".pp").forEach(b => { const selected = b.id !== "p0Pick" && +b.dataset.part === PART; b.classList.toggle("on", selected); b.setAttribute("aria-pressed", String(selected)); });
   $("beginBtn").textContent = PART === 2 ? "Start Part 2 ♥" : "Start Part 1 ♥";
   if (renderConfirm.quiet) { renderConfirm.quiet = false; return; }
   setTimeout(() => { const r = $("pair").getBoundingClientRect(); burstHearts(r.left+r.width/2, r.top+r.height/3, 24); audio(); sfx.love(); }, 250);
 }
-$("beginBtn").onclick = () => { audio(); sfx.love(); go("s-intro"); };
-$("partPick").querySelectorAll(".pp[data-part]").forEach(b => b.onclick = () => { audio(); sfx.tap(); applyPart(+b.dataset.part); renderConfirm.quiet = true; renderConfirm(); });
+$("beginBtn").onclick = () => { audio(); sfx.love(); if (BASICS_SELECTED) openBasics("s-confirm"); else go("s-intro"); };
+$("partPick").querySelectorAll(".pp[data-part]").forEach(b => b.onclick = () => { audio(); sfx.tap(); BASICS_SELECTED = false; applyPart(+b.dataset.part); renderConfirm.quiet = true; renderConfirm(); });
 
 // ================= GAME: THE DIMMING HOUSE =================
 // Text tokens: {P} loved one's name (sentence start), {p} (mid-sentence),
@@ -2893,7 +2902,7 @@ function finishBasics(){
 }
 $("p0Back").onclick=()=>go(basicsReturn);
 $("p0Title").onclick=()=>openBasics("s-title");
-$("p0Pick").onclick=()=>openBasics("s-confirm");
+$("p0Pick").onclick=()=>{ audio(); sfx.select(); BASICS_SELECTED = true; renderConfirm.quiet = true; renderConfirm(); };
 
 renderTitle();
 })();
