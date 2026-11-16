@@ -870,45 +870,18 @@ html.t-light .themebtn{background:#FAF8F3 !important;border-color:#BFCDDC !impor
 html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !important}
 
 
-/* Part 0 house: reuse the game's active colour theme. */
-.p0-hud{padding:14px;border:1px solid var(--line);border-radius:18px;background:var(--card);margin:8px 0}
-.p0-hud div{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:13px}
-.p0-hud progress{display:block;width:100%;height:16px;margin:10px 0;accent-color:var(--rose)}
-.p0-hud p{font-size:11px;margin:0;color:var(--dim)}
-.p0-rooms{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
-.p0-room{padding:12px 8px;border:1px solid var(--line);border-radius:14px;background:var(--card);font-size:13px;font-weight:800}
-.p0-room[aria-pressed="true"]{border-color:var(--rose);box-shadow:0 0 0 2px var(--rose)}
-.p0-room:disabled{opacity:.45;cursor:default}
-.p0-house{padding:20px 14px;border:1px solid var(--line);border-radius:24px;background:var(--card);text-align:center;margin:12px 0}
-.p0-house h3{margin:4px 0;font-size:24px}.p0-house p{line-height:1.5;margin:10px 0;color:var(--dim)}
-.p0-guide{font-size:52px;line-height:1.4}.p0-pop{animation:pop .5s}
-.p0-objects{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
-.p0-object{min-height:125px;border-radius:20px;padding:16px 10px;border:2px dashed var(--line);background:var(--card);font-size:18px;font-weight:800;transition:box-shadow .3s,background .3s}
-.p0-object.dim{border:2px solid #b78a35;background:rgba(220,170,65,.12)}
-.p0-object.bright{border:2px solid #58a68c;background:rgba(90,210,155,.22);box-shadow:0 0 22px rgba(90,210,155,.3)}
-.p0-answer{padding:17px;text-align:left;border:2px solid var(--line);border-radius:18px;background:var(--card);line-height:1.45}
-.p0-answer.correct{border-color:#58a68c;background:rgba(90,210,155,.18)}
-.p0-answer.reconsider{border-color:#b78a35;background:rgba(220,170,65,.12)}
-.p0-answer:disabled{cursor:default}
-.p0-feedback:not(:empty){padding:16px;border-radius:18px;margin:14px 0;border:2px solid #b78a35;line-height:1.5}
-.p0-feedback.success{border-color:#58a68c}
-.p0-feedback h3{margin-top:0}
-#s-basics a{color:inherit;text-decoration:underline}
-#s-basics button:focus-visible{outline:3px solid var(--rose);outline-offset:3px}
-@media(prefers-reduced-motion:reduce){.p0-pop{animation:none}}
-
-
-.p0-outcome{text-align:center;border-radius:18px;padding:18px 12px;margin-bottom:14px;background:var(--card);animation:p0-reveal .45s ease-out}
-.p0-outcome-object{font-size:32px;font-weight:800;line-height:1.5}
-.p0-outcome.lit{box-shadow:inset 0 0 30px rgba(90,210,155,.25);border:2px solid #58a68c}
-.p0-outcome.dim{box-shadow:inset 0 0 30px rgba(220,170,65,.16);border:2px solid #b78a35}
-.p0-outcome strong{display:block;font-size:19px;margin:6px 0}
-.p0-outcome p{margin:6px 0;font-weight:800}
-.p0-chosen{font-style:italic;padding-bottom:10px;border-bottom:1px solid var(--line)}
-.p0-feedback{scroll-margin-top:10px}
-@keyframes p0-reveal{from{opacity:.3;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
-@media(prefers-reduced-motion:reduce){.p0-outcome{animation:none}}
-
+/* Part 0 uses the shared house, room, token, HUD and dialogue styles. */
+.p0-native{display:flex;flex-direction:column;flex:1;min-height:0;padding-top:6px}
+#p0House{grid-template-rows:repeat(2,minmax(0,1fr))}
+#p0Guide{color:var(--dim)}
+#p0Content .hbar{background:rgba(80,110,145,.2)}
+#p0House .rname small{max-width:150px}
+#p0House .spot.done{cursor:default}
+#p0Content .p0-learning-note{font-size:11px;margin:5px 0}
+#p0Content .hud2{flex-wrap:wrap}
+#p0Feedback .lookback{margin-top:14px}
+#p0Feedback .help a{color:inherit}
+@media(max-height:600px){#p0Content .guide{font-size:11px;min-height:25px;padding:5px 2px}#p0Content .p0-learning-note{display:none}}
 </style>
 </head>
 <body>
@@ -960,11 +933,7 @@ html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !import
   </section>
 
   <!-- STEP 3: CONFIRM -->
-  <section class="screen" id="s-basics">
-<div class="top"><button class="back" id="p0Back" aria-label="Leave Part 0">←</button><div style="flex:1;text-align:center">Part 0 · Mental Health Basics</div></div>
-<div class="scroll" style="padding:8px 2px"><div id="p0Content"></div>
-<details class="lookback"><summary style="cursor:pointer;font-weight:800">♡ Support in Vietnam</summary><aside class="story" style="text-align:left;font-style:normal"><b>Support in Vietnam</b><p><b>Ngày Mai</b><br>Emotional support by telephone for people struggling with mental health and their families.</p><p><a href="tel:+84963061414?oai_link_source=model_response_hotline">963061414</a><br>Wednesday–Sunday, 1:00 PM–8:30 PM (Vietnam time).</p><p><a href="https://duongdaynongngaymai.vn/?oai_link_source=model_response_hotline" target="_blank" rel="noopener noreferrer">Ngày Mai website</a></p><p><b>HOPE · Suicide Prevention Hotline</b><br><a href="tel:0865044400">0865 044 400</a><br>Daily, 12:00 noon–12:00 midnight (Vietnam time).<br><a href="https://hyvongsong.com/ho-tro-khung-hoang/" target="_blank" rel="noopener noreferrer">HOPE crisis support website</a></p><p><b>National Child Helpline · 111</b><br>For children under 16 and adults concerned about a child: protection and emotional support.<br><a href="tel:111">111</a> · Available 24/7.<br><a href="https://findahelpline.com/organizations/t-ng-dai-di-n-tho-i-qu-c-gia-b-o-v-tr-em-national-child-helpline" target="_blank" rel="noopener noreferrer">Service details</a></p><p><b>CSAGA · Gender-based violence support</b><br>Counseling and referrals for survivors, or people seeking help for them.<br><a href="tel:02433335599">024 3333 5599</a> · Daily, 8:00 AM–9:00 PM.<br><a href="https://findahelpline.com/organizations/d-ng-day-nong-h-tr-ng-i-b-b-o-l-c-gi-i" target="_blank" rel="noopener noreferrer">Service details</a></p><p><b>Ngôi nhà Bình yên · Peace House Shelter</b><br>Support for women, young people and children affected by domestic violence, sexual abuse or trafficking; temporary shelter services.<br><a href="tel:1900969680">1900969680</a> or <a href="tel:+84946833380">(+84) 94-683-3380</a> · Available 24/7.<br><a href="https://findahelpline.com/organizations/ngoi-nha-binh-yen-peace-house-shelter-vietnam" target="_blank" rel="noopener noreferrer">Service details</a></p><p>All opening hours are Vietnam time. Contact details checked 16 November 2026; services and hours may change. <a href="https://findahelpline.com/countries/vn" target="_blank" rel="noopener noreferrer">Find A Helpline · Vietnam</a></p><p>If someone is in immediate danger, seek emergency medical help or go to the nearest emergency department. Do not wait for a helpline to open.</p></aside></details></div>
-</section>
+  <section class="screen" id="s-basics"><div class="top"><button class="back" id="p0Back" aria-label="Leave Part 0">←</button><div style="flex:1;text-align:center">Part 0 · Mental Health Basics</div></div><div id="p0Content" class="p0-native"></div></section>
 <section class="screen" id="s-confirm">
     <div class="top"><button class="back" data-go="s-partner" aria-label="Back">←</button><div class="dots"><i class="done"></i><i class="done"></i><i class="on"></i></div><div class="spacer"></div></div>
     <div class="scroll">
@@ -2707,7 +2676,7 @@ function tapQualityTime(){
     (!$("s-end").classList.contains("active") && $("qSheet").classList.add("show")); card.scrollTop = 0; updateHUD();
   });
 }
-$("qSheet").addEventListener("click", e => { if (e.target.id === "qSheet" && !PLAY.q) $("qSheet").classList.remove("show"); });
+$("qSheet").addEventListener("click", e => { if (e.target.id === "qSheet" && !(PLAY && PLAY.q) && !(BASICS && BASICS.talk)) $("qSheet").classList.remove("show"); });
 
 // ---------------- help ----------------
 ["helpBtn","helpBtnTitle","helpLinkTitle"].forEach(id => $(id).onclick = () => { audio(); sfx.tap(); $("helpSheet").classList.add("show"); });
@@ -2801,108 +2770,150 @@ function setTheme(t){
 setTheme(document.documentElement.classList.contains("t-dusk") ? "t-dusk" : "t-light");
 $("themeBtn").onclick = () => { audio(); sfx.tap(); const next = document.documentElement.classList.contains("t-light") ? "t-dusk" : "t-light"; setTheme(next); };
 
-// ================= PART 0: HOUSE OF UNDERSTANDING =================
+// ================= PART 0: SHARED HOUSE AND DIALOGUE ELEMENTS =================
 const PART0_QUESTIONS = [{"q":"What does mental health include?","a":["Emotional and social well-being, including coping and connecting with others.","Only whether someone has a diagnosis, without considering how they feel or cope.","Feeling happy and positive every day, without difficult emotions or setbacks."],"why":"Mental health is part of everyday well-being. People experience it differently, and support can help.","best":0},{"q":"Does struggling with mental health mean someone is weak?","a":["Yes. Struggling shows they need stronger willpower to handle everyday problems.","No. Anyone can struggle with mental health and deserves care and support.","Sometimes. Asking for help shows they cannot manage their problems independently."],"why":"Mental health difficulties are not a character flaw. Listen without blame or judgment.","best":1},{"q":"You feel overwhelmed after a stressful day. What could help?","a":["Keep working through the stress and leave your own needs for another day.","Use alcohol to relax after work and avoid thinking about the stressful day.","Take a short break, try grounding, or talk with someone you trust."],"why":"Small coping steps can ease stress. Different things help different people; these steps do not replace care when more support is needed.","best":2},{"q":"When is it reasonable to seek professional support?","a":["Only when distress becomes unbearable and you cannot manage things by yourself.","When distress persists, affects daily life, or you want help understanding it.","Only when an online quiz confirms that your symptoms match a specific diagnosis."],"why":"You can ask a qualified health professional for support without waiting for a crisis. A learning quiz cannot diagnose you.","best":1},{"q":"A friend says they are having a hard time. What is a helpful first response?","a":["Listen without judgment and ask what kind of support they would like.","Explain that others have harder lives so their problems feel less serious.","Promise to solve every problem so they will not need anyone else."],"why":"You do not need perfect words. Taking someone seriously and asking what they need can make it easier to talk.","best":0},{"q":"You want emotional support in Vietnam but do not know where to begin. What is an option?","a":["Wait until you understand your feelings and can explain your situation perfectly.","Keep your concerns private because support services are meant for other people.","Choose a suitable support service or ask someone trusted to help you contact one."],"why":"For emotional distress, Ngày Mai or HOPE may help. For a child’s safety or emotional needs, contact the National Child Helpline (111). For gender-based violence, CSAGA offers support; Peace House supports women, young people and children affected by violence or trafficking. Phone numbers, opening hours and service details are below.","best":2,"support":true},{"q":"What if the support line is closed or you cannot get through?","a":["Take the unanswered call as a sign that your concerns do not deserve support.","Try a trusted person, a health professional, or another suitable support service.","Stop seeking support because one unavailable line means other services cannot help."],"why":"One unavailable service does not mean help is unavailable. Check the opening hours and who each service supports, or contact a trusted person or health professional. If someone is in immediate danger, seek emergency medical help or go to the nearest emergency department; do not wait for a helpline to open.","best":1,"support":true},{"q":"What does finishing this quiz tell you?","a":["You have identified a mental health diagnosis through your choices in the game.","You have learned enough to handle future difficulties without help from others.","You have explored mental health basics and learned about ways to find support."],"why":"This is an educational activity, not a diagnosis or a test of your worth. You can revisit it or continue to the story parts.","best":2}];
 const PART0_SUPPORT = "<aside class=\"story\" style=\"text-align:left;font-style:normal\"><b>Support in Vietnam</b><p><b>Ngày Mai</b><br>Emotional support by telephone for people struggling with mental health and their families.</p><p><a href=\"tel:+84963061414?oai_link_source=model_response_hotline\">963061414</a><br>Wednesday–Sunday, 1:00 PM–8:30 PM (Vietnam time).</p><p><a href=\"https://duongdaynongngaymai.vn/?oai_link_source=model_response_hotline\" target=\"_blank\" rel=\"noopener noreferrer\">Ngày Mai website</a></p><p><b>HOPE · Suicide Prevention Hotline</b><br><a href=\"tel:0865044400\">0865 044 400</a><br>Daily, 12:00 noon–12:00 midnight (Vietnam time).<br><a href=\"https://hyvongsong.com/ho-tro-khung-hoang/\" target=\"_blank\" rel=\"noopener noreferrer\">HOPE crisis support website</a></p><p><b>National Child Helpline · 111</b><br>For children under 16 and adults concerned about a child: protection and emotional support.<br><a href=\"tel:111\">111</a> · Available 24/7.<br><a href=\"https://findahelpline.com/organizations/t-ng-dai-di-n-tho-i-qu-c-gia-b-o-v-tr-em-national-child-helpline\" target=\"_blank\" rel=\"noopener noreferrer\">Service details</a></p><p><b>CSAGA · Gender-based violence support</b><br>Counseling and referrals for survivors, or people seeking help for them.<br><a href=\"tel:02433335599\">024 3333 5599</a> · Daily, 8:00 AM–9:00 PM.<br><a href=\"https://findahelpline.com/organizations/d-ng-day-nong-h-tr-ng-i-b-b-o-l-c-gi-i\" target=\"_blank\" rel=\"noopener noreferrer\">Service details</a></p><p><b>Ngôi nhà Bình yên · Peace House Shelter</b><br>Support for women, young people and children affected by domestic violence, sexual abuse or trafficking; temporary shelter services.<br><a href=\"tel:1900969680\">1900969680</a> or <a href=\"tel:+84946833380\">(+84) 94-683-3380</a> · Available 24/7.<br><a href=\"https://findahelpline.com/organizations/ngoi-nha-binh-yen-peace-house-shelter-vietnam\" target=\"_blank\" rel=\"noopener noreferrer\">Service details</a></p><p>All opening hours are Vietnam time. Contact details checked 16 November 2026; services and hours may change. <a href=\"https://findahelpline.com/countries/vn\" target=\"_blank\" rel=\"noopener noreferrer\">Find A Helpline · Vietnam</a></p><p>If someone is in immediate danger, seek emergency medical help or go to the nearest emergency department. Do not wait for a helpline to open.</p></aside>";
-
-const P0_ROOMS = ["Living Room", "Your Corner", "Study", "Support Desk"];
-const P0_OBJECTS = ["🪞 Mirror", "🖼️ Portrait", "🫖 Tea cup", "📔 Journal", "🛋️ Sofa", "☎️ Phone", "🗺️ Support map", "🌱 Seedling"];
+const P0_ROOM_IDS = [0,4,2,3];
+const P0_THEMES = ["Understanding mental health","Coping and seeking care","Listening and reaching out","Finding the right support"];
+const P0_OBJECTS = [["🪞","🖼️"],["☕","📔"],["🛋️","☎️"],["🗺️","🌱"]];
+const P0_LABELS = ["Mirror","Portrait","Tea cup","Journal","Sofa","Phone","Support map","Seedling"];
 const P0_SCENES = [
- "You and your companion find a mirror. A note asks what it means to look after your mind.",
- "A portrait carries an unkind label: ‘Struggling means weakness.’ Your companion asks whether that is true.",
- "Your companion arrives home feeling overwhelmed. A warm cup sits nearby.",
+ "You find a mirror together. A note asks what it means to look after your mind.",
+ "A portrait carries an unkind label: ‘Struggling means weakness.’ You pause together to question it.",
+ "After a stressful day, you sit down together beside a warm cup.",
  "A journal describes difficult feelings that keep getting in the way of daily life.",
- "Your companion sits beside you and says, ‘I have been having a hard time.’",
- "You find a phone with a note: ‘You can reach out. You do not need perfect words.’",
- "The support desk is closed. A map shows other ways to reach people who can help.",
- "The last seedling is ready to grow. Your companion asks what this journey means."
+ "You sit beside each other on the sofa. There is space to talk without rushing.",
+ "A phone sits within reach. You do not need perfect words to ask for support.",
+ "One support service is closed. A map shows other people and services you can contact.",
+ "The final seedling is ready to grow. You look back at what you have learned together."
+];
+const P0_LINES = [
+ "What do you think looking after our mental health actually means?",
+ "Does having a hard time say anything about someone's strength?",
+ "Today felt like a lot. What could we try?",
+ "When would it make sense to ask a professional for support?",
+ "I've been having a hard time. Could we talk?",
+ "Where could someone in Vietnam begin looking for support?",
+ "What if the first service we contact is unavailable?",
+ "What can this game tell us, and what can it not tell us?"
 ];
 let BASICS = null, basicsReturn = "s-title";
-function openBasics(from) {
- basicsReturn = from;
- BASICS = {room:0, lights:Array(8).fill(0), tried:Array(8).fill(false), first:0, points:0};
- audio(); sfx.next(); go("s-basics"); renderBasics();
+function basicsFace(who,uid,mood){
+ const p=GAME[who];
+ return avatar(p.kind,who==="partner"?PARTNER_VARIANT[p.kind]:null,uid,mood||"calm");
 }
-function basicsHud() {
- const lit = BASICS.lights.filter(x=>x===2).length;
- return '<div class="p0-hud"><div><b>💡 Understanding</b><span>'+lit+'/8 lights · '+BASICS.points+' learning points</span></div><progress aria-label="Objects fully lit" max="8" value="'+lit+'"></progress><p>Points show learning progress, not your mental health.</p></div>';
+function openBasics(from){
+ basicsReturn=from;
+ if(!GAME.player.kind||!GAME.partner.kind){BASICS_SELECTED=true;go("s-player");return;}
+ BASICS={room:0,lights:Array(8).fill(0),tried:Array(8).fill(false),first:0,points:0,talk:null};
+ audio();sfx.next();go("s-basics");renderBasicsIntro();
 }
-function renderBasics() {
- const box=$("p0Content"), room=BASICS.room, lit=BASICS.lights.filter(x=>x===2).length;
- box.innerHTML=basicsHud()+'<div class="step-title"><small>PART 0 · HOUSE OF UNDERSTANDING</small><h2>Bring a little light inside</h2><p>Explore objects, choose a response and watch the house change. A dim light can always be revisited.</p></div><div class="p0-rooms" id="p0Rooms"></div><div class="p0-house"><div class="p0-guide" aria-hidden="true">'+(lit===8?'🌟':lit>3?'😊':'🙂')+'</div><h3>'+P0_ROOMS[room]+'</h3><p>Choose an object to start a moment.</p><div class="p0-objects" id="p0Objects"></div></div><p class="note" id="p0MapNote" role="status"></p><button class="cta" id="p0Finish" hidden>See my result →</button>';
- P0_ROOMS.forEach((name,r)=>{
-  const unlocked=r===0||BASICS.tried.slice(0,r*2).every(Boolean);
-  const b=document.createElement("button");b.className="p0-room";b.textContent=(unlocked?'':'🔒 ')+name;b.disabled=!unlocked;b.setAttribute("aria-pressed",String(r===room));
-  b.onclick=()=>{audio();sfx.tap();BASICS.room=r;renderBasics();};$("p0Rooms").appendChild(b);
- });
- for(let i=room*2;i<room*2+2;i++){
-  const state=BASICS.lights[i],b=document.createElement("button");
-  b.className="p0-object "+(state===2?'bright':state===1?'dim':'dark');
-  b.textContent=P0_OBJECTS[i]+" · "+(state===2?'Lit ✓':state===1?'Dim · try again':'Explore');
-  b.onclick=()=>openBasicsMoment(i);$("p0Objects").appendChild(b);
- }
- $("p0MapNote").textContent=BASICS.tried.every(Boolean)?"Every object explored. Revisit dim lights or see your result.":"Explore both objects in each room to unlock the next room.";
+function renderBasicsIntro(){
+ $("p0Content").className="p0-native scroll soon";
+ $("p0Content").innerHTML='<div><span class="badge">PART 0 · HOUSE OF UNDERSTANDING</span></div><div class="pair">'+pairHTML("calm","calm")+'</div><div class="story">Before the harder days begin, explore the house together. Learn about mental health and the people you can turn to for support.</div><div class="howto"><div><span>🕯️</span><em><b>Bring light to the house.</b> Tap an object and choose a response.</em></div><div><span>💡</span><em><b>Build understanding.</b> Helpful choices fully light objects. Other choices leave a dim light you can revisit.</em></div><div><span>☎️</span><em><b>Find support.</b> Explore verified contact information for services in Vietnam.</em></div></div><p class="note">Learning points reflect this game, not your mental health.</p><button class="cta" id="p0Enter">Enter the house →</button>';
+ $("p0Enter").onclick=()=>{audio();sfx.next();renderBasics();};
+}
+function basicsHud(){
+ const lit=BASICS.lights.filter(v=>v===2).length;
+ return '<div class="hud"><div class="hmood">'+basicsFace("partner","p0hud","happy")+'</div><div class="hmeter"><div class="hlabel"><b>Understanding</b><span>'+BASICS.points+'/80</span></div><div class="hwrap"><div class="hbar" role="progressbar" aria-label="Learning points" aria-valuemin="0" aria-valuemax="80" aria-valuenow="'+BASICS.points+'"><i style="width:'+(BASICS.points/80*100)+'%"></i></div></div></div><button class="helpbtn" id="p0Help" aria-label="Support in Vietnam">♡<small>Help</small></button></div><div class="hud2"><span class="phase">PART 0 · LEARNING TOGETHER</span><span class="lights">✨ '+lit+'/8</span></div>';
+}
+function basicsUnlocked(r){return r===0||BASICS.tried.slice(0,r*2).every(Boolean);}
+function renderBasics(){
+ const box=$("p0Content");box.className="p0-native";
+ box.innerHTML=basicsHud()+'<div class="house" id="p0House"></div><div class="guide" id="p0Guide">Tap a glowing object to talk. Explore both objects to open the next room.</div><button class="finishbtn" id="p0Finish" hidden>🏁 See my result</button><p class="note p0-learning-note">Points show learning progress, not your mental health.</p>';
+ $("p0House").innerHTML=P0_ROOM_IDS.map((rid,r)=>{
+  const rm=ROOMS[rid],open=basicsUnlocked(r),full=BASICS.lights.slice(r*2,r*2+2).every(v=>v===2);
+  const glow=BASICS.lights.slice(r*2,r*2+2).reduce((n,v)=>n+(v===2?1:v===1?.5:0),0);
+  const spots=open?[0,1].map(k=>{
+   const i=r*2+k,v=BASICS.lights[i],[x,y]=rm.spots[k];
+   return '<button class="spot obj '+(v===2?'done':v===1?'dim again':'')+'" data-basic-q="'+i+'" style="left:'+x+'%;top:'+y+'%" aria-label="'+rm.name+' · '+P0_LABELS[i]+' · '+(v===2?'fully lit':v===1?'dim, brighten':'explore')+'" '+(v===2?'disabled':'')+'><span class="ic">'+P0_OBJECTS[r][k]+'</span><span class="bd '+(v===2?'ok':v===1?'half':'talk')+'">'+(v===2?'✓':v===1?'½':'💬')+'</span></button>';
+  }).join(""):'<div class="lock">🔒<small>Explore both objects in the previous rooms</small></div>';
+  return '<div class="room '+(full?'lit':'')+' '+(open&&!full?'cur':'')+'" data-basic-room="'+r+'" style="--floor:'+rm.floor+'"><svg class="furn" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'+FURNITURE[rid]+'</svg><div class="dark" style="--d0:'+Math.max(0,open?.55-glow*.27:.8)+';--d1:'+Math.max(0,open?.88-glow*.44:.92)+'"></div><div class="rname">'+rm.name+'<small>'+P0_THEMES[r]+'</small></div>'+spots+'</div>';
+ }).join("")+'<div class="token" id="p0Me" aria-label="Your character">'+basicsFace("player","p0me","happy")+'</div><div class="token love" id="p0Love" aria-label="Your loved one"><div class="tk-face">'+basicsFace("partner","p0love","happy")+'</div></div>';
+ $("p0House").querySelectorAll("[data-basic-q]").forEach(b=>b.onclick=()=>openBasicsMoment(+b.dataset.basicQ));
+ $("p0Help").onclick=openBasicsHelp;
  $("p0Finish").hidden=!BASICS.tried.every(Boolean);$("p0Finish").onclick=finishBasics;
+ if(BASICS.tried.every(Boolean))$("p0Guide").textContent="All moments explored. Brighten dim objects or see your result.";
+ requestAnimationFrame(()=>placeBasicsTokens(BASICS.room,true));
 }
-function openBasicsMoment(i) {
- const item=PART0_QUESTIONS[i],box=$("p0Content");
- audio();sfx.tap();
- box.innerHTML=basicsHud()+'<div class="p0-house"><div class="p0-guide" id="p0Guide" aria-hidden="true">🙂</div><small>'+P0_ROOMS[Math.floor(i/2)]+' · '+P0_OBJECTS[i]+'</small><p>'+P0_SCENES[i]+'</p></div><div class="step-title"><h2 id="p0Question"></h2></div><div class="choices" id="p0Options"></div><div class="p0-feedback" id="p0Feedback" role="status" aria-live="polite"></div><button class="cta" id="p0Next" hidden>Back to the house →</button><button class="ghost" id="p0Cancel">Back to the house</button>';
- $("p0Question").textContent=item.q;
- item.a.forEach((answer,index)=>{
-  const button=document.createElement("button");button.className="p0-answer";button.textContent=answer;
-  button.onclick=()=>answerBasics(i,index,button);$("p0Options").appendChild(button);
- });
- $("p0Cancel").onclick=renderBasics;
- $("p0Next").onclick=()=>{if(BASICS.tried.slice(0,(BASICS.room+1)*2).every(Boolean)&&BASICS.room<3)BASICS.room++;renderBasics();$("p0Content").parentElement.scrollTop=0;};
- $("p0Content").parentElement.scrollTop=0;
+function basicsPosition(r,x,y){
+ const h=$("p0House").getBoundingClientRect(),b=$("p0House").querySelector('[data-basic-room="'+r+'"]').getBoundingClientRect();
+ return [b.left-h.left+b.width*x/100,b.top-h.top+b.height*y/100];
+}
+function placeBasicsTokens(r,instant,k){
+ if(!$("p0House"))return;
+ const rm=ROOMS[P0_ROOM_IDS[r]],p=k===undefined?[18,88]:rm.spots[k];
+ setTok($("p0Me"),basicsPosition(r,Math.max(14,p[0]-14),Math.min(88,p[1]+18)),instant);
+ setTok($("p0Love"),basicsPosition(r,84,86),instant);
+ if(!instant){anim($("p0Me"),"walk");anim($("p0Love"),"walk");}
+}
+addEventListener("resize",()=>{if($("s-basics").classList.contains("active")&&$("p0House"))placeBasicsTokens(BASICS.room,true);});
+function openBasicsHelp(){
+ const card=$("qCard");card.className="qcard help";card.onclick=null;
+ card.innerHTML=PART0_SUPPORT+'<button class="cta" id="p0CloseHelp">Back to the house</button>';
+ $("p0CloseHelp").onclick=()=>$("qSheet").classList.remove("show");
+ $("qSheet").classList.add("show");card.scrollTop=0;
+}
+function openBasicsMoment(i){
+ if(BASICS.talk||BASICS.lights[i]===2)return;
+ const session=BASICS;BASICS.room=Math.floor(i/2);BASICS.talk={i,answered:false};
+ audio();sfx.tap();placeBasicsTokens(BASICS.room,false,i%2);
+ setTimeout(()=>{if(BASICS===session&&$("s-basics").classList.contains("active"))showBasicsTalk(i);},450);
+}
+function showBasicsTalk(i){
+ const q=PART0_QUESTIONS[i],r=Math.floor(i/2),card=$("qCard");
+ card.className="qcard staged";card.innerHTML='<div class="qhead"><span class="chip">'+P0_OBJECTS[r][i%2]+' '+ROOMS[P0_ROOM_IDS[r]].name.toUpperCase()+' · '+P0_THEMES[r].toUpperCase()+'</span><span class="n">Light '+(i+1)+' / 8</span></div><p class="scene"></p><div class="say"><div class="face">'+basicsFace("partner","p0q","calm")+'</div><div class="bubble"></div></div><div class="ask"></div><div class="qopts" id="p0Options">'+shuffleArr([0,1,2]).map(n=>'<button class="qopt" data-basic-answer="'+n+'"><span class="dot"></span><span class="t"></span></button>').join("")+'</div><div id="p0Feedback" aria-live="polite"></div><button class="ghost" id="p0CancelTalk">Back to the house</button>';
+ card.querySelector(".ask").textContent=q.q;
+ card.querySelectorAll("[data-basic-answer]").forEach(b=>{const n=+b.dataset.basicAnswer;b.querySelector(".t").textContent=q.a[n];b.onclick=()=>answerBasics(i,n,b);});
+ $("p0CancelTalk").onclick=()=>{stopVoice();BASICS.talk=null;$("qSheet").classList.remove("show");};
+ $("qSheet").classList.add("show");card.scrollTop=0;
+ revealCard(card,[typeStep(card.querySelector(".scene"),P0_SCENES[i],16,null),showEl(card.querySelector(".say")),typeStep(card.querySelector(".bubble"),"“"+P0_LINES[i]+"”",28,{kind:GAME.partner.kind,mood:"calm"}),showEl(card.querySelector(".ask")),popOpts(card)]);
+}
+function resolveBasicsAnswer(state,i,index){
+ const correct=index===PART0_QUESTIONS[i].best,old=state.lights[i];
+ let gain=0;
+ if(correct){gain=old===0?10:old===1?7:0;state.lights[i]=2;if(!state.tried[i])state.first++;}
+ else if(old===0){gain=3;state.lights[i]=1;}
+ state.points+=gain;state.tried[i]=true;
+ return {correct,gain,old};
 }
 function answerBasics(i,index,button){
- const item=PART0_QUESTIONS[i],correct=index===item.best,old=BASICS.lights[i];
+ if(!BASICS.talk||BASICS.talk.answered)return;
+ stopVoice();BASICS.talk.answered=true;
+ const q=PART0_QUESTIONS[i],result=resolveBasicsAnswer(BASICS,i,index),correct=result.correct,gain=result.gain;
  $("p0Options").querySelectorAll("button").forEach(b=>b.disabled=true);
- button.classList.add(correct?"correct":"reconsider");
- let gain=0;
- if(correct){gain=old===0?10:old===1?7:0;BASICS.lights[i]=2;if(!BASICS.tried[i])BASICS.first++;}
- else if(old===0){gain=3;BASICS.lights[i]=1;}
- BASICS.points+=gain;BASICS.tried[i]=true;
- audio();if(correct){sfx.love();const r=button.getBoundingClientRect();burstHearts(r.left+r.width/2,r.top,18);}else sfx.tap();
- $("p0Guide").textContent=correct?"🌟":"💭";$("p0Guide").classList.add("p0-pop");
- $("p0Content").querySelector(".p0-hud").outerHTML=basicsHud();
- const feedback=$("p0Feedback");feedback.classList.add(correct?"success":"reflect");
- const h=document.createElement("h3");h.textContent=correct?(gain?'✨ Object lit! +'+gain+' points':'✨ This light is already shining.'):(old===2?'💭 Your light stays lit. Let’s reflect.':gain?'🕯️ A little light · +3 points':'💭 Keep exploring. You can try again.');
- const best=document.createElement("p");best.textContent="Helpful response: "+item.a[item.best];
- const why=document.createElement("p");why.textContent=item.why;
- const reaction=document.createElement("p");reaction.textContent=correct?'Your companion: “That helps me understand. Let’s carry this light with us.”':'Your companion: “Let’s think about that together. We can come back and try another response.”';
- feedback.append(h,reaction,best,why);
- if(item.support)feedback.insertAdjacentHTML("beforeend",PART0_SUPPORT);
- if(!correct){const retry=document.createElement("button");retry.className="ghost";retry.textContent="Try this moment again ↻";retry.onclick=()=>openBasicsMoment(i);feedback.appendChild(retry);}
- $("p0Next").hidden=false;$("p0Cancel").hidden=true;
- // Show the consequence immediately, including on a short phone screen.
- $("p0Options").style.display="none";
- const outcome=document.createElement("div");
- outcome.className="p0-outcome "+(BASICS.lights[i]===2?"lit":"dim");
- const object=document.createElement("div");object.className="p0-outcome-object";object.textContent=P0_OBJECTS[i];
- const state=document.createElement("strong");state.textContent=BASICS.lights[i]===2?"💡 Fully lit":"🕯️ Dim light · you can retry";
- const points=document.createElement("p");points.textContent=(gain?"+"+gain+" learning points · ":"")+BASICS.points+" points total";
- outcome.append(object,state,points);
- const chosen=document.createElement("p");chosen.className="p0-chosen";chosen.textContent="You chose: "+item.a[index];
- feedback.prepend(outcome,chosen);
- feedback.setAttribute("tabindex","-1");
- feedback.focus({preventScroll:true});
- feedback.scrollIntoView({behavior:"instant",block:"start"});
- toast(correct?"💡 Object lit! "+(gain?"+"+gain+" points":""):"🕯️ A dim light — try again anytime");
+ button.classList.add(correct?"yes":"mid");button.querySelector(".dot").textContent=correct?"✓":"~";
+ $("p0Options").classList.add("done");$("p0CancelTalk").style.display="none";
+ const feedback=$("p0Feedback");
+ feedback.innerHTML='<div class="why '+(correct?'good':'mid')+'"><h4>'+(correct?'A helpful understanding':'A chance to learn')+'<span class="delta up">+'+gain+' understanding</span></h4><span class="w"></span><div class="lm">'+(correct?'✨ '+P0_LABELS[i]+' is fully lit.':'🕯️ '+P0_LABELS[i]+' is dim. You can revisit this moment.')+'</div></div><div class="say small mine"><div class="bubble"></div><div class="face">'+basicsFace("player","p0answer",correct?"happy":"calm")+'</div></div><div class="say small"><div class="face">'+basicsFace("partner","p0reply",correct?"happy":"calm")+'</div><div class="bubble"></div></div>'+(q.support?'<details class="lookback" open><summary>Support in Vietnam · phone numbers and hours</summary>'+PART0_SUPPORT+'</details>':'')+'<button class="cta" id="p0Done">'+(correct?'Bring the light home ✨':'Continue together →')+'</button>';
+ feedback.querySelector(".w").textContent=q.why;
+ feedback.querySelector(".mine .bubble").textContent="“"+q.a[index]+"”";
+ const reply=correct?"That helps me understand. We can keep learning and supporting each other.":"Let's think about that together. We can revisit this moment and try another response.";
+ typeText(feedback.querySelector(".say:not(.mine) .bubble"),"“"+reply+"”",28,{kind:GAME.partner.kind,mood:correct?"happy":"calm"});
+ $("p0Done").onclick=()=>finishBasicsTalk(i,correct);
+ audio();if(correct)sfx.love();else tone(440,.2,.07,0,"triangle");
+ const hud=$("p0Content").querySelector(".hud");if(hud)hud.outerHTML=basicsHud().split('<div class="hud2">')[0];
+ $("p0Help").onclick=openBasicsHelp;
+ feedback.setAttribute("tabindex","-1");feedback.focus({preventScroll:true});feedback.scrollIntoView({behavior:"instant",block:"start"});
+}
+function finishBasicsTalk(i,correct){
+ stopVoice();$("qSheet").classList.remove("show");BASICS.talk=null;renderBasics();
+ requestAnimationFrame(()=>{
+  const spot=$("p0House").querySelector('[data-basic-q="'+i+'"]');
+  if(spot){anim(spot,"pop");const r=spot.getBoundingClientRect();burstHearts(r.left+r.width/2,r.top+r.height/2,correct?18:6);}
+  toast(correct?"✨ A new light in your house":"🕯️ A dim light — return anytime");
+ });
 }
 function finishBasics(){
- const lit=BASICS.lights.filter(x=>x===2).length;
- audio();sfx.love();
- $("p0Content").innerHTML=basicsHud()+'<div class="step-title"><small>PART 0 COMPLETE</small><h2>'+(lit===8?'🌟 House of Understanding':'🌱 A growing understanding')+'</h2><p>'+lit+' objects fully lit · '+BASICS.first+' helpful first choices.</p></div><div class="story">Every moment is a chance to learn. You can revisit dim objects and keep bringing light into the house.</div><p class="note">This result reflects this game only. It is not a diagnosis or a measure of your worth.</p><button class="cta" id="p0Continue">Continue to the story →</button><button class="ghost" id="p0Review">Return to my house</button><button class="ghost" id="p0Again">Play Part 0 again ↻</button>';
- $("p0Continue").onclick=()=>go(basicsReturn==="s-confirm"?"s-confirm":"s-player");
+ const lit=BASICS.lights.filter(v=>v===2).length;audio();sfx.love();
+ $("p0Content").className="p0-native scroll soon";
+ $("p0Content").innerHTML='<div><span class="badge">'+(lit===8?'THE HOUSE IS BRIGHT AGAIN':'YOUR UNDERSTANDING IS GROWING')+'</span></div><div class="pair">'+pairHTML("happy","happy")+'</div><div class="story">You explored eight moments together. Every conversation is a chance to listen, learn and find support.</div><div class="result"><div><b>'+lit+'/8</b><span>OBJECTS FULLY LIT</span></div><div><b>'+BASICS.points+'/80</b><span>LEARNING POINTS</span></div></div><div class="learned"><h3>What you practised</h3><ol><li>Understanding mental health without judgment.</li><li>Recognising when more support may help.</li><li>Listening and finding support in Vietnam.</li></ol></div><p class="note">This result reflects the game, not a diagnosis or your worth.</p><button class="cta" id="p0Continue">Continue to the story →</button><button class="ghost" id="p0Review">Look back at my house</button><button class="ghost" id="p0Again">Play Part 0 again ♥</button>';
+ $("p0Continue").onclick=()=>{BASICS_SELECTED=false;go("s-confirm");};
  $("p0Review").onclick=renderBasics;$("p0Again").onclick=()=>openBasics(basicsReturn);
- $("p0Content").parentElement.scrollTop=0;
 }
-$("p0Back").onclick=()=>go(basicsReturn);
+$("p0Back").onclick=()=>{stopVoice();if(BASICS)BASICS.talk=null;go(basicsReturn);};
 $("p0Title").onclick=()=>openBasics("s-title");
-$("p0Pick").onclick=()=>{ audio(); sfx.select(); BASICS_SELECTED = true; renderConfirm.quiet = true; renderConfirm(); };
+$("p0Pick").onclick=()=>{audio();sfx.select();BASICS_SELECTED=true;renderConfirm.quiet=true;renderConfirm();};
 
 renderTitle();
 })();
