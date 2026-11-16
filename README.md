@@ -8,7 +8,9 @@ A browser game about mental health, made by **W4GZ (Writing for Gen Z)**.
 
 ## Part 0 · Mental Health Basics
 
-Start from the front page or the part picker to explore the House of Understanding: four rooms and eight interactive objects. Explore both objects in each room to unlock the next. Helpful answers fully light objects (+10 learning points); other answers leave a dim light (+3) and can be retried for the remaining +7. Answers trigger companion reactions, sound and visual effects. Fully lit objects cannot be used to earn extra points. The ending shows lights earned and helpful first choices, with review and replay options. Learning points are not a mental health assessment. Topics include everyday mental health, stress, listening and seeking support. Relevant answers and an expandable support panel include all five services listed by Find A Helpline for Vietnam: Ngày Mai, HOPE, the National Child Helpline, CSAGA and Peace House. Each entry explains its audience and opening hours. This activity is educational and cannot diagnose a condition.
+Part 0 uses the same furnished rooms, character art, moving character tokens, glowing objects, HUD, speech bubbles, typewriter dialogue and answer-result panel as Parts 1 and 2. Choose your characters, select Part 0 and enter the house together. Eight moments are spread across the Living Room, Your Corner, Study and Balcony. Explore both objects in each room to unlock the next. Helpful answers fully light objects (+10 learning points); other answers leave a dim light (+3) and can be revisited for the remaining +7. The result screen supports reviewing the house, replaying Part 0 and continuing to the story. Learning points are not a mental health assessment.
+
+Relevant answers and the in-game Help button include all five Vietnam support services: Ngày Mai, HOPE, the National Child Helpline, CSAGA and Peace House, with audiences, phone links and opening hours.
 
 The Part 0 bank is in `part0.json` and is also embedded as `PART0_QUESTIONS` in `index.html`; keep both copies in sync when editing. Parts 1 and 2 continue to use `questions.json`.
 
