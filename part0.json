@@ -54,9 +54,9 @@
     "a": [
       "Wait until you can explain everything perfectly.",
       "Keep it to yourself because helplines are only for other people.",
-      "Contact Ngày Mai for emotional support or HOPE for crisis support during their opening hours, or ask a trusted person to help you reach support."
+      "Choose a support service that fits your situation, or ask a trusted person to help you contact one."
     ],
-    "why": "In Vietnam, Ngày Mai offers telephone emotional support; HOPE provides suicide crisis support. Their contact details and different opening hours are below. You do not need perfect words to ask for help.",
+    "why": "For emotional distress, Ngày Mai or HOPE may help. For a child’s safety or emotional needs, contact the National Child Helpline (111). For gender-based violence, CSAGA offers support; Peace House supports women, young people and children affected by violence or trafficking. Phone numbers, opening hours and service details are below.",
     "best": 2,
     "support": true
   },
@@ -67,7 +67,7 @@
       "Try another source of support: a trusted person, a health professional, or a local health service.",
       "Assume there are no other options."
     ],
-    "why": "One unavailable service does not mean help is unavailable. If you or someone else is in immediate danger, seek emergency medical help or go to the nearest emergency department; do not wait for a helpline to open.",
+    "why": "One unavailable service does not mean help is unavailable. Check the opening hours and who each service supports, or contact a trusted person or health professional. If someone is in immediate danger, seek emergency medical help or go to the nearest emergency department; do not wait for a helpline to open.",
     "best": 1,
     "support": true
   },
