@@ -2266,7 +2266,7 @@ function renderHouse(){
     return `<div class="room ${n>=2?'lit':''} ${open && !roomComplete(r) ? 'cur' : ''}" data-room="${r}" style="--floor:${rm.floor}">
       <svg class="furn" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${FURNITURE[r]}</svg>
       <div class="dark" style="--d0:${Math.max(0,d0)};--d1:${Math.max(0,d1)}"></div>
-      <div class="rname">${rm.name}<small>${open ? rm.theme : ""}</small></div>
+      <div class="rname">${rm.name}</div>
       ${spots}
       ${open ? "" : (r === 5 && bedroomGate() === "trust")
         ? `<div class="lock trustlock">🔒<b>Needs trust ${BEDROOM_TRUST}</b><div class="tl"><i id="bedTrustFill" style="width:${Math.min(100, PLAY.trust / BEDROOM_TRUST * 100)}%"></i></div><small id="bedTrustTxt">Now ${PLAY.trust} — spend time together or brighten half-lit objects</small></div>`
