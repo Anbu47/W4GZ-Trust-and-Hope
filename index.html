@@ -935,6 +935,7 @@ html.t-dusk #s-support-match{--sm-surface:#2c4463;--sm-ink:#f0f4fa;--sm-edge:#53
 @media(max-width:380px){.sm-board{gap:8px}.sm-card{padding:11px 8px;min-height:174px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){.sm-card{transition:none}}
 
+.sm-need strong{font-weight:800}
 </style>
 </head>
 <body>
@@ -3044,6 +3045,15 @@ $("p0Pick").onclick=()=>{audio();sfx.select();BASICS_SELECTED=true;renderConfirm
 
 /* Matching activity adapted from the user's Kết nối hỗ trợ game. */
 const SUPPORT_MATCH_DATA = [{"id":"mai","name":"Ngày Mai","need":"Lắng nghe và hỗ trợ tinh thần khi bạn cảm thấy buồn, căng thẳng hoặc cô đơn và muốn có người chia sẻ."},{"id":"hope","name":"HOPE","need":"Hỗ trợ khi một người đang khủng hoảng hoặc có ý nghĩ tự tử."},{"id":"child","name":"Tổng đài Quốc gia Bảo vệ Trẻ em · 111","need":"Bảo vệ trẻ em dưới 16 tuổi và tư vấn cho người lớn đang lo cho một trẻ em."},{"id":"csaga","name":"CSAGA","need":"Tư vấn và kết nối dịch vụ hỗ trợ cho người bị bạo lực trên cơ sở giới."},{"id":"peace","name":"Ngôi nhà Bình yên","need":"Cung cấp nơi tạm lánh an toàn cho phụ nữ, thanh thiếu niên và trẻ em bị bạo lực, xâm hại hoặc mua bán người."}];
+const SUPPORT_MATCH_EMPHASIS = {"mai":"buồn, căng thẳng hoặc cô đơn","hope":"đang khủng hoảng hoặc có ý nghĩ tự tử","child":"Bảo vệ trẻ em dưới 16 tuổi","csaga":"Tư vấn và kết nối dịch vụ","peace":"nơi tạm lánh an toàn"};
+function renderSupportNeed(button,item){
+ const text=document.createElement("span"),phrase=SUPPORT_MATCH_EMPHASIS[item.id],at=item.need.indexOf(phrase);
+ if(at<0){text.textContent=item.need;}else{
+  const emphasis=document.createElement("strong");emphasis.textContent=phrase;
+  text.append(document.createTextNode(item.need.slice(0,at)),emphasis,document.createTextNode(item.need.slice(at+phrase.length)));
+ }
+ button.appendChild(text);
+}
 let SUPPORT_MATCH = null;
 function newSupportMatch(){
  return {selected:null,done:new Set(),order:shuffleArr(SUPPORT_MATCH_DATA.slice()),locked:false};
@@ -3074,7 +3084,7 @@ function renderSupportMatch(){
   };$("smServices").appendChild(b);
  });
  state.order.forEach(item=>{
-  const b=document.createElement("button");b.type="button";b.className="sm-card sm-need";b.dataset.need=item.id;b.textContent=item.need;
+  const b=document.createElement("button");b.type="button";b.className="sm-card sm-need";b.dataset.need=item.id;renderSupportNeed(b,item);
   b.disabled=state.done.has(item.id);
   if(b.disabled){b.classList.add("sm-matched");const check=document.createElement("span");check.className="sm-check";check.textContent="✓ Đã ghép";b.append(check);}
   b.onclick=()=>chooseSupportNeed(item,b);$("smNeeds").appendChild(b);
