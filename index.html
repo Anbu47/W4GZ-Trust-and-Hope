@@ -921,7 +921,6 @@ html.t-dusk #s-support-match{--sm-surface:#2c4463;--sm-ink:#f0f4fa;--sm-edge:#53
 .sm-list{display:grid;gap:10px}
 .sm-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:7px;width:100%;min-height:142px;padding:14px 12px;border:2px solid var(--sm-edge);border-radius:16px;background:var(--sm-surface);color:var(--sm-ink);text-align:left;font-size:13px;line-height:1.55;overflow-wrap:anywhere;transition:background .2s,border-color .2s,transform .2s}
 .sm-service{font-weight:800}
-.sm-number{font-size:11px;opacity:.75}
 .sm-card.sm-selected{border-color:var(--sm-ink);background:var(--sm-active);box-shadow:0 0 0 1px var(--sm-ink)}
 .sm-card.sm-matched{border-color:var(--sm-good-edge);background:var(--sm-good);opacity:.85;cursor:default}
 .sm-check{font-size:11px;font-weight:800}
@@ -3069,10 +3068,9 @@ function renderSupportMatch(){
  if(!SUPPORT_MATCH)SUPPORT_MATCH=newSupportMatch();
  const state=SUPPORT_MATCH;
  $("smServices").replaceChildren();$("smNeeds").replaceChildren();
- SUPPORT_MATCH_DATA.forEach((item,i)=>{
+ SUPPORT_MATCH_DATA.forEach(item=>{
   const b=document.createElement("button");b.type="button";b.className="sm-card sm-service";b.dataset.service=item.id;
-  const n=document.createElement("span");n.className="sm-number";n.textContent=String(i+1).padStart(2,"0");
-  const title=document.createElement("span");title.textContent=item.name;b.append(n,title);
+  const title=document.createElement("span");title.textContent=item.name;b.appendChild(title);
   b.classList.toggle("sm-selected",state.selected===item.id);b.setAttribute("aria-pressed",String(state.selected===item.id));
   b.disabled=state.done.has(item.id);if(b.disabled){b.classList.add("sm-matched");const check=document.createElement("span");check.className="sm-check";check.textContent="✓ Đã ghép";b.append(check);}
   b.onclick=()=>{
