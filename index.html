@@ -868,7 +868,8 @@ h1.th1{font-size:clamp(32px,11vw,50px) !important}
 @media (max-height:660px){ #s-intro .story,html.t-light #s-intro .story,html.t-dusk #s-intro .story{font-size:15px !important} #s-intro .who{max-width:min(96px,14vh) !important} }
 @media (max-height:700px){ #s-confirm .who{max-width:min(110px,14vh) !important} }
 #s-intro .howto{margin-bottom:8px !important}
-.themebtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:64px;z-index:5;width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center}
+.musicbtn.voicebtn.floating{right:64px}
+.themebtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:112px;z-index:5;width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center}
 html.t-light .themebtn{background:#FAF8F3 !important;border-color:#BFCDDC !important}
 html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !important}
 
@@ -908,6 +909,7 @@ html .character-name.name-partner,html .who b.name-partner{color:var(--partner-n
   <!-- TITLE -->
   <section class="screen active" id="s-title">
     <button class="musicbtn floating" aria-label="Music on">🎵</button>
+    <button type="button" class="musicbtn voicebtn floating" aria-label="Mute voices and sound effects">🔊</button>
     <button class="themebtn floating" id="themeBtn" aria-label="Change colour theme">🌙</button>
     <div class="help-tip theme-tip" id="themeTip">Prefer other colours? Tap here 🎨</div>
     <button class="helpbtn floating" id="helpBtnTitle" aria-label="Get help">♡<small>Help</small></button>
