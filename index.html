@@ -943,6 +943,18 @@ html.t-dusk #s-support-match{--sm-surface:#2c4463;--sm-ink:#f0f4fa;--sm-edge:#53
 #smFullBody .sm-detail-note{font-size:12px;opacity:.9}
 #smFullBody a{overflow-wrap:anywhere}
 
+
+/* Part 1 / Part 2 question navigation; Part 0 keeps its existing controls. */
+.story-question-nav{position:sticky;top:-16px;z-index:12;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0 10px;margin:0 0 12px;background:inherit;border-bottom:1px solid var(--line)}
+.story-question-nav button{padding:9px 12px;min-height:40px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:inherit;font:inherit;font-size:13px;font-weight:800;line-height:1.3}
+.story-question-nav button:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.story-question-nav button:disabled{opacity:.55;cursor:default}
+html.t-light .story-question-nav{background:#FAF8F3;color:#2C4463;border-color:#BFCDDC}
+html.t-light .story-question-nav button{background:#FFFFFF;border-color:#BFCDDC}
+html.t-dusk .story-question-nav{background:#2C4463;color:#F0F4FA;border-color:#536780}
+html.t-dusk .story-question-nav button{background:#3A5980;border-color:#536780}
+@media(pointer:coarse){.story-question-nav button{min-height:44px}}
+
 </style>
 </head>
 <body>
@@ -1330,7 +1342,8 @@ function blip(kind, mood){
 function typeText(el, text, speed, voice, done){
   addCharacterSpeaker(el);
   let k = 0, stopped = false; el.textContent = ""; el.classList.add("typing");
-  const finish = () => { if (stopped) return; stopped = true; clearTimeout(tm); el.textContent = text; el.classList.remove("typing"); colourCharacterNames(el.closest(".qcard") || el); if (done) done(); };
+  el.cancelTyping = () => { stopped = true; clearTimeout(tm); el.classList.remove("typing"); el.cancelTyping = null; };
+  const finish = () => { if (stopped) return; stopped = true; clearTimeout(tm); el.textContent = text; el.classList.remove("typing"); el.cancelTyping = null; colourCharacterNames(el.closest(".qcard") || el); if (done) done(); };
   let tm;
   const step = () => {
     if (stopped) return;
@@ -2428,6 +2441,27 @@ function tapTrustMoment(k){
   setTimeout(() => openTalk({ kind:"moment", idx:k, data:TRUST_MOMENTS[k], room:L.r }), 800);
 }
 
+
+function leaveStoryQuestion(home){
+ const talk=PLAY&&PLAY.q;if(!talk)return;
+ stopVoice();
+ $("qCard").querySelectorAll(".typing").forEach(el=>{if(el.cancelTyping)el.cancelTyping();});
+ $("qCard").onclick=null;window.__typeSkip=null;
+ if(!home&&talk.answered){finishTalk();return;}
+ if(!talk.answered)PLAY.energy=Math.min(MAX_ENERGY,PLAY.energy+1);
+ PLAY.q=null;
+ $("qSheet").classList.remove("show");
+ go(home?"s-title":"s-house");
+}
+function mountStoryQuestionNavigation(card){
+ const nav=document.createElement("nav");nav.className="story-question-nav";nav.setAttribute("aria-label","Question navigation");
+ const back=document.createElement("button");back.type="button";back.textContent="← Go back";back.setAttribute("aria-label","Go back to the house");
+ const home=document.createElement("button");home.type="button";home.textContent="Back to home";home.setAttribute("aria-label","Back to home");
+ const leave=(event,isHome)=>{event.stopPropagation();nav.querySelectorAll("button").forEach(b=>b.disabled=true);leaveStoryQuestion(isHome);};
+ back.onclick=event=>leave(event,false);home.onclick=event=>leave(event,true);
+ nav.append(back,home);card.prepend(nav);
+}
+
 function openTalk(t){
   PLAY.energy--; updateHUD();
   t.drained = PLAY.energy === 0;     // this talk took your last energy
@@ -2447,6 +2481,7 @@ function openTalk(t){
     <div class="ask"></div>
     <div class="qopts" id="qOpts">${order.map(i => `<button class="qopt" data-i="${i}"><span class="dot"></span><span class="t"></span></button>`).join("")}</div>
     <div id="qWhy"></div>`;
+  mountStoryQuestionNavigation(card);
   if (Q.cue) card.querySelector(".cue span").textContent = T(Q.cue);
   card.querySelector(".ask").textContent = T(Q.ask);
   card.classList.add("staged");
@@ -2521,7 +2556,7 @@ function answer(i, btn){
   why.querySelector(".w").textContent = T(o.why);
   if (lightMsg) why.querySelector(".lm").textContent = lightMsg;
   { const rb = why.querySelector(".say:not(.mine) .bubble"), mb = why.querySelector(".say.mine .bubble");
-    const sayReact = () => typeText(rb, "“" + T(react) + "”", 28, { kind:GAME.partner.kind, mood:partnerMood() });
+    const sayReact = () => { if (PLAY.q !== t || !$("qSheet").classList.contains("show")) return; typeText(rb, "“" + T(react) + "”", 28, { kind:GAME.partner.kind, mood:partnerMood() }); };
     if (mb) { rb.textContent = ""; typeText(mb, "“" + mySay(o) + "”", 28, { kind:GAME.player.kind, mood:playerMood() }, () => setTimeout(sayReact, 250)); }
     else setTimeout(sayReact, 250); }
   if (streakBonus) { setTimeout(() => { [523,659,784,1047,1319].slice(0, 2 + streakBonus).forEach((f,i) => tone(f,.18,.06,i*.08,"triangle")); const c = why.querySelector(".streak-card"); if (c) { const r = c.getBoundingClientRect(); emberBurst(c, 14 + streakBonus * 6); } }, 650); }
