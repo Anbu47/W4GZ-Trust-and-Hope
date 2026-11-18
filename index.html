@@ -882,6 +882,19 @@ html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !import
 #p0Feedback .lookback{margin-top:14px}
 #p0Feedback .help a{color:inherit}
 @media(max-height:600px){#p0Content .guide{font-size:11px;min-height:25px;padding:5px 2px}#p0Content .p0-learning-note{display:none}}
+
+/* Character colours follow the role in every part and theme. */
+:root{--player-name:#91d2ff;--partner-name:#e3b9ff}
+html.t-light{--player-name:#075985;--partner-name:#7e22a3}
+html.t-dusk{--player-name:#91d2ff;--partner-name:#e3b9ff}
+html .character-name.name-player,html .who b.name-player{color:var(--player-name) !important}
+html .character-name.name-partner,html .who b.name-partner{color:var(--partner-name) !important}
+.character-name{font-weight:800}
+.say{position:relative;padding-top:20px}
+.say .speaker-name{position:absolute;left:60px;top:0;font-family:"Hanken Grotesk",sans-serif;font-size:12px;font-style:normal;font-weight:800;line-height:16px;max-width:calc(100% - 70px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.say.small .speaker-name{left:52px}
+.say.mine .speaker-name{left:auto;right:52px}
+
 </style>
 </head>
 <body>
@@ -1246,8 +1259,9 @@ function blip(kind, mood){
 }
 // Types text into an element. voice = {kind, mood} adds blips; returns a function that finishes instantly.
 function typeText(el, text, speed, voice, done){
+  addCharacterSpeaker(el);
   let k = 0, stopped = false; el.textContent = ""; el.classList.add("typing");
-  const finish = () => { if (stopped) return; stopped = true; clearTimeout(tm); el.textContent = text; el.classList.remove("typing"); if (done) done(); };
+  const finish = () => { if (stopped) return; stopped = true; clearTimeout(tm); el.textContent = text; el.classList.remove("typing"); colourCharacterNames(el.closest(".qcard") || el); if (done) done(); };
   let tm;
   const step = () => {
     if (stopped) return;
@@ -1272,6 +1286,7 @@ function voiceToggle(){
 }
 // Reveal a question card step by step: the situation types out, the speaker talks, then the answers pop up.
 function revealCard(card, steps){
+  colourCharacterNames(card);
   let i = 0, skip = null, done = false;
   const next = () => {
     if (i >= steps.length) { done = true; skip = null; card.onclick = null; window.__typeSkip = null; return; }
@@ -1304,6 +1319,7 @@ function go(id){
   if (id === "s-house") renderHouse();
   if (id === "s-end") renderEnd();
   if (id === "s-title") renderTitle();
+  colourCharacterNames(document.querySelector(".screen.active"));
 }
 document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) { audio(); sfx.tap(); go(b.dataset.go); } });
 function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("show"); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove("show"),1600); }
@@ -1402,13 +1418,37 @@ $("partnerNext").onclick = () => {
 };
 
 // ================= STEP 3 =================
+
+function addCharacterSpeaker(el){
+ const say=el.closest && el.closest(".say");
+ if(!say||say.querySelector(".speaker-name"))return;
+ const role=say.classList.contains("mine")?"player":"partner";
+ const label=document.createElement("span");label.className="speaker-name character-name name-"+role;
+ label.textContent=showName(role);say.appendChild(label);
+}
+function colourCharacterNames(root){
+ if(!root||!GAME.player.kind||!GAME.partner.kind)return;
+ const names=["player","partner"].map(role=>({role,name:GAME[role].name.trim()||(role==="partner"?showName(role):"")})).filter(n=>n.name);
+ if(!names.length)return;
+ const escapeName=s=>s.replace(/[.*+?^${}()|[\]\\]/g,match=>"\\"+match);
+ const re=new RegExp("(?<![\\p{L}\\p{N}_])("+names.sort((a,b)=>b.name.length-a.name.length).map(n=>escapeName(n.name)).join("|")+")(?![\\p{L}\\p{N}_])","gu");
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),texts=[];
+ while(walker.nextNode()){const node=walker.currentNode;if(!node.parentElement.closest(".character-name, .speaker-name, script, style, input, textarea")&&node.nodeValue.trim())texts.push(node);}
+ texts.forEach(node=>{
+  const value=node.nodeValue;re.lastIndex=0;if(!re.test(value))return;re.lastIndex=0;
+  const fragment=document.createDocumentFragment();let end=0,match;
+  while((match=re.exec(value))){fragment.appendChild(document.createTextNode(value.slice(end,match.index)));const span=document.createElement("span");span.className="character-name name-"+names.find(n=>n.name===match[0]).role;span.textContent=match[0];fragment.appendChild(span);end=match.index+match[0].length;}
+  fragment.appendChild(document.createTextNode(value.slice(end)));node.replaceWith(fragment);
+ });
+}
+
 function pairHTML(partnerMood, youMood){
   const P = GAME.player, L = GAME.partner;
   const pv = CHAR[P.kind], lv = Object.assign({}, CHAR[L.kind], PARTNER_VARIANT[L.kind]);
   const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  return `<div class="who"><div class="portrait" style="--pbg:${pv.bg}">${avatar(P.kind,null,"c_p"+Math.random().toString(36).slice(2,6),youMood)}</div><b>${esc(showName("player"))}</b><span>${pv.sub}</span><br><span class="role">YOU</span></div>
+  return `<div class="who"><div class="portrait" style="--pbg:${pv.bg}">${avatar(P.kind,null,"c_p"+Math.random().toString(36).slice(2,6),youMood)}</div><b class="character-name name-player">${esc(showName("player"))}</b><span>${pv.sub}</span><br><span class="role">YOU</span></div>
           <div class="link">💞</div>
-          <div class="who"><div class="portrait" style="--pbg:${lv.bg}">${avatar(L.kind,PARTNER_VARIANT[L.kind],"c_l"+Math.random().toString(36).slice(2,6),partnerMood)}</div><b>${esc(showName("partner"))}</b><span>${CHAR[L.kind].sub}</span><br><span class="role">LOVED ONE</span></div>`;
+          <div class="who"><div class="portrait" style="--pbg:${lv.bg}">${avatar(L.kind,PARTNER_VARIANT[L.kind],"c_l"+Math.random().toString(36).slice(2,6),partnerMood)}</div><b class="character-name name-partner">${esc(showName("partner"))}</b><span>${CHAR[L.kind].sub}</span><br><span class="role">LOVED ONE</span></div>`;
 }
 function renderConfirm(){
   if (!GAME.player.kind || !GAME.partner.kind) return go("s-player");
@@ -1427,8 +1467,9 @@ function renderConfirm(){
   if (PART === 2) e.innerHTML = (named ? `<b></b>, ` : ``) + `${named ? "you" : "You"} share your home with <b></b>. Months ago, you helped ${pr.o} through a hard time. Now something in you has quietly run out — and it's your turn to let someone help.`;
   else e.innerHTML = (named ? `<b></b>, ` : ``) + `${named ? "you" : "You"} share your home with <b></b>, the person you love most. Lately, something feels different—${pr.s === "they" ? "they seem" : pr.s + " seems"} emotionally drained and ${pr.s === "they" ? "need" : "needs"} you more than ever. This is a story about noticing the subtle signs, listening without judgment, and staying by ${pr.p} side through the hard days.`;
   const bs = e.querySelectorAll("b");
-  if (named) bs[0].textContent = GAME.player.name.trim();
+  if (named) { bs[0].textContent = GAME.player.name.trim(); bs[0].className = "character-name name-player"; }
   bs[bs.length - 1].textContent = inSentence("partner");
+  bs[bs.length - 1].className = "character-name name-partner";
   $("storyLine").innerHTML = e.innerHTML;
   $("partPick").querySelectorAll(".pp").forEach(b => { const selected = b.id !== "p0Pick" && +b.dataset.part === PART; b.classList.toggle("on", selected); b.setAttribute("aria-pressed", String(selected)); });
   $("beginBtn").textContent = PART === 2 ? "Start Part 2 ♥" : "Start Part 1 ♥";
@@ -2184,6 +2225,7 @@ function updateHUD(){
   const litN = PLAY.light.filter(v => v >= 1).length;
   $("hMood").innerHTML = PART === 2 ? avatar(GAME.player.kind, null, "hm", playerMood()) : partnerAvatar("hm");
   $("hName").textContent = PART === 2 ? showName("player") : showName("partner");
+  $("hName").className = "character-name name-" + (PART === 2 ? "player" : "partner");
   $("hPct").textContent = `${Tw()} ${PLAY.trust}`;
   $("restBtn").textContent = PART === 2 ? "💖 Self-love" : "🔋 Recharge";
   $("hFill").style.width = PLAY.trust + "%";
@@ -2888,6 +2930,7 @@ function answerBasics(i,index,button){
  feedback.innerHTML='<div class="why '+(correct?'good':'mid')+'"><h4>'+(correct?'A helpful understanding':'A chance to learn')+'<span class="delta up">+'+gain+' understanding</span></h4><span class="w"></span><div class="lm">'+(correct?'✨ '+P0_LABELS[i]+' is fully lit.':'🕯️ '+P0_LABELS[i]+' is dim. You can revisit this moment.')+'</div></div><div class="say small mine"><div class="bubble"></div><div class="face">'+basicsFace("player","p0answer",correct?"happy":"calm")+'</div></div><div class="say small"><div class="face">'+basicsFace("partner","p0reply",correct?"happy":"calm")+'</div><div class="bubble"></div></div>'+(q.support?'<details class="lookback" open><summary>Support in Vietnam · phone numbers and hours</summary>'+PART0_SUPPORT+'</details>':'')+'<button class="cta" id="p0Done">'+(correct?'Bring the light home ✨':'Continue together →')+'</button>';
  feedback.querySelector(".w").textContent=q.why;
  feedback.querySelector(".mine .bubble").textContent="“"+q.a[index]+"”";
+ addCharacterSpeaker(feedback.querySelector(".mine .bubble"));
  const reply=correct?"That helps me understand. We can keep learning and supporting each other.":"Let's think about that together. We can revisit this moment and try another response.";
  typeText(feedback.querySelector(".say:not(.mine) .bubble"),"“"+reply+"”",28,{kind:GAME.partner.kind,mood:correct?"happy":"calm"});
  $("p0Done").onclick=()=>finishBasicsTalk(i,correct);
