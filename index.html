@@ -949,7 +949,7 @@ html .character-name.name-partner,html .who b.name-partner{color:var(--partner-n
   </section>
 
   <!-- STEP 3: CONFIRM -->
-  <section class="screen" id="s-basics" lang="vi"><div class="top"><button class="back" id="p0Back" aria-label="Rời phần 0">←</button><div style="flex:1;text-align:center">Phần 0 · Tìm hiểu về sức khỏe tinh thần</div></div><div id="p0Content" class="p0-native"></div></section>
+  <section class="screen" id="s-basics" lang="vi"><div class="top"><button class="back" id="p0Back" aria-label="Rời phần 0">←</button><div style="flex:1;text-align:center">Phần 0 · Tìm hiểu về sức khỏe tinh thần</div><button type="button" class="musicbtn" aria-label="Tắt nhạc nền">🎵</button><button type="button" class="musicbtn voicebtn" aria-label="Tắt giọng nhân vật và hiệu ứng âm thanh">🔊</button></div><div id="p0Content" class="p0-native"></div></section>
 <section class="screen" id="s-confirm">
     <div class="top"><button class="back" data-go="s-partner" aria-label="Back">←</button><div class="dots"><i class="done"></i><i class="done"></i><i class="on"></i></div><div class="spacer"></div></div>
     <div class="scroll">
@@ -1200,11 +1200,14 @@ function musicStop(){
   if (MUSIC.master && AC) MUSIC.master.gain.setTargetAtTime(0, AC.currentTime, 0.4);
   clearInterval(MUSIC.timer); MUSIC.timer = null;
 }
+function musicLabel(button){
+  return button.closest("#s-basics") ? (MUSIC.on ? "Tắt nhạc nền" : "Bật nhạc nền") : (MUSIC.on ? "Music on" : "Music off");
+}
 function musicToggle(){
   MUSIC.on = !MUSIC.on;
   try { localStorage.setItem("hq_music", MUSIC.on ? "on" : "off"); } catch(e) {}
   MUSIC.on ? musicStart() : musicStop();
-  document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.setAttribute("aria-label", MUSIC.on ? "Music on" : "Music off"); });
+  document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.setAttribute("aria-label", musicLabel(b)); });
 }
 document.addEventListener("visibilitychange", () => { if (document.hidden) musicStop(); else if (MUSIC.on && AC) musicStart(); });
 // start softly on the first tap anywhere
@@ -1286,12 +1289,16 @@ function typeText(el, text, speed, voice, done){
 function mySay(o){ return o.say ? T(o.say) : spokenPart(T(o.t)); }
 function spokenPart(t){ const m = t.match(/“([^”]+)”/g); return m ? m.map(x => x.slice(1, -1)).join(" ") : ""; }
 function stopVoice(){ if (window.__typeSkip) window.__typeSkip(); }
+function voiceLabel(button){
+  return button.closest("#s-basics") ? (VOICE.on ? "Tắt giọng nhân vật và hiệu ứng âm thanh" : "Bật giọng nhân vật và hiệu ứng âm thanh") : (VOICE.on ? "Mute voices and sound effects" : "Unmute voices and sound effects");
+}
 function voiceToggle(){
   VOICE.on = !VOICE.on;
   if (!VOICE.on) activeEffectTones.forEach(o => o.stop());
   try { localStorage.setItem("hq_voice", VOICE.on ? "1" : "0"); } catch (e) {}
-  document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🔊" : "🔇"; b.setAttribute("aria-label", VOICE.on ? "Mute voices and sound effects" : "Unmute voices and sound effects"); });
-  toast(VOICE.on ? "🔊 Voices and sound effects on" : "🔇 Voices and sound effects muted");
+  document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🔊" : "🔇"; b.setAttribute("aria-label", voiceLabel(b)); });
+  const inBasics = $("s-basics").classList.contains("active");
+  toast(inBasics ? (VOICE.on ? "🔊 Đã bật giọng nhân vật và hiệu ứng âm thanh" : "🔇 Đã tắt giọng nhân vật và hiệu ứng âm thanh") : (VOICE.on ? "🔊 Voices and sound effects on" : "🔇 Voices and sound effects muted"));
 }
 // Reveal a question card step by step: the situation types out, the speaker talks, then the answers pop up.
 function revealCard(card, steps){
@@ -2810,8 +2817,8 @@ function renderEnd(){
 $("againBtn").onclick = () => { audio(); sfx.next(); go("s-intro"); };
 $("nextPartBtn").onclick = () => { applyPart(2); audio(); sfx.next(); go("s-intro"); };
 
-document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.onclick = e => { e.stopPropagation(); audio(); musicToggle(); }; });
-document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🔊" : "🔇"; b.setAttribute("aria-label", VOICE.on ? "Mute voices and sound effects" : "Unmute voices and sound effects"); b.onclick = e => { e.stopPropagation(); audio(); voiceToggle(); }; });
+document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.setAttribute("aria-label", musicLabel(b)); b.onclick = e => { e.stopPropagation(); audio(); musicToggle(); }; });
+document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🔊" : "🔇"; b.setAttribute("aria-label", voiceLabel(b)); b.onclick = e => { e.stopPropagation(); audio(); voiceToggle(); }; });
 
 // ---------------- colour theme: Light sky (default) or Soft dusk ----------------
 function setTheme(t){
