@@ -1,0 +1,29 @@
+name: Check Vietnam hotline information
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test verification safeguards
+        run: python3 -B -m unittest discover -s tests -v
+      - name: Check Find A Helpline and publish the result
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/check_hotlines.py --publish --report "$RUNNER_TEMP/hotline-check-report.json"
+      - name: Save verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hotline-verification
+          path: ${{ runner.temp }}/hotline-check-report.json
+          retention-days: 30
