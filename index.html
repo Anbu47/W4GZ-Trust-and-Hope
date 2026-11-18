@@ -1465,14 +1465,14 @@ function pairHTML(partnerMood, youMood, localized = false){
   const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   return `<div class="who"><div class="portrait" style="--pbg:${pv.bg}">${avatar(P.kind,null,"c_p"+Math.random().toString(36).slice(2,6),youMood)}</div><b><span class="character-name name-player">${esc(showName("player"))}</span></b><span>${pv.sub}</span><br><span class="role">${localized ? "BẠN" : "YOU"}</span></div>
           <div class="link">💞</div>
-          <div class="who"><div class="portrait" style="--pbg:${lv.bg}">${avatar(L.kind,PARTNER_VARIANT[L.kind],"c_l"+Math.random().toString(36).slice(2,6),partnerMood)}</div><b><span class="character-name name-partner">${esc(showName("partner"))}</span></b><span>${CHAR[L.kind].sub}</span><br><span class="role">${localized ? "NGƯỜI THÂN" : "LOVED ONE"}</span></div>`;
+          <div class="who"><div class="portrait" style="--pbg:${lv.bg}">${avatar(L.kind,PARTNER_VARIANT[L.kind],"c_l"+Math.random().toString(36).slice(2,6),partnerMood)}</div><b><span class="character-name name-partner">${esc(showName("partner"))}</span></b><span>${CHAR[L.kind].sub}</span><br><span class="role">${localized ? "NGƯỜI THƯƠNG" : "LOVED ONE"}</span></div>`;
 }
 function renderConfirm(){
   if (!GAME.player.kind || !GAME.partner.kind) return go("s-player");
   $("pair").innerHTML = pairHTML();
   $("storyLine").hidden = false;
   if (BASICS_SELECTED) {
-    $("storyLine").textContent = "Trước khi bắt đầu câu chuyện, hãy cùng người thân khám phá Ngôi nhà thấu hiểu. Trải qua tám tình huống trong bốn căn phòng để thắp sáng ngôi nhà và tìm hiểu các nguồn hỗ trợ tại Việt Nam.";
+    $("storyLine").textContent = "Trước khi bắt đầu câu chuyện, hãy cùng người thương khám phá Ngôi nhà thấu hiểu. Trải qua tám tình huống trong bốn căn phòng để thắp sáng ngôi nhà và tìm hiểu các nguồn hỗ trợ tại Việt Nam.";
     $("partPick").querySelectorAll(".pp").forEach(b => { const selected = b.id === "p0Pick"; b.classList.toggle("on", selected); b.setAttribute("aria-pressed", String(selected)); });
     $("beginBtn").textContent = "Bắt đầu phần 0 💡";
     renderConfirm.quiet = false;
@@ -2852,14 +2852,14 @@ const P0_LABELS = [
   "Cây non"
 ];
 const P0_SCENES = [
-  "Trước khi ra ngoài, người thân của bạn nói rằng họ thường nghe nhắc đến sức khỏe tinh thần nhưng chưa rõ nó là gì.",
-  "Khi xem ảnh gia đình, người thân nhớ lại lúc gặp khó khăn và được bảo phải ‘mạnh mẽ hơn’. Họ tự hỏi liệu cần người giúp có phải là yếu đuối không.",
-  "Sau một tuần bận rộn, người thân của bạn thấy mình khác thường. Bên tách trà, hai bạn nói về những dấu hiệu căng thẳng.",
-  "Khi lên kế hoạch trong sổ tay, người thân kể rằng họ dành thời gian tập thể dục nhưng lại thấy áy náy khi dành thời gian chăm sóc tinh thần.",
-  "Đang ngồi bên nhau trên ghế sofa, người thân của bạn chợt im lặng rồi nói rằng dạo này họ thấy mọi việc thật khó khăn.",
-  "Người thân đã tìm được thông tin liên hệ của chuyên viên tham vấn nhưng còn ngần ngại đặt lịch. Họ lo khó khăn của mình chưa đủ nghiêm trọng.",
-  "Hai bạn cùng tìm dịch vụ hỗ trợ gần nhà. Người thân của bạn chưa biết nơi nào có chuyên môn phù hợp và hỏi nên bắt đầu từ đâu.",
-  "Trong lúc tưới cây ngoài ban công, người thân kể rằng nơi họ liên hệ vẫn chưa trả lời. Họ thấy nản và chưa biết làm gì tiếp."
+  "Trước khi ra ngoài, người thương của bạn nói rằng họ thường nghe nhắc đến sức khỏe tinh thần nhưng chưa rõ nó là gì.",
+  "Khi xem ảnh gia đình, người thương nhớ lại lúc gặp khó khăn và được bảo phải ‘mạnh mẽ hơn’. Họ tự hỏi liệu cần người giúp có phải là yếu đuối không.",
+  "Sau một tuần bận rộn, người thương của bạn thấy mình khác thường. Bên tách trà, hai bạn nói về những dấu hiệu căng thẳng.",
+  "Khi lên kế hoạch trong sổ tay, người thương kể rằng họ dành thời gian tập thể dục nhưng lại thấy áy náy khi dành thời gian chăm sóc tinh thần.",
+  "Đang ngồi bên nhau trên ghế sofa, người thương của bạn chợt im lặng rồi nói rằng dạo này họ thấy mọi việc thật khó khăn.",
+  "Người thương đã tìm được thông tin liên hệ của chuyên viên tham vấn nhưng còn ngần ngại đặt lịch. Họ lo khó khăn của mình chưa đủ nghiêm trọng.",
+  "Hai bạn cùng tìm dịch vụ hỗ trợ gần nhà. Người thương của bạn chưa biết nơi nào có chuyên môn phù hợp và hỏi nên bắt đầu từ đâu.",
+  "Trong lúc tưới cây ngoài ban công, người thương kể rằng nơi họ liên hệ vẫn chưa trả lời. Họ thấy nản và chưa biết làm gì tiếp."
 ];
 const P0_LINES = [
   "Mình hay nghe nói về sức khỏe tinh thần. Nó là gì và tại sao lại quan trọng?",
@@ -2884,7 +2884,7 @@ function openBasics(from){
 }
 function renderBasicsIntro(){
  $("p0Content").className="p0-native scroll soon";
- $("p0Content").innerHTML='<div><span class="badge">PHẦN 0 · NGÔI NHÀ THẤU HIỂU</span></div><div class="pair">'+pairHTML("calm","calm",true)+'</div><div class="story">Cùng người thân khám phá ngôi nhà, tìm hiểu về sức khỏe tinh thần và biết mình có thể tìm đến ai khi cần hỗ trợ.</div><div class="howto"><div><span>🕯️</span><em><b>Thắp sáng ngôi nhà.</b> Chạm vào một đồ vật và chọn câu trả lời.</em></div><div><span>💡</span><em><b>Hiểu thêm qua mỗi câu hỏi.</b> Câu trả lời phù hợp sẽ thắp sáng đồ vật. Với lựa chọn khác, đồ vật sẽ sáng mờ và bạn có thể quay lại thử tiếp.</em></div><div><span>☎️</span><em><b>Tìm sự hỗ trợ.</b> Xem thông tin liên hệ đã được kiểm tra của các dịch vụ tại Việt Nam.</em></div></div><p class="note">Điểm chỉ phản ánh tiến độ trong trò chơi, không đánh giá sức khỏe tinh thần của bạn.</p><button class="cta" id="p0Enter">Vào nhà →</button>';
+ $("p0Content").innerHTML='<div><span class="badge">PHẦN 0 · NGÔI NHÀ THẤU HIỂU</span></div><div class="pair">'+pairHTML("calm","calm",true)+'</div><div class="story">Cùng người thương khám phá ngôi nhà, tìm hiểu về sức khỏe tinh thần và biết mình có thể tìm đến ai khi cần hỗ trợ.</div><div class="howto"><div><span>🕯️</span><em><b>Thắp sáng ngôi nhà.</b> Chạm vào một đồ vật và chọn câu trả lời.</em></div><div><span>💡</span><em><b>Hiểu thêm qua mỗi câu hỏi.</b> Câu trả lời phù hợp sẽ thắp sáng đồ vật. Với lựa chọn khác, đồ vật sẽ sáng mờ và bạn có thể quay lại thử tiếp.</em></div><div><span>☎️</span><em><b>Tìm sự hỗ trợ.</b> Xem thông tin liên hệ đã được kiểm tra của các dịch vụ tại Việt Nam.</em></div></div><p class="note">Điểm chỉ phản ánh tiến độ trong trò chơi, không đánh giá sức khỏe tinh thần của bạn.</p><button class="cta" id="p0Enter">Vào nhà →</button>';
  $("p0Enter").onclick=()=>{audio();sfx.next();renderBasics();};
 }
 function basicsHud(){
@@ -2903,7 +2903,7 @@ function renderBasics(){
    return '<button class="spot obj '+(v===2?'done':v===1?'dim again':'')+'" data-basic-q="'+i+'" style="left:'+x+'%;top:'+y+'%" aria-label="'+P0_ROOM_NAMES[r]+' · '+P0_LABELS[i]+' · '+(v===2?'đã sáng hẳn':v===1?'sáng mờ, thử thắp sáng':'khám phá')+'" '+(v===2?'disabled':'')+'><span class="ic">'+P0_OBJECTS[r][k]+'</span><span class="bd '+(v===2?'ok':v===1?'half':'talk')+'">'+(v===2?'✓':v===1?'½':'💬')+'</span></button>';
   }).join(""):'<div class="lock">🔒<small>Khám phá cả hai đồ vật ở mỗi phòng trước</small></div>';
   return '<div class="room '+(full?'lit':'')+' '+(open&&!full?'cur':'')+'" data-basic-room="'+r+'" style="--floor:'+rm.floor+'"><svg class="furn" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'+FURNITURE[rid]+'</svg><div class="dark" style="--d0:'+Math.max(0,open?.55-glow*.27:.8)+';--d1:'+Math.max(0,open?.88-glow*.44:.92)+'"></div><div class="rname">'+P0_ROOM_NAMES[r]+'<small>'+P0_THEMES[r]+'</small></div>'+spots+'</div>';
- }).join("")+'<div class="token" id="p0Me" aria-label="Nhân vật của bạn">'+basicsFace("player","p0me","happy")+'</div><div class="token love" id="p0Love" aria-label="Người thân của bạn"><div class="tk-face">'+basicsFace("partner","p0love","happy")+'</div></div>';
+ }).join("")+'<div class="token" id="p0Me" aria-label="Nhân vật của bạn">'+basicsFace("player","p0me","happy")+'</div><div class="token love" id="p0Love" aria-label="Người thương của bạn"><div class="tk-face">'+basicsFace("partner","p0love","happy")+'</div></div>';
  $("p0House").querySelectorAll("[data-basic-q]").forEach(b=>b.onclick=()=>openBasicsMoment(+b.dataset.basicQ));
  $("p0Help").onclick=openBasicsHelp;
  $("p0Finish").hidden=!BASICS.tried.every(Boolean);$("p0Finish").onclick=finishBasics;
