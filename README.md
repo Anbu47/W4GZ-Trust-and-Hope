@@ -6,15 +6,13 @@ A browser game about mental health, made by **W4GZ (Writing for Gen Z)**.
 
 ▶️ **Play:** [anbu47.github.io/W4GZ-Trust-and-Hope](https://anbu47.github.io/W4GZ-Trust-and-Hope/)
 
-## Part 0 · Mental Health Basics
+## Hotline matching · Vietnam
 
-Part 0 uses the same furnished rooms, character art, moving character tokens, glowing objects, HUD, speech bubbles, typewriter dialogue and answer-result panel as Parts 1 and 2. Choose your characters, select Part 0 and enter the house together. Eight moments are spread across the Living Room, Your Corner, Study and Balcony. Explore both objects in each room to unlock the next. Helpful answers fully light objects (+10 learning points); other answers leave a dim light (+3) and can be revisited for the remaining +7. The result screen supports reviewing the house, replaying Part 0 and continuing to the story. Learning points are not a mental health assessment.
+Choose **Ghép cặp đường dây nóng** to match five Vietnam hotlines with the needs they support. Correct matches open the full contact card, with clickable telephone numbers, opening hours, audience information and official links. Matched hotline cards can be opened again. Retry without penalties, replay, or return to part selection to start Part 1 or Part 2.
 
-Relevant answers and the in-game Help button include all five Vietnam support services: Ngày Mai, HOPE, the National Child Helpline, CSAGA and Peace House, with audiences, phone links and opening hours.
+The former Part 0 house and quiz have been removed. Parts 1 and 2 continue to use `questions.json` and include **Go back** (return to the house) and **Back to home** (return to the title screen) on questions.
 
-The Part 0 bank is in `part0.json` and is also embedded as `PART0_QUESTIONS` in `index.html`; keep both copies in sync when editing. Parts 1 and 2 continue to use `questions.json`.
-
-Content references: [WHO mental health overview](https://www.who.int/news-room/fact-sheets/detail/mental-health-strengthening-our-response), [WHO stress Q&A](https://www.who.int/news-room/questions-and-answers/item/stress), [Ngày Mai](https://duongdaynongngaymai.vn/), and [HOPE crisis support](https://hyvongsong.com/ho-tro-khung-hoang/). Directory source: [Find A Helpline · Vietnam](https://findahelpline.com/countries/vn), including each service’s profile. Support information checked on 16 November 2026; check the provider for updates.
+The matching activity and Help panel include Ngày Mai, HOPE, the National Child Helpline, CSAGA and Peace House. Every push to `main` runs the [automatic Find A Helpline check](docs/hotline-checks.md). Verification dates are only shown for successfully checked, matching contact content. HOPE’s hours are not published in its directory profile and are not automatically verified there.
 
 ## Two story parts
 
