@@ -900,6 +900,41 @@ html .character-name.name-partner,html .who b.name-partner{color:var(--partner-n
 .say.small .speaker-name{left:52px}
 .say.mine .speaker-name{left:auto;right:52px}
 
+
+/* Support matching: scoped to the existing game shell and themes. */
+#s-support-match{--sm-surface:#faf8f3;--sm-ink:#2c4463;--sm-edge:#bfcddc;--sm-active:#e4f4fa;--sm-good:#e1f1e8;--sm-good-edge:#408267;--sm-wrong:#fff0db}
+html.t-dusk #s-support-match{--sm-surface:#2c4463;--sm-ink:#f0f4fa;--sm-edge:#536780;--sm-active:#3a5980;--sm-good:#2b534b;--sm-good-edge:#7ed4b5;--sm-wrong:#584830}
+.sm-top-title{flex:1;text-align:center;font-weight:800;font-size:14px}
+.sm-progress{flex:none;padding:10px 2px 0}
+.sm-progress>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sm-progress b{font-size:13px;color:var(--sm-ink)}
+#smReset{margin:0;color:var(--sm-ink);font-size:12px}
+#smProgress{background:var(--sm-edge);height:8px}
+#smFill{background:var(--rose)}
+.sm-status{flex:none;min-height:64px;padding:10px 4px;font-size:13px;line-height:1.5;color:var(--sm-ink)}
+#s-support-match .sm-scroll>:first-child{margin-top:0}
+#s-support-match .step-title{margin:8px 0 18px}
+#s-support-match .step-title h2{font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:clamp(23px,6vw,31px);font-weight:800;line-height:1.2;color:var(--sm-ink)}
+#s-support-match .step-title p{line-height:1.5;font-size:13px}
+.sm-board{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:12px}
+.sm-board h3{font-size:12px;margin:0 0 10px;color:var(--sm-ink);font-weight:800}
+.sm-list{display:grid;gap:10px}
+.sm-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:7px;width:100%;min-height:142px;padding:14px 12px;border:2px solid var(--sm-edge);border-radius:16px;background:var(--sm-surface);color:var(--sm-ink);text-align:left;font-size:13px;line-height:1.55;overflow-wrap:anywhere;transition:background .2s,border-color .2s,transform .2s}
+.sm-service{font-weight:800}
+.sm-number{font-size:11px;opacity:.75}
+.sm-card.sm-selected{border-color:var(--sm-ink);background:var(--sm-active);box-shadow:0 0 0 1px var(--sm-ink)}
+.sm-card.sm-matched{border-color:var(--sm-good-edge);background:var(--sm-good);opacity:.85;cursor:default}
+.sm-check{font-size:11px;font-weight:800}
+.sm-card.sm-wrong{background:var(--sm-wrong)}
+.sm-card:focus-visible,#smReset:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.sm-finish{font-family:"Hanken Grotesk",sans-serif;font-style:normal;color:var(--sm-ink);background:var(--sm-good);border-color:var(--sm-good-edge);margin:18px 0}
+.sm-finish p{margin:8px 0 0;font-size:14px;line-height:1.5}
+.sm-finish[hidden]{display:none!important}
+#s-support-match .sm-note{font-size:11px;line-height:1.6;margin:18px 0 8px}
+#smContinue{flex:none}
+@media(max-width:380px){.sm-board{gap:8px}.sm-card{padding:11px 8px;min-height:174px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.sm-card{transition:none}}
+
 </style>
 </head>
 <body>
@@ -926,6 +961,19 @@ html .character-name.name-partner,html .who b.name-partner{color:var(--partner-n
     </div>
     <button class="cta" id="startBtn">Begin your story</button>
   </section>
+
+<section class="screen" id="s-support-match" lang="vi">
+ <div class="top"><button type="button" class="back" data-go="s-confirm" aria-label="Về chọn phần chơi">←</button><span class="sm-top-title">Kết nối hỗ trợ</span><button type="button" class="helpbtn" id="smHelp" aria-label="Xem thông tin hỗ trợ tại Việt Nam">♡<small>Hỗ trợ</small></button></div>
+ <div class="sm-progress"><div><b id="smCount">0 / 5 cặp đã ghép</b><button type="button" class="ghost" id="smReset">↻ Chơi lại</button></div><div class="hbar" id="smProgress" role="progressbar" aria-label="Số cặp đã ghép" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><i id="smFill"></i></div></div>
+ <div class="sm-status" id="smStatus" role="status" aria-live="polite"></div>
+ <div class="scroll sm-scroll">
+  <div class="step-title"><small>HIỂU ĐỂ ĐỒNG HÀNH</small><h2>Mỗi nhu cầu,<br>một kết nối phù hợp.</h2><p>Chọn một dịch vụ bên trái, rồi chọn mô tả phù hợp bên phải.</p></div>
+  <div class="sm-board"><section aria-label="Dịch vụ hỗ trợ"><h3>Dịch vụ</h3><div class="sm-list" id="smServices"></div></section><section aria-label="Nhu cầu hỗ trợ"><h3>Hỗ trợ phù hợp</h3><div class="sm-list" id="smNeeds"></div></section></div>
+  <div class="sm-finish story" id="smFinish" hidden><b>Bạn đã kết nối đủ 5 cặp! ✨</b><p>Biết nơi tìm hỗ trợ là một bước để chăm sóc bản thân và những người xung quanh.</p></div>
+  <p class="note sm-note">Một số dịch vụ có thể hỗ trợ các nhu cầu trùng nhau. Trò chơi sử dụng mô tả nổi bật của từng dịch vụ.<br>Không giới hạn thời gian · Không trừ điểm · Có thể thử lại.</p>
+ </div>
+ <button type="button" class="ghost" id="smContinue">Bỏ qua và tiếp tục →</button>
+</section>
 
   <!-- STEP 1: PLAYER -->
   <section class="screen" id="s-player">
@@ -1329,9 +1377,10 @@ const typeStep = (el, text, speed, voice) => (go) => el ? typeText(el, text, spe
 
 // ================= NAVIGATION =================
 function go(id){
-  $("qSheet").lang = id === "s-basics" ? "vi" : "en";
+  $("qSheet").lang = (id === "s-basics" || id === "s-support-match") ? "vi" : "en";
   ["qSheet","chapterCard","helpSheet","toast"].forEach(k => { const el = $(k); if (el) el.classList.remove("show"); });
   document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
+  if (id === "s-support-match") renderSupportMatch();
   if (id === "s-player") renderPlayer();
   if (id === "s-partner") renderPartner();
   if (id === "s-confirm") renderConfirm();
@@ -1496,7 +1545,7 @@ function renderConfirm(){
   if (renderConfirm.quiet) { renderConfirm.quiet = false; return; }
   setTimeout(() => { const r = $("pair").getBoundingClientRect(); burstHearts(r.left+r.width/2, r.top+r.height/3, 24); audio(); sfx.love(); }, 250);
 }
-$("beginBtn").onclick = () => { audio(); sfx.love(); if (BASICS_SELECTED) openBasics("s-confirm"); else go("s-intro"); };
+$("beginBtn").onclick = () => { audio(); sfx.love(); if (BASICS_SELECTED) startSupportMatch(); else go("s-intro"); };
 $("partPick").querySelectorAll(".pp[data-part]").forEach(b => b.onclick = () => { audio(); sfx.tap(); BASICS_SELECTED = false; applyPart(+b.dataset.part); renderConfirm.quiet = true; renderConfirm(); });
 
 // ================= GAME: THE DIMMING HOUSE =================
@@ -2991,6 +3040,72 @@ function finishBasics(){
 }
 $("p0Back").onclick=()=>{stopVoice();if(BASICS)BASICS.talk=null;go(basicsReturn);};
 $("p0Pick").onclick=()=>{audio();sfx.select();BASICS_SELECTED=true;renderConfirm.quiet=true;renderConfirm();};
+
+
+/* Matching activity adapted from the user's Kết nối hỗ trợ game. */
+const SUPPORT_MATCH_DATA = [{"id":"mai","name":"Ngày Mai","need":"Lắng nghe và hỗ trợ tinh thần khi bạn cảm thấy buồn, căng thẳng hoặc cô đơn và muốn có người chia sẻ."},{"id":"hope","name":"HOPE","need":"Hỗ trợ khi một người đang khủng hoảng hoặc có ý nghĩ tự tử."},{"id":"child","name":"Tổng đài Quốc gia Bảo vệ Trẻ em · 111","need":"Bảo vệ trẻ em dưới 16 tuổi và tư vấn cho người lớn đang lo cho một trẻ em."},{"id":"csaga","name":"CSAGA","need":"Tư vấn và kết nối dịch vụ hỗ trợ cho người bị bạo lực trên cơ sở giới."},{"id":"peace","name":"Ngôi nhà Bình yên","need":"Cung cấp nơi tạm lánh an toàn cho phụ nữ, thanh thiếu niên và trẻ em bị bạo lực, xâm hại hoặc mua bán người."}];
+let SUPPORT_MATCH = null;
+function newSupportMatch(){
+ return {selected:null,done:new Set(),order:shuffleArr(SUPPORT_MATCH_DATA.slice()),locked:false};
+}
+function resolveSupportPair(state,id){
+ if(state.done.has(id))return "already";
+ if(!state.selected)return "choose";
+ if(state.selected!==id)return "wrong";
+ state.done.add(id);state.selected=null;return "matched";
+}
+function startSupportMatch(){SUPPORT_MATCH=newSupportMatch();go("s-support-match");}
+function renderSupportMatch(){
+ if(!SUPPORT_MATCH)SUPPORT_MATCH=newSupportMatch();
+ const state=SUPPORT_MATCH;
+ $("smServices").replaceChildren();$("smNeeds").replaceChildren();
+ SUPPORT_MATCH_DATA.forEach((item,i)=>{
+  const b=document.createElement("button");b.type="button";b.className="sm-card sm-service";b.dataset.service=item.id;
+  const n=document.createElement("span");n.className="sm-number";n.textContent=String(i+1).padStart(2,"0");
+  const title=document.createElement("span");title.textContent=item.name;b.append(n,title);
+  b.classList.toggle("sm-selected",state.selected===item.id);b.setAttribute("aria-pressed",String(state.selected===item.id));
+  b.disabled=state.done.has(item.id);if(b.disabled){b.classList.add("sm-matched");const check=document.createElement("span");check.className="sm-check";check.textContent="✓ Đã ghép";b.append(check);}
+  b.onclick=()=>{
+   if(SUPPORT_MATCH.locked)return;
+   SUPPORT_MATCH.selected=item.id;
+   $("smServices").querySelectorAll("button").forEach(el=>{const on=el.dataset.service===item.id;el.classList.toggle("sm-selected",on);el.setAttribute("aria-pressed",String(on));});
+   $("smStatus").textContent="Đã chọn "+item.name+". Hãy chọn mô tả phù hợp.";
+   audio();sfx.select();
+  };$("smServices").appendChild(b);
+ });
+ state.order.forEach(item=>{
+  const b=document.createElement("button");b.type="button";b.className="sm-card sm-need";b.dataset.need=item.id;b.textContent=item.need;
+  b.disabled=state.done.has(item.id);
+  if(b.disabled){b.classList.add("sm-matched");const check=document.createElement("span");check.className="sm-check";check.textContent="✓ Đã ghép";b.append(check);}
+  b.onclick=()=>chooseSupportNeed(item,b);$("smNeeds").appendChild(b);
+ });
+ const complete=state.done.size===SUPPORT_MATCH_DATA.length;
+ $("smCount").textContent=state.done.size+" / 5 cặp đã ghép";
+ $("smFill").style.width=(state.done.size*20)+"%";$("smProgress").setAttribute("aria-valuenow",String(state.done.size));
+ $("smFinish").hidden=!complete;
+ $("smContinue").className=complete?"cta":"ghost";$("smContinue").textContent=complete?"Tiếp tục vào phần 0 →":"Bỏ qua và tiếp tục →";
+ $("smStatus").textContent=complete?"Hoàn thành! Bạn đã ghép đúng cả 5 dịch vụ.":state.done.size?"Tiếp tục chọn một dịch vụ chưa ghép.":"Bắt đầu bằng cách chọn một dịch vụ.";
+}
+function chooseSupportNeed(item,button){
+ const state=SUPPORT_MATCH;if(state.locked)return;
+ const result=resolveSupportPair(state,item.id);
+ if(result==="already")return;
+ if(result==="choose"){$("smStatus").textContent="Hãy chọn một dịch vụ bên trái trước nhé.";audio();sfx.tap();return;}
+ if(result==="wrong"){
+  state.locked=true;button.classList.add("sm-wrong");
+  $("smStatus").textContent="Cặp này chưa phù hợp với mô tả trong trò chơi. Hãy thử một mô tả khác nhé.";
+  audio();sfx.tap();
+  setTimeout(()=>{if(SUPPORT_MATCH!==state)return;state.locked=false;button.classList.remove("sm-wrong");},700);
+  return;
+ }
+ const box=button.getBoundingClientRect();audio();sfx.love();burstHearts(box.left+box.width/2,box.top+box.height/2,12);
+ renderSupportMatch();
+ $("smStatus").textContent=state.done.size===5?"Hoàn thành! Bạn đã ghép đúng cả 5 dịch vụ.":"Chính xác! "+item.name+" — "+item.need;
+ if(state.done.size===5){$("smFinish").scrollIntoView({behavior:"smooth",block:"nearest"});$("smContinue").focus({preventScroll:true});}
+}
+$("smReset").onclick=()=>{audio();sfx.tap();SUPPORT_MATCH=newSupportMatch();renderSupportMatch();$("smServices").querySelector("button").focus();};
+$("smContinue").onclick=()=>{audio();sfx.next();openBasics("s-support-match");};
+$("smHelp").onclick=()=>{$("qSheet").lang="vi";openBasicsHelp();};
 
 renderTitle();
 })();
