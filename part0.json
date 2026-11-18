@@ -2,91 +2,90 @@
   {
     "q": "Sức khỏe tinh thần là gì và vì sao nó quan trọng?",
     "a": [
-      "Đó là thể lực và mức độ vận động của chúng ta.",
-      "Nó ảnh hưởng đến cách ta suy nghĩ, cảm nhận, ứng phó và kết nối với người khác.",
-      "Đó là trí thông minh và tốc độ tiếp thu kiến thức.",
-      "Đó là luôn vui vẻ và tránh mọi cảm xúc khó chịu."
+      "Là mức độ rèn luyện thể chất và số giờ ta dành để tập thể dục mỗi ngày.",
+      "Là cách ta suy nghĩ, cảm nhận, ứng phó và kết nối với người xung quanh.",
+      "Là chỉ số trí thông minh và tốc độ ta tiếp thu kiến thức mới trong học tập.",
+      "Là lúc nào cũng vui vẻ và tránh xa mọi cảm xúc khó chịu trong cuộc sống."
     ],
     "best": 1,
     "why": "Sức khỏe tinh thần ảnh hưởng đến cách ta suy nghĩ, cảm nhận, ứng phó và kết nối với người khác trong cuộc sống hằng ngày. Có sức khỏe tinh thần tốt không có nghĩa là lúc nào cũng phải vui vẻ."
   },
   {
-    "q": "Gặp khó khăn về sức khỏe tinh thần có nghĩa là yếu đuối không?",
+    "q": "Gặp khó khăn về sức khỏe tinh thần có nghĩa là một người yếu đuối không?",
     "a": [
-      "Điều đó cho thấy một người quyết tâm giải quyết vấn đề đến mức nào.",
-      "Điều đó phản ánh khả năng tự vượt qua khó khăn của một người.",
-      "Đó là điều ai cũng có thể trải qua và không nói lên họ mạnh mẽ đến đâu.",
-      "Điều đó cho thấy một người đã sẵn sàng lo liệu việc hằng ngày đến đâu."
+      "Nó cho thấy người đó chưa đủ quyết tâm để tự mình giải quyết vấn đề.",
+      "Nó cho thấy người đó không thể vượt qua thử thách nếu thiếu người giúp đỡ.",
+      "Đó là trải nghiệm của con người và không quyết định ai mạnh hay yếu.",
+      "Nó cho thấy người đó chưa sẵn sàng gánh vác các trách nhiệm hằng ngày."
     ],
     "best": 2,
     "why": "Khó khăn về sức khỏe tinh thần không nói lên sự mạnh mẽ, quyết tâm hay giá trị của một người. Ai cũng có lúc cần được hỗ trợ."
   },
   {
-    "q": "Căng thẳng thường có những dấu hiệu nào?",
+    "q": "Đâu có thể là dấu hiệu một người đang gặp khó khăn về sức khỏe tinh thần?",
     "a": [
-      "Dễ cáu, căng cơ, khó ngủ hoặc khó tập trung.",
-      "Luôn tự tin, có năng lượng ổn định và cảm thấy bình tĩnh hơn.",
-      "Tập trung tốt hơn, cơ bắp thư giãn và luôn ngủ ngon.",
-      "Kiên nhẫn hơn, ít lo lắng hơn và thấy thoải mái khi chịu áp lực."
+      "Thu mình khỏi bạn bè, ăn ngủ thất thường, mất hứng thú với mọi thứ.",
+      "Lên nhiều kế hoạch mới, giữ nếp sinh hoạt đều đặn, vẫn vui với sở thích cũ.",
+      "Hay cười đùa cùng bạn bè, ngủ ngon giấc, háo hức mong chờ tương lai.",
+      "Hăng hái đặt câu hỏi trên lớp, nộp bài đúng hạn và ăn uống bình thường."
     ],
     "best": 0,
-    "why": "Căng thẳng có thể ảnh hưởng đến cảm xúc, cơ thể, giấc ngủ và khả năng tập trung. Những dấu hiệu này cũng có thể do nguyên nhân khác mà trò chơi không thể xác định."
+    "why": "Thu mình khỏi bạn bè, thay đổi trong ăn ngủ và mất hứng thú có thể là dấu hiệu một người đang gặp khó khăn. Hãy quan tâm và hỏi han mà không vội kết luận: riêng những dấu hiệu này chưa đủ để chẩn đoán."
   },
   {
-    "q": "Sức khỏe tinh thần có quan trọng như sức khỏe thể chất không?",
+    "q": "Thói quen nào giúp bảo vệ sức khỏe tinh thần của chính bạn?",
     "a": [
-      "Không, sức khỏe thể chất luôn quan trọng hơn trạng thái tinh thần.",
-      "Chỉ khi khó khăn về cảm xúc gây ra triệu chứng thể chất.",
-      "Có. Cả hai đều ảnh hưởng đến sức khỏe chung và có thể tác động lẫn nhau.",
-      "Chỉ khi một người đã được chẩn đoán về sức khỏe tinh thần."
+      "Thức khuya lướt mạng mỗi đêm để không bao giờ bỏ lỡ bất cứ thông tin gì.",
+      "Giữ kín mọi cảm xúc khó chịu trong lòng để không ai phải lo lắng cho mình.",
+      "Bỏ bữa và bớt nghỉ ngơi để có thêm thời gian làm việc mỗi ngày.",
+      "Ngủ đủ giấc, vận động cơ thể và trò chuyện với người mình tin tưởng."
     ],
-    "best": 2,
-    "why": "Sức khỏe tinh thần và thể chất đều góp phần vào sức khỏe chung và có thể tác động lẫn nhau. Sức khỏe tinh thần vẫn quan trọng dù không có triệu chứng thể chất hay chẩn đoán."
+    "best": 3,
+    "why": "Ngủ đủ giấc, vận động và trò chuyện với người tin tưởng là những thói quen có thể hỗ trợ sức khỏe tinh thần. Khi cần, bạn vẫn có thể tìm thêm sự giúp đỡ từ chuyên gia."
   },
   {
-    "q": "Bạn có thể giúp một người bạn đang gặp khó khăn về cảm xúc như thế nào?",
+    "q": "Bạn có thể hỗ trợ một người bạn đang gặp khó khăn về cảm xúc bằng cách nào?",
     "a": [
-      "Nhắc họ rằng người khác còn gặp vấn đề lớn hơn.",
-      "Lắng nghe mà không phán xét và hỏi họ muốn được hỗ trợ thế nào.",
-      "Khuyên họ giữ mình bận rộn để quên đi những cảm xúc khó chịu.",
-      "Đưa ngay giải pháp trước khi họ kể xong."
+      "Giải thích rằng còn nhiều người khác đang gặp chuyện tệ hơn họ rất nhiều.",
+      "Lắng nghe không phán xét và hỏi xem điều gì sẽ thật sự giúp được họ.",
+      "Khuyên họ cứ bận rộn liên tục để quên đi những cảm xúc khó chịu kia.",
+      "Đưa ra ngay cách giải quyết trước khi họ kịp kể hết câu chuyện của mình."
     ],
     "best": 1,
     "why": "Lắng nghe mà không phán xét và hỏi xem điều gì có thể giúp họ là cách tôn trọng nhu cầu của bạn mình. So sánh khó khăn hoặc vội đưa lời khuyên có thể khiến họ khó chia sẻ hơn."
   },
   {
-    "q": "Khi nào nên tìm đến chuyên gia?",
+    "q": "Khi nào một người nên tìm đến sự hỗ trợ tâm lý từ chuyên gia?",
     "a": [
-      "Chỉ khi tình huống trở thành trường hợp khẩn cấp.",
-      "Chỉ sau khi bạn bè và gia đình đã thử mọi cách.",
-      "Khi không còn lo được bất kỳ việc gì hằng ngày.",
-      "Bất cứ khi nào cần giúp đỡ, kể cả trước khi khó khăn trở nên nghiêm trọng."
+      "Chỉ khi tình hình đã trở thành một trường hợp khẩn cấp ngay trước mắt.",
+      "Chỉ sau khi bạn bè và gia đình đã thử hết mọi cách mà vẫn không ổn.",
+      "Chỉ khi họ không còn tự lo được bất kỳ việc gì trong sinh hoạt hằng ngày.",
+      "Bất cứ khi nào cần, kể cả trước khi mọi chuyện trở nên nghiêm trọng."
     ],
     "best": 3,
     "why": "Bạn có thể tìm đến chuyên gia ngay khi cần. Bạn không phải đợi đến khi tình huống khẩn cấp hoặc đã thử hết các cách hỗ trợ khác."
   },
   {
-    "q": "Ở Việt Nam, bạn có thể tìm hỗ trợ về sức khỏe tinh thần ở đâu?",
+    "q": "Ở Việt Nam, có thể tìm sự hỗ trợ sức khỏe tinh thần ở đâu?",
     "a": [
-      "Bệnh viện, chuyên viên tham vấn học đường hoặc chuyên gia sức khỏe tinh thần có chuyên môn phù hợp.",
-      "Một nhóm thảo luận công khai, nơi người lạ gợi ý cách điều trị.",
-      "Một tài khoản mạng xã hội hứa có cùng một cách chữa cho tất cả mọi người.",
-      "Một bài trắc nghiệm tính cách trực tuyến gợi ý cách điều trị dựa vào điểm số."
+      "Bệnh viện, chuyên viên tư vấn học đường hoặc tham vấn viên tâm lý, nhà trị liệu có chuyên môn.",
+      "Xem tarot để soi chiếu bản thân và hiểu về vấn đề trong cuộc sống của mình.",
+      "Một trang mạng xã hội hứa hẹn một cách chữa khỏi giống nhau cho tất cả mọi người.",
+      "Một bài trắc nghiệm tính cách trên mạng đưa ra cách điều trị chỉ dựa vào điểm số."
     ],
     "best": 0,
-    "why": "Bạn có thể bắt đầu từ bệnh viện, chuyên viên tham vấn học đường hoặc chuyên gia sức khỏe tinh thần có chuyên môn phù hợp. Các đường dây hỗ trợ bên dưới phục vụ những nhu cầu khác nhau. Hãy xem đối tượng hỗ trợ và giờ hoạt động của từng dịch vụ.",
+    "why": "Bạn có thể tìm đến bệnh viện, chuyên viên tư vấn học đường hoặc chuyên gia tâm lý có chuyên môn phù hợp. Tarot và trắc nghiệm tính cách không thay thế sự đánh giá hay hỗ trợ chuyên môn. Các đường dây bên dưới là những lựa chọn hỗ trợ khác; hãy xem đối tượng phục vụ và giờ hoạt động.",
     "support": true
   },
   {
-    "q": "Nếu lần đầu tìm hỗ trợ mà chưa được giúp, bạn có thể làm gì?",
+    "q": "Các vấn đề sức khỏe tinh thần có thể cải thiện được không?",
     "a": [
-      "Đợi đến khi vấn đề nghiêm trọng hơn rồi thử lại.",
-      "Cho rằng nơi nào cũng sẽ phản hồi như vậy.",
-      "Thử một dịch vụ khác hoặc nhờ người bạn tin tưởng giúp liên hệ.",
-      "Kết luận rằng không nơi nào có thể giúp vì một cuộc gọi không được trả lời."
+      "Chỉ cải thiện khi người đó tự cố gắng vượt qua một mình mà không cần ai giúp.",
+      "Hầu như không thể, vì đó là tính cách cố định đi theo người đó suốt cả cuộc đời.",
+      "Có thể, với sự hỗ trợ phù hợp, nhiều người hồi phục và sống tốt trở lại.",
+      "Chỉ cải thiện khi người đó dùng thuốc thật lâu dài mà không cần cách nào khác."
     ],
     "best": 2,
-    "why": "Một lần liên hệ chưa thành công không có nghĩa là hết cách. Hãy thử dịch vụ phù hợp khác hoặc nhờ người bạn tin tưởng giúp liên hệ. Nếu có người đang gặp nguy hiểm ngay lúc này, hãy tìm trợ giúp y tế khẩn cấp, đừng chờ đường dây hỗ trợ mở cửa.",
-    "support": true
+    "why": "Nhiều người có thể hồi phục và sống tốt trở lại khi nhận được sự hỗ trợ phù hợp. Quá trình này khác nhau ở mỗi người; khó khăn không phải là tính cách cố định, và bạn không cần tự vượt qua mọi thứ một mình."
   }
 ]
