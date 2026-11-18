@@ -935,6 +935,14 @@ html.t-dusk #s-support-match{--sm-surface:#2c4463;--sm-ink:#f0f4fa;--sm-edge:#53
 @media(prefers-reduced-motion:reduce){.sm-card{transition:none}}
 
 .sm-need strong{font-weight:800}
+
+.sm-service.sm-matched{cursor:pointer}
+.sm-full-card h3{margin:12px 0 16px}
+#smFullBody p{line-height:1.7}
+#smFullBody a[href^="tel:"]{display:inline-block;font-size:20px;font-weight:800;padding:6px 0}
+#smFullBody .sm-detail-note{font-size:12px;opacity:.9}
+#smFullBody a{overflow-wrap:anywhere}
+
 </style>
 </head>
 <body>
@@ -3064,6 +3072,31 @@ function resolveSupportPair(state,id){
  state.done.add(id);state.selected=null;return "matched";
 }
 function startSupportMatch(){SUPPORT_MATCH=newSupportMatch();go("s-support-match");}
+
+function showSupportMatchDetails(item){
+ const template=document.createElement("template");template.innerHTML=PART0_SUPPORT;
+ const paragraphs=Array.from(template.content.querySelectorAll("aside > p"));
+ const detail=paragraphs.find(p=>{const title=p.querySelector("b");return title&&title.textContent.startsWith(item.name.split(" · ")[0]);});
+ const card=$("qCard");card.className="qcard help sm-full-card";card.onclick=null;
+ card.innerHTML='<div class="qhead"><span class="chip">ĐÃ GHÉP ĐÚNG</span><span class="n">✓</span></div><h3 id="smDetailTitle"></h3><div id="smFullBody"></div><button type="button" class="cta" id="smCloseDetails">Tiếp tục →</button>';
+ $("smDetailTitle").textContent=item.name;
+ const body=$("smFullBody");
+ if(detail){
+  const copy=detail.cloneNode(true),title=copy.querySelector("b");
+  if(title)title.remove();if(copy.firstChild&&copy.firstChild.nodeName==="BR")copy.firstChild.remove();
+  if(copy.firstChild&&copy.firstChild.nodeName==="A"){const description=document.createElement("p");description.textContent=item.need;body.appendChild(description);}
+  body.appendChild(copy);
+ }else{const p=document.createElement("p");p.textContent=item.need;body.appendChild(p);}
+ paragraphs.filter(p=>!p.querySelector("b")).forEach(p=>{const copy=p.cloneNode(true);copy.classList.add("sm-detail-note");body.appendChild(copy);});
+ $("smCloseDetails").onclick=()=>{
+  $("qSheet").classList.remove("show");
+  if(SUPPORT_MATCH.done.size===5){$("smFinish").scrollIntoView({behavior:"smooth",block:"nearest"});$("smContinue").focus({preventScroll:true});}
+  else{const next=Array.from($("smServices").querySelectorAll("button")).find(b=>!SUPPORT_MATCH.done.has(b.dataset.service));if(next)next.focus();}
+ };
+ $("qSheet").lang="vi";$("qSheet").classList.add("show");card.scrollTop=0;
+ $("smCloseDetails").focus({preventScroll:true});
+}
+
 function renderSupportMatch(){
  if(!SUPPORT_MATCH)SUPPORT_MATCH=newSupportMatch();
  const state=SUPPORT_MATCH;
@@ -3072,9 +3105,10 @@ function renderSupportMatch(){
   const b=document.createElement("button");b.type="button";b.className="sm-card sm-service";b.dataset.service=item.id;
   const title=document.createElement("span");title.textContent=item.name;b.appendChild(title);
   b.classList.toggle("sm-selected",state.selected===item.id);b.setAttribute("aria-pressed",String(state.selected===item.id));
-  b.disabled=state.done.has(item.id);if(b.disabled){b.classList.add("sm-matched");const check=document.createElement("span");check.className="sm-check";check.textContent="✓ Đã ghép";b.append(check);}
+  if(state.done.has(item.id)){b.classList.add("sm-matched");const check=document.createElement("span");check.className="sm-check";check.textContent="✓ Xem thông tin";b.append(check);}
   b.onclick=()=>{
    if(SUPPORT_MATCH.locked)return;
+   if(SUPPORT_MATCH.done.has(item.id)){showSupportMatchDetails(item);return;}
    SUPPORT_MATCH.selected=item.id;
    $("smServices").querySelectorAll("button").forEach(el=>{const on=el.dataset.service===item.id;el.classList.toggle("sm-selected",on);el.setAttribute("aria-pressed",String(on));});
    $("smStatus").textContent="Đã chọn "+item.name+". Hãy chọn mô tả phù hợp.";
@@ -3109,7 +3143,7 @@ function chooseSupportNeed(item,button){
  const box=button.getBoundingClientRect();audio();sfx.love();burstHearts(box.left+box.width/2,box.top+box.height/2,12);
  renderSupportMatch();
  $("smStatus").textContent=state.done.size===5?"Hoàn thành! Bạn đã ghép đúng cả 5 đường dây nóng.":"Chính xác! "+item.name+" — "+item.need;
- if(state.done.size===5){$("smFinish").scrollIntoView({behavior:"smooth",block:"nearest"});$("smContinue").focus({preventScroll:true});}
+ showSupportMatchDetails(item);
 }
 $("smReset").onclick=()=>{audio();sfx.tap();SUPPORT_MATCH=newSupportMatch();renderSupportMatch();$("smServices").querySelector("button").focus();};
 $("smContinue").onclick=()=>{audio();sfx.next();openBasics("s-support-match");};
