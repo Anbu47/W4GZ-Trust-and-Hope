@@ -889,9 +889,10 @@ html.t-light{--player-name:#075985;--partner-name:#7e22a3}
 html.t-dusk{--player-name:#91d2ff;--partner-name:#e3b9ff}
 html .character-name.name-player,html .who b.name-player{color:var(--player-name) !important}
 html .character-name.name-partner,html .who b.name-partner{color:var(--partner-name) !important}
-.character-name{font-weight:800}
+.character-name{font-weight:800;font-size:calc(1em + 2px)}
+.who b .character-name{font-size:calc(1em + 2px);font-weight:800}
 .say{position:relative;padding-top:20px}
-.say .speaker-name{position:absolute;left:60px;top:0;font-family:"Hanken Grotesk",sans-serif;font-size:12px;font-style:normal;font-weight:800;line-height:16px;max-width:calc(100% - 70px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.say .speaker-name{position:absolute;left:60px;top:0;font-family:"Hanken Grotesk",sans-serif;font-size:14px;font-style:normal;font-weight:800;line-height:18px;max-width:calc(100% - 70px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .say.small .speaker-name{left:52px}
 .say.mine .speaker-name{left:auto;right:52px}
 
@@ -1446,9 +1447,9 @@ function pairHTML(partnerMood, youMood){
   const P = GAME.player, L = GAME.partner;
   const pv = CHAR[P.kind], lv = Object.assign({}, CHAR[L.kind], PARTNER_VARIANT[L.kind]);
   const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  return `<div class="who"><div class="portrait" style="--pbg:${pv.bg}">${avatar(P.kind,null,"c_p"+Math.random().toString(36).slice(2,6),youMood)}</div><b class="character-name name-player">${esc(showName("player"))}</b><span>${pv.sub}</span><br><span class="role">YOU</span></div>
+  return `<div class="who"><div class="portrait" style="--pbg:${pv.bg}">${avatar(P.kind,null,"c_p"+Math.random().toString(36).slice(2,6),youMood)}</div><b><span class="character-name name-player">${esc(showName("player"))}</span></b><span>${pv.sub}</span><br><span class="role">YOU</span></div>
           <div class="link">💞</div>
-          <div class="who"><div class="portrait" style="--pbg:${lv.bg}">${avatar(L.kind,PARTNER_VARIANT[L.kind],"c_l"+Math.random().toString(36).slice(2,6),partnerMood)}</div><b class="character-name name-partner">${esc(showName("partner"))}</b><span>${CHAR[L.kind].sub}</span><br><span class="role">LOVED ONE</span></div>`;
+          <div class="who"><div class="portrait" style="--pbg:${lv.bg}">${avatar(L.kind,PARTNER_VARIANT[L.kind],"c_l"+Math.random().toString(36).slice(2,6),partnerMood)}</div><b><span class="character-name name-partner">${esc(showName("partner"))}</span></b><span>${CHAR[L.kind].sub}</span><br><span class="role">LOVED ONE</span></div>`;
 }
 function renderConfirm(){
   if (!GAME.player.kind || !GAME.partner.kind) return go("s-player");
