@@ -968,10 +968,10 @@ html.t-dusk #s-support-match{--sm-surface:#2c4463;--sm-ink:#f0f4fa;--sm-edge:#53
  <div class="sm-progress"><div><b id="smCount">0 / 5 cặp đã ghép</b><button type="button" class="ghost" id="smReset">↻ Chơi lại</button></div><div class="hbar" id="smProgress" role="progressbar" aria-label="Số cặp đã ghép" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><i id="smFill"></i></div></div>
  <div class="sm-status" id="smStatus" role="status" aria-live="polite"></div>
  <div class="scroll sm-scroll">
-  <div class="step-title"><small>HIỂU ĐỂ ĐỒNG HÀNH</small><h2>Mỗi nhu cầu,<br>một kết nối phù hợp.</h2><p>Chọn một dịch vụ bên trái, rồi chọn mô tả phù hợp bên phải.</p></div>
-  <div class="sm-board"><section aria-label="Dịch vụ hỗ trợ"><h3>Dịch vụ</h3><div class="sm-list" id="smServices"></div></section><section aria-label="Nhu cầu hỗ trợ"><h3>Hỗ trợ phù hợp</h3><div class="sm-list" id="smNeeds"></div></section></div>
+  <div class="step-title"><small>HIỂU ĐỂ ĐỒNG HÀNH</small><h2>Mỗi nhu cầu,<br>một kết nối phù hợp.</h2><p>Chọn một đường dây nóng bên trái, rồi chọn mô tả phù hợp bên phải.</p></div>
+  <div class="sm-board"><section aria-label="Đường dây nóng hỗ trợ"><h3>Đường dây nóng</h3><div class="sm-list" id="smServices"></div></section><section aria-label="Nhu cầu hỗ trợ"><h3>Hỗ trợ phù hợp</h3><div class="sm-list" id="smNeeds"></div></section></div>
   <div class="sm-finish story" id="smFinish" hidden><b>Bạn đã kết nối đủ 5 cặp! ✨</b><p>Biết nơi tìm hỗ trợ là một bước để chăm sóc bản thân và những người xung quanh.</p></div>
-  <p class="note sm-note">Một số dịch vụ có thể hỗ trợ các nhu cầu trùng nhau. Trò chơi sử dụng mô tả nổi bật của từng dịch vụ.<br>Không giới hạn thời gian · Không trừ điểm · Có thể thử lại.</p>
+  <p class="note sm-note">Một số đường dây nóng có thể hỗ trợ các nhu cầu trùng nhau. Trò chơi sử dụng mô tả nổi bật của từng đường dây nóng.<br>Không giới hạn thời gian · Không trừ điểm · Có thể thử lại.</p>
  </div>
  <button type="button" class="ghost" id="smContinue">Bỏ qua và tiếp tục →</button>
 </section>
@@ -3094,13 +3094,13 @@ function renderSupportMatch(){
  $("smFill").style.width=(state.done.size*20)+"%";$("smProgress").setAttribute("aria-valuenow",String(state.done.size));
  $("smFinish").hidden=!complete;
  $("smContinue").className=complete?"cta":"ghost";$("smContinue").textContent=complete?"Tiếp tục vào phần 0 →":"Bỏ qua và tiếp tục →";
- $("smStatus").textContent=complete?"Hoàn thành! Bạn đã ghép đúng cả 5 dịch vụ.":state.done.size?"Tiếp tục chọn một dịch vụ chưa ghép.":"Bắt đầu bằng cách chọn một dịch vụ.";
+ $("smStatus").textContent=complete?"Hoàn thành! Bạn đã ghép đúng cả 5 đường dây nóng.":state.done.size?"Tiếp tục chọn một đường dây nóng chưa ghép.":"Bắt đầu bằng cách chọn một đường dây nóng.";
 }
 function chooseSupportNeed(item,button){
  const state=SUPPORT_MATCH;if(state.locked)return;
  const result=resolveSupportPair(state,item.id);
  if(result==="already")return;
- if(result==="choose"){$("smStatus").textContent="Hãy chọn một dịch vụ bên trái trước nhé.";audio();sfx.tap();return;}
+ if(result==="choose"){$("smStatus").textContent="Hãy chọn một đường dây nóng bên trái trước nhé.";audio();sfx.tap();return;}
  if(result==="wrong"){
   state.locked=true;button.classList.add("sm-wrong");
   $("smStatus").textContent="Cặp này chưa phù hợp với mô tả trong trò chơi. Hãy thử một mô tả khác nhé.";
@@ -3110,7 +3110,7 @@ function chooseSupportNeed(item,button){
  }
  const box=button.getBoundingClientRect();audio();sfx.love();burstHearts(box.left+box.width/2,box.top+box.height/2,12);
  renderSupportMatch();
- $("smStatus").textContent=state.done.size===5?"Hoàn thành! Bạn đã ghép đúng cả 5 dịch vụ.":"Chính xác! "+item.name+" — "+item.need;
+ $("smStatus").textContent=state.done.size===5?"Hoàn thành! Bạn đã ghép đúng cả 5 đường dây nóng.":"Chính xác! "+item.name+" — "+item.need;
  if(state.done.size===5){$("smFinish").scrollIntoView({behavior:"smooth",block:"nearest"});$("smContinue").focus({preventScroll:true});}
 }
 $("smReset").onclick=()=>{audio();sfx.tap();SUPPORT_MATCH=newSupportMatch();renderSupportMatch();$("smServices").querySelector("button").focus();};
