@@ -1,92 +1,92 @@
 [
   {
-    "q": "What is mental health, and why does it matter?",
+    "q": "Sức khỏe tinh thần là gì và vì sao nó quan trọng?",
     "a": [
-      "It concerns physical fitness and how much exercise we do.",
-      "It shapes how we think, feel, cope, and connect with others.",
-      "It describes our intelligence and how quickly we learn things.",
-      "It means feeling cheerful and avoiding all unpleasant emotions."
+      "Đó là thể lực và mức độ vận động của chúng ta.",
+      "Nó ảnh hưởng đến cách ta suy nghĩ, cảm nhận, ứng phó và kết nối với người khác.",
+      "Đó là trí thông minh và tốc độ tiếp thu kiến thức.",
+      "Đó là luôn vui vẻ và tránh mọi cảm xúc khó chịu."
     ],
     "best": 1,
-    "why": "Mental health affects how we think, feel, cope and relate to others. It matters in everyday life and does not mean being cheerful all the time."
+    "why": "Sức khỏe tinh thần ảnh hưởng đến cách ta suy nghĩ, cảm nhận, ứng phó và kết nối với người khác trong cuộc sống hằng ngày. Có sức khỏe tinh thần tốt không có nghĩa là lúc nào cũng phải vui vẻ."
   },
   {
-    "q": "Does struggling with mental health mean someone is weak?",
+    "q": "Gặp khó khăn về sức khỏe tinh thần có nghĩa là yếu đuối không?",
     "a": [
-      "It shows how much determination someone puts into solving problems.",
-      "It reflects how well someone can manage challenges without support.",
-      "It is a human experience that does not define someone’s strength.",
-      "It reveals how prepared someone is to handle everyday responsibilities."
+      "Điều đó cho thấy một người quyết tâm giải quyết vấn đề đến mức nào.",
+      "Điều đó phản ánh khả năng tự vượt qua khó khăn của một người.",
+      "Đó là điều ai cũng có thể trải qua và không nói lên họ mạnh mẽ đến đâu.",
+      "Điều đó cho thấy một người đã sẵn sàng lo liệu việc hằng ngày đến đâu."
     ],
     "best": 2,
-    "why": "Mental health difficulties do not define someone’s strength, determination or worth. Needing support is a human experience."
+    "why": "Khó khăn về sức khỏe tinh thần không nói lên sự mạnh mẽ, quyết tâm hay giá trị của một người. Ai cũng có lúc cần được hỗ trợ."
   },
   {
-    "q": "What are some common signs of stress?",
+    "q": "Căng thẳng thường có những dấu hiệu nào?",
     "a": [
-      "Irritability, muscle tension, and difficulty sleeping or concentrating.",
-      "Constant confidence, steady energy, and an increased sense of calm.",
-      "Better concentration, relaxed muscles, and consistently restful sleep.",
-      "Greater patience, fewer worries, and feeling comfortable under pressure."
+      "Dễ cáu, căng cơ, khó ngủ hoặc khó tập trung.",
+      "Luôn tự tin, có năng lượng ổn định và cảm thấy bình tĩnh hơn.",
+      "Tập trung tốt hơn, cơ bắp thư giãn và luôn ngủ ngon.",
+      "Kiên nhẫn hơn, ít lo lắng hơn và thấy thoải mái khi chịu áp lực."
     ],
     "best": 0,
-    "why": "Stress can affect emotions, the body, sleep and concentration. These signs can have other causes too; a quiz cannot diagnose their cause."
+    "why": "Căng thẳng có thể ảnh hưởng đến cảm xúc, cơ thể, giấc ngủ và khả năng tập trung. Những dấu hiệu này cũng có thể do nguyên nhân khác mà trò chơi không thể xác định."
   },
   {
-    "q": "Is mental health just as important as physical health?",
+    "q": "Sức khỏe tinh thần có quan trọng như sức khỏe thể chất không?",
     "a": [
-      "No, physical health always matters more than emotional well-being.",
-      "Only when emotional difficulties begin to cause physical symptoms.",
-      "Yes, both affect overall well-being and can influence each other.",
-      "Only when someone has received a formal mental health diagnosis."
+      "Không, sức khỏe thể chất luôn quan trọng hơn trạng thái tinh thần.",
+      "Chỉ khi khó khăn về cảm xúc gây ra triệu chứng thể chất.",
+      "Có. Cả hai đều ảnh hưởng đến sức khỏe chung và có thể tác động lẫn nhau.",
+      "Chỉ khi một người đã được chẩn đoán về sức khỏe tinh thần."
     ],
     "best": 2,
-    "why": "Mental and physical health both contribute to overall well-being and can influence each other. Mental health matters even without physical symptoms or a diagnosis."
+    "why": "Sức khỏe tinh thần và thể chất đều góp phần vào sức khỏe chung và có thể tác động lẫn nhau. Sức khỏe tinh thần vẫn quan trọng dù không có triệu chứng thể chất hay chẩn đoán."
   },
   {
-    "q": "How can you support a friend who is struggling emotionally?",
+    "q": "Bạn có thể giúp một người bạn đang gặp khó khăn về cảm xúc như thế nào?",
     "a": [
-      "Explain that other people have bigger problems to deal with.",
-      "Listen without judgment and ask what support would feel helpful.",
-      "Encourage them to stay busy so they forget their difficult feelings.",
-      "Give them a solution before they finish explaining their situation."
+      "Nhắc họ rằng người khác còn gặp vấn đề lớn hơn.",
+      "Lắng nghe mà không phán xét và hỏi họ muốn được hỗ trợ thế nào.",
+      "Khuyên họ giữ mình bận rộn để quên đi những cảm xúc khó chịu.",
+      "Đưa ngay giải pháp trước khi họ kể xong."
     ],
     "best": 1,
-    "why": "Listening without judgment and asking what would help respects your friend’s needs. Comparing problems or rushing into solutions can make it harder to talk."
+    "why": "Lắng nghe mà không phán xét và hỏi xem điều gì có thể giúp họ là cách tôn trọng nhu cầu của bạn mình. So sánh khó khăn hoặc vội đưa lời khuyên có thể khiến họ khó chia sẻ hơn."
   },
   {
-    "q": "When might someone benefit from professional support?",
+    "q": "Khi nào nên tìm đến chuyên gia?",
     "a": [
-      "Only when their situation becomes an immediate emergency.",
-      "Only after friends and family have tried every possible solution.",
-      "When they can no longer manage any of their daily responsibilities.",
-      "Whenever they need help, including before difficulties become severe."
+      "Chỉ khi tình huống trở thành trường hợp khẩn cấp.",
+      "Chỉ sau khi bạn bè và gia đình đã thử mọi cách.",
+      "Khi không còn lo được bất kỳ việc gì hằng ngày.",
+      "Bất cứ khi nào cần giúp đỡ, kể cả trước khi khó khăn trở nên nghiêm trọng."
     ],
     "best": 3,
-    "why": "People can seek professional support before difficulties become severe. They do not need to wait for an emergency or for other forms of support to be exhausted."
+    "why": "Bạn có thể tìm đến chuyên gia ngay khi cần. Bạn không phải đợi đến khi tình huống khẩn cấp hoặc đã thử hết các cách hỗ trợ khác."
   },
   {
-    "q": "Where can someone look for mental health support in Vietnam?",
+    "q": "Ở Việt Nam, bạn có thể tìm hỗ trợ về sức khỏe tinh thần ở đâu?",
     "a": [
-      "A hospital, school counsellor, or qualified mental health professional.",
-      "A public discussion group where strangers suggest personal treatments.",
-      "A social media account that promises the same cure for everyone.",
-      "An online personality quiz that recommends treatment from a score."
+      "Bệnh viện, chuyên viên tham vấn học đường hoặc chuyên gia sức khỏe tinh thần có chuyên môn phù hợp.",
+      "Một nhóm thảo luận công khai, nơi người lạ gợi ý cách điều trị.",
+      "Một tài khoản mạng xã hội hứa có cùng một cách chữa cho tất cả mọi người.",
+      "Một bài trắc nghiệm tính cách trực tuyến gợi ý cách điều trị dựa vào điểm số."
     ],
     "best": 0,
-    "why": "A hospital, school counsellor or qualified mental health professional can be a starting point. The Vietnam helplines below offer additional options for different needs; check each service’s audience and opening hours.",
+    "why": "Bạn có thể bắt đầu từ bệnh viện, chuyên viên tham vấn học đường hoặc chuyên gia sức khỏe tinh thần có chuyên môn phù hợp. Các đường dây hỗ trợ bên dưới phục vụ những nhu cầu khác nhau. Hãy xem đối tượng hỗ trợ và giờ hoạt động của từng dịch vụ.",
     "support": true
   },
   {
-    "q": "What can someone do if their first attempt to get support is unsuccessful?",
+    "q": "Nếu lần đầu tìm hỗ trợ mà chưa được giúp, bạn có thể làm gì?",
     "a": [
-      "Wait until the problem becomes more serious before trying again.",
-      "Assume that other support services will give the same response.",
-      "Try another service or ask someone trusted to help them connect.",
-      "Decide that an unanswered call means support is unavailable everywhere."
+      "Đợi đến khi vấn đề nghiêm trọng hơn rồi thử lại.",
+      "Cho rằng nơi nào cũng sẽ phản hồi như vậy.",
+      "Thử một dịch vụ khác hoặc nhờ người bạn tin tưởng giúp liên hệ.",
+      "Kết luận rằng không nơi nào có thể giúp vì một cuộc gọi không được trả lời."
     ],
     "best": 2,
-    "why": "An unsuccessful first attempt does not mean all support is unavailable. Try another suitable service or ask someone trusted to help. If someone is in immediate danger, seek emergency medical help rather than waiting for a helpline.",
+    "why": "Một lần liên hệ chưa thành công không có nghĩa là hết cách. Hãy thử dịch vụ phù hợp khác hoặc nhờ người bạn tin tưởng giúp liên hệ. Nếu có người đang gặp nguy hiểm ngay lúc này, hãy tìm trợ giúp y tế khẩn cấp, đừng chờ đường dây hỗ trợ mở cửa.",
     "support": true
   }
 ]
