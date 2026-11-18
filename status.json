@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "issues": [],
+  "checks": [
+    {
+      "id": "mai",
+      "name": "Ngày Mai",
+      "phones": [
+        "+84963061414"
+      ],
+      "phone_match": true,
+      "website_match": true,
+      "hours": "matched",
+      "source": "https://findahelpline.com/organizations/ngay-mai"
+    },
+    {
+      "id": "hope",
+      "name": "HOPE",
+      "phones": [
+        "0865044400"
+      ],
+      "phone_match": true,
+      "website_match": true,
+      "hours": "not_published_in_profile",
+      "source": "https://findahelpline.com/organizations/hope-suicide-prevention-hotline"
+    },
+    {
+      "id": "child",
+      "name": "Tổng đài Quốc gia Bảo vệ Trẻ em",
+      "phones": [
+        "111"
+      ],
+      "phone_match": true,
+      "website_match": true,
+      "hours": "matched",
+      "source": "https://findahelpline.com/organizations/t-ng-dai-di-n-tho-i-qu-c-gia-b-o-v-tr-em-national-child-helpline"
+    },
+    {
+      "id": "csaga",
+      "name": "CSAGA",
+      "phones": [
+        "02433335599"
+      ],
+      "phone_match": true,
+      "website_match": true,
+      "hours": "matched",
+      "source": "https://findahelpline.com/organizations/d-ng-day-nong-h-tr-ng-i-b-b-o-l-c-gi-i"
+    },
+    {
+      "id": "peace",
+      "name": "Ngôi nhà Bình yên",
+      "phones": [
+        "1900969680",
+        "+84946833380"
+      ],
+      "phone_match": true,
+      "website_match": true,
+      "hours": "matched",
+      "source": "https://findahelpline.com/organizations/ngoi-nha-binh-yen-peace-house-shelter-vietnam"
+    }
+  ],
+  "support_sha256": "cfc7e64845eae49698450000f7a17c4d929b8f9083b59a8940a4c84f24c2ba01",
+  "schema_version": 1,
+  "source": "https://findahelpline.com/countries/vn",
+  "scope": "Names, telephone numbers, official website links and opening hours published in the directory profiles. HOPE hours are not published there and are not automatically verified.",
+  "checked_at": "2026-11-18T07:21:58.343703+00:00",
+  "source_sha": "cf9bfafb066dbba474898e1ddd5f77c201ef693b",
+  "run_number": 1,
+  "run_url": "https://github.com/Anbu47/W4GZ-Trust-and-Hope/actions/runs/44258285024",
+  "last_verified_at": "2026-11-18T07:21:58.343703+00:00",
+  "last_verified_support_sha256": "cfc7e64845eae49698450000f7a17c4d929b8f9083b59a8940a4c84f24c2ba01"
+}
