@@ -916,7 +916,7 @@ html .character-name.name-partner,html .who b.name-partner{color:var(--partner-n
         <h1 class="th1">Trust <span class="and">and</span> <span class="hope">Hope</span></h1>
         <div class="qchip">120 real-life questions · a new set every game</div>
         <p class="tagline" id="titleTag">Learn how to support someone you love, and how to let someone support you.</p>
-        <button class="ghost" id="p0Title" lang="vi">Phần 0 · Tìm hiểu về sức khỏe tinh thần →</button><p class="safe">For learning only, not professional help. Need support now? Tap <button class="safe-help" id="helpLinkTitle">♡ Help</button></p>
+        <p class="safe">For learning only, not professional help. Need support now? Tap <button class="safe-help" id="helpLinkTitle">♡ Help</button></p>
       </div>
     </div>
     <button class="cta" id="startBtn">Begin your story</button>
@@ -2972,7 +2972,6 @@ function finishBasics(){
  $("p0Review").onclick=renderBasics;$("p0Again").onclick=()=>openBasics(basicsReturn);
 }
 $("p0Back").onclick=()=>{stopVoice();if(BASICS)BASICS.talk=null;go(basicsReturn);};
-$("p0Title").onclick=()=>openBasics("s-title");
 $("p0Pick").onclick=()=>{audio();sfx.select();BASICS_SELECTED=true;renderConfirm.quiet=true;renderConfirm();};
 
 renderTitle();
