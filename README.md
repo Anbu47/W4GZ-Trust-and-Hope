@@ -69,7 +69,7 @@ Two themes built from the W4GZ brand guideline (v3.2). Tap 🌙 / ☀️ on the 
 
 Voices and sound effects are made in code with the Web Audio API; the music is one small MP3 file.
 
-- 🎵 **Music:** an original trap-style loop — trap drums and 808 bass, lead guitar (with a guitar solo), hummed "mmm / ooh / aah" vocals and a few "ting ting" bells — in [`music/trap-loop.mp3`](music/trap-loop.mp3). It loops seamlessly (about 2 minutes). If the file can't load (for example, when `index.html` is opened on its own), a calm piano soundtrack made in code plays instead. Tap 🎵 to turn it on or off.
+- 🎵 **Music:** an original trap-style loop — trap drums and 808 bass, lead guitar (with a guitar solo), hummed "mmm / ooh / aah" vocals and a few "ting ting" bells — in [`music/trap-loop.mp3`](music/trap-loop.mp3). It loops seamlessly (about 2 minutes). If the file can't load (for example, when `index.html` is opened on its own), a calm piano soundtrack made in code plays instead. It keeps playing when you switch to another tab or app. Tap 🎵 to turn it on or off.
 - 🗣️ **Game voice:** characters "speak" in soft blips as their words type out, with a different pitch for each character.
 
 ## Help and safety
