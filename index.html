@@ -1442,7 +1442,7 @@ function musicStart(){
   audio(); if (!AC) return;
   if (MUSIC.failed) return synthStart();
   loadTrack().then(() => {
-    if (!MUSIC.on || document.hidden) return;
+    if (!MUSIC.on) return;
     if (MUSIC.failed) return synthStart();
     if (!MUSIC.tgain) { MUSIC.tgain = AC.createGain(); MUSIC.tgain.gain.value = 0; MUSIC.tgain.connect(AC.destination); }
     if (!MUSIC.src) {
@@ -1475,7 +1475,8 @@ function musicToggle(){
   MUSIC.on ? musicStart() : musicStop();
   document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.setAttribute("aria-label", musicLabel(b)); });
 }
-document.addEventListener("visibilitychange", () => { if (document.hidden) musicStop(); else if (MUSIC.on && AC) musicStart(); });
+// Music keeps playing when the tab or app is in the background; when the page comes back, wake the audio up if the browser paused it.
+document.addEventListener("visibilitychange", () => { if (!document.hidden && MUSIC.on && AC) musicStart(); });
 // start softly on the first tap anywhere
 document.addEventListener("pointerdown", function firstTap(){ document.removeEventListener("pointerdown", firstTap); if (MUSIC.on) musicStart(); }, { once:false });
 
