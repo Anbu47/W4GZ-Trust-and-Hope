@@ -166,7 +166,10 @@ button{border:0;background:none;cursor:pointer;padding:0}
 .couple .ring.r2{width:118%;border-color:rgba(255,220,180,.09)}
 .couple .p{position:absolute;top:50%;width:58%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:4px solid rgba(255,248,240,.95);
   box-shadow:0 18px 40px rgba(20,4,30,.55),0 0 0 8px rgba(255,255,255,.06)}
-.couple .p svg{width:100%;height:100%;display:block}
+/* the avatar art is 200×216: scale it to cover the circle (no side gaps at any size) and sit it on a solid cream base,
+   so its soft-edged background never shows the page colour through (it looked dim on the dark theme) */
+.couple .p{background:#FAF8F3}
+.couple .p svg{position:absolute;left:50%;top:50%;width:108%;height:108%;transform:translate(-50%,-50%);display:block}
 .couple .p.l{left:2%;transform:translateY(-50%) rotate(-3deg);z-index:2;animation:floatA 6s ease-in-out infinite}
 .couple .p.r{right:2%;transform:translateY(-50%) rotate(3deg);z-index:1;animation:floatB 6s ease-in-out infinite}
 @keyframes floatA{50%{transform:translateY(calc(-50% - 5px)) rotate(-3deg)}}
@@ -804,7 +807,8 @@ html.t-dusk .help-tip::before{border-bottom-color:#F4F1EA !important}
 html.t-dusk .helpbtn,html.t-dusk .musicbtn{background:#2C4463 !important;border:1px solid #3A5980 !important;color:#C3E7F2 !important;box-shadow:none !important}
 html.t-dusk .helpbtn small{color:#BDB6A6 !important}
 html.t-dusk .couple .halo{background:none !important;box-shadow:none !important}
-html.t-dusk .couple .ring{border-color:#3A5980 !important}
+html.t-dusk .couple .ring{border-color:rgba(195,231,242,.38) !important}
+html.t-dusk .couple .ring.r2{border-color:rgba(195,231,242,.2) !important}
 html.t-dusk .couple .p,html.t-dusk .who .portrait{border-color:#F4F1EA !important;box-shadow:none !important}
 html.t-dusk .who b,html.t-dusk .step-title h2{font-family:"Hanken Grotesk",Inter,sans-serif !important;font-style:italic;font-weight:400 !important}
 html.t-dusk .step-title small,html.t-dusk .partpick small,html.t-dusk .soon .badge,html.t-dusk .who .role{font-family:"IBM Plex Mono","DejaVu Sans Mono",monospace !important;font-weight:400 !important;letter-spacing:.25em !important;color:#BDB6A6 !important;background:none !important}
