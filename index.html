@@ -1127,7 +1127,7 @@ html.lang-vi #qSheet .qcard.restq .scene::before{content:"🌿 TÌNH HUỐNG"}
  <div class="sm-progress"><div><b id="smCount">0 / 5 cặp đã ghép</b><button type="button" class="ghost" id="smReset">↻ Chơi lại</button></div><div class="hbar" id="smProgress" role="progressbar" aria-label="Số cặp đã ghép" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><i id="smFill"></i></div></div>
  <div class="sm-status" id="smStatus" role="status" aria-live="polite"></div>
  <div class="scroll sm-scroll">
-  <div class="step-title"><small>HIỂU ĐỂ ĐỒNG HÀNH</small><h2>Mỗi nhu cầu,<br>một kết nối phù hợp.</h2><p>Chọn một đường dây nóng bên trái, rồi chọn mô tả phù hợp bên phải.</p></div>
+  <div class="step-title"><small>SỨC KHỎE TINH THẦN</small><h2>Khi lòng nặng trĩu,<br>bạn không một mình.</h2><p>Ghép mỗi đường dây nóng với cách họ có thể giúp bạn.</p></div>
   <div class="sm-board"><section aria-label="Đường dây nóng hỗ trợ"><h3>Đường dây nóng</h3><div class="sm-list" id="smServices"></div></section><section aria-label="Nhu cầu hỗ trợ"><h3>Hỗ trợ phù hợp</h3><div class="sm-list" id="smNeeds"></div></section></div>
   <div class="sm-finish story" id="smFinish" hidden><b>Bạn đã kết nối đủ 5 cặp! ✨</b><p>Biết nơi tìm hỗ trợ là một bước để chăm sóc bản thân và những người xung quanh.</p></div>
   <p class="note sm-note">Một số đường dây nóng có thể hỗ trợ các nhu cầu trùng nhau. Trò chơi sử dụng mô tả nổi bật của từng đường dây nóng.<br>Không giới hạn thời gian · Không trừ điểm · Có thể thử lại.</p>
@@ -3154,7 +3154,10 @@ function renderSupportNeed(button,item){
 }
 let SUPPORT_MATCH = null;
 function newSupportMatch(){
- return {selected:null,done:new Set(),order:shuffleArr(SUPPORT_MATCH_DATA.slice()),locked:false};
+ // Both columns are shuffled, and never left in the same order (so the answers don't sit side by side).
+ const services=shuffleArr(SUPPORT_MATCH_DATA.slice());let order=shuffleArr(SUPPORT_MATCH_DATA.slice());
+ for(let tries=0;tries<20&&order.some((item,i)=>item.id===services[i].id);tries++)order=shuffleArr(SUPPORT_MATCH_DATA.slice());
+ return {selected:null,done:new Set(),services,order,locked:false};
 }
 function resolveSupportPair(state,id){
  if(state.done.has(id))return "already";
@@ -3192,7 +3195,7 @@ function renderSupportMatch(){
  if(!SUPPORT_MATCH)SUPPORT_MATCH=newSupportMatch();
  const state=SUPPORT_MATCH;
  $("smServices").replaceChildren();$("smNeeds").replaceChildren();
- SUPPORT_MATCH_DATA.forEach(item=>{
+ (state.services||SUPPORT_MATCH_DATA).forEach(item=>{
   const b=document.createElement("button");b.type="button";b.className="sm-card sm-service";b.dataset.service=item.id;
   const title=document.createElement("span");title.textContent=item.name;b.appendChild(title);
   b.classList.toggle("sm-selected",state.selected===item.id);b.setAttribute("aria-pressed",String(state.selected===item.id));
