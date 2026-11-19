@@ -2354,7 +2354,7 @@ window.W4GZ_VI = {
 "You made a mistake today and, for once, talked to yourself like a friend.\n\n{P} took a weekend with friends, and you called your sister.\n\nSupport works best when it's shared.": "Hôm nay bạn mắc lỗi và, lần này, bạn nói chuyện với chính mình như với một người bạn.\n\n{P} dành một cuối tuần đi chơi với bạn bè, còn bạn thì gọi cho chị gái.\n\nSự hỗ trợ hiệu quả nhất khi được sẻ chia.",
 "The Hardest Night": "Đêm khó khăn nhất",
 "Some nights are still heavy. Tonight is one of them.\n\nBut you're not the same person who said “I'm fine” at the start.\n\nTake a breath. You don't have to hold this alone.": "Có những đêm vẫn còn nặng nề. Đêm nay là một trong số đó.\n\nNhưng bạn không còn là người từng nói “Mình ổn” lúc ban đầu nữa.\n\nHít một hơi thật sâu. Bạn không cần phải gánh chuyện này một mình.",
-"You catch your reflection, and the first thing you think is: “Ugh, look at you.”": "Bạn bắt gặp hình ảnh mình trong gương, và điều đầu tiên bạn nghĩ là: “Ugh, nhìn cưng kìa.”",
+"You catch your reflection, and the first thing you think is: “Ugh, look at you.”": "Bạn bắt gặp hình ảnh mình trong gương, và điều đầu tiên bạn nghĩ là: “U là trời, nhìn cưng kìa.”",
 "Pause and say one kind thing to yourself instead — out loud if you can.": "Dừng lại và thay vào đó, nói một điều tử tế với bản thân — nói thành tiếng nếu có thể.",
 "How you talk to yourself shapes how you feel. A kinder inner voice is a real self-love skill.": "Cách bạn nói chuyện với chính mình định hình cảm xúc của bạn. Một giọng nói nội tâm tử tế hơn là một kỹ năng yêu thương bản thân thật sự.",
 "Look away quickly and try not to think about it.": "Nhanh chóng quay đi và cố không nghĩ đến nó.",
