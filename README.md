@@ -6,6 +6,12 @@ A browser game about mental health, made by **W4GZ (Writing for Gen Z)**.
 
 ▶️ **Play:** [anbu47.github.io/W4GZ-Trust-and-Hope](https://anbu47.github.io/W4GZ-Trust-and-Hope/)
 
+## Language · Ngôn ngữ
+
+The game opens in **Tiếng Việt** by default. Tap **🌐 Ngôn ngữ / Language** on the front page to switch between Tiếng Việt and English. The choice is remembered on this device, and you can also link to a language directly with `?lang=vi` or `?lang=en`.
+
+The Vietnamese text lives in [`lang/vi.js`](lang/vi.js), keyed by the original English text, so the English stays exactly as it is. The Vietnam hotline matching below is shown only in Vietnamese.
+
 ## Hotline matching · Vietnam
 
 Choose **Ghép cặp đường dây nóng** to match five Vietnam hotlines with the needs they support. Correct matches open the full contact card, with clickable telephone numbers, opening hours, audience information and official links. Matched hotline cards can be opened again. Retry without penalties, replay, or return to part selection to start Part 1 or Part 2.
@@ -78,3 +84,4 @@ Tap **♡ Help** at any time — on the front page or in the game — for crisis
 |---|---|
 | `index.html` | The whole game in one file. Open it in any browser, phone or desktop. |
 | `questions.json` | The question bank (also built into `index.html`). |
+| `lang/vi.js` | Vietnamese translations of every on-screen string, keyed by the English original. |
