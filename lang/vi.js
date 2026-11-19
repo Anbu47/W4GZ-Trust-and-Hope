@@ -12,7 +12,7 @@ window.W4GZ_VI = {
 "Trust": "Niềm tin",
 "and": "và",
 "Hope": "Hy vọng",
-"120 real-life questions · a new set every game": "120 câu hỏi từ đời thực · mỗi lượt chơi một bộ mới",
+"120 real-life questions · a new set every game": "120 câu hỏi thực tế · mỗi lượt chơi một bộ mới",
 "Learn how to support someone you love, and how to let someone support you.": "Học cách nâng đỡ người bạn thương, và học cách để người khác nâng đỡ mình.",
 "For learning only, not professional help. Need support now? Tap": "Chỉ dùng để học hỏi, không thay thế hỗ trợ chuyên môn. Cần hỗ trợ ngay? Chạm",
 "Begin your story": "Bắt đầu câu chuyện của bạn",
