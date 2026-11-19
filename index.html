@@ -1419,10 +1419,10 @@ function musicTick(){
   if (!AC || !MUSIC.master) return;
   while (MUSIC.next < AC.currentTime + 1.5) MUSIC.next += scheduleBar(Math.max(MUSIC.next, AC.currentTime + 0.05));
 }
-// The soundtrack: an indie-style loop (guitar, bass, drums, hummed vocals) in music/indie-loop.mp3.
-// The file holds a 65 s loop plus a copy of its first 2 s, so looping 1 s → 66 s is seamless.
+// The soundtrack: a trap-style loop (808 and trap drums, lead guitar, hummed vocals, bells) in music/trap-loop.mp3.
+// The file holds a 115.2 s loop plus a copy of its first 2 s, so looping 1 s → 116.2 s is seamless.
 // If the file can't load (e.g. the page is opened as a single file), the generated piano music above plays instead.
-const TRACK = { url:"music/indie-loop.mp3", from:1, to:66, vol:0.38 };
+const TRACK = { url:"music/trap-loop.mp3", from:1, to:116.2, vol:0.36 };
 function loadTrack(){
   if (!MUSIC.trackP) MUSIC.trackP = fetch(TRACK.url)
     .then(r => { if (!r.ok) throw new Error("no track"); return r.arrayBuffer(); })
