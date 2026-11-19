@@ -28,7 +28,7 @@ After choosing your characters, pick a part:
 |---|---|---|
 | **You are** | the supporter | the one who is struggling |
 | **Your loved one** | is going through a hard time | is there to help you |
-| **The bar** | Trust | Hope |
+| **Lives** | ❤️❤️❤️ | ❤️❤️❤️ |
 | **Answers** | ✅ Supportive · 🙂 Well-meant · ❌ Hurtful | ✅ Letting them in · 🙂 Half-open · ❌ Shutting them out |
 
 ## How to play
@@ -37,14 +37,14 @@ After choosing your characters, pick a part:
 2. **Explore the house.** Six rooms open chapter by chapter (Week 1 → Week 3 → Month 2): Living Room, Kitchen, Study, Balcony, Your Corner and Bedroom. Each room has two faded objects; tap one to start a moment with your loved one.
 3. **Read and respond.** The situation types out, your loved one speaks, and you choose an answer. Every answer has a spoken line, and your loved one replies to what you said.
    - ❌ Hurtful answers **blink light red** as soon as the question appears, so players learn to spot what hurts.
-   - ✅ Supportive and 🙂 Well-meant answers count the same: the object lights up fully, **+4**. The explanation still shows how each one helps.
-   - ❌ Hurtful: the object stays dark, **−10**. Come back later and choose a better answer for **+2**.
-   - 🔥 Non-hurtful answers in a row earn a streak bonus (+1, +2, then +3).
-4. **Heart moments.** Five 💗 hearts sit on the bar. Reaching each one unlocks a heart conversation with **1 chance only**: any non-hurtful answer wins the heart (+5); a hurtful answer loses it and costs −20.
+   - ✅ Supportive and 🙂 Well-meant answers count the same: the object lights up fully. The explanation still shows how each one helps.
+   - ❌ Hurtful: the object stays dark and you lose **1 ❤️**. Come back later and choose a better answer.
+   - There is no score: the top bar only shows your **❤️ lives** and **✨ x/12** lit objects.
+4. **Heart moments.** A 💗 heart conversation appears after 2, 4, 6, 8 and 11 lit objects, with **1 chance only**. A warning shows before you answer. Any non-hurtful answer wins the heart and **gives back 1 ❤️** (up to 3); a hurtful answer loses the heart and costs **2 ❤️**.
 5. **Energy.** Every talk costs 🔋 energy. Recharge when it runs low: some ways to rest work better than others (in Part 2 these are *self-love actions*).
 6. **Bad days.** As the weeks pass, a light may go out. Answer well to relight it — recovery isn't a straight line.
-7. **The Bedroom.** The last room opens when every other object is lit and trust reaches 60. It holds the hardest night.
-8. **Trust or hope at 0.** The first time it hits 0, you get a warning. One more hurtful answer while it's at 0 and the story ends, taking you back to choose a part.
+7. **The Bedroom.** The last room opens when every other object is lit. It holds the hardest night.
+8. **Lives.** You start with 3 ❤️. When you drop to 1 ❤️ you get a warning. Lose all 3 and the house goes dark: the story ends and you choose a part to start again.
 
 ## Questions
 
@@ -69,7 +69,7 @@ Two themes built from the W4GZ brand guideline (v3.2). Tap 🌙 / ☀️ on the 
 
 Everything is made in code with the Web Audio API — no audio files.
 
-- 🎵 **Music:** a calm piano-and-pad soundtrack that follows the mood, warmer as trust or hope grows. Tap 🎵 to turn it on or off.
+- 🎵 **Music:** a calm piano-and-pad soundtrack that follows the mood, warmer as more of the house lights up. Tap 🎵 to turn it on or off.
 - 🗣️ **Game voice:** characters "speak" in soft blips as their words type out, with a different pitch for each character.
 
 ## Help and safety

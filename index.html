@@ -997,6 +997,20 @@ h1.th1{font-size:clamp(32px,11vw,50px) !important}
 #s-intro .howto{margin-bottom:8px !important}
 .musicbtn.voicebtn.floating{right:64px}
 /* hurtful answers blink light red as soon as the question appears */
+.lives{display:flex;gap:5px;margin-top:5px;font-size:21px;line-height:1}
+.lives span{display:inline-block;transition:filter .3s,opacity .3s}
+.lives span.lost{filter:grayscale(1);opacity:.3}
+html.t-dusk .lives span.lost{filter:grayscale(1) brightness(2.4);opacity:.45}
+.lives span.gain{animation:lifeGain .7s cubic-bezier(.2,1.6,.4,1)}
+.lives span.drop{animation:lifeDrop .8s ease}
+.lives.last span:not(.lost){animation:lifeBeat 1s ease-in-out infinite}
+@keyframes lifeGain{0%{transform:scale(.3)}100%{transform:scale(1)}}
+@keyframes lifeDrop{0%{transform:scale(1.35);filter:none;opacity:1}40%{transform:translateY(-4px) rotate(-12deg)}100%{transform:none}}
+@keyframes lifeBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.heartwarn{margin:10px 0 2px;padding:10px 13px;border-radius:14px;font-size:13.5px;font-weight:700;line-height:1.45;color:#8a1f2b;background:#ffe6e8;border:1.5px solid #f2a1a8}
+.heartwarn b{color:#b02829}
+.why .delta.life{white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.lives span,.lives.last span{animation:none!important}}
 .qopt.hurtful{position:relative}
 .qopt.hurtful::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:rgba(229,83,75,.24);box-shadow:inset 0 0 0 1.5px rgba(229,83,75,.55);animation:hurtBlink 1.3s ease-in-out infinite}
 @keyframes hurtBlink{0%,100%{opacity:.15}50%{opacity:1}}
@@ -1200,8 +1214,8 @@ html.lang-vi #qSheet .qcard.restq .scene::before{content:"🌿 TÌNH HUỐNG"}
     <div class="hud">
       <div class="hmood" id="hMood"></div>
       <div class="hmeter">
-        <div class="hlabel"><b id="hName"></b><span id="hPct"></span></div>
-        <div class="hwrap"><div class="hbar"><i id="hFill"></i></div><div class="hearts" id="hHearts"></div></div>
+        <div class="hlabel"><b id="hName"></b></div>
+        <div class="lives" id="hLives" role="img" aria-label="Lives"></div>
       </div>
       <button class="musicbtn" aria-label="Music on">🎵</button>
       <button class="musicbtn voicebtn" aria-label="Mute voices and sound effects">🔊</button>
@@ -1209,7 +1223,7 @@ html.lang-vi #qSheet .qcard.restq .scene::before{content:"🌿 TÌNH HUỐNG"}
     </div>
     <div class="hud2">
       <span class="phase" id="hPhase">WEEK 1</span>
-      <span class="lights" id="hLights">✨ 0/12</span><span class="lights" id="hHeartN">💗 0/5</span><span class="lights streak" id="hStreak"></span>
+      <span class="lights" id="hLights">✨ 0/12</span>
       <span class="energy" id="hEnergy" title="Your energy"></span>
       <button class="restbtn" id="restBtn">🔋 Recharge</button>
     </div>
@@ -1759,6 +1773,10 @@ const HEARTS = [
 const HEART_BONUS = 5;
 const heartHTML = got => got.map(h => `<div class="lm hg">💗 Heart secured: <b>${h.name}</b></div>`).join("");
 const MAX_ENERGY = 3, START_TRUST = 10, BEDROOM_TRUST = 60;
+// Lives: a hurtful answer costs 1 ❤️ (2 at a 💗 heart moment). A good answer at a heart moment wins 1 back.
+const MAX_LIVES = 3, HEART_LOSS = 2;
+// A 💗 heart moment appears once this many objects are lit.
+const HEART_AT = [2, 4, 6, 8, 11];
 const GRADE = {
   help:{ trust:4, cls:"good", head:"💛 Supportive" },
   okay:{ trust:4,  cls:"mid",  head:"🙂 Well-meant — caring, too" },
@@ -2325,7 +2343,7 @@ const heartPos = r => (PLAY.pos && PLAY.pos[r] ? PLAY.pos[r].hx : ROOMS[r].hx);
 function newPlay(){
   pickQuestions();   // fresh random questions every new game
   const carry = PART === 2 && P2_SAVE && P2_SAVE.unlocked ? (P2_SAVE.shining ? 10 : 5) : 0;
-  PLAY = { carry, light:Array(12).fill(0), trust:START_TRUST + carry, energy:MAX_ENERGY, chap:0, bedOpen:false, phase:0, justLit:-1,
+  PLAY = { carry, lives:MAX_LIVES, light:Array(12).fill(0), trust:START_TRUST + carry, energy:MAX_ENERGY, chap:0, bedOpen:false, phase:0, justLit:-1,
            setback:{}, setbacksFixed:0, tm:TRUST_MOMENTS.map(() => ({ shown:false, done:false })),
            pos:ROOMS.map((_, r) => scatter(r)), restsGood:0, rests:0, qt:0, msShown:[], doorShown:false, hearts:HEARTS.map(() => false), me:{ r:0, x:18, y:90 }, q:null, pendingPhase:null };
 }
@@ -2350,12 +2368,13 @@ function refreshUnlocks(){
   if (PLAY.chap === 2 && !PLAY.bedOpen && !bedroomGate()) { PLAY.bedOpen = true; changed = true; }
   return changed;
 }
-function trustTier(){ return PLAY.trust < 40 ? 0 : PLAY.trust < 70 ? 1 : 2; }
+const litCount = () => PLAY.light.filter(v => v >= 1).length;
+function trustTier(){ const n = litCount(); return n < 4 ? 0 : n < 8 ? 1 : 2; }
 // Part 2 calls the meter "hope" — it's your own hope growing as you let people in.
 const tw = () => I18N.vi ? (PART === 2 ? "hy vọng" : "niềm tin") : PART === 2 ? "hope" : "trust", Tw = () => I18N.vi ? (PART === 2 ? "Hy vọng" : "Niềm tin") : PART === 2 ? "Hope" : "Trust";
-function trustMood(){ return !PLAY ? "sad" : PLAY.trust >= 70 ? "happy" : PLAY.trust >= 45 ? "calm" : "sad"; }
+function trustMood(){ if (!PLAY) return "sad"; const n = litCount(); return PLAY.lives <= 1 ? "sad" : n >= 8 ? "happy" : n >= 4 ? "calm" : "sad"; }
 // Part 1: your loved one's mood follows trust. Part 2: yours does, and they're a calm, worried helper.
-function partnerMood(){ return PART === 2 ? (PLAY && PLAY.trust >= 45 ? "happy" : "calm") : trustMood(); }
+function partnerMood(){ return PART === 2 ? (PLAY && litCount() >= 5 ? "happy" : "calm") : trustMood(); }
 function playerMood(){ return PART === 2 ? trustMood() : "happy"; }
 function partnerAvatar(uid){ return avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], uid, partnerMood()); }
 
@@ -2370,17 +2389,16 @@ function renderIntro(){
   const d = document.createElement("div");
   d.innerHTML = two
     ? fill(`Months after helping <b>{p}</b> through {their} darkest days, the tiredness has followed <b>you</b> home.<br><br>This time, the bravest thing you can do is let {them} help.`)
-      + (PLAY.carry ? `<br><br><span class="carry">💞 Because you stood by ${escH(inSentence("partner"))} in Part 1, you start with <b>${PLAY.trust} hope</b>.</span>` : "")
     : fill(`Lately, <b>{p}</b> doesn't seem like {their} usual self: laughing less, sleeping more, often alone.<br><br>Help bring the light back, one moment at a time.`);
   $("introLine").innerHTML = d.innerHTML;
   const H = two ? [
     ["🕯️","Let the light in.","Tap a dark moment and answer openly to light it up."],
-    ["🌱","Grow your hope.","Honest answers raise it, with a bonus for streaks. Reach a 💗 for a special moment."],
+    ["❤️","You have 3 lives.","Shutting them out costs 1 ❤️ — 2 at a 💗 moment. Answer a 💗 openly to win one back."],
     ["💖","Be kind to yourself.","Low on energy? Tap Self-love."],
     ["🌧️","Heavy days happen.","A light may go out. That's recovery, not failure."]
   ] : [
     ["🎸","Light up the house.","Tap a dark object and choose a caring answer to light it up."],
-    ["💗","Build trust.","Caring answers raise it, with a bonus for streaks. Reach a 💗 for a once-only moment."],
+    ["❤️","You have 3 lives.","A hurtful answer costs 1 ❤️ — 2 at a 💗 moment. Answer a 💗 with care to win one back."],
     ["🔋","Look after yourself.","Low on energy? Tap Recharge."],
     ["🌧️","Expect bad days.","A light may go out. Find it and help again."]
   ];
@@ -2476,21 +2494,14 @@ function updateHUD(){
   $("hMood").innerHTML = PART === 2 ? avatar(GAME.player.kind, null, "hm", playerMood()) : partnerAvatar("hm");
   $("hName").textContent = PART === 2 ? showName("player") : showName("partner");
   $("hName").className = "character-name name-" + (PART === 2 ? "player" : "partner");
-  $("hPct").textContent = `${Tw()} ${PLAY.trust}`;
   $("restBtn").textContent = PART === 2 ? "💖 Self-love" : "🔋 Recharge";
-  $("hFill").style.width = PLAY.trust + "%";
-  const hState = k => { const m = PLAY.tm[k]; return m.done ? (m.won ? "won" : "lost") : m.shown ? "ready" : "far"; };
-  const hIcon = { won:"💗", lost:"❌", ready:"🤍", far:"🤍" };
-  $("hHearts").innerHTML = HEARTS.map((h, k) => `<span class="hm ${hState(k)} ${(PLAY.heartNew || []).includes(k) ? 'pop' : ''}" style="left:${Math.min(h.at, 96)}%" data-h="${k}">${hIcon[hState(k)]}</span>`).join("");
-  PLAY.heartNew = [];
-  $("hHearts").querySelectorAll(".hm").forEach(el => el.onclick = () => { const k = +el.dataset.h, h = HEARTS[k], st = hState(k);
-    const note = { won:"Heart secured!", lost:"Heart missed.", ready: PART === 2 ? "Tap the 💗 on your character and choose with care." : "Tap the 💗 on your loved one and respond with total care.", far:`Reach ${tw()} ${h.at} to unlock this heart.` }[st];
-    toast(`${hIcon[st]} ${h.name} — ${note}`); });
+  const L = $("hLives"), prevL = PLAY.livesShown == null ? PLAY.lives : PLAY.livesShown;
+  L.innerHTML = Array.from({length:MAX_LIVES}, (_, k) => `<span class="${k < PLAY.lives ? "" : "lost"}${k < PLAY.lives && k >= prevL ? " gain" : ""}${k >= PLAY.lives && k < prevL ? " drop" : ""}">❤️</span>`).join("");
+  L.classList.toggle("last", PLAY.lives === 1);
+  L.setAttribute("aria-label", `${PLAY.lives} / ${MAX_LIVES} ❤️`);
+  PLAY.livesShown = PLAY.lives;
   $("hPhase").textContent = PHASES[PLAY.phase].label;
   $("hLights").textContent = `✨ ${litN}/12`;
-  if ($("bedTrustFill")) { $("bedTrustFill").style.width = Math.min(100, PLAY.trust / BEDROOM_TRUST * 100) + "%"; $("bedTrustTxt").textContent = `Now ${PLAY.trust} — spend time together or brighten half-lit objects`; }
-  $("hStreak").textContent = (PLAY.streak || 0) >= 2 ? `🔥${PLAY.streak}` : "";
-  $("hHeartN").textContent = `💗 ${PLAY.tm.filter(m => m.won).length}/${HEARTS.length}`;
   $("hEnergy").innerHTML = Array.from({length:MAX_ENERGY}, (_,i) => `<i class="${i < PLAY.energy ? 'on' : ''}"></i>`).join("");
   $("hEnergy").classList.toggle("low", PLAY.energy <= 1);
   $("restBtn").classList.toggle("urge", PLAY.energy <= 1);
@@ -2635,6 +2646,7 @@ function openTalk(t){
   const card = $("qCard");
   card.className = "qcard" + (t.kind === "moment" ? " heartq" : t.kind === "setback" ? " stormq" : "");
   card.innerHTML = `<div class="qhead"><span class="chip">${chip}</span><span class="n">${tag}</span></div>
+    ${t.kind === "moment" ? `<div class="heartwarn">${PLAY.lives <= HEART_LOSS ? `⚠️ <b>Only ${PLAY.lives} ❤️ left.</b> A hurtful answer here ends the story. A caring answer wins 1 ❤️ back.` : PLAY.lives < MAX_LIVES ? `⚠️ <b>Heart moment:</b> a hurtful answer costs 2 ❤️. A caring answer wins 1 ❤️ back.` : `⚠️ <b>Heart moment:</b> a hurtful answer costs 2 ❤️.`}</div>` : ""}
     ${t.drained ? `<div class="drain">${PART === 2 ? "🔋 This talk uses your last drop of energy. Take a self-love break right after!" : "🔋 This exchange drains your last drop of energy. Recharge immediately after!"}</div>` : ""}
     <p class="scene"></p>
     ${Q.cue ? `<div class="cue"><b>Read the subtext</b><span></span></div>` : ""}
@@ -2671,18 +2683,13 @@ function answer(i, btn){
   // Well-meant answers now score exactly like supportive ones; only hurtful answers cost trust.
   const g = o.g === "hurt" ? "hurt" : "help";
   logLookBack(t, Q, o);
-  // trust change
-  let dt = G.trust;
-  // fixing a dark object later earns +2
-  if (t.kind === "light" && t.revisit) dt = g === "help" ? 2 : -10;
-  if (t.kind === "moment") dt = g === "help" ? HEART_BONUS : -20;   // heart-milestone talks: hurt costs more
-  // streak: supportive answers in a row earn a growing bonus (+1, +2, then +3 each)
-  let streakBonus = 0; const baseDt = dt, lostStreak = g !== "help" ? (PLAY.streak || 0) : 0;
-  if (g === "help") { PLAY.streak = (PLAY.streak || 0) + 1; streakBonus = Math.min(3, PLAY.streak - 1); dt += streakBonus; PLAY.bestStreak = Math.max(PLAY.bestStreak || 0, PLAY.streak); }
-  else PLAY.streak = 0;
-  const before = PLAY.trust; PLAY.trust = clamp(PLAY.trust + dt, 0, 100);
-  // At 0: first time is a warning. Any further minus answer after that ends the game.
-  if (PLAY.trust === 0 && dt < 0) { if (PLAY.zeroWarned) PLAY.collapsePending = true; else { PLAY.zeroWarned = true; PLAY.warnPending = true; } }
+  // lives: hurtful costs 1 ❤️ (2 at a heart moment); a good heart-moment answer wins 1 back
+  let dl = 0;
+  if (g === "hurt") dl = -(t.kind === "moment" ? HEART_LOSS : 1);
+  else if (t.kind === "moment" && PLAY.lives < MAX_LIVES) dl = 1;
+  PLAY.lives = clamp(PLAY.lives + dl, 0, MAX_LIVES);
+  if (PLAY.lives === 0) PLAY.collapsePending = true;
+  else if (PLAY.lives === 1 && dl < 0 && !PLAY.zeroWarned) { PLAY.zeroWarned = true; PLAY.warnPending = true; }
   let heartsGot = [];
   if (t.kind === "moment") {
     PLAY.tm[t.idx].won = g === "help";
@@ -2711,8 +2718,7 @@ function answer(i, btn){
   $("qOpts").classList.add("done");
   const react = o.re || pickReact(o.g, trustTier());
   const why = $("qWhy");
-  why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}<span class="delta ${baseDt>0?'up':baseDt<0?'down':''}">${baseDt>0?'+':''}${baseDt} ${tw()}</span></h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
-    ${streakBonus ? streakCard(PLAY.streak, streakBonus) : lostStreak >= 2 ? `<div class="streak-lost">🔥 Your ${lostStreak}-answer streak ended — the next supportive answer starts a new one.</div>` : ""}
+  why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}${dl ? `<span class="delta life ${dl > 0 ? "up" : "down"}">${dl > 0 ? "+" : "−"}${Math.abs(dl)} ❤️</span>` : ""}</h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
     ${mySay(o) ? `<div class="say small mine"><div class="bubble"></div><div class="face">${avatar(GAME.player.kind, null, "mf", playerMood())}</div></div>` : ""}
     <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
     <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? (PART === 2 ? "Let the light in ✨" : "Resurrect ✨") : t.collect ? "Warm it up" : "Continue"}</button>`;
@@ -2722,7 +2728,6 @@ function answer(i, btn){
     const sayReact = () => { if (PLAY.q !== t || !$("qSheet").classList.contains("show")) return; typeText(rb, "“" + T(react) + "”", 28, { kind:GAME.partner.kind, mood:partnerMood() }); };
     if (mb) { rb.textContent = ""; typeText(mb, "“" + mySay(o) + "”", 28, { kind:GAME.player.kind, mood:playerMood() }, () => setTimeout(sayReact, 250)); }
     else setTimeout(sayReact, 250); }
-  if (streakBonus) { setTimeout(() => { [523,659,784,1047,1319].slice(0, 2 + streakBonus).forEach((f,i) => tone(f,.18,.06,i*.08,"triangle")); const c = why.querySelector(".streak-card"); if (c) { const r = c.getBoundingClientRect(); emberBurst(c, 14 + streakBonus * 6); } }, 650); }
   if (g === "help") sfx.love(); else { tone(330,.25,.08,0,"triangle"); tone(247,.35,.06,.12,"triangle"); }
   $("doneBtn").onclick = finishTalk;
   setTimeout(() => why.scrollIntoView({ behavior:"smooth", block:"nearest" }), 60);
@@ -2771,7 +2776,7 @@ function finishTalk(){
 function afterTalk(){
   // trust moments become available
   const heartCards = [];
-  PLAY.tm.forEach((m, k) => { if (!m.shown && PLAY.trust >= TRUST_MOMENTS[k].at && PLAY.light.filter(v => v >= 1).length >= 2) { m.shown = true; heartCards.push(heartRevealCard(k)); } });
+  PLAY.tm.forEach((m, k) => { if (!m.shown && litCount() >= HEART_AT[k]) { m.shown = true; heartCards.push(heartRevealCard(k)); } });
   if (PLAY.collapsePending) { PLAY.collapsePending = false; houseCollapse(); return; }
   if (PLAY.warnPending) { PLAY.warnPending = false; renderHouse(); zeroWarning(); return; }
   const prevKey = PLAY.chap + "/" + PLAY.bedOpen;
@@ -2824,10 +2829,10 @@ const DARK_TRUST = 10;
 function zeroWarning(){
   tone(330,.25,.07,0,"triangle"); tone(262,.35,.07,.2,"triangle");
   showCards([() => ({
-    html:`<div class="chap story warn"><small>⚠️ ${PART === 2 ? "HOPE IS EMPTY" : "TRUST IS EMPTY"}</small><div class="msface">${PART === 2 ? avatar(GAME.player.kind, null, "zw" + Math.random().toString(36).slice(2,6), "sad") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "zw" + Math.random().toString(36).slice(2,6), "sad")}<span>⚠️</span></div>
+    html:`<div class="chap story warn"><small>⚠️ ${PART === 2 ? "HOPE IS RUNNING LOW" : "TRUST IS RUNNING LOW"}</small><div class="msface">${PART === 2 ? avatar(GAME.player.kind, null, "zw" + Math.random().toString(36).slice(2,6), "sad") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "zw" + Math.random().toString(36).slice(2,6), "sad")}<span>⚠️</span></div>
       <h2>${PART === 2 ? "Running on Empty" : "On the Edge"}</h2>
-      ${paras(PART === 2 ? "Your hope has dropped to 0. You've pushed {p} away so many times that {their} is not sure how to reach you anymore.\n\nNothing is lost yet — your rooms and lights stay as they are." : "{P}'s trust has dropped to 0, and {their} is close to shutting you out completely.\n\nNothing is lost yet — your rooms and lights stay as they are.")}
-      <p class="sb">⚠️ Last warning: one more hurtful answer while ${tw()} is at 0 and the story ends.</p>
+      ${paras(PART === 2 ? "You've pushed {p} away so many times that {they} may stop knowing how to reach you.\n\nNothing is lost yet — your rooms and lights stay as they are." : "{P} is close to shutting you out completely.\n\nNothing is lost yet — your rooms and lights stay as they are.")}
+      <p class="sb">⚠️ Only 1 ❤️ left. One more hurtful answer and the story ends.</p>
       <p class="gain">${T(PART === 2 ? "Try an honest, open answer next — let {p} in a little." : "Try a supportive answer next — listen, stay calm, stay close.")}</p>`,
     btn:"I understand" })]);
 }
@@ -2839,7 +2844,7 @@ function houseCollapse(){
     html:`<div class="chap story dark"><small>${PART === 2 ? "HOPE HAS RUN OUT" : "TRUST HAS RUN OUT"}</small><div class="msface">${PART === 2 ? avatar(GAME.player.kind, null, "dk" + Math.random().toString(36).slice(2,6), "sad") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "dk" + Math.random().toString(36).slice(2,6), "sad")}<span>🌑</span></div>
       <h2>${PART === 2 ? "The House Goes Quiet" : "The Door Closes"}</h2>
       ${paras(PART === 2 ? "After being pushed away again and again, {p} stops asking how you are. The house goes quiet, and every light goes out.\n\nThis happens in real life too: when we keep shutting people out, they can lose track of how to reach us.\n\nBut it's never too late to start again — one honest moment at a time." : "After one hurtful answer too many, {p} shuts {their} bedroom door and stops letting you in. Every light in the house goes out.\n\nThis happens in real life too: repeated judgment teaches people to stop sharing.\n\nBut trust can be rebuilt — one small, kind moment at a time.")}
-      <p class="sb">🌑 ${Tw()} stayed at 0 after the warning. This story ends here.</p>
+      <p class="sb">🌑 You lost all 3 ❤️. This story ends here.</p>
       <p class="gain">Choose a part and try again — you know more now than when you started.</p>`,
     btn:"Back to choose a part",
     onGo: () => { $("chapterCard").classList.remove("show"); $("house").classList.remove("blackout"); PLAY = null; audio(); sfx.tap(); go("s-confirm"); } })]), 1200);
@@ -2914,13 +2919,14 @@ function heartRevealCard(k){
     setTimeout(() => { burstHearts(innerWidth / 2, innerHeight * 0.33, 40); [523,659,784,1047,1319].forEach((f,i) => tone(f,.35,.07,i*.09)); }, 250);
     const floaters = Array.from({length:10}, (_, i) => `<i style="left:${8 + i*9}%;animation-delay:${(i*0.37)%2.6}s;font-size:${12 + (i*7)%12}px">💗</i>`).join("");
     return { html:`<div class="chap story heartcard"><div class="floaters">${floaters}</div>
-      <small>HEART MILESTONE · ${H.at}</small>
+      <small>HEART MILESTONE</small>
       <div class="bigheart2"><svg viewBox="0 0 120 108" aria-hidden="true"><defs><radialGradient id="hg${k}" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="#ffd1e3"/><stop offset=".55" stop-color="#ff6b9a"/><stop offset="1" stop-color="#d63c74"/></radialGradient></defs>
         <path d="M60 104 C20 76 2 54 2 32 C2 14 16 2 33 2 C45 2 54 9 60 19 C66 9 75 2 87 2 C104 2 118 14 118 32 C118 54 100 76 60 104Z" fill="url(#hg${k})" stroke="#fff" stroke-width="3"/>
         <path d="M30 18 C22 20 16 27 16 35" stroke="rgba(255,255,255,.7)" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
         <div class="hface">${PART === 2 ? avatar(GAME.player.kind, null, "hr" + k, k >= 2 ? "happy" : "calm") : avatar(GAME.partner.kind, PARTNER_VARIANT[GAME.partner.kind], "hr" + k, k >= 3 ? "happy" : "calm")}</div></div>
       <h2>${H.name}</h2>
-      ${paras(H.tip + (PART === 2 ? "\n\nA moment of hope, just for you. Tap the 💗 on your character — it only happens once!" : "\n\n{P} is ready to confess a secret. Tap the 💗 message on {them} — this event happens once!"))}`, btn: PART === 2 ? "My moment 💗" : fill("Go to {them} 💗") };
+      ${paras(H.tip + (PART === 2 ? "\n\nA moment of hope, just for you. Tap the 💗 on your character — it only happens once!" : "\n\n{P} is ready to confess a secret. Tap the 💗 message on {them} — this event happens once!"))}
+      <p class="sb">⚠️ Heads up: a hurtful answer at a 💗 moment costs 2 ❤️. A caring one wins 1 ❤️ back.</p>`, btn: PART === 2 ? "My moment 💗" : fill("Go to {them} 💗") };
   };
 }
 function showCards(list){
@@ -3029,7 +3035,7 @@ function lookBackHTML(){
 }
 function renderEnd(){
   if (!PLAY) return go("s-title");
-  const tr = PLAY.trust, tier = tr >= 80 ? 2 : tr >= 60 ? 1 : 0;
+  const wonN = PLAY.tm.filter(m => m.won).length, tier = wonN >= 4 ? 2 : wonN >= 2 ? 1 : 0;
   $("pair3").innerHTML = pairHTML(tier === 0 ? "calm" : "happy", tier === 0 ? "calm" : "happy");
   const two = PART === 2;
   const lines = two ? [
@@ -3045,7 +3051,7 @@ function renderEnd(){
   const txt = lines[tier].replace("{go}", pr.s === "they" ? "go" : "goes").replace("{es}", pr.s === "they" ? "" : "es");
   $("endLine").innerHTML = fill(txt);
   const bright = PLAY.light.filter(v => v === 2).length;
-  $("endResult").innerHTML = `<div><b>${tr}</b><span>${Tw().toUpperCase()}</span></div><div><b>${bright}/12</b><span>LUMINOUS LIGHTS</span></div><div><b>${PLAY.tm.filter(m => m.won).length}/5</b><span>HEARTS SECURED</span></div>`;
+  $("endResult").innerHTML = `<div><b>${"❤️".repeat(PLAY.lives)}</b><span>LIVES LEFT</span></div><div><b>${bright}/12</b><span>LUMINOUS LIGHTS</span></div><div><b>${PLAY.tm.filter(m => m.won).length}/5</b><span>HEARTS SECURED</span></div>`;
   const half = PLAY.light.filter(v => v === 1).length;
   // Rank from hearts won (0–5), like game ranks: Iron → Bronze → Silver → Gold → Diamond → Legend
   const won = PLAY.tm.filter(m => m.won).length;
