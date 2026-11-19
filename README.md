@@ -67,9 +67,9 @@ Two themes built from the W4GZ brand guideline (v3.2). Tap 🌙 / ☀️ on the 
 
 ## Sound
 
-Everything is made in code with the Web Audio API — no audio files.
+Voices and sound effects are made in code with the Web Audio API; the music is one small MP3 file.
 
-- 🎵 **Music:** a calm piano-and-pad soundtrack that follows the mood, warmer as more of the house lights up. Tap 🎵 to turn it on or off.
+- 🎵 **Music:** an original indie-style loop — clean jangly guitar, warm bass, soft drums and hummed "mmm / ooh / aah" vocals — in [`music/indie-loop.mp3`](music/indie-loop.mp3). It loops seamlessly (65 s). If the file can't load (for example, when `index.html` is opened on its own), a calm piano soundtrack made in code plays instead. Tap 🎵 to turn it on or off.
 - 🗣️ **Game voice:** characters "speak" in soft blips as their words type out, with a different pitch for each character.
 
 ## Help and safety
