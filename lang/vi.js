@@ -54,6 +54,7 @@ window.W4GZ_VI = {
 "Support someone you love through a hard time.": "Đồng hành cùng người bạn thương qua giai đoạn khó khăn.",
 "Part 2 · Hope Recovery": "Phần 2 · Phục hồi Hy vọng",
 "Months later, you're the one struggling — learn to let someone help.": "Nhiều tháng sau, chính bạn là người đang chật vật — hãy học cách để người khác giúp mình.",
+"Learn to accept help from someone you trust.": "Học cách để nhận sự giúp đỡ từ người mình tin tưởng.",
 "{0} share your home with <b></b>, the person you love most. Lately, something feels different—they seem emotionally drained and need you more than ever. This is a story about noticing the subtle signs, listening without judgment, and staying by their side through the hard days.": "{0} sống chung nhà với <b></b>, người bạn thương nhất. Dạo gần đây, có gì đó khác lạ—người ấy có vẻ kiệt sức về cảm xúc và cần bạn hơn bao giờ hết. Đây là câu chuyện về việc nhận ra những dấu hiệu nhỏ, lắng nghe mà không phán xét, và ở bên người ấy qua những ngày khó khăn.",
 "{0} share your home with <b></b>. Months ago, you helped them through a hard time. Now something in you has quietly run out — and it's your turn to let someone help.": "{0} sống chung nhà với <b></b>. Nhiều tháng trước, bạn đã giúp người ấy vượt qua giai đoạn khó khăn. Giờ đây, có gì đó trong bạn đã lặng lẽ cạn kiệt — và đến lượt bạn để ai đó giúp mình.",
 "Start the game ♥": "Bắt đầu chơi ♥",
