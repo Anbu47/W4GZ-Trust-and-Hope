@@ -36,11 +36,11 @@ After choosing your characters, pick a part:
 1. **Choose your characters.** Pick yourself and your loved one (man, woman or non-binary). Names are optional.
 2. **Explore the house.** Six rooms open chapter by chapter (Week 1 → Week 3 → Month 2): Living Room, Kitchen, Study, Balcony, Your Corner and Bedroom. Each room has two faded objects; tap one to start a moment with your loved one.
 3. **Read and respond.** The situation types out, your loved one speaks, and you choose an answer. Every answer has a spoken line, and your loved one replies to what you said.
-   - ✅ Supportive: the object lights up fully, **+4**.
-   - 🙂 Well-meant: the object is only half-lit, **+2**. Come back later and choose the supportive answer for another **+2**.
-   - ❌ Hurtful: the object stays dark, **−10**.
-   - 🔥 Supportive answers in a row earn a streak bonus (+1, +2, then +3).
-4. **Heart moments.** Five 💗 hearts sit on the bar. Reaching each one unlocks a heart conversation with **1 chance only**: a supportive answer wins the heart (+5); otherwise it's lost (a hurtful answer costs −20).
+   - ❌ Hurtful answers **blink light red** as soon as the question appears, so players learn to spot what hurts.
+   - ✅ Supportive and 🙂 Well-meant answers count the same: the object lights up fully, **+4**. The explanation still shows how each one helps.
+   - ❌ Hurtful: the object stays dark, **−10**. Come back later and choose a better answer for **+2**.
+   - 🔥 Non-hurtful answers in a row earn a streak bonus (+1, +2, then +3).
+4. **Heart moments.** Five 💗 hearts sit on the bar. Reaching each one unlocks a heart conversation with **1 chance only**: any non-hurtful answer wins the heart (+5); a hurtful answer loses it and costs −20.
 5. **Energy.** Every talk costs 🔋 energy. Recharge when it runs low: some ways to rest work better than others (in Part 2 these are *self-love actions*).
 6. **Bad days.** As the weeks pass, a light may go out. Answer well to relight it — recovery isn't a straight line.
 7. **The Bedroom.** The last room opens when every other object is lit and trust reaches 60. It holds the hardest night.
