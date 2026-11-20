@@ -199,10 +199,10 @@
       "opts": [
        {
         "g": "help",
-        "t": "Sit on the chair beside the desk: “Depression turns small tasks into mountains. Want to just split the pile into 'now' and 'later' together? You point, I'll stack.”",
+        "t": "Sit on the chair beside the desk: “When you're this worn out, small tasks turn into mountains. Want to just split the pile into 'now' and 'later' together? You point, I'll stack.”",
         "why": "Lowering the bar to one easy step done side by side, and treating the freeze as normal, removes shame without asking them to decide what to throw away.",
         "re": "Yes, please. I've been staring at this pile for three days feeling completely frozen.",
-        "say": "Depression turns small tasks into mountains. Want to just split the pile into 'now' and 'later' together? You point, I'll stack."
+        "say": "When you're this worn out, small tasks turn into mountains. Want to just split the pile into 'now' and 'later' together? You point, I'll stack."
        },
        {
         "g": "okay",
