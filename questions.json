@@ -321,7 +321,7 @@
        {
         "g": "help",
         "t": "Make something simple, set it nearby and sit down: “I made too much—help yourself if you want.”",
-        "why": "Depression makes basic tasks feel mountainous. Quiet, low-friction help removes barriers without pressure.",
+        "why": "When someone is worn out, even basic tasks feel like mountains. Quiet, low-friction help removes barriers without pressure.",
         "re": "Thanks... I couldn't figure out how to start eating, but I'll try a bit of this."
        },
        {
@@ -345,12 +345,12 @@
       "title": "Countering the Burden Trap",
       "scene": "While scrubbing plates together by the sink, {p} stops dead, staring blankly at the soapy water.",
       "line": "I'm so sorry. I am genuinely just a massive anchor dragging your entire life down.",
-      "ask": "How do you counter this emotional trap?",
+      "ask": "How do you gently pull them out of this thought?",
       "opts": [
        {
         "g": "help",
         "t": "Look {them} straight in the eye: “You aren't an anchor. We're riding out a brutal storm, and I'm right here in this boat with you voluntarily.”",
-        "why": "Feeling like a burden is a hallmark symptom of depression. Direct, unconditional reassurance cuts through distortion.",
+        "why": "Feeling like a burden is very common when someone is struggling. Direct, unconditional reassurance cuts through that distorted thinking.",
         "re": "Do you really mean that? I'm just so scared I'm ruining things for you.",
         "say": "You aren't an anchor. We're riding out a brutal storm, and I'm right here in this boat with you voluntarily."
        },
@@ -561,7 +561,7 @@
        {
         "g": "help",
         "t": "Set bags down casually: “Relationships aren't a scoreboard. Sometimes it's 80/20, and I'm happy to cover the 80.”",
-        "why": "Dismantling scorekeeping relieves pressure to 'earn' care while depressed.",
+        "why": "Dismantling scorekeeping relieves the pressure to 'earn' care while they're struggling.",
         "re": "I hate that you have to carry so much of the weight right now. But thank you.",
         "say": "Relationships aren't a scoreboard. Sometimes it's 80/20, and I'm happy to cover the 80."
        },
@@ -801,7 +801,7 @@
       "loc": "Living Room",
       "title": "Numbness Over Sadness",
       "scene": "You ask how {p} feels, and {they} answer{s} with blankness.",
-      "line": "I don't even feel sad. Just gray static. Nothing registers.",
+      "line": "I don't even feel sad. Just gray and empty. Nothing registers.",
       "ask": "How do you respond to emotional blunting?",
       "opts": [
        {
@@ -822,7 +822,7 @@
         "g": "hurt",
         "t": "Set your cup down: “Hm. Maybe you're just tired. Want some tea?”",
         "why": "Performing a routine action highlights disconnect.",
-        "re": "Why are you acting like nothing is wrong? I just told you I feel like static."
+        "re": "Why are you acting like nothing is wrong? I just told you I feel empty."
        }
       ]
      },
@@ -1143,10 +1143,10 @@
        },
        {
         "g": "okay",
-        "t": "“You need to delete apps—screen time is scientifically proven to worsen depression.”",
+        "t": "“You need to delete apps—screen time is scientifically proven to make your mood worse.”",
         "why": "Delivering lectures feels corrective.",
         "re": "Don't lecture me about screen-time studies when I'm already feeling miserable.",
-        "say": "You need to delete apps—screen time is scientifically proven to worsen depression."
+        "say": "You need to delete apps—screen time is scientifically proven to make your mood worse."
        },
        {
         "g": "hurt",
@@ -1333,8 +1333,8 @@
       "n": 39,
       "loc": "Bedroom",
       "title": "After a Rough Argument",
-      "scene": "Exhaustion boils over; you snap at {p} over a small mess. {P} looks devastated.",
-      "ask": "How do you repair the rupture cleanly?",
+      "scene": "Exhausted, you snap at {p} over a small mess. {P} looks devastated.",
+      "ask": "How do you make it right?",
       "opts": [
        {
         "g": "help",
@@ -1365,7 +1365,7 @@
       "loc": "Balcony",
       "title": "Recognizing Your Limits",
       "scene": "{P} asks you to analyze {their} childhood trauma, and you feel out of your depth.",
-      "ask": "How do you hold a loving boundary around expertise?",
+      "ask": "How do you lovingly say this is beyond you?",
       "opts": [
        {
         "g": "help",
@@ -1452,8 +1452,8 @@
       "n": 48,
       "loc": "Bedroom",
       "title": "Anniversary or Trigger Date",
-      "scene": "A difficult anniversary is coming up on the calendar.",
-      "ask": "How do you acknowledge a quiet trigger date?",
+      "scene": "A painful anniversary is coming up on the calendar.",
+      "ask": "How do you quietly mark a painful date?",
       "opts": [
        {
         "g": "help",
@@ -1659,7 +1659,7 @@
       "loc": "Bedroom",
       "title": "Imminent Safety Action",
       "scene": "{P} confirms those dark intentions.",
-      "ask": "Execute your final emergency action.",
+      "ask": "What do you do right now?",
       "critical": true,
       "opts": [
        {
@@ -1677,7 +1677,7 @@
        {
         "g": "hurt",
         "t": "Sit still on the edge of the bed: “I… I don't know what to say. Let's talk about it tomorrow.”",
-        "why": "Remaining motionless fails to initiate emergency safety protocols.",
+        "why": "Freezing in place means the emergency safety steps never start.",
         "re": "Tomorrow? I need help now. Please, do something!"
        }
       ]
@@ -2230,7 +2230,7 @@
       "opts": [
        {
         "g": "help",
-        "t": "Open door in sweatpants: “Thank you—no energy to host, porch drop-off is a lifesaver.”",
+        "t": "Open the door in pajamas: “Thank you—no energy to host, porch drop-off is a lifesaver.”",
         "why": "Accepting help on your terms models boundaries.",
         "re": "See? People want to show up for you. I love that.",
         "say": "Thank you—no energy to host, porch drop-off is a lifesaver."
@@ -2687,7 +2687,7 @@
        {
         "g": "help",
         "t": "“Moment of lightness doesn't erase struggle—allowed brief relief.”",
-        "why": "Understanding depression isn't 24/7 misery stops policing joy.",
+        "why": "Understanding that a hard season isn't 24/7 misery stops you from policing your own joy.",
         "re": "Laugh all you want. It's allowed. I love hearing it.",
         "say": "Moment of lightness doesn't erase struggle—allowed brief relief."
        },
@@ -2926,7 +2926,7 @@
        {
         "g": "okay",
         "t": "Keep it simple: “Mostly I just can't sleep. Otherwise I'm okay.”",
-        "why": "Treating one symptom leaves depression unaddressed.",
+        "why": "Treating one symptom leaves the root of the problem unaddressed.",
         "re": "Did you tell them about the low mood too?"
        },
        {
@@ -3209,14 +3209,14 @@
        },
        {
         "g": "okay",
-        "t": "Start a long explanation: “Actually, depression is about neurotransmitters, so let me explain…”",
+        "t": "Start a long explanation: “Actually, it's all about neurotransmitters, so let me explain…”",
         "why": "Debating drains scarce energy.",
         "re": "You don't have to win that argument. Save your energy."
        },
        {
         "g": "hurt",
         "t": "Nod once: “Yeah. Maybe you're right. I should just try harder.”",
-        "why": "Agreeing that you just need to try harder absorbs a harmful idea about depression.",
+        "why": "Agreeing that you just need to try harder absorbs a harmful idea about mental health.",
         "re": "…You okay after that conversation?"
        }
       ]
