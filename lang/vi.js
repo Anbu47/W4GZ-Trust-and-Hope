@@ -2481,8 +2481,6 @@ window.W4GZ_VI = {
 "You're home now—you don't have to perform. Take all the quiet time you need.": "Về nhà rồi, cậu không cần phải gồng đâu. Cứ yên lặng bao lâu cũng được.",
 "Flip through the mail: “Long day for everyone, honestly. Has the paycheck come in yet?”": "Lật xem đống thư: “Nói thật thì hôm nay ai cũng mệt mà. Lương đã về chưa?”",
 "Yeah. Clearly the paycheck matters more than me standing right here.": "Ừ. Rõ ràng tiền lương quan trọng hơn mình đang ở ngay đây mà.",
-"“‘Lies break hearts, lies make hearts ache.’ I'll just tell them straight that you didn't want to see them.”": "“‘Nói dối làm trái tim tan nát, nói dối làm trái tim đau.’ Mình sẽ nói thẳng là cậu không muốn gặp họ.”",
-"‘Lies break hearts, lies make hearts ache.’ I'll just tell them straight that you didn't want to see them.": "‘Nói dối làm trái tim tan nát, nói dối làm trái tim đau.’ Mình sẽ nói thẳng là cậu không muốn gặp họ.",
 "You refused to cover for them and told everyone they didn't want to come. Already exhausted, now they also have to face judgment and shame.": "Bạn từ chối nói đỡ, lại còn bảo với mọi người rằng người ấy không muốn đến. Đang kiệt sức, giờ họ còn phải chịu thêm sự phán xét và xấu hổ.",
 "You notice {p} has worn the same pants for four days straight and hasn't brushed {their} hair.": "Bạn để ý thấy {p} đã mặc cùng một chiếc quần dài suốt bốn ngày liền và chưa chải tóc.",
 "Run a warm shower, lay out a clean towel and fresh clothes without commentary, and say: “Bathroom's open if you want a reset—no pressure.”": "Xả sẵn nước ấm, đặt ra một chiếc khăn sạch và một bộ quần áo mới mà không bình luận gì, rồi nói: “Phòng tắm trống đó, nếu cậu muốn F5 bản thân chút—không áp lực đâu.”",
@@ -2512,5 +2510,7 @@ window.W4GZ_VI = {
 "Start a long explanation: “Actually, it's all about neurotransmitters, so let me explain…”": "Bắt đầu giảng giải dài dòng: “Thật ra chuyện này liên quan đến chất dẫn truyền thần kinh, để cháu giải thích…”",
 "Agreeing that you just need to try harder absorbs a harmful idea about mental health.": "Đồng ý rằng bạn chỉ cần cố gắng hơn là tiếp nhận một quan niệm có hại về sức khỏe tinh thần.",
 "Squeeze {their} hand: “I'm fine. Please don't make this a big thing.”": "Siết tay người ấy: “Mình ổn mà. Làm ơn đừng làm um xùm.”",
-"Asking them not to make it “a big thing” keeps you in danger. This needs help now.": "Xin người ấy đừng “làm um xùm” sẽ khiến bạn vẫn ở trong nguy hiểm. Chuyện này cần được giúp đỡ ngay."
+"Asking them not to make it “a big thing” keeps you in danger. This needs help now.": "Xin người ấy đừng “làm um xùm” sẽ khiến bạn vẫn ở trong nguy hiểm. Chuyện này cần được giúp đỡ ngay.",
+"“Lying is bad, you know. I'll just tell them straight that you didn't want to see them.”": "“Nói dối là không tốt đâu nha. Mình sẽ nói thẳng là cậu không muốn gặp họ.”",
+"Lying is bad, you know. I'll just tell them straight that you didn't want to see them.": "Nói dối là không tốt đâu nha. Mình sẽ nói thẳng là cậu không muốn gặp họ."
 };
