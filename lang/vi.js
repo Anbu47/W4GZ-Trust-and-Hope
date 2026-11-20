@@ -2511,6 +2511,6 @@ window.W4GZ_VI = {
 "LIVES LEFT": "MẠNG CÒN LẠI",
 "Reply: “I'm not lying for you again. I'll just tell them you didn't feel like seeing them.”": "Nhắn lại: “Mình không nói dối giùm cậu nữa đâu. Mình sẽ nói thẳng là cậu không muốn gặp họ.”",
 "I'm not lying for you again. I'll just tell them you didn't feel like seeing them.": "Mình không nói dối giùm cậu nữa đâu. Mình sẽ nói thẳng là cậu không muốn gặp họ.",
-"Refusing to cover for them and announcing that they didn't want to come turns an energy crash into a public judgment, piling shame on top of exhaustion.": "Từ chối che chắn và nói ra rằng người ấy không muốn đến biến một lúc kiệt sức thành lời phán xét trước mặt mọi người, chồng thêm xấu hổ lên sự mệt mỏi.",
+"Refusing to cover for them and announcing that they didn't want to come turns an energy crash into a public judgment, piling shame on top of exhaustion.": "Bạn từ chối nói đỡ, lại còn bảo với mọi người rằng người ấy không muốn đến. Đang kiệt sức, giờ họ còn phải chịu thêm sự phán xét và xấu hổ.",
 "Great. Now they'll all think I don't care about them.": "Hay lắm. Giờ ai cũng sẽ nghĩ mình chẳng quan tâm gì đến họ."
 };
