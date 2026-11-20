@@ -252,12 +252,12 @@
       "n": 9,
       "loc": "Bedroom",
       "title": "Hygiene Slippage",
-      "scene": "You notice {p} has worn the same sweatpants for four days straight and hasn't brushed {their} hair.",
+      "scene": "You notice {p} has worn the same clothes for four days straight and hasn't brushed {their} hair.",
       "ask": "How do you offer gentle care without embarrassing {them}?",
       "opts": [
        {
         "g": "help",
-        "t": "Run a warm shower, lay out a clean towel and fresh hoodie without commentary, and say: “Bathroom's open if you want a reset—no pressure.”",
+        "t": "Run a warm shower, lay out a clean towel and a fresh set of clothes without commentary, and say: “Bathroom's open if you want a reset—no pressure.”",
         "why": "Setting up the environment quietly eliminates activation steps without drawing attention to appearance.",
         "re": "Okay... thank you. I'll go take a warm shower in a minute.",
         "say": "Bathroom's open if you want a reset—no pressure."
