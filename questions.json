@@ -9,25 +9,25 @@
       "loc": "Living Room",
       "title": "Spotting the red flags",
       "scene": "For weeks, {p} has ditched movie nights, hibernated until noon, and completely ignored {their} guitar.",
-      "ask": "What is your tactical opening move?",
+      "ask": "What should your first step be?",
       "opts": [
        {
         "g": "help",
-        "t": "Catch {them} in a quiet moment and say neutrally: “I've noticed your routine shifted a lot lately. How are you holding up beneath the surface?”",
-        "why": "Spotting lifestyle shifts without weaponizing them opens a low-pressure gateway for honesty.",
-        "re": "Honestly? Not great. I feel like I'm moving through thick mud every day, but... thanks for noticing without making a big deal out of it.",
-        "say": "I've noticed your routine shifted a lot lately. How are you holding up beneath the surface?"
+        "t": "Catch {them} in a quiet moment and say neutrally: “I've noticed your routine shifted a lot lately. How are you feeling?”",
+        "why": "Spotting lifestyle shifts without weaponizing them opens a gentle, low-pressure door for them to open up honestly.",
+        "re": "Honestly? Not great. Every day feels really heavy, but... thanks for noticing without making a fuss.",
+        "say": "I've noticed your routine shifted a lot lately. How are you feeling?"
        },
        {
         "g": "okay",
         "t": "Grab a board game: “Come on, let's play a quick round together—just the two of us, to unwind.”",
-        "why": "Even micro-social obligations can feel like an impossible performance requirement when someone's battery is drained.",
-        "re": "I know you're trying to help, but looking at a board and making decisions right now just feels like another chore I'm going to fail at."
+        "why": "Even tiny social obligations become an impossible performance when someone's battery is drained.",
+        "re": "I know you're trying to help, but looking at a board right now just feels like another thing I'm going to fail at."
        },
        {
         "g": "hurt",
         "t": "Mention casually: “You haven't touched that guitar in weeks.”",
-        "why": "Bare observations of skipped habits subtly point out their decline, creating quiet pressure and self-consciousness.",
+        "why": "Bare observations of skipped habits subtly point out their decline, creating quiet pressure and making them feel even more self-conscious.",
         "re": "Right. Because staring at it makes me feel even more useless. Thanks for keeping score.",
         "say": "You haven't touched that guitar in weeks."
        }
@@ -37,30 +37,30 @@
       "n": 2,
       "loc": "Living Room",
       "title": "Reading the subtext",
-      "scene": "You spot {p} slouching on the sofa under a blanket with noise-canceling headphones on, offering a microscopic, strained smile before looking at the floor.",
-      "cue": "🎧 Cocooned in a blanket burrito, eyes locked downward.",
-      "line": "Oh, hey. Just chilling, totally living my best lazy Sunday life.",
-      "ask": "Read the subtext. What's the optimal play here?",
+      "scene": "You spot {p} slouching on the sofa under a blanket with noise-canceling headphones on, offering a strained smile before looking down at the floor.",
+      "cue": "🎧 Rolled up in a blanket like a sushi roll, eyes on the floor.",
+      "line": "Mm. Just chilling, totally living my best lazy Sunday life.",
+      "ask": "Read between the lines. What's the right thing to say here?",
       "opts": [
        {
         "g": "help",
-        "t": "Sit down a safe distance away and murmur: “Mind if I occupy space near you in absolute silence? Zero conversation required on your end.”",
+        "t": "Sit down a safe distance away and murmur: “Mind if I sit near you, but quietly? You don't have to say anything.”",
         "why": "Their brain capacity is maxed out. Quiet presence respects boundaries while proving they aren't stranded.",
         "re": "Yeah. You can sit there. Just... don't ask me any questions, okay?",
         "say": "Mind if I occupy space near you in absolute silence? Zero conversation required on your end."
        },
        {
         "g": "okay",
-        "t": "Smile warmly: “No pressure to talk, but I'm going to put your favorite comfort show on softly.”",
+        "t": "Smile warmly: “No pressure to talk, but I'm putting your favorite show on softly to make things a little cozier.”",
         "why": "Introducing external sensory stimuli forces an exhausted nervous system to process data when it needs static reduction.",
         "re": "Please turn it off. The noise is just bouncing around inside my head right now.",
-        "say": "No pressure to talk, but I'm putting your favorite show on softly for some gentle company."
+        "say": "No pressure to talk, but I'm putting your favorite show on softly to make things a little cozier."
        },
        {
         "g": "hurt",
-        "t": "Look at the headphones and say: “Quiet day.”",
+        "t": "Look at the headphones and say: “Do Not Disturb mode today, huh?”",
         "why": "Using clipped minimalism to comment on withdrawal isolates them further by highlighting detachment without warmth.",
-        "re": "Yeah. Thrilling life I've got here.",
+        "re": "Yeah. So what?",
         "say": "Quiet day."
        }
       ]
@@ -69,29 +69,29 @@
       "n": 3,
       "loc": "Study",
       "title": "The 'I'm Just Tired' Mask",
-      "scene": "{P} has replied 'just tired' every single evening for three weeks while visibly losing weight and skipping tasks.",
+      "scene": "{P} has replied 'just tired' every evening for almost a month, yet is visibly losing weight and skipping tasks.",
       "line": "Seriously, I just didn't sleep great last night. Stop looking at me like that.",
       "ask": "How do you respond without triggering defensiveness?",
       "opts": [
        {
         "g": "help",
-        "t": "Soften your posture: “Fair enough, I'll back off. Just know if it ever turns out to be heavier than bad sleep, you don't have to carry it solo.”",
+        "t": "Say gently: “Fair enough, I'll back off. Just know if it ever turns out to be heavier than bad sleep, you don't have to carry it solo.”",
         "why": "Respecting stated boundaries while leaving an unpressured door open preserves trust without forcing a confession.",
         "re": "Fine. Whatever. Just... leave it alone for tonight.",
         "say": "Fair enough, I'll back off. Just know if it ever turns out to be heavier than bad sleep, you don't have to carry it solo."
        },
        {
         "g": "okay",
-        "t": "“I'm only looking because I care—let me order you some melatonin and blackout curtains to fix your sleep.”",
+        "t": "“I'm only noticing because I care—let me order you some melatonin and blackout curtains to fix your sleep.”",
         "why": "Jumping straight into logistical problem-solving bypasses the emotional reality behind exhaustion.",
         "re": "I don't need your melatonin or your fixes. I just need you to stop analyzing every single thing I do.",
-        "say": "I'm only looking because I care—let me order you some melatonin and blackout curtains to fix your sleep."
+        "say": "I'm only noticing because I care—let me order you some melatonin and blackout curtains to fix your sleep."
        },
        {
         "g": "hurt",
         "t": "“You said the exact same thing yesterday.”",
         "why": "Directly tracking and repeating past statements turns dialogue into a scoreboard, shutting down future disclosure.",
-        "re": "Oh, I'm sorry, is there a daily quota of new excuses I'm supposed to meet for you?",
+        "re": "Oh, I'm sorry, do I have to justify myself to you every single day?",
         "say": "You said the exact same thing yesterday."
        }
       ]
@@ -120,10 +120,10 @@
        },
        {
         "g": "hurt",
-        "t": "Reply: “I'll tell them you stayed home.”",
-        "why": "Neutral compliance delivers social news without support or warmth, leaving them to sit alone in isolation.",
-        "re": "Whatever. Tell them whatever you want.",
-        "say": "I'll tell them you stayed home."
+        "t": "“Lying is bad, you know. I'll just tell them straight that you didn't want to see them.”",
+        "why": "You refused to cover for them and told everyone they didn't want to come. Already exhausted, now they also have to face judgment and shame.",
+        "re": "Great. Now they'll all think I don't care about them.",
+        "say": "Lying is bad, you know. I'll just tell them straight that you didn't want to see them."
        }
       ]
      },
@@ -139,21 +139,21 @@
         "g": "help",
         "t": "Lower your voice slightly and say gently: “No rush to talk—we can just stand in quiet until you're ready.”",
         "why": "Lowering sensory demand and removing conversational pressure lets their nervous system regulate safely.",
-        "re": "Thanks... my head just sort of short-circuited for a second there.",
+        "re": "Thanks... my head just sort of short-circuited for a moment there.",
         "say": "No rush to talk—we can just stand in quiet until you're ready."
        },
        {
         "g": "okay",
         "t": "Reach over and pat {their} arm: “Hey, where did your brain just go? Tell me what just popped into your head.”",
         "why": "Demanding immediate verbalization when someone dissociates or hits a wave of numbness overwhelms them.",
-        "re": "Nowhere! Stop interrogating me every time I zone out for two seconds.",
+        "re": "Nowhere! Stop interrogating me every time I zone out.",
         "say": "Hey, where did your brain just go? Tell me what just popped into your head."
        },
        {
         "g": "hurt",
         "t": "Keep wiping the counter: “Lunch is almost ready. Can you grab the plates?”",
-        "why": "Carrying on with chores and small talk while they shut down treats their sudden withdrawal like it isn't happening.",
-        "re": "Plates? I just… I can't right now. Never mind."
+        "why": "Carrying on with chores and small talk while they shut down, as if their sudden withdrawal isn't happening, is insensitive.",
+        "re": "Plates? I just… I can't right now… Never mind."
        }
       ]
      }
@@ -199,21 +199,21 @@
       "opts": [
        {
         "g": "help",
-        "t": "Sit on the chair beside the desk: “Depression turns small tasks into mountains. Want to just toss the junk in the bin together?”",
-        "why": "Lowering the standard and normalizing executive dysfunction removes shame.",
+        "t": "Sit on the chair beside the desk: “When you're this worn out, small tasks turn into mountains. Want to just split the pile into 'now' and 'later' together? You point, I'll stack.”",
+        "why": "Lowering the bar to one easy step done side by side, and treating the freeze as normal, removes shame without asking them to decide what to throw away.",
         "re": "Yes, please. I've been staring at this pile for three days feeling completely frozen.",
-        "say": "Depression turns small tasks into mountains. Want to just toss the junk in the bin together?"
+        "say": "When you're this worn out, small tasks turn into mountains. Want to just split the pile into 'now' and 'later' together? You point, I'll stack."
        },
        {
         "g": "okay",
         "t": "“You're just overwhelmed—set a fifteen-minute timer and sort just the top folder for a quick dopamine win!”",
-        "why": "Productivity hacks assume normal energy reserves and often leave depressed individuals feeling worse if they stall.",
+        "why": "Productivity hacks assume normal energy reserves and often leave overwhelmed people feeling worse if they stall.",
         "re": "A timer isn't going to magically give me energy I don't have. Just leave it.",
         "say": "You're just overwhelmed—set a fifteen-minute timer and sort just the top folder for a quick dopamine win!"
        },
        {
         "g": "hurt",
-        "t": "Reach past the pile for a book: “Everyone gets messy sometimes. It's just paper.”",
+        "t": "Reach past the pile for a book: “Everyone gets messy sometimes. It's just paper, don't stress about it.”",
         "why": "Physical avoidance of the clutter while bypassing the person reinforces feelings of being an invisible obstacle.",
         "re": "Right, step right over it. It's not just paper to me."
        }
@@ -228,10 +228,10 @@
       "opts": [
        {
         "g": "help",
-        "t": "Leave a low-friction note: “Hey, noticing your entries have been brief lately. Zero need to write a paragraph—just thinking of you.”",
+        "t": "Leave a low-friction note: “Hey, noticing your entries have been brief lately. Zero need to write a paragraph—I'm just worried about you.”",
         "why": "Explicitly removing the obligation to reply prevents check-ins from becoming another unread chore.",
         "re": "Thanks for not pushing. I'll write more when my head clears up.",
-        "say": "Hey, noticing your entries have been brief lately. Zero need to write a paragraph—just thinking of you."
+        "say": "Hey, noticing your entries have been brief lately. Zero need to write a paragraph—I'm just worried about you."
        },
        {
         "g": "okay",
@@ -242,9 +242,9 @@
        },
        {
         "g": "hurt",
-        "t": "Write back one line: “Got it. Talk when you feel like it.”",
+        "t": "Write back one line: “Okay. Talk some other time, then.”",
         "why": "A short, flat reply to short, flat entries ends the conversation and quietly accepts the distance.",
-        "re": "Got it? Really? That's all you've got for me?"
+        "re": "Okay? Really? That's all the care you've got for me?"
        }
       ]
      },
@@ -252,22 +252,22 @@
       "n": 9,
       "loc": "Bedroom",
       "title": "Hygiene Slippage",
-      "scene": "You notice {p} has worn the same sweatpants for four days straight and hasn't brushed {their} hair.",
+      "scene": "You notice {p} has worn the same pants for four days straight and hasn't brushed {their} hair.",
       "ask": "How do you offer gentle care without embarrassing {them}?",
       "opts": [
        {
         "g": "help",
-        "t": "Run a warm shower, lay out a clean towel and fresh hoodie without commentary, and say: “Bathroom's open if you want a reset—no pressure.”",
+        "t": "Run a warm shower, lay out a clean towel and fresh clothes without commentary, and say: “Bathroom's open if you want a reset—no pressure.”",
         "why": "Setting up the environment quietly eliminates activation steps without drawing attention to appearance.",
         "re": "Okay... thank you. I'll go take a warm shower in a minute.",
         "say": "Bathroom's open if you want a reset—no pressure."
        },
        {
         "g": "okay",
-        "t": "Hand {them} a fresh outfit with a bright smile: “Come on, a hot shower will make you feel brand new!”",
+        "t": "Hand {them} a fresh outfit with a bright smile: “Come on, a hot shower will make you feel so much better!”",
         "why": "Promising that basic hygiene will transform mood sets up unrealistic expectations and subtle judgment.",
         "re": "A shower isn't magic, it's just exhausting. Leave me alone.",
-        "say": "Come on, a hot shower will make you feel brand new!"
+        "say": "Come on, a hot shower will make you feel so much better!"
        },
        {
         "g": "hurt",
@@ -283,14 +283,14 @@
       "title": "Returning from Work",
       "scene": "{P} comes home from work, drops {their} bag, and sits down staring at the floor without moving.",
       "line": "I spent eight hours pretending to be a functional human. I have nothing left.",
-      "ask": "What is your opening move?",
+      "ask": "What do you do first?",
       "opts": [
        {
         "g": "help",
-        "t": "Pour a glass of water and slide it over quietly: “You don't have to perform here. Take all the quiet time you need.”",
+        "t": "Pour a glass of water and slide it over quietly: “You're home now—you don't have to perform. Take all the quiet time you need.”",
         "why": "Acknowledging exhaustion and offering immediate physical comfort signals total safety.",
         "re": "God, thank you. I am so tired of smiling at people all day.",
-        "say": "You don't have to perform here. Take all the quiet time you need."
+        "say": "You're home now—you don't have to perform. Take all the quiet time you need."
        },
        {
         "g": "okay",
@@ -301,9 +301,9 @@
        },
        {
         "g": "hurt",
-        "t": "Flip through the mail: “Long day for everyone, honestly. Did the electric bill come?”",
+        "t": "Scroll through your phone: “Long day for everyone, honestly. Has the paycheck come in yet?”",
         "why": "Stepping past someone sitting in heavy depletion to check mail communicates that routine tasks outrank their state.",
-        "re": "Yeah, check the bill. That's definitely more important than me standing here."
+        "re": "Yeah. Clearly the paycheck matters more than me standing right here."
        }
       ]
      }
@@ -321,15 +321,15 @@
        {
         "g": "help",
         "t": "Make something simple, set it nearby and sit down: “I made too much—help yourself if you want.”",
-        "why": "Depression makes basic tasks feel mountainous. Quiet, low-friction help removes barriers without pressure.",
+        "why": "When someone is worn out, even basic tasks feel like mountains. Quiet, low-friction help removes barriers without pressure.",
         "re": "Thanks... I couldn't figure out how to start eating, but I'll try a bit of this."
        },
        {
         "g": "okay",
-        "t": "Cut the toast into neat pieces and prompt: “Eat just three bites for me, okay? You'll feel better once blood sugar rises.”",
+        "t": "Cut the toast into neat pieces and prompt: “Open wide—just three bites for me, okay? You'll feel better once blood sugar rises.”",
         "why": "Setting micro-goals shifts focus to performance and creates a failure condition if they still can't eat.",
         "re": "Stop treating me like a toddler. I'll eat if I'm hungry.",
-        "say": "Eat just three bites for me, okay? You'll feel better once blood sugar rises."
+        "say": "Open wide—just three bites for me, okay? You'll feel better once blood sugar rises."
        },
        {
         "g": "hurt",
@@ -345,12 +345,12 @@
       "title": "Countering the Burden Trap",
       "scene": "While scrubbing plates together by the sink, {p} stops dead, staring blankly at the soapy water.",
       "line": "I'm so sorry. I am genuinely just a massive anchor dragging your entire life down.",
-      "ask": "How do you counter this emotional trap?",
+      "ask": "How do you gently pull them out of this thought?",
       "opts": [
        {
         "g": "help",
         "t": "Look {them} straight in the eye: “You aren't an anchor. We're riding out a brutal storm, and I'm right here in this boat with you voluntarily.”",
-        "why": "Feeling like a burden is a hallmark symptom of depression. Direct, unconditional reassurance cuts through distortion.",
+        "why": "Feeling like a burden is very common when someone is struggling. Direct, unconditional reassurance cuts through that distorted thinking.",
         "re": "Do you really mean that? I'm just so scared I'm ruining things for you.",
         "say": "You aren't an anchor. We're riding out a brutal storm, and I'm right here in this boat with you voluntarily."
        },
@@ -425,7 +425,7 @@
         "g": "hurt",
         "t": "Roll over: “Can you turn the brightness down? Some of us have work tomorrow.”",
         "why": "Physical shielding against screen glow communicates sleep-disruption annoyance without words.",
-        "re": "Fine, keep the blanket. Way to make me feel unwelcome in bed."
+        "re": "Fine, I dimmed it. Way to make me feel unwelcome in bed."
        }
       ]
      },
@@ -465,7 +465,7 @@
       "n": 16,
       "loc": "Living Room",
       "title": "Sensory Overload",
-      "scene": "After a loud morning outside, {p} sits on the rug, breathing shallowly with hands over {their} ears.",
+      "scene": "The TV is blaring after a loud morning outside; {p} sits on the rug, breathing shallowly with hands over {their} ears.",
       "cue": "👀 Shoulders hunched against ambient apartment noises.",
       "line": "There's too much noise. I can't process anything.",
       "ask": "What is your tactical move?",
@@ -514,7 +514,7 @@
        },
        {
         "g": "hurt",
-        "t": "Pour your own coffee: “Morning. Kettle's there if you want some.”",
+        "t": "Pour your own coffee: “Morning. Help yourself if you need anything.”",
         "why": "Making your own beverage while ignoring their empty cup highlights the solitude of their struggle.",
         "re": "Yeah, get your own and leave me sitting here with an empty cup."
        }
@@ -530,10 +530,10 @@
       "opts": [
        {
         "g": "help",
-        "t": "Open the door wide: “Forget the walk. Want to just stand by the open door in our socks for sixty seconds?”",
+        "t": "Open the door wide: “Forget the walk. Want to just stand by the open door for a bit?”",
         "why": "Shrinking the threshold to zero-effort contact respects limits while breaking stagnation.",
         "re": "Just the door? Yeah... I think I can manage that without panicking.",
-        "say": "Forget the walk. Want to just stand by the open door in our socks for sixty seconds?"
+        "say": "Forget the walk. Want to just stand by the open door for a bit?"
        },
        {
         "g": "okay",
@@ -560,10 +560,10 @@
       "opts": [
        {
         "g": "help",
-        "t": "Set bags down casually: “Relationships aren't a scoreboard. Sometimes it's 80/20, and I'm happy to cover the 80.”",
-        "why": "Dismantling scorekeeping relieves pressure to 'earn' care while depressed.",
+        "t": "Set bags down casually: “Relationships aren't about keeping score. Sometimes it's 80/20, and I'm happy to cover the 80.”",
+        "why": "Dismantling scorekeeping relieves the pressure to 'earn' care while they're struggling.",
         "re": "I hate that you have to carry so much of the weight right now. But thank you.",
-        "say": "Relationships aren't a scoreboard. Sometimes it's 80/20, and I'm happy to cover the 80."
+        "say": "Relationships aren't about keeping score. Sometimes it's 80/20, and I'm happy to cover the 80."
        },
        {
         "g": "okay",
@@ -801,7 +801,7 @@
       "loc": "Living Room",
       "title": "Numbness Over Sadness",
       "scene": "You ask how {p} feels, and {they} answer{s} with blankness.",
-      "line": "I don't even feel sad. Just gray static. Nothing registers.",
+      "line": "I don't even feel sad. Just gray and empty. Nothing registers.",
       "ask": "How do you respond to emotional blunting?",
       "opts": [
        {
@@ -822,7 +822,7 @@
         "g": "hurt",
         "t": "Set your cup down: “Hm. Maybe you're just tired. Want some tea?”",
         "why": "Performing a routine action highlights disconnect.",
-        "re": "Why are you acting like nothing is wrong? I just told you I feel like static."
+        "re": "Why are you acting like nothing is wrong? I just told you I feel empty."
        }
       ]
      },
@@ -836,7 +836,7 @@
       "opts": [
        {
         "g": "help",
-        "t": "Lean on the railing: “When you're inside the fog, your brain can't picture skies. I'll hold hope for both of us.”",
+        "t": "Lean on the windowsill: “When you're inside the fog, your brain can't picture skies. I'll hold hope for both of us.”",
         "why": "Offering to carry hope validates blindness without arguing against pain.",
         "re": "I hope you're right. Because right now, I genuinely can't see the other side of this.",
         "say": "When you're inside the fog, your brain can't picture skies. I'll hold hope for both of us."
@@ -1076,10 +1076,10 @@
       "opts": [
        {
         "g": "help",
-        "t": "Normalize pacing: “Session one is laying the map. Showing up was huge—want to take it easy?”",
+        "t": "Normalize pacing: “Session one is laying the map. Showing up was huge—I'll order takeout, you take it easy?”",
         "why": "Setting expectations prevents premature dropout.",
         "re": "It was exhausting just recounting everything. Thanks for ordering takeout and letting me rest.",
-        "say": "Session one is laying the map. Showing up was huge—want to take it easy?"
+        "say": "Session one is laying the map. Showing up was huge—I'll order takeout, you take it easy?"
        },
        {
         "g": "okay",
@@ -1143,10 +1143,10 @@
        },
        {
         "g": "okay",
-        "t": "“You need to delete apps—screen time is scientifically proven to worsen depression.”",
+        "t": "“You need to delete apps—screen time is scientifically proven to make your mood worse.”",
         "why": "Delivering lectures feels corrective.",
         "re": "Don't lecture me about screen-time studies when I'm already feeling miserable.",
-        "say": "You need to delete apps—screen time is scientifically proven to worsen depression."
+        "say": "You need to delete apps—screen time is scientifically proven to make your mood worse."
        },
        {
         "g": "hurt",
@@ -1333,8 +1333,8 @@
       "n": 39,
       "loc": "Bedroom",
       "title": "After a Rough Argument",
-      "scene": "Exhaustion boils over; you snap at {p} over a small mess. {P} looks devastated.",
-      "ask": "How do you repair the rupture cleanly?",
+      "scene": "Exhausted, you snap at {p} over a small mess. {P} looks devastated.",
+      "ask": "How do you make it right?",
       "opts": [
        {
         "g": "help",
@@ -1365,7 +1365,7 @@
       "loc": "Balcony",
       "title": "Recognizing Your Limits",
       "scene": "{P} asks you to analyze {their} childhood trauma, and you feel out of your depth.",
-      "ask": "How do you hold a loving boundary around expertise?",
+      "ask": "How do you lovingly say this is beyond you?",
       "opts": [
        {
         "g": "help",
@@ -1412,7 +1412,7 @@
        },
        {
         "g": "hurt",
-        "t": "Check your watch in the mirror: “Just say you've been busy. We need to leave in five.”",
+        "t": "Glance at your watch: “Just say you've been busy. We need to leave in five.”",
         "why": "Checking time places schedule pressure on them.",
         "re": "Already timing me before we even leave the house. Great."
        }
@@ -1422,7 +1422,7 @@
       "n": 47,
       "loc": "Study",
       "title": "Financial Stress Trigger",
-      "scene": "An unexpected repair bill arrives in the mail; {p} spirals in panic.",
+      "scene": "An unexpected car repair bill arrives in the mail; {p} spirals in panic.",
       "line": "Everything goes wrong when I'm barely holding on. I'm cursed.",
       "ask": "How do you ground catastrophic thinking?",
       "opts": [
@@ -1452,8 +1452,8 @@
       "n": 48,
       "loc": "Bedroom",
       "title": "Anniversary or Trigger Date",
-      "scene": "A difficult anniversary is coming up on the calendar.",
-      "ask": "How do you acknowledge a quiet trigger date?",
+      "scene": "A painful anniversary is coming up on the calendar.",
+      "ask": "How do you quietly mark a painful date?",
       "opts": [
        {
         "g": "help",
@@ -1466,7 +1466,7 @@
         "g": "okay",
         "t": "Plan a surprise outing for that day: “Keep Tuesday free—I've got a fun surprise planned!”",
         "why": "Ambushing someone on trauma anniversaries misfires.",
-        "re": "Why did you ambush me with a party on this specific day? You didn't even check!"
+        "re": "Why did you ambush me with an outing on this specific day? You didn't even check!"
        },
        {
         "g": "hurt",
@@ -1659,7 +1659,7 @@
       "loc": "Bedroom",
       "title": "Imminent Safety Action",
       "scene": "{P} confirms those dark intentions.",
-      "ask": "Execute your final emergency action.",
+      "ask": "What do you do right now?",
       "critical": true,
       "opts": [
        {
@@ -1677,7 +1677,7 @@
        {
         "g": "hurt",
         "t": "Sit still on the edge of the bed: “I… I don't know what to say. Let's talk about it tomorrow.”",
-        "why": "Remaining motionless fails to initiate emergency safety protocols.",
+        "why": "Freezing in place means the emergency safety steps never start.",
         "re": "Tomorrow? I need help now. Please, do something!"
        }
       ]
@@ -1922,7 +1922,7 @@
        },
        {
         "g": "hurt",
-        "t": "Pull your hood down: “Doesn't matter. Whatever you want.”",
+        "t": "Turn away from the mirror: “Doesn't matter. Whatever you want.”",
         "why": "Adjusting garments to block eye contact shuts off bridge building.",
         "re": "…Okay. I'll be nearby if you need me."
        }
@@ -2110,7 +2110,7 @@
       "opts": [
        {
         "g": "help",
-        "t": "Cross off items, rest: “Surviving a heavy day counts as enough today.”",
+        "t": "Put the list away and rest: “Surviving a heavy day counts as enough today.”",
         "why": "Recalibrating expectations prevents shame spirals.",
         "re": "Surviving counts. I'm proud of you for today.",
         "say": "Surviving a heavy day counts as enough today."
@@ -2225,12 +2225,12 @@
       "n": 63,
       "loc": "Living Room",
       "title": "Friend Dropping Off Groceries",
-      "scene": "A friend leaves soup on your doorstep.",
+      "scene": "A friend brings you soup and texts that they're waiting at your door.",
       "ask": "How do you respond?",
       "opts": [
        {
         "g": "help",
-        "t": "Open door in sweatpants: “Thank you—no energy to host, porch drop-off is a lifesaver.”",
+        "t": "Open the door in pajamas: “Thank you—no energy to host, porch drop-off is a lifesaver.”",
         "why": "Accepting help on your terms models boundaries.",
         "re": "See? People want to show up for you. I love that.",
         "say": "Thank you—no energy to host, porch drop-off is a lifesaver."
@@ -2519,10 +2519,10 @@
       "opts": [
        {
         "g": "help",
-        "t": "Send voice note: “Talking is hard tonight, wrote three sentences.”",
+        "t": "Send a text: “Talking is hard tonight, so I wrote three sentences.”",
         "why": "Asynchronous communication lowers pressure.",
-        "re": "I got your voice note. Thank you. I'm coming to sit with you.",
-        "say": "Talking is hard tonight, wrote three sentences."
+        "re": "I got your text. Thank you. I'm coming to sit with you.",
+        "say": "Talking is hard tonight, so I wrote three sentences."
        },
        {
         "g": "okay",
@@ -2687,7 +2687,7 @@
        {
         "g": "help",
         "t": "“Moment of lightness doesn't erase struggle—allowed brief relief.”",
-        "why": "Understanding depression isn't 24/7 misery stops policing joy.",
+        "why": "Understanding that a hard season isn't 24/7 misery stops you from policing your own joy.",
         "re": "Laugh all you want. It's allowed. I love hearing it.",
         "say": "Moment of lightness doesn't erase struggle—allowed brief relief."
        },
@@ -2926,7 +2926,7 @@
        {
         "g": "okay",
         "t": "Keep it simple: “Mostly I just can't sleep. Otherwise I'm okay.”",
-        "why": "Treating one symptom leaves depression unaddressed.",
+        "why": "Treating one symptom leaves the root of the problem unaddressed.",
         "re": "Did you tell them about the low mood too?"
        },
        {
@@ -3061,10 +3061,10 @@
       "opts": [
        {
         "g": "help",
-        "t": "“You matter too. See friends—I'll call my sister.”",
+        "t": "“You matter too. Spend this weekend with friends—I'll call my sister.”",
         "why": "Shared support protects you both.",
         "re": "…Really? Thank you. I think I do need that weekend.",
-        "say": "You matter too. See friends—I'll call my sister."
+        "say": "You matter too. Spend this weekend with friends—I'll call my sister."
        },
        {
         "g": "okay",
@@ -3209,14 +3209,14 @@
        },
        {
         "g": "okay",
-        "t": "Start a long explanation: “Actually, depression is about neurotransmitters, so let me explain…”",
+        "t": "Start a long explanation: “Actually, it's all about neurotransmitters, so let me explain…”",
         "why": "Debating drains scarce energy.",
         "re": "You don't have to win that argument. Save your energy."
        },
        {
         "g": "hurt",
         "t": "Nod once: “Yeah. Maybe you're right. I should just try harder.”",
-        "why": "Agreeing that you just need to try harder absorbs a harmful idea about depression.",
+        "why": "Agreeing that you just need to try harder absorbs a harmful idea about mental health.",
         "re": "…You okay after that conversation?"
        }
       ]
@@ -3349,7 +3349,7 @@
       "opts": [
        {
         "g": "help",
-        "t": "Text/call crisis line (988): “Not in safe headspace—stay on line?”",
+        "t": "Text/call a crisis line: “Not in safe headspace—stay on line?”",
         "why": "Reaching out interrupts isolation.",
         "re": "You reached out. That was so brave. I'm coming to sit with you too.",
         "say": "Not in safe headspace—stay on line?"
