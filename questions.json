@@ -326,10 +326,10 @@
        },
        {
         "g": "okay",
-        "t": "Cut the toast into neat pieces and prompt: “Eat just three bites for me, okay? You'll feel better once blood sugar rises.”",
+        "t": "Cut the toast into neat pieces and prompt: “Open wide—just three bites for me, okay? You'll feel better once blood sugar rises.”",
         "why": "Setting micro-goals shifts focus to performance and creates a failure condition if they still can't eat.",
         "re": "Stop treating me like a toddler. I'll eat if I'm hungry.",
-        "say": "Eat just three bites for me, okay? You'll feel better once blood sugar rises."
+        "say": "Open wide—just three bites for me, okay? You'll feel better once blood sugar rises."
        },
        {
         "g": "hurt",
@@ -425,7 +425,7 @@
         "g": "hurt",
         "t": "Roll over: “Can you turn the brightness down? Some of us have work tomorrow.”",
         "why": "Physical shielding against screen glow communicates sleep-disruption annoyance without words.",
-        "re": "Fine, keep the blanket. Way to make me feel unwelcome in bed."
+        "re": "Fine, I dimmed it. Way to make me feel unwelcome in bed."
        }
       ]
      },
@@ -514,7 +514,7 @@
        },
        {
         "g": "hurt",
-        "t": "Pour your own coffee: “Morning. Kettle's there if you want some.”",
+        "t": "Pour your own coffee: “Morning. Help yourself if you need anything.”",
         "why": "Making your own beverage while ignoring their empty cup highlights the solitude of their struggle.",
         "re": "Yeah, get your own and leave me sitting here with an empty cup."
        }
@@ -530,10 +530,10 @@
       "opts": [
        {
         "g": "help",
-        "t": "Open the door wide: “Forget the walk. Want to just stand by the open door in our socks for sixty seconds?”",
+        "t": "Open the door wide: “Forget the walk. Want to just stand by the open door for a bit?”",
         "why": "Shrinking the threshold to zero-effort contact respects limits while breaking stagnation.",
         "re": "Just the door? Yeah... I think I can manage that without panicking.",
-        "say": "Forget the walk. Want to just stand by the open door in our socks for sixty seconds?"
+        "say": "Forget the walk. Want to just stand by the open door for a bit?"
        },
        {
         "g": "okay",
@@ -560,10 +560,10 @@
       "opts": [
        {
         "g": "help",
-        "t": "Set bags down casually: “Relationships aren't a scoreboard. Sometimes it's 80/20, and I'm happy to cover the 80.”",
+        "t": "Set bags down casually: “Relationships aren't about keeping score. Sometimes it's 80/20, and I'm happy to cover the 80.”",
         "why": "Dismantling scorekeeping relieves the pressure to 'earn' care while they're struggling.",
         "re": "I hate that you have to carry so much of the weight right now. But thank you.",
-        "say": "Relationships aren't a scoreboard. Sometimes it's 80/20, and I'm happy to cover the 80."
+        "say": "Relationships aren't about keeping score. Sometimes it's 80/20, and I'm happy to cover the 80."
        },
        {
         "g": "okay",
@@ -3349,7 +3349,7 @@
       "opts": [
        {
         "g": "help",
-        "t": "Text/call crisis line (988): “Not in safe headspace—stay on line?”",
+        "t": "Text/call a crisis line: “Not in safe headspace—stay on line?”",
         "why": "Reaching out interrupts isolation.",
         "re": "You reached out. That was so brave. I'm coming to sit with you too.",
         "say": "Not in safe headspace—stay on line?"
