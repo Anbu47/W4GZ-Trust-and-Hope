@@ -120,10 +120,10 @@
        },
        {
         "g": "hurt",
-        "t": "Reply: “I'll tell them you stayed home.”",
-        "why": "Neutral compliance delivers social news without support or warmth, leaving them to sit alone in isolation.",
-        "re": "Whatever. Tell them whatever you want.",
-        "say": "I'll tell them you stayed home."
+        "t": "Reply: “I'm not lying for you again. I'll just tell them you didn't feel like seeing them.”",
+        "why": "Refusing to cover for them and announcing that they didn't want to come turns an energy crash into a public judgment, piling shame on top of exhaustion.",
+        "re": "Great. Now they'll all think I don't care about them.",
+        "say": "I'm not lying for you again. I'll just tell them you didn't feel like seeing them."
        }
       ]
      },

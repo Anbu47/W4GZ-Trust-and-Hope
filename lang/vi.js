@@ -446,10 +446,6 @@ window.W4GZ_VI = {
 "I won't force you, just promise me you'll step outside for ten minutes while I'm gone.": "Mình không ép đâu, chỉ cần cậu hứa là sẽ ra ngoài đi dạo mười phút trong lúc mình đi vắng.",
 "Great, now even staying home comes with homework. Just go have fun without me.": "Tuyệt, giờ đến ở nhà cũng bị giao nhiệm vụ. Thôi cậu cứ đi vui vẻ mà không cần mình.",
 "Attaching wellness homework to a cancelled plan turns rest into another obligation they might fail.": "Gắn thêm một \"nhiệm vụ chăm sóc bản thân\" vào kế hoạch đã hủy biến việc nghỉ ngơi thành thêm một nghĩa vụ mà người ấy có thể không làm được.",
-"Reply: “I'll tell them you stayed home.”": "Nhắn lại: “Mình sẽ bảo họ là cậu ở nhà.”",
-"I'll tell them you stayed home.": "Mình sẽ bảo họ là cậu ở nhà.",
-"Whatever. Tell them whatever you want.": "Sao cũng được. Cậu muốn nói gì với họ thì nói.",
-"Neutral compliance delivers social news without support or warmth, leaving them to sit alone in isolation.": "Chiều theo một cách trung lập chỉ truyền đạt chuyện xã giao mà không có sự hỗ trợ hay ấm áp, để người ấy ngồi lại một mình trong cô đơn.",
 "The Sudden Silence": "Sự im lặng đột ngột",
 "Standing by the counter preparing lunch, {p} goes completely mute mid-sentence and stares blankly out the window.": "Đang đứng cạnh kệ bếp chuẩn bị bữa trưa, {p} bỗng im bặt giữa chừng câu nói và nhìn trân trân ra ngoài cửa sổ.",
 "👀 Shoulders slumped, jaw clenched, fingers stiff on the edge of the counter.": "👀 Vai rũ xuống, hàm nghiến chặt, ngón tay cứng đờ bám vào mép kệ bếp.",
@@ -2512,5 +2508,9 @@ window.W4GZ_VI = {
 "Only 1 ❤️ left. One more hurtful answer and the story ends.": "Chỉ còn 1 ❤️. Thêm một câu trả lời gây tổn thương nữa, câu chuyện sẽ kết thúc.",
 "🌑 You lost all 3 ❤️. This story ends here.": "🌑 Bạn đã mất cả 3 ❤️. Câu chuyện kết thúc tại đây.",
 "You lost all 3 ❤️. This story ends here.": "Bạn đã mất cả 3 ❤️. Câu chuyện kết thúc tại đây.",
-"LIVES LEFT": "MẠNG CÒN LẠI"
+"LIVES LEFT": "MẠNG CÒN LẠI",
+"Reply: “I'm not lying for you again. I'll just tell them you didn't feel like seeing them.”": "Nhắn lại: “Mình không nói dối giùm cậu nữa đâu. Mình sẽ nói thẳng là cậu không muốn gặp họ.”",
+"I'm not lying for you again. I'll just tell them you didn't feel like seeing them.": "Mình không nói dối giùm cậu nữa đâu. Mình sẽ nói thẳng là cậu không muốn gặp họ.",
+"Refusing to cover for them and announcing that they didn't want to come turns an energy crash into a public judgment, piling shame on top of exhaustion.": "Từ chối che chắn và nói ra rằng người ấy không muốn đến biến một lúc kiệt sức thành lời phán xét trước mặt mọi người, chồng thêm xấu hổ lên sự mệt mỏi.",
+"Great. Now they'll all think I don't care about them.": "Hay lắm. Giờ ai cũng sẽ nghĩ mình chẳng quan tâm gì đến họ."
 };
