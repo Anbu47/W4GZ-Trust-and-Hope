@@ -480,10 +480,7 @@ window.W4GZ_VI = {
 "Papers and notes have sat stacked in an unorganized pile on the desk for weeks, and {p} is staring at it looking defeated.": "Giấy tờ và ghi chú chất thành một đống lộn xộn trên bàn học đã mấy tuần nay, và {p} đang nhìn chằm chằm vào nó với vẻ bất lực.",
 "I can't even sort a stack of notes. What is actually wrong with me?": "Đến sắp xếp một chồng ghi chú mình cũng không làm nổi. Rốt cuộc mình bị làm sao vậy?",
 "What is the most supportive intervention?": "Cách hỗ trợ tốt nhất ở đây là gì?",
-"Sit on the chair beside the desk: “Depression turns small tasks into mountains. Want to just toss the junk in the bin together?”": "Ngồi xuống chiếc ghế cạnh bàn: “Trầm cảm biến việc nhỏ thành cả ngọn núi. Hay mình cùng nhau quăng hết đống rác vào thùng nhé?”",
-"Depression turns small tasks into mountains. Want to just toss the junk in the bin together?": "Trầm cảm biến việc nhỏ thành cả ngọn núi. Hay mình cùng nhau quăng hết đống rác vào thùng nhé?",
 "Yes, please. I've been staring at this pile for three days feeling completely frozen.": "Ừ, làm vậy đi. Mình nhìn đống này ba ngày nay rồi mà cứ đơ ra hoàn toàn.",
-"Lowering the standard and normalizing executive dysfunction removes shame.": "Hạ thấp tiêu chuẩn và bình thường hóa tình trạng rối loạn chức năng điều hành giúp xóa bỏ cảm giác xấu hổ.",
 "“You're just overwhelmed—set a fifteen-minute timer and sort just the top folder for a quick dopamine win!”": "“Cậu chỉ đang bị quá tải thôi—đặt hẹn giờ mười lăm phút rồi xếp mỗi tập hồ sơ trên cùng thôi, để có ngay một chút dopamine chiến thắng!”",
 "You're just overwhelmed—set a fifteen-minute timer and sort just the top folder for a quick dopamine win!": "Cậu chỉ đang bị quá tải thôi—đặt hẹn giờ mười lăm phút rồi xếp mỗi tập hồ sơ trên cùng thôi, để có ngay một chút dopamine chiến thắng!",
 "A timer isn't going to magically give me energy I don't have. Just leave it.": "Một cái hẹn giờ đâu có thần kỳ cho mình năng lượng mà mình không có. Thôi để đó đi.",
@@ -2512,5 +2509,8 @@ window.W4GZ_VI = {
 "Reply: “I'm not lying for you again. I'll just tell them you didn't feel like seeing them.”": "Nhắn lại: “Mình không nói dối giùm cậu nữa đâu. Mình sẽ nói thẳng là cậu không muốn gặp họ.”",
 "I'm not lying for you again. I'll just tell them you didn't feel like seeing them.": "Mình không nói dối giùm cậu nữa đâu. Mình sẽ nói thẳng là cậu không muốn gặp họ.",
 "Refusing to cover for them and announcing that they didn't want to come turns an energy crash into a public judgment, piling shame on top of exhaustion.": "Bạn từ chối nói đỡ, lại còn bảo với mọi người rằng người ấy không muốn đến. Đang kiệt sức, giờ họ còn phải chịu thêm sự phán xét và xấu hổ.",
-"Great. Now they'll all think I don't care about them.": "Hay lắm. Giờ ai cũng sẽ nghĩ mình chẳng quan tâm gì đến họ."
+"Great. Now they'll all think I don't care about them.": "Hay lắm. Giờ ai cũng sẽ nghĩ mình chẳng quan tâm gì đến họ.",
+"Sit on the chair beside the desk: “Depression turns small tasks into mountains. Want to just split the pile into 'now' and 'later' together? You point, I'll stack.”": "Ngồi xuống chiếc ghế cạnh bàn: “Trầm cảm biến việc nhỏ thành cả ngọn núi. Hay mình cùng chia chồng này thành hai phần, ‘làm bây giờ’ và ‘để sau’ nhé? Cậu chỉ, mình xếp.”",
+"Depression turns small tasks into mountains. Want to just split the pile into 'now' and 'later' together? You point, I'll stack.": "Trầm cảm biến việc nhỏ thành cả ngọn núi. Hay mình cùng chia chồng này thành hai phần, ‘làm bây giờ’ và ‘để sau’ nhé? Cậu chỉ, mình xếp.",
+"Lowering the bar to one easy step done side by side, and treating the freeze as normal, removes shame without asking them to decide what to throw away.": "Hạ yêu cầu xuống thành một bước dễ, làm cùng nhau, và coi việc bị “đơ” là chuyện bình thường giúp người ấy bớt xấu hổ, mà không bắt họ phải quyết định vứt đi thứ gì."
 };
