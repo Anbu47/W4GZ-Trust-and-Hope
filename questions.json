@@ -1079,7 +1079,7 @@
         "t": "Normalize pacing: “Session one is laying the map. Showing up was huge—I'll order takeout, you take it easy?”",
         "why": "Setting expectations prevents premature dropout.",
         "re": "It was exhausting just recounting everything. Thanks for ordering takeout and letting me rest.",
-        "say": "Session one is laying the map. Showing up was huge—want to take it easy?"
+        "say": "Session one is laying the map. Showing up was huge—I'll order takeout, you take it easy?"
        },
        {
         "g": "okay",
@@ -2522,7 +2522,7 @@
         "t": "Send a text: “Talking is hard tonight, so I wrote three sentences.”",
         "why": "Asynchronous communication lowers pressure.",
         "re": "I got your text. Thank you. I'm coming to sit with you.",
-        "say": "Talking is hard tonight, wrote three sentences."
+        "say": "Talking is hard tonight, so I wrote three sentences."
        },
        {
         "g": "okay",
@@ -3064,7 +3064,7 @@
         "t": "“You matter too. Spend this weekend with friends—I'll call my sister.”",
         "why": "Shared support protects you both.",
         "re": "…Really? Thank you. I think I do need that weekend.",
-        "say": "You matter too. See friends—I'll call my sister."
+        "say": "You matter too. Spend this weekend with friends—I'll call my sister."
        },
        {
         "g": "okay",

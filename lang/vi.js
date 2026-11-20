@@ -832,7 +832,6 @@ window.W4GZ_VI = {
 "{P} comes out of an online therapy session, looking drained.": "{P} vừa kết thúc một buổi trị liệu tâm lý online, trông kiệt quệ.",
 "I spent fifty minutes explaining background. I don't feel magically better.": "Mình mất năm mươi phút chỉ để kể lại hoàn cảnh. Mình chẳng thấy khá lên tí nào như phép màu cả.",
 "How do you manage early therapy expectations?": "Bạn giúp người ấy điều chỉnh kỳ vọng ở giai đoạn đầu trị liệu thế nào?",
-"Session one is laying the map. Showing up was huge—want to take it easy?": "Buổi đầu là để vẽ bản đồ thôi. Cậu chịu đến đã là chuyện lớn rồi—hôm nay nghỉ ngơi chút nhé?",
 "It was exhausting just recounting everything. Thanks for ordering takeout and letting me rest.": "Chỉ kể lại mọi thứ thôi mà mình đã mệt rã rời. Cảm ơn cậu đã gọi đồ ăn và để mình nghỉ.",
 "Setting expectations prevents premature dropout.": "Đặt kỳ vọng hợp lý giúp người ấy không bỏ trị liệu quá sớm.",
 "“Maybe that therapist isn't proactive—should we find someone with action plans?”": "“Hay là nhà trị liệu đó không chủ động lắm—mình tìm người khác có kế hoạch hành động cụ thể nhé?”",
@@ -1698,7 +1697,6 @@ window.W4GZ_VI = {
 "Voice Memo When Words Fail": "Tin nhắn thoại khi không nói nên lời",
 "Your throat feels too tight to talk tonight.": "Tối nay cổ họng bạn nghẹn lại, khó mà nói thành lời.",
 "How do you bridge the gap?": "Bạn làm gì để vượt qua khoảng cách đó?",
-"Talking is hard tonight, wrote three sentences.": "Tối nay mình khó nói chuyện quá, mình đã viết ra ba câu.",
 "Asynchronous communication lowers pressure.": "Giao tiếp không cần trả lời ngay giúp giảm áp lực.",
 "Put it off: “I'll wait until talking feels easier. Maybe in a couple of weeks.”": "Gác lại: “Mình sẽ đợi đến khi nói chuyện dễ hơn. Chắc vài tuần nữa.”",
 "You don't have to wait. Text me even one word.": "Cậu không cần đợi đâu. Nhắn cho mình dù chỉ một chữ thôi cũng được.",
@@ -1929,7 +1927,6 @@ window.W4GZ_VI = {
 "Staring at work reinforces obsessive error review.": "Dán mắt vào công việc chỉ củng cố thói quen soi lỗi đầy ám ảnh.",
 "Encouraging Helper to Rest": "Khuyên người chăm sóc mình nghỉ ngơi",
 "{P} looks exhausted after caring for you all week.": "{P} trông kiệt sức sau cả tuần chăm sóc bạn.",
-"You matter too. See friends—I'll call my sister.": "Cậu cũng quan trọng mà. Đi gặp bạn bè đi—mình sẽ gọi cho chị mình.",
 "…Really? Thank you. I think I do need that weekend.": "…Thật hả? Cảm ơn cậu. Chắc mình cần cuối tuần đó thật.",
 "Shared support protects you both.": "Chia sẻ việc hỗ trợ giúp bảo vệ cả hai người.",
 "Make a silent promise: “From now on, I'll keep the heavy days to myself.”": "Âm thầm tự hứa: “Từ giờ mấy ngày nặng nề mình sẽ giữ cho riêng mình.”",
@@ -2512,5 +2509,8 @@ window.W4GZ_VI = {
 "A friend brings you soup and texts that they're waiting at your door.": "Một người bạn mang súp đến và nhắn tin rằng đang đứng trước cửa nhà bạn.",
 "Send a text: “Talking is hard tonight, so I wrote three sentences.”": "Gửi tin nhắn chữ: “Tối nay mình khó nói chuyện quá, nên mình viết ra ba câu.”",
 "I got your text. Thank you. I'm coming to sit with you.": "Mình nhận được tin nhắn của cậu rồi. Cảm ơn cậu. Mình sang ngồi với cậu đây.",
-"“You matter too. Spend this weekend with friends—I'll call my sister.”": "“Cậu cũng quan trọng mà. Cuối tuần này đi gặp bạn bè đi—mình sẽ gọi cho chị mình.”"
+"“You matter too. Spend this weekend with friends—I'll call my sister.”": "“Cậu cũng quan trọng mà. Cuối tuần này đi gặp bạn bè đi—mình sẽ gọi cho chị mình.”",
+"Session one is laying the map. Showing up was huge—I'll order takeout, you take it easy?": "Buổi đầu là để vẽ bản đồ thôi. Cậu chịu đến đã là chuyện lớn rồi—mình gọi đồ ăn nhé, cậu nghỉ đi?",
+"Talking is hard tonight, so I wrote three sentences.": "Tối nay mình khó nói chuyện quá, nên mình viết ra ba câu.",
+"You matter too. Spend this weekend with friends—I'll call my sister.": "Cậu cũng quan trọng mà. Cuối tuần này đi gặp bạn bè đi—mình sẽ gọi cho chị mình."
 };
