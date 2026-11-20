@@ -51,7 +51,7 @@
        },
        {
         "g": "okay",
-        "t": "Smile warmly: “No pressure to talk, but I'm going to put your favorite comfort show on softly.”",
+        "t": "Smile warmly: “No pressure to talk, but I'm putting your favorite show on softly to make things a little cozier.”",
         "why": "Introducing external sensory stimuli forces an exhausted nervous system to process data when it needs static reduction.",
         "re": "Please turn it off. The noise is just bouncing around inside my head right now.",
         "say": "No pressure to talk, but I'm putting your favorite show on softly to make things a little cozier."
@@ -301,7 +301,7 @@
        },
        {
         "g": "hurt",
-        "t": "Flip through the mail: “Long day for everyone, honestly. Has the paycheck come in yet?”",
+        "t": "Scroll through your phone: “Long day for everyone, honestly. Has the paycheck come in yet?”",
         "why": "Stepping past someone sitting in heavy depletion to check mail communicates that routine tasks outrank their state.",
         "re": "Yeah. Clearly the paycheck matters more than me standing right here."
        }
@@ -465,7 +465,7 @@
       "n": 16,
       "loc": "Living Room",
       "title": "Sensory Overload",
-      "scene": "After a loud morning outside, {p} sits on the rug, breathing shallowly with hands over {their} ears.",
+      "scene": "The TV is blaring after a loud morning outside; {p} sits on the rug, breathing shallowly with hands over {their} ears.",
       "cue": "👀 Shoulders hunched against ambient apartment noises.",
       "line": "There's too much noise. I can't process anything.",
       "ask": "What is your tactical move?",
@@ -836,7 +836,7 @@
       "opts": [
        {
         "g": "help",
-        "t": "Lean on the railing: “When you're inside the fog, your brain can't picture skies. I'll hold hope for both of us.”",
+        "t": "Lean on the windowsill: “When you're inside the fog, your brain can't picture skies. I'll hold hope for both of us.”",
         "why": "Offering to carry hope validates blindness without arguing against pain.",
         "re": "I hope you're right. Because right now, I genuinely can't see the other side of this.",
         "say": "When you're inside the fog, your brain can't picture skies. I'll hold hope for both of us."
@@ -1076,7 +1076,7 @@
       "opts": [
        {
         "g": "help",
-        "t": "Normalize pacing: “Session one is laying the map. Showing up was huge—want to take it easy?”",
+        "t": "Normalize pacing: “Session one is laying the map. Showing up was huge—I'll order takeout, you take it easy?”",
         "why": "Setting expectations prevents premature dropout.",
         "re": "It was exhausting just recounting everything. Thanks for ordering takeout and letting me rest.",
         "say": "Session one is laying the map. Showing up was huge—want to take it easy?"
@@ -1412,7 +1412,7 @@
        },
        {
         "g": "hurt",
-        "t": "Check your watch in the mirror: “Just say you've been busy. We need to leave in five.”",
+        "t": "Glance at your watch: “Just say you've been busy. We need to leave in five.”",
         "why": "Checking time places schedule pressure on them.",
         "re": "Already timing me before we even leave the house. Great."
        }
@@ -1422,7 +1422,7 @@
       "n": 47,
       "loc": "Study",
       "title": "Financial Stress Trigger",
-      "scene": "An unexpected repair bill arrives in the mail; {p} spirals in panic.",
+      "scene": "An unexpected car repair bill arrives in the mail; {p} spirals in panic.",
       "line": "Everything goes wrong when I'm barely holding on. I'm cursed.",
       "ask": "How do you ground catastrophic thinking?",
       "opts": [
@@ -1466,7 +1466,7 @@
         "g": "okay",
         "t": "Plan a surprise outing for that day: “Keep Tuesday free—I've got a fun surprise planned!”",
         "why": "Ambushing someone on trauma anniversaries misfires.",
-        "re": "Why did you ambush me with a party on this specific day? You didn't even check!"
+        "re": "Why did you ambush me with an outing on this specific day? You didn't even check!"
        },
        {
         "g": "hurt",
@@ -1922,7 +1922,7 @@
        },
        {
         "g": "hurt",
-        "t": "Pull your hood down: “Doesn't matter. Whatever you want.”",
+        "t": "Turn away from the mirror: “Doesn't matter. Whatever you want.”",
         "why": "Adjusting garments to block eye contact shuts off bridge building.",
         "re": "…Okay. I'll be nearby if you need me."
        }
@@ -2110,7 +2110,7 @@
       "opts": [
        {
         "g": "help",
-        "t": "Cross off items, rest: “Surviving a heavy day counts as enough today.”",
+        "t": "Put the list away and rest: “Surviving a heavy day counts as enough today.”",
         "why": "Recalibrating expectations prevents shame spirals.",
         "re": "Surviving counts. I'm proud of you for today.",
         "say": "Surviving a heavy day counts as enough today."
@@ -2225,7 +2225,7 @@
       "n": 63,
       "loc": "Living Room",
       "title": "Friend Dropping Off Groceries",
-      "scene": "A friend leaves soup on your doorstep.",
+      "scene": "A friend brings you soup and texts that they're waiting at your door.",
       "ask": "How do you respond?",
       "opts": [
        {
@@ -2519,9 +2519,9 @@
       "opts": [
        {
         "g": "help",
-        "t": "Send voice note: “Talking is hard tonight, wrote three sentences.”",
+        "t": "Send a text: “Talking is hard tonight, so I wrote three sentences.”",
         "why": "Asynchronous communication lowers pressure.",
-        "re": "I got your voice note. Thank you. I'm coming to sit with you.",
+        "re": "I got your text. Thank you. I'm coming to sit with you.",
         "say": "Talking is hard tonight, wrote three sentences."
        },
        {
@@ -3061,7 +3061,7 @@
       "opts": [
        {
         "g": "help",
-        "t": "“You matter too. See friends—I'll call my sister.”",
+        "t": "“You matter too. Spend this weekend with friends—I'll call my sister.”",
         "why": "Shared support protects you both.",
         "re": "…Really? Thank you. I think I do need that weekend.",
         "say": "You matter too. See friends—I'll call my sister."
