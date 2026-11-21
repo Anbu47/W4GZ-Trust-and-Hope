@@ -2486,7 +2486,7 @@ window.W4GZ_VI = {
 "Look {them} straight in the eye: “You aren't an anchor. We're riding out a brutal storm, and I'm right here in this boat with you voluntarily.”": "Nhẹ nhàng nắm lấy đôi tay còn ướt của người ấy: “Mình sẽ không giả vờ là thời gian này mình không bị vắt kiệt—nhưng mình thương cậu đủ để cố gắng vượt qua.”",
 "You aren't an anchor. We're riding out a brutal storm, and I'm right here in this boat with you voluntarily.": "Mình sẽ không giả vờ là thời gian này mình không bị vắt kiệt—nhưng mình thương cậu đủ để cố gắng vượt qua.",
 "Body-doubling and breaking down tasks preserves agency while sharing cognitive load.": "Ngồi làm cùng và chia nhỏ công việc giúp người ấy vẫn giữ quyền chủ động, đồng thời được san sẻ gánh nặng đầu óc.",
-"Fine, I dimmed it. Way to make me feel unwelcome in bed.": "Rồi, tớ giảm độ sáng rồi đây. Giỏi lắm, làm mình thấy mình thừa thãi ngay trên giường.",
+"Fine, I dimmed it. Way to make me feel unwelcome in bed.": "Rồi, giảm độ sáng rồi đây. Giỏi lắm, làm mình thấy mình thừa thãi ngay trên giường.",
 "I'm not sick, I'm broken. Stop calling it sick.": "Mình không ốm, mình tiêu rồi. Đừng gọi nó là ốm nữa.",
 "Thank you... the noise was literally making my chest tighten up.": "Cảm ơn cậu... tiếng ồn làm ngực mình thắt lại thật đó.",
 "I'm not doing a morning evaluation checklist. Just let me drink in peace.": "Mình không làm bảng tự đánh giá buổi sáng đâu. Để mình uống trong yên bình đi.",
