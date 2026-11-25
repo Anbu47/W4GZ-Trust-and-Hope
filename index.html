@@ -2096,54 +2096,54 @@ const TRUST_MOMENTS = [
 // Recharge moments: a different situation each time (no repeats until all have been seen).
 // g: best = truly restful, okay = some rest, poor = feels like rest but isn't.
 const RECHARGE = [
-  { q:"It's midnight, and your brain is projecting an IMAX horror movie of worst-case scenarios about {p}.", opts:[
-    { g:"best", t:"Dump all racing thoughts onto a physical notepad and execute slow breathing cycles.", tip:"Externalizing catastrophe onto paper tricks your overworked nervous system into clocking out." },
-    { g:"okay", t:"Put on one mindless comfort sitcom episode to distract your racing mind.", tip:"A mild distraction works—just don't accidentally binge three seasons until 3 AM." },
-    { g:"poor", t:"Stay awake deep-diving into dark psychological forums about clinical depression.", tip:"Midnight doom-scrolling feels proactive, but it's really anxiety fuel disguised as research." } ] },
-  { q:"A friend texts: “Coffee this Saturday? Miss your face!”", opts:[
-    { g:"best", t:"Accept enthusiastically, and admit honestly that things have been heavy lately.", tip:"Allowing external friendships to feed you ensures you aren't isolated in an echo chamber." },
-    { g:"okay", t:"Accept, slap on a glossy fake smile, and pretend your household is a joyful paradise.", tip:"Social contact helps, though masking your reality keeps you feeling lonely in a crowded room." },
-    { g:"poor", t:"Ghost the text entirely because social bandwidth is currently set to zero.", tip:"Severing your own safety lines makes supporting someone else exponentially harder." } ] },
-  { q:"You realize your daily nutritional intake has consisted entirely of cold coffee and ambient stress.", opts:[
-    { g:"best", t:"Cook a legitimate meal and sit down to consume it phone-free.", tip:"Your physical vessel is your engine. Fueling it properly prevents systemic burnout." },
-    { g:"okay", t:"Grab a protein bar while pacing around cleaning the baseboards.", tip:"Better than starving, though pausing to eat mindfully restores actual energy." },
-    { g:"poor", t:"Skip eating entirely and double down on a third iced energy drink.", tip:"Chemical stimulants borrow tomorrow's energy at an astronomical interest rate." } ] },
-  { q:"A wave of intense guilt hits you simply for wanting an hour of solo quiet time.", opts:[
-    { g:"best", t:"Reframe boundaries: remind yourself that rest is essential maintenance, not abandonment.", tip:"You cannot pour from a dry well. Solitude is how you stay functional." },
-    { g:"okay", t:"Take ten minutes to sit down while glaring nervously at the clock and feeling sick with guilt.", tip:"A short break helps, but toxic guilt sabotages the physiological rest cycle." },
-    { g:"poor", t:"Suppress the guilt and aggressively scrub the bathtub with bleach until your arms ache.", tip:"Channeling anxiety into compulsive physical labor just drains your remaining reserves." } ] },
-  { q:"Your shoulder muscles have petrified into solid granite from weeks of chronic bracing.", opts:[
-    { g:"best", t:"Take a brisk outdoor walk or engage in deep stretching routines.", tip:"Physical movement signals to your primitive brain that the immediate crisis mode has paused." },
-    { g:"okay", t:"Lie flat on the rug and listen to ambient instrumental tracks for ten minutes.", tip:"Passive resting helps—though active muscle release moves stagnant tension faster." },
-    { g:"poor", t:"Stay up until 2 AM meticulously alphabetizing your digital photo library to feel in control.", tip:"Micromanaging minor details tricks your brain into feeling productive while exhausting you." } ] },
-  { q:"You catch yourself believing that if you just love hard enough, you can personally cure {p}'s illness.", opts:[
-    { g:"best", t:"Connect with a caregiver support group or professional counselor.", tip:"You are a partner, not a psychiatric hospital. Sharing the load shatters the illusion of solo-fixing." },
-    { g:"okay", t:"Read five more clinical breakdown articles about mood disorders online.", tip:"Intellectual understanding helps, but peer community support heals caregiver isolation." },
-    { g:"poor", t:"Berate yourself internally for not being a strong enough healer.", tip:"Self-flagellation doesn't accelerate their recovery; it only guarantees your destruction." } ] },
-  { q:"It's Sunday morning, and a rare uncommitted hour opens up before you.", opts:[
-    { g:"best", t:"Dive headfirst into an unrelated personal hobby that brings you pure joy.", tip:"Cultivating joy outside the caregiver identity reminds you who you are at your core." },
-    { g:"okay", t:"Clear out your backlog of household administrative emails and chores.", tip:"Productive, sure, but chore execution doesn't recharge cognitive battery levels." },
-    { g:"poor", t:"Sit on the couch catastrophizing about what disaster might happen next week.", tip:"Pre-grieving catastrophes drains your emotional bank account without altering outcomes." } ] },
-  { q:"You snapped aggressively at a colleague over a minor inconvenience and feel sick about it.", opts:[
-    { g:"best", t:"Practice self-compassion, plan a sincere apology tomorrow, and get an early night.", tip:"Grace accelerates recovery from mistakes far more efficiently than toxic self-loathing." },
-    { g:"okay", t:"Go to bed on time, but mentally replay the awkward outburst twenty times in HD.", tip:"Sleep is essential—now force your brain to stop looping the cringey highlight reel." },
-    { g:"poor", t:"Stay awake cataloging every single social mistake you've made over the last decade.", tip:"Chronic self-audit keeps your adrenaline pumping and destroys sleep quality." } ] },
-  { q:"You realize you haven't laid eyes on natural sunlight in four consecutive days.", opts:[
-    { g:"best", t:"Take a sunlit walk around the perimeter block or sit in a local green park.", tip:"Daylight helps reset your body clock and lift your mood, and a little movement outdoors helps you sleep better tonight." },
-    { g:"okay", t:"Unlatch the living room window for sixty seconds to inhale a gust of fresh air.", tip:"A cute micro-step, though an actual outdoor excursion yields vastly superior results." },
-    { g:"poor", t:"Draw all the blackout blinds tighter and remain cocooned inside your cave.", tip:"Voluntary sensory deprivation slowly drags your own baseline mood into the basement." } ] },
-  { q:"A relative calls offering: “Can I take over home watch this weekend so you can escape?”", opts:[
-    { g:"best", t:"Accept immediately: delegate care duties so you can step away completely.", tip:"Distributed support expands the safety net and keeps burnout from capsizing the household." },
-    { g:"okay", t:"Respond politely: “That's so sweet of you, maybe we can coordinate something next month!”", tip:"Keeping doors open is polite, but accepting immediate rescue is vastly smarter." },
-    { g:"poor", t:"Decline flatly: “No thanks, I'm obligated to handle this entirely on my own.”", tip:"Rejecting help out of pride turns a capable partner into a clinical casualty." } ] },
-  { q:"Following an intense emotional confrontation, your mind is exhausted but your nervous system is vibrating.", opts:[
-    { g:"best", t:"Do slow breathing cycles — 4 seconds in, 6 seconds out.", tip:"Longer exhales switch on your body's built-in calming system and help ease you out of fight-or-flight mode." },
-    { g:"okay", t:"Take a scorching hot shower before climbing into bed.", tip:"Thermal immersion relaxes surface tension, helping wind down physical agitation." },
-    { g:"poor", t:"Slam an energy drink and plow through a pile of household chores.", tip:"Pushing past exhaustion guarantees an explosive physiological crash tomorrow." } ] },
-  { q:"A sudden realization hits that you haven't experienced genuine laughter in an age.", opts:[
-    { g:"best", t:"Call that one hilarious friend who instantly short-circuits your serious moods.", tip:"Shared laughter is an explosive biological reset button for mental fatigue." },
-    { g:"okay", t:"Scroll through viral comedy sketches on your phone in total solitude.", tip:"Digital chuckles help—though active social connection heals core isolation far deeper." },
-    { g:"poor", t:"Vow strictly that you aren't permitted to smile until {p} is 100% fully recovered.", tip:"Joy isn't a prize unlocked at a finish line; it's the fuel required to finish the marathon." } ] }
+  { q:"It's midnight. {P} is finally asleep, but your mind keeps replaying every worst-case scenario.", opts:[
+    { g:"best", t:"Write the worries down on paper, then breathe slowly until your shoulders drop.", tip:"Putting worries on paper tells your brain it can stop guarding them for tonight." },
+    { g:"okay", t:"Put on one light comedy episode to quiet your mind.", tip:"A little distraction helps—just stop at one episode, not a 3 AM marathon." },
+    { g:"poor", t:"Keep searching online for every symptom {p} might have.", tip:"Late-night searching feels like helping, but it mostly feeds your own anxiety." } ] },
+  { q:"A friend texts: “Coffee this Saturday? You've been taking care of {p} for ages—how are YOU?”", opts:[
+    { g:"best", t:"Say yes, and tell them honestly that things at home have been heavy.", tip:"Having your own people to lean on keeps you from carrying everything alone." },
+    { g:"okay", t:"Say yes, but tell them everything at home is totally fine.", tip:"Seeing a friend helps, but pretending keeps you lonely even at the table." },
+    { g:"poor", t:"Leave the message unread—you don't have the energy for anyone else.", tip:"Cutting off your own support makes caring for {p} much harder." } ] },
+  { q:"You've cooked for {p} all week, but your own meals have been cold coffee and leftovers eaten standing up.", opts:[
+    { g:"best", t:"Make yourself a proper plate and sit down to eat it, phone away.", tip:"You can't keep caring for someone on an empty stomach." },
+    { g:"okay", t:"Eat a snack while you tidy up the kitchen.", tip:"Better than nothing, but sitting down to eat gives back more energy." },
+    { g:"poor", t:"Skip dinner and drink another coffee to keep going.", tip:"Caffeine borrows tomorrow's energy, and the bill comes due fast." } ] },
+  { q:"{P} is resting, and you feel guilty for wanting an hour to yourself.", opts:[
+    { g:"best", t:"Remind yourself that rest is part of caring, then take the hour.", tip:"You can't pour from an empty cup. Time alone keeps you going." },
+    { g:"okay", t:"Sit down for ten minutes, but check on {p} every few minutes.", tip:"A short break helps, but guilt keeps your body from really resting." },
+    { g:"poor", t:"Push the guilt down and scrub the whole bathroom instead.", tip:"Turning worry into chores just drains what little energy you have left." } ] },
+  { q:"Your shoulders are stiff from weeks of staying on alert for {p}.", opts:[
+    { g:"best", t:"Go for a brisk walk or do a few minutes of slow stretching.", tip:"Moving your body tells your brain the emergency is over for now." },
+    { g:"okay", t:"Lie on the floor and listen to calm music for ten minutes.", tip:"Resting helps, though moving loosens tight muscles faster." },
+    { g:"poor", t:"Stay up re-sorting {p}'s appointments and notes for the third time.", tip:"Checking again and again feels like control, but it keeps your body tense." } ] },
+  { q:"You catch yourself thinking: if I just love {p} enough, I can fix this on my own.", opts:[
+    { g:"best", t:"Join a support group for people caring for a loved one, or talk to a counselor.", tip:"You're a partner, not a therapist. Sharing the load is part of caring well." },
+    { g:"okay", t:"Read a few more articles about mental health tonight.", tip:"Learning helps, but talking to people who've been there helps more." },
+    { g:"poor", t:"Blame yourself for not being strong enough to make {p} better.", tip:"Blaming yourself won't speed up {their} recovery—it only wears you down." } ] },
+  { q:"{P} is napping, and you suddenly have a free hour.", opts:[
+    { g:"best", t:"Spend it on a hobby you love that has nothing to do with caregiving.", tip:"Doing what you love reminds you that you're more than a caregiver." },
+    { g:"okay", t:"Catch up on bills, emails and chores.", tip:"Useful, but crossing off chores doesn't refill your energy." },
+    { g:"poor", t:"Sit on the couch worrying about what might go wrong next.", tip:"Worrying ahead drains you without changing anything." } ] },
+  { q:"After a sleepless night with {p}, you snapped at a coworker over something small.", opts:[
+    { g:"best", t:"Go easy on yourself, plan a short apology for tomorrow, and sleep early.", tip:"Kindness to yourself helps you bounce back faster than guilt does." },
+    { g:"okay", t:"Go to bed on time, but replay the moment in your head again and again.", tip:"Sleep helps—now let the replay stop." },
+    { g:"poor", t:"Stay up listing every mistake you've made this month.", tip:"Going over every mistake keeps you wired and ruins your sleep." } ] },
+  { q:"You haven't stepped outside in four days because you didn't want to leave {p} alone.", opts:[
+    { g:"best", t:"Tell {p} you'll be back soon, and take a short walk in the sun.", tip:"Daylight lifts your mood and helps you sleep better tonight." },
+    { g:"okay", t:"Open the window for a few minutes of fresh air.", tip:"A good small step, though actually going outside helps more." },
+    { g:"poor", t:"Close the curtains and stay in, just in case {p} needs you.", tip:"Staying in for days slowly drags your own mood down too." } ] },
+  { q:"Your sister calls: “Let me stay with {p} this weekend so you can get some rest.”", opts:[
+    { g:"best", t:"Say yes, and take the weekend off for real.", tip:"Letting others help widens the safety net for {p} and for you." },
+    { g:"okay", t:"Thank her and say maybe some other time.", tip:"Polite, but saying yes now would help you a lot more." },
+    { g:"poor", t:"Say no—you have to handle this all by yourself.", tip:"Turning down help leaves you running on empty." } ] },
+  { q:"After a hard conversation with {p}, your head is tired but your heart is still racing.", opts:[
+    { g:"best", t:"Breathe slowly—4 seconds in, 6 seconds out.", tip:"Longer breaths out help your body calm down after stress." },
+    { g:"okay", t:"Take a warm shower before bed.", tip:"Warm water relaxes your body and helps you wind down." },
+    { g:"poor", t:"Drink an energy drink and power through the chores.", tip:"Pushing through exhaustion means a bigger crash tomorrow." } ] },
+  { q:"You realize you haven't really laughed since things got hard with {p}.", opts:[
+    { g:"best", t:"Call the friend who always makes you laugh.", tip:"Laughing with someone is one of the fastest ways to recharge." },
+    { g:"okay", t:"Watch funny videos on your own.", tip:"A chuckle helps, but laughing with people helps even more." },
+    { g:"poor", t:"Promise yourself no fun until {p} is fully better.", tip:"Joy isn't a reward for the finish line—it's what gets you there." } ] }
 ];
 const REST_GAIN = { best:3, okay:2, poor:0 };
 const REST_HEAD_P1 = { best:["🌿 Fully restored","good"], okay:["🙂 Minor rest","mid"], poor:["😮‍💨 Minimal recovery","bad"] };
