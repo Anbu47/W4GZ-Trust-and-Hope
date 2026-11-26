@@ -1011,7 +1011,7 @@ h1.th1{font-size:clamp(32px,11vw,50px) !important}
 @media (max-height:660px){ #s-intro .story,html.t-light #s-intro .story,html.t-dusk #s-intro .story{font-size:15px !important} #s-intro .who{max-width:min(96px,14vh) !important} }
 @media (max-height:700px){ #s-confirm .who{max-width:min(110px,14vh) !important} }
 #s-intro .howto{margin-bottom:8px !important}
-.musicbtn.voicebtn.floating{right:64px}
+.musicbtn.voicebtn.floating{right:16px}
 /* hurtful answers blink light red as soon as the question appears */
 .lives{display:flex;gap:5px;margin-top:5px;font-size:21px;line-height:1}
 .lives span{display:inline-block;transition:filter .3s,opacity .3s}
@@ -1033,7 +1033,7 @@ html.t-dusk .lives span.lost{filter:grayscale(1) brightness(2.4);opacity:.45}
 .qopts.done .qopt.hurtful:not(.no)::after{animation:none;opacity:.35}
 .qopts.done .qopt.hurtful.no::after{animation:none;opacity:0}
 @media (prefers-reduced-motion:reduce){.qopt.hurtful::after{animation:none;opacity:.7}}
-.themebtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:112px;z-index:5;width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center}
+.themebtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:64px;z-index:5;width:40px;height:40px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:17px;display:grid;place-items:center}
 html.t-light .themebtn{background:#FAF8F3 !important;border-color:#BFCDDC !important}
 html.t-dusk .themebtn{background:#2C4463 !important;border-color:#56789F !important}
 
@@ -1108,7 +1108,7 @@ html.t-dusk .story-question-nav button{background:#3A5980;border-color:#536780}
 @media(pointer:coarse){.story-question-nav button{min-height:44px}}
 
 /* Language switch (Tiếng Việt / English). */
-.langbtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:160px;z-index:5;height:40px;padding:0 11px;border-radius:14px;background:var(--card);border:1px solid var(--line);color:inherit;font:inherit;font-size:12.5px;font-weight:800;white-space:nowrap}
+.langbtn.floating{position:absolute;top:max(14px,env(safe-area-inset-top));right:112px;z-index:5;height:40px;padding:0 11px;border-radius:14px;background:var(--card);border:1px solid var(--line);color:inherit;font:inherit;font-size:12.5px;font-weight:800;white-space:nowrap}
 html.t-light .langbtn{background:#FAF8F3 !important;border-color:#BFCDDC !important;color:#2C4463}
 html.t-dusk .langbtn{background:#2C4463 !important;border-color:#56789F !important;color:#F0F4FA}
 .lang-pop{position:absolute;top:calc(max(14px,env(safe-area-inset-top)) + 50px);right:16px;z-index:7;display:grid;gap:8px;min-width:190px;padding:12px;border-radius:16px;background:#FAF8F3;color:#2C4463;border:1px solid #BFCDDC;box-shadow:0 10px 28px rgba(0,0,0,.25)}
@@ -1130,7 +1130,7 @@ html.t-light .vp-row input{accent-color:#1B6E96}
 .lang-pop button[aria-pressed="true"]{background:#2C4463;border-color:#2C4463;color:#fff}
 html.t-dusk .lang-pop button[aria-pressed="true"]{background:#F0F4FA;border-color:#F0F4FA;color:#2C4463}
 .langbtn:focus-visible,.lang-pop button:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
-@media(max-width:350px){.langbtn.floating{right:156px;padding:0 8px;font-size:11.5px}}
+@media(max-width:350px){.langbtn.floating{right:108px;padding:0 8px;font-size:11.5px}}
 /* The Vietnam hotline matching is only offered in Vietnamese. */
 html.lang-en #supportMatchPick{display:none!important}
 html.lang-vi h1.th1{font-size:clamp(30px,9.4vw,46px) !important;white-space:normal}
@@ -1149,7 +1149,6 @@ html.lang-vi #qSheet .qcard.restq .scene::before{content:"🌿 TÌNH HUỐNG"}
 
   <!-- TITLE -->
   <section class="screen active" id="s-title">
-    <button class="musicbtn floating" aria-label="Music on">🎵</button>
     <button type="button" class="musicbtn voicebtn floating" aria-label="Mute voices and sound effects">🔊</button>
     <button class="themebtn floating" id="themeBtn" aria-label="Change colour theme">🌙</button>
     <button type="button" class="langbtn floating" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-controls="langPop">🌐 Language</button>
@@ -1246,7 +1245,6 @@ html.lang-vi #qSheet .qcard.restq .scene::before{content:"🌿 TÌNH HUỐNG"}
         <div class="hlabel"><b id="hName"></b></div>
         <div class="lives" id="hLives" role="img" aria-label="Lives"></div>
       </div>
-      <button class="musicbtn" aria-label="Music on">🎵</button>
       <button class="musicbtn voicebtn" aria-label="Mute voices and sound effects">🔊</button>
       <button class="helpbtn" id="helpBtn" aria-label="Get help">♡<small>Help</small></button>
     </div>
@@ -1630,6 +1628,7 @@ function volSetup(){
     const k = inp.dataset.k; VOL[k] = (+inp.value) / 100;
     p.querySelector(`output[data-k="${k}"]`).textContent = inp.value + "%";
     if (k === "music" && VOL.music > 0 && !MUSIC.on) { audio(); musicToggle(); }
+    if (k === "music" && VOL.music === 0 && MUSIC.on) musicToggle();
     volApply(); volSave();
   }));
   p.querySelector('input[data-k="sfx"]').addEventListener("change", () => { if (VOICE.on) sfx.tap(); });
