@@ -40,7 +40,7 @@ After choosing your characters, pick a part:
    - ✅ Supportive and 🙂 Well-meant answers count the same: the object lights up fully. The explanation still shows how each one helps.
    - ❌ Hurtful: the object stays dark and you lose **1 ❤️**. Come back later and choose a better answer.
    - There is no score: the top bar only shows your **❤️ lives** and **✨ x/12** lit objects.
-4. **Heart moments.** A 💗 heart conversation appears after 2, 4, 6, 8 and 11 lit objects, with **1 chance only**. A warning shows before you answer. Any non-hurtful answer wins the heart and **gives back 1 ❤️** (up to 3); a hurtful answer loses the heart and costs **2 ❤️**.
+4. **Heart moments.** A 💗 heart conversation appears after 2, 6 and 10 lit objects (3 per part, chosen to match Mental Health First Aid and WHO guidance), with **1 chance only**. A warning shows before you answer. Any non-hurtful answer wins the heart and **gives back 1 ❤️** (up to 3); a hurtful answer loses the heart and costs **2 ❤️**.
 5. **Energy.** Every talk costs 🔋 energy. Recharge when it runs low: some ways to rest work better than others (in Part 2 these are *self-love actions*).
 6. **Bad days.** As the weeks pass, a light may go out. Answer well to relight it — recovery isn't a straight line.
 7. **The Bedroom.** The last room opens when every other object is lit. It holds the hardest night.
