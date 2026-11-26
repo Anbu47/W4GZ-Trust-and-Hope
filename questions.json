@@ -21,7 +21,7 @@
        {
         "g": "okay",
         "t": "Grab a board game: “Come on, let's play a quick round together—just the two of us, to unwind.”",
-        "why": "Even tiny social obligations become an impossible performance when someone's battery is drained.",
+        "why": "Wanting to spend time together is caring. Next time, offer something that takes no effort, like just sitting together.",
         "re": "A quick round… okay. Thanks for not giving up on me."
        },
        {
@@ -52,7 +52,7 @@
        {
         "g": "okay",
         "t": "Smile warmly: “No pressure to talk, but I'm putting your favorite show on softly to make things a little cozier.”",
-        "why": "Introducing external sensory stimuli forces an exhausted nervous system to process data when it needs static reduction.",
+        "why": "Making the room cozy is thoughtful. Asking first—“Sound or quiet?”—lets them choose what they can handle.",
         "re": "Okay… keep it low. It's kind of nice having it on.",
         "say": "No pressure to talk, but I'm putting your favorite show on softly to make things a little cozier."
        },
@@ -83,7 +83,7 @@
        {
         "g": "okay",
         "t": "“I'm only noticing because I care—let me order you some melatonin and blackout curtains to fix your sleep.”",
-        "why": "Jumping straight into logistical problem-solving bypasses the emotional reality behind exhaustion.",
+        "why": "Noticing and wanting to help is kind. Ask how they're feeling before jumping to fixes.",
         "re": "You really noticed, huh? …Okay. Maybe I'll try the curtains.",
         "say": "I'm only noticing because I care—let me order you some melatonin and blackout curtains to fix your sleep."
        },
@@ -114,7 +114,7 @@
        {
         "g": "okay",
         "t": "Sit on the edge of the mattress: “I won't force you, just promise me you'll step outside for ten minutes while I'm gone.”",
-        "why": "Attaching wellness homework to a cancelled plan turns rest into another obligation they might fail.",
+        "why": "Caring about their wellbeing is sweet. Let rest just be rest—no task attached—so they can't 'fail' it.",
         "re": "Ten minutes outside… fine, I'll try. Have fun tonight, okay?",
         "say": "I won't force you, just promise me you'll step outside for ten minutes while I'm gone."
        },
@@ -145,7 +145,7 @@
        {
         "g": "okay",
         "t": "Reach over and pat {their} arm: “Hey, where did your brain just go? Tell me what just popped into your head.”",
-        "why": "Demanding immediate verbalization when someone dissociates or hits a wave of numbness overwhelms them.",
+        "why": "Checking in shows you're paying attention. A softer start—“I'm here, no need to explain”—takes the pressure off.",
         "re": "Sorry, I just drifted off. Thanks for checking on me.",
         "say": "Hey, where did your brain just go? Tell me what just popped into your head."
        },
@@ -177,7 +177,7 @@
        {
         "g": "okay",
         "t": "Smile encouragingly: “Take a deep breath! Let's flip a coin so you can practice quick low-stakes choices.”",
-        "why": "Turning cognitive overload into a 'skill-building exercise' misses that their brain is genuinely depleted.",
+        "why": "Making the choice smaller really helps. When their mind is this tired, offering to decide for them is even lighter.",
         "re": "A coin flip… okay, that's actually easier. You flip it.",
         "say": "Take a deep breath! Let's flip a coin so you can practice quick low-stakes choices."
        },
@@ -207,7 +207,7 @@
        {
         "g": "okay",
         "t": "“You're just overwhelmed—set a fifteen-minute timer and sort just the top folder for a quick dopamine win!”",
-        "why": "Productivity hacks assume normal energy reserves and often leave overwhelmed people feeling worse if they stall.",
+        "why": "Breaking it into a small piece is smart. Doing it side by side, without a timer, makes it feel less like a test.",
         "re": "Just the top folder? …Okay. I can probably do that much.",
         "say": "You're just overwhelmed—set a fifteen-minute timer and sort just the top folder for a quick dopamine win!"
        },
@@ -236,7 +236,7 @@
        {
         "g": "okay",
         "t": "Write back: “You've seemed really distant this week—did something happen between us or are you having a rough patch?”",
-        "why": "Asking whether you caused the distance forces them to expend scarce energy reassuring you.",
+        "why": "Reaching out when they seem distant is caring. Keep the focus on them—“just checking on you”—so they don't have to reassure you.",
         "re": "Nothing happened between us, I promise. Just a rough week. Thanks for asking.",
         "say": "You've seemed really distant this week—did something happen between us or are you having a rough patch?"
        },
@@ -265,7 +265,7 @@
        {
         "g": "okay",
         "t": "Hand {them} a fresh outfit with a bright smile: “Come on, a hot shower will make you feel so much better!”",
-        "why": "Promising that basic hygiene will transform mood sets up unrealistic expectations and subtle judgment.",
+        "why": "Preparing clean clothes is a kind gesture. Skip the promise that they'll feel “so much better”—just leave it as an option.",
         "re": "Okay, okay… a shower. Thanks for the clean clothes.",
         "say": "Come on, a hot shower will make you feel so much better!"
        },
@@ -295,7 +295,7 @@
        {
         "g": "okay",
         "t": "“You did great getting through the day! Let's talk through what drained you most today.”",
-        "why": "Immediately asking them to recount stressors demands mental labor right when their tank hits zero.",
+        "why": "Praising them for getting through the day is warm. Let them rest first, and talk only if they want to.",
         "re": "Maybe later. Right now I just want quiet—but thanks for asking.",
         "say": "You did great getting through the day! Let's talk through what drained you most today."
        },
@@ -327,7 +327,7 @@
        {
         "g": "okay",
         "t": "Cut the toast into neat pieces and prompt: “Open wide—just three bites for me, okay? You'll feel better once blood sugar rises.”",
-        "why": "Setting micro-goals shifts focus to performance and creates a failure condition if they still can't eat.",
+        "why": "Making food easy to eat is caring. Leave out the number so it doesn't feel like a goal they could miss.",
         "re": "Ahh… fine, just three bites. Thanks for cutting it up for me.",
         "say": "Open wide—just three bites for me, okay? You'll feel better once blood sugar rises."
        },
@@ -357,7 +357,7 @@
        {
         "g": "okay",
         "t": "Hold {their} wet hands gently: “I won't pretend this season hasn't stretched me thin—but I love you enough to push through.”",
-        "why": "Admitting how taxing they are right when they feel worthless confirms their darkest fear.",
+        "why": "Being honest and still staying is precious. Lead with “I love you” before mentioning how tired you are.",
         "re": "Thank you for being honest… and for staying anyway.",
         "say": "I won't pretend this season hasn't stretched me thin—but I love you enough to push through."
        },
@@ -387,7 +387,7 @@
        {
         "g": "okay",
         "t": "Scoop up the stack: “Give those to me—I'll pay everything and handle your inbox from now on.”",
-        "why": "Over-functioning and stripping away all responsibility reinforces helplessness and breeds resentment.",
+        "why": "Offering to lift the weight is generous. Doing the scariest parts together keeps them in charge of their own life.",
         "re": "Thank you… maybe just help me with the scary ones?",
         "say": "Give those to me—I'll pay everything and handle your inbox from now on."
        },
@@ -417,7 +417,7 @@
        {
         "g": "okay",
         "t": "“Put your phone away right now—blue light ruins melatonin and we need to fix your sleep hygiene.”",
-        "why": "Lecturing on sleep hygiene at 2:30 AM feels corrective rather than soothing.",
+        "why": "Wanting them to sleep well is caring. At 2:30 AM, comfort works better than advice.",
         "re": "Okay, okay, phone away. Just stay close, okay?",
         "say": "Put your phone away right now—blue light ruins melatonin and we need to fix your sleep hygiene."
        },
@@ -447,7 +447,7 @@
        {
         "g": "okay",
         "t": "“You shouldn't feel pathetic—when you're sick, it's my job to take care of everything.”",
-        "why": "Casting them as 'sick' and yourself as sole caretaker can deepen dependency.",
+        "why": "Wanting to protect them is loving. Remind them they're still your partner, not just someone being cared for.",
         "re": "It's not your job… but thank you for wanting to.",
         "say": "You shouldn't feel pathetic—when you're sick, it's my job to take care of everything."
        },
@@ -480,7 +480,7 @@
        {
         "g": "okay",
         "t": "“Just breathe slowly with me—if we sit here through the noise, you'll prove you can handle it.”",
-        "why": "Forcing exposure therapy in the middle of acute overwhelm prioritizes conquest over safety.",
+        "why": "Breathing together is calming. Moving somewhere quieter first makes it easier to breathe.",
         "re": "Okay… slow breaths. Can we sit closer to the door?",
         "say": "Just breathe slowly with me—if we sit here through the noise, you'll prove you can handle it."
        },
@@ -508,7 +508,7 @@
        {
         "g": "okay",
         "t": "Bring over a mug and ask warmly: “Rough night? Rate your energy from one to ten.”",
-        "why": "Requiring self-assessment metrics first thing in the morning turns support into clinical tracking.",
+        "why": "A warm drink and a check-in are kind. A simple “How are you this morning?” feels less like a survey.",
         "re": "Like a three, honestly. Thanks for the mug.",
         "say": "Rough night? Rate your energy from one to ten."
        },
@@ -538,7 +538,7 @@
        {
         "g": "okay",
         "t": "“That's why we start small—let's lace up sneakers and commit to one lap around the building.”",
-        "why": "Even a single lap requires getting dressed and being seen, which may exceed current capacity.",
+        "why": "Starting small is the right idea. Even smaller—like standing at the door together—is easier on a heavy day.",
         "re": "One lap is a lot… but maybe half, if you come too.",
         "say": "That's why we start small—let's lace up sneakers and commit to one lap around the building."
        },
@@ -568,7 +568,7 @@
        {
         "g": "okay",
         "t": "“Don't worry about paying me back—once you're feeling better, you can treat me to dinner!”",
-        "why": "Promising future payback still keeps the interaction on a transactional ledger.",
+        "why": "Taking the money worry away is generous. Leave out the payback so it feels like a gift, not a deal.",
         "re": "Deal. Dinner's on me when I'm back on my feet.",
         "say": "Don't worry about paying me back—once you're feeling better, you can treat me to dinner!"
        },
@@ -598,7 +598,7 @@
        {
         "g": "okay",
         "t": "“Let's block out two hours and power through the whole queue so you start fresh.”",
-        "why": "Attempting a marathon catch-up session when depleted invites mid-task burnout.",
+        "why": "Offering to help clear the backlog is kind. Short sessions with breaks keep it from becoming exhausting.",
         "re": "Two hours sounds like a lot… can we start with twenty minutes?",
         "say": "Let's block out two hours and power through the whole queue so you start fresh."
        },
@@ -632,7 +632,7 @@
        {
         "g": "okay",
         "t": "Sit beside {them}: “I hate hearing you hurt. Let's list three anchors so you see what you have.”",
-        "why": "Rushing to counter despair with gratitude invalidates acute pain.",
+        "why": "Reminding them what they have is loving. Listen to the pain a little first, then look for anchors together.",
         "re": "Three things… you're one of them. Thank you.",
         "say": "I hate hearing you hurt. Let's list three anchors so you see what you have."
        },
@@ -662,7 +662,7 @@
        {
         "g": "okay",
         "t": "Keep typing while turning halfway: “Wrapping up this paragraph, go ahead and start!”",
-        "why": "Split attention feels like a polite brush-off.",
+        "why": "Making space for them is good. Stopping and turning fully toward them shows they matter more than the paragraph.",
         "re": "Oh, okay. I'll wait till you finish—it's nothing urgent.",
         "say": "Wrapping up this paragraph, go ahead and start!"
        },
@@ -692,7 +692,7 @@
        {
         "g": "okay",
         "t": "“I get that—let's host a brunch this weekend so you can reconnect!”",
-        "why": "Prescribing social exposure misses internal dissociation.",
+        "why": "Wanting them to reconnect is caring. Start with one person they feel safe with before a whole group.",
         "re": "A brunch… maybe a tiny one. Just a couple of people?",
         "say": "I get that—let's host a brunch this weekend so you can reconnect!"
        },
@@ -722,7 +722,7 @@
        {
         "g": "okay",
         "t": "Hand {them} a tissue: “Let it out! Crying releases stress hormones so you'll feel lighter.”",
-        "why": "Promising an immediate mood rebound frames tears as a mechanical cleanse.",
+        "why": "Making room for tears is kind. Just stay with them—no need to promise they'll feel lighter.",
         "re": "Okay… thanks for the tissue. It does help a little.",
         "say": "Let it out! Crying releases stress hormones so you'll feel lighter."
        },
@@ -752,7 +752,7 @@
        {
         "g": "okay",
         "t": "“You have a kind heart—let's donate to that cause together to channel that feeling!”",
-        "why": "Redirecting shame into charity bypasses self-loathing.",
+        "why": "Seeing their kind heart is lovely. Gently ask about the shame too, so they don't carry it alone.",
         "re": "Yeah… doing something small might help. Thank you.",
         "say": "You have a kind heart—let's donate to that cause together to channel that feeling!"
        },
@@ -784,7 +784,7 @@
        {
         "g": "okay",
         "t": "“Everyone loses patience over small things—put on calming music and let it go.”",
-        "why": "Minimizing annoyance misses deeper fear about personality changes.",
+        "why": "Not making a big deal of it is kind. Ask if they're worried about changing—that fear may be the real weight.",
         "re": "Okay… put something on. Thanks for not getting mad at me.",
         "say": "Everyone loses patience over small things—put on calming music and let it go."
        },
@@ -814,7 +814,7 @@
        {
         "g": "okay",
         "t": "“Let's shake things up—spicy food, a loud movie, something intense to wake your senses!”",
-        "why": "Trying to shock anhedonia away rarely works.",
+        "why": "Trying to bring back some spark is sweet. Gentle, familiar comforts usually work better than big jolts.",
         "re": "Maybe not too intense… but spicy noodles sound kind of good.",
         "say": "Let's shake things up—spicy food, a loud movie, something intense to wake your senses!"
        },
@@ -844,7 +844,7 @@
        {
         "g": "okay",
         "t": "“Don't talk like that! Statistics prove almost everyone recovers if you stay positive.”",
-        "why": "Telling someone to stay positive feels impossible.",
+        "why": "Believing in their recovery is powerful. Pair hope with “It's okay if you can't feel positive right now.”",
         "re": "I'm not sure about statistics… but I like hearing you believe it.",
         "say": "Don't talk like that! Statistics prove almost everyone recovers if you stay positive."
        },
@@ -874,7 +874,7 @@
        {
         "g": "okay",
         "t": "“Because I remember how vibrant you are when healthy, and that version is coming back!”",
-        "why": "Anchoring love to a past self makes them feel unlovable now.",
+        "why": "Holding hope for them is loving. Let them know you love who they are right now, too.",
         "re": "You really think I'll be like that again? …I hope so.",
         "say": "Because I remember how vibrant you are when healthy, and that version is coming back!"
        },
@@ -904,7 +904,7 @@
        {
         "g": "okay",
         "t": "“No, don't shut down—just finish the thought so I can understand!”",
-        "why": "Pressuring someone to complete thoughts triggers flight.",
+        "why": "Wanting to understand shows you care. “Take your time, I'll wait” helps more than urging.",
         "re": "Okay… I'll try. Just give me a second.",
         "say": "No, don't shut down—just finish the thought so I can understand!"
        },
@@ -937,7 +937,7 @@
        {
         "g": "okay",
         "t": "Leave a folder on the table: “I printed some top therapists and worksheets—look whenever you're ready.”",
-        "why": "Handing an exhausted person a research packet feels like an exam.",
+        "why": "Doing the research for them is a real gift. Offering to look through it together makes it feel less like a chore.",
         "re": "You did all this? …Okay. I'll look when I'm ready."
        },
        {
@@ -966,7 +966,7 @@
        {
         "g": "okay",
         "t": "“Nobody in our family has to know—we can pay cash and keep it off radar.”",
-        "why": "Treating therapy like an undercover secret reinforces shame.",
+        "why": "Making therapy feel safe to start is caring. Remind them there's nothing shameful about it, even if it stays private.",
         "re": "Okay… that makes it feel safer to start. Thank you.",
         "say": "Nobody in our family has to know—we can pay cash and keep it off radar."
        },
@@ -996,7 +996,7 @@
        {
         "g": "okay",
         "t": "“Millions take them—just take the first dose tonight to balance chemistry!”",
-        "why": "Pushing compliance dismisses desire for agency.",
+        "why": "Encouraging treatment is supportive. Reading about it and asking the doctor together respects their choice.",
         "re": "Maybe… can we read about it together first?",
         "say": "Millions take them—just take the first dose tonight to balance chemistry!"
        },
@@ -1025,7 +1025,7 @@
        {
         "g": "okay",
         "t": "Smile encouragingly: “Five weeks will fly by! You'll be so busy you won't even notice.”",
-        "why": "Cheerful minimizing skips the real fear that they'll have to hold on alone until then.",
+        "why": "Your encouragement helps. Add a real plan for the wait, like checking in together every week.",
         "re": "I hope you're right. Help me keep busy, okay?"
        },
        {
@@ -1053,7 +1053,7 @@
        {
         "g": "okay",
         "t": "Hesitate: “I'd love to, but you're an adult—you've got this. Text me the second you're done?”",
-        "why": "Encouraging independence is kind, but it ignores the specific support they asked for at a fragile moment.",
+        "why": "Believing they can do it is kind. When they ask for company, saying yes is the best support.",
         "re": "Okay… I'll text you the second it's over. Promise."
        },
        {
@@ -1084,7 +1084,7 @@
        {
         "g": "okay",
         "t": "“Maybe that therapist isn't proactive—should we find someone with action plans?”",
-        "why": "Jumping to switch therapists undermines rapport.",
+        "why": "Wanting the best care for them is caring. Ask how they feel about the therapist before suggesting a change.",
         "re": "Maybe… but let me try a couple more sessions first.",
         "say": "Maybe that therapist isn't proactive—should we find someone with action plans?"
        },
@@ -1114,7 +1114,7 @@
        {
         "g": "okay",
         "t": "“Don't overthink bad sleep—you're recovered, stay busy!”",
-        "why": "Dismissing warning signs delays adjustments.",
+        "why": "Trusting their progress is encouraging. Still, a few bad nights are worth noticing and talking about together.",
         "re": "Okay… staying busy might help. But you'll keep an eye on me?",
         "say": "Don't overthink bad sleep—you're recovered, stay busy!"
        },
@@ -1144,7 +1144,7 @@
        {
         "g": "okay",
         "t": "“You need to delete apps—screen time is scientifically proven to make your mood worse.”",
-        "why": "Delivering lectures feels corrective.",
+        "why": "Caring about their mood is good. Suggesting a phone-free activity together works better than a lecture.",
         "re": "You're probably right. Maybe I'll put the phone down for a bit.",
         "say": "You need to delete apps—screen time is scientifically proven to make your mood worse."
        },
@@ -1173,7 +1173,7 @@
        {
         "g": "okay",
         "t": "“You have to give it more time! Just push through—everyone says the first month is the worst.”",
-        "why": "Pushing them to endure side effects without a doctor dismisses their experience.",
+        "why": "Encouraging patience can help. Make sure the doctor hears about the side effects too.",
         "re": "Okay… a bit longer. But I'll tell the doctor how I feel."
        },
        {
@@ -1201,7 +1201,7 @@
        {
         "g": "okay",
         "t": "“Just be totally honest and tell them everything. Good managers always understand.”",
-        "why": "Pressuring full disclosure ignores their right to decide what's shared at work.",
+        "why": "Encouraging honesty is supportive. Let them decide how much to share, and help them find the words.",
         "re": "Everything? …Maybe just the important part. Help me write it?"
        },
        {
@@ -1232,7 +1232,7 @@
        {
         "g": "okay",
         "t": "Wash your face and quietly take on extra chores: “It's fine. I've got it all handled.”",
-        "why": "Silent martyrdom ends in collapse.",
+        "why": "Wanting to carry the load shows love. Saying you're tired and asking for help keeps you going longer.",
         "re": "Thank you for everything you do. Please rest too, okay?"
        },
        {
@@ -1259,7 +1259,7 @@
        {
         "g": "okay",
         "t": "Keep your ringer on max: “Call me anytime, day or night. I'll always pick up.”",
-        "why": "Operating out of raw terror leads to physical collapse.",
+        "why": "Being there anytime is devoted. Building a support circle together means you don't have to be the only one.",
         "re": "Thank you for always picking up. I'll try to call a bit earlier."
        },
        {
@@ -1288,7 +1288,7 @@
        {
         "g": "okay",
         "t": "Cancel quietly: “Actually, I'd rather stay home and keep company.”",
-        "why": "Sacrificing lifelines breeds unspoken resentment.",
+        "why": "Staying with them is kind. Keeping your own plans too helps you stay strong for both of you.",
         "re": "You'd really stay? …Thank you. Let's watch something together.",
         "say": "Actually, I'd rather stay home and keep company."
        },
@@ -1318,7 +1318,7 @@
        {
         "g": "okay",
         "t": "Text {their} sister privately: “Just so you know, things have been really hard here.”",
-        "why": "Breaking confidentiality destroys trust.",
+        "why": "Reaching out for backup is wise. Asking them first protects their trust in you.",
         "re": "You told her? …Okay. Maybe it's good she knows a little."
        },
        {
@@ -1346,7 +1346,7 @@
        {
         "g": "okay",
         "t": "“Sorry I raised my voice—it's been a lot managing everything while you struggle.”",
-        "why": "Attaching conditions turns apologies into accusations.",
+        "why": "Apologizing is a good step. Leave out the “but” so the apology stands on its own.",
         "re": "Thank you for saying sorry. I know it's been a lot for you.",
         "say": "Sorry I raised my voice—it's been a lot managing everything while you struggle."
        },
@@ -1377,7 +1377,7 @@
        {
         "g": "okay",
         "t": "Try to read the patterns yourself: “Okay, so it sounds like it all goes back to your dad…”",
-        "why": "Playing amateur psychologist risks unhelpful advice.",
+        "why": "Listening closely is caring. Some things are better explored with a therapist—you can help them find one.",
         "re": "Maybe… I hadn't thought about it that way. Thanks for listening."
        },
        {
@@ -1406,7 +1406,7 @@
        {
         "g": "okay",
         "t": "“Everyone loves you—once you start chatting, your social battery kicks back in!”",
-        "why": "Predicting spontaneous social recovery dismisses limits.",
+        "why": "Your encouragement is sweet. Agreeing on an easy way to leave early makes the party feel safer.",
         "re": "I hope you're right. Stay next to me, okay?",
         "say": "Everyone loves you—once you start chatting, your social battery kicks back in!"
        },
@@ -1436,7 +1436,7 @@
        {
         "g": "okay",
         "t": "“Don't look—I'll cover the entire thing out of my savings.”",
-        "why": "Hiding financial reality reinforces incompetence.",
+        "why": "Offering to help with money is generous. Looking at the bill together helps them feel capable, not rescued.",
         "re": "Thank you… I'll pay you back, okay? Can we look at it together?",
         "say": "Don't look—I'll cover the entire thing out of my savings."
        },
@@ -1465,7 +1465,7 @@
        {
         "g": "okay",
         "t": "Plan a surprise outing for that day: “Keep Tuesday free—I've got a fun surprise planned!”",
-        "why": "Ambushing someone on trauma anniversaries misfires.",
+        "why": "Wanting to make the day kinder is thoughtful. Asking how they'd like to spend it lets them feel in control.",
         "re": "A surprise? …That's sweet. Maybe something quiet, okay?"
        },
        {
@@ -1492,7 +1492,7 @@
        {
         "g": "okay",
         "t": "Push it down: “I'm not allowed to feel this. They're the one who's struggling.”",
-        "why": "Burying the feeling doesn't make it go away—it builds pressure until it bursts.",
+        "why": "Putting them first shows how much you care. Your feelings matter too—find someone safe to share them with.",
         "re": "You look worn out. Come sit with me for a minute?"
        },
        {
@@ -1819,7 +1819,7 @@
      {
       "g": "okay",
       "t": "“Look how strong you were—you proved you can beat this, let's push through!”",
-      "why": "Using recent good days turns a dip into a performance failure.",
+      "why": "Reminding them of good days is encouraging. Add that dips are normal, so a bad day doesn't feel like failure.",
       "re": "Thank you for believing in me. Maybe I can try again tomorrow.",
       "say": "Look how strong you were—you proved you can beat this, let's push through!"
      },
@@ -1849,7 +1849,7 @@
      {
       "g": "okay",
       "t": "“Driving to the lot is huge progress! Promise me next week we won't let fear win.”",
-      "why": "Extracting a promise adds performance pressure.",
+      "why": "Celebrating the small step is great. Skip the promise and just offer to go together next time.",
       "re": "You think it counts? …Okay. Next week, together.",
       "say": "Driving to the lot is huge progress! Promise me next week we won't let fear win."
      },
@@ -1885,7 +1885,7 @@
        {
         "g": "okay",
         "t": "“Just dealing with a mental backlog from work, I'll fix it this week.”",
-        "why": "Intellectualizing exhaustion keeps you in your head.",
+        "why": "Admitting something's up is a start. Saying how you really feel, not just about work, lets them help more.",
         "re": "A plan for work is good. And I'm here for the rest, too.",
         "say": "Just dealing with a mental backlog from work, I'll fix it this week."
        },
@@ -1916,7 +1916,7 @@
        {
         "g": "okay",
         "t": "“Stay if you want, but I'm staring at my phone so don't expect good company.”",
-        "why": "Disclaimers prevent real connection.",
+        "why": "Letting them stay is a good step. You don't need to be good company—just being together is enough.",
         "re": "Phone and all is fine. I'm happy just being next to you.",
         "say": "Stay if you want, but I'm staring at my phone so don't expect good company."
        },
@@ -1945,7 +1945,7 @@
        {
         "g": "okay",
         "t": "“I lack discipline—if I force a cold shower and five tasks, I'll snap out.”",
-        "why": "Treating depletion as a willpower deficit crashes.",
+        "why": "Wanting to get going shows strength. On heavy mornings, one gentle step works better than a punishing plan.",
         "re": "I love that you want to get going. Start gentle, okay? I'll make breakfast.",
         "say": "I lack discipline—if I force a cold shower and five tasks, I'll snap out."
        },
@@ -1974,7 +1974,7 @@
        {
         "g": "okay",
         "t": "Send 'All good!' for now: “I'll tell them the real stuff later—no need to bring the mood down.”",
-        "why": "Waiting for 100% creates exile.",
+        "why": "Answering at all keeps the connection alive. Sharing even a little truth lets your friend really be there.",
         "re": "Later works. I'm glad you have friends checking on you."
        },
        {
@@ -2002,7 +2002,7 @@
        {
         "g": "okay",
         "t": "Open some motivational videos: “Come on—get hyped, get up, get moving.”",
-        "why": "Artificial hype ignores genuine exhaustion.",
+        "why": "Trying to lift yourself up is brave. It's okay to rest first—moving gently comes easier after.",
         "re": "Ha, I'll cheer you on. And it's fine to rest a bit first."
        },
        {
@@ -2032,7 +2032,7 @@
        {
         "g": "okay",
         "t": "Plan a big reset: “Tomorrow: 6 AM start, strict 30-day plan. No excuses.”",
-        "why": "All-or-nothing plans collapse.",
+        "why": "Wanting a fresh start is hopeful. Begin with one small, kind step instead of a strict plan.",
         "re": "A fresh start sounds great. Want to begin with one small thing together?"
        },
        {
@@ -2060,7 +2060,7 @@
        {
         "g": "okay",
         "t": "Push on anyway: “Three hours, no breaks. I can't afford to lose my edge.”",
-        "why": "Grinding creates aversion.",
+        "why": "Showing up to work counts. Short sessions with breaks protect the energy you have.",
         "re": "I'm proud of you for showing up. I'll bring snacks for the breaks."
        },
        {
@@ -2089,7 +2089,7 @@
        {
         "g": "okay",
         "t": "“Just thinking through work logistics, I'll be normal Friday.”",
-        "why": "Hiding behind work blocks support.",
+        "why": "Replying keeps the door open. Telling them how you really are lets them stay close.",
         "re": "Okay. I'm here whenever you want to talk—work or anything else.",
         "say": "Just thinking through work logistics, I'll be normal Friday."
        },
@@ -2118,7 +2118,7 @@
        {
         "g": "okay",
         "t": "Open the list again: “If I stay up till 2 AM, I can still get all of it done.”",
-        "why": "Sacrificing sleep worsens mood regulation.",
+        "why": "Wanting to finish shows you care. Picking the top few tasks and resting is kinder to your body.",
         "re": "You really want to get it done, huh? Let's pick the top three and save the rest."
        },
        {
@@ -2146,7 +2146,7 @@
        {
         "g": "okay",
         "t": "Set yourself a deadline: “Three more months. If it's still bad then, I'll get help.”",
-        "why": "Arbitrary delays prolong suffering.",
+        "why": "Thinking about getting help is an important step. Reaching out now, not later, means less time carrying it alone.",
         "re": "Thank you for thinking about getting help. I'll be with you the whole way."
        },
        {
@@ -2179,7 +2179,7 @@
        {
         "g": "okay",
         "t": "“Looks great, leave it and I'll eat once my stomach settles.”",
-        "why": "Polite deflection leaves you running on empty.",
+        "why": "Thanking them is kind. Even a few bites now can help—and lets them know their care reached you.",
         "re": "Of course. It'll be right here whenever you're ready.",
         "say": "Looks great, leave it and I'll eat once my stomach settles."
        },
@@ -2209,7 +2209,7 @@
        {
         "g": "okay",
         "t": "“Just zoned out—sorry I haven't been fun lately.”",
-        "why": "Apologizing hides real guilt.",
+        "why": "Saying where you went is honest. You don't need to apologize for struggling.",
         "re": "You're always fun to me. Thanks for telling me where you went.",
         "say": "Just zoned out—sorry I haven't been fun lately."
        },
@@ -2238,7 +2238,7 @@
        {
         "g": "okay",
         "t": "“Don't spend money on me! Take it home, I have food.”",
-        "why": "Refusing care out of pride deprives friends of love.",
+        "why": "Thinking of others is kind. Accepting help lets your friend care for you too.",
         "re": "That's so like you, always thinking of others. But keep the soup—they made it for you.",
         "say": "Don't spend money on me! Take it home, I have food."
        },
@@ -2267,7 +2267,7 @@
        {
         "g": "okay",
         "t": "Keep quiet and grind: “I'll just work till midnight. Nobody needs to know I'm struggling.”",
-        "why": "Suffering in silence prevents adjustments.",
+        "why": "Caring about your work matters. Letting someone know you're struggling makes the load lighter.",
         "re": "I know how much this matters to you. Want me to bring dinner to your desk?"
        },
        {
@@ -2295,7 +2295,7 @@
        {
         "g": "okay",
         "t": "Keep the conversation going: “So—how was your day? And your week? Anything new?”",
-        "why": "Overcompensating drains reserves.",
+        "why": "Asking about their day is thoughtful. When you're drained, quiet company is enough.",
         "re": "My day was nice, actually. Thanks for asking—even when you're tired."
        },
        {
@@ -2325,7 +2325,7 @@
        {
         "g": "okay",
         "t": "“No, I'll take two buses—don't want to inconvenience you.”",
-        "why": "Choosing hardship prolongs exhaustion.",
+        "why": "Not wanting to be a burden is considerate. Saying yes lets them show they care.",
         "re": "That's thoughtful of you. The offer's always open, okay?",
         "say": "No, I'll take two buses—don't want to inconvenience you."
        },
@@ -2354,7 +2354,7 @@
        {
         "g": "okay",
         "t": "Stay on the line: “No, no, I'm not busy—tell me everything!”",
-        "why": "Ignoring limits drains energy.",
+        "why": "Picking up is caring. It's okay to say you're tired and call back later.",
         "re": "They'll love hearing from you. Call back whenever you need a rest."
        },
        {
@@ -2382,7 +2382,7 @@
        {
         "g": "okay",
         "t": "Take over the stove: “Move over, I'll make the whole thing myself. I owe you.”",
-        "why": "Overriding limits leads to frustration.",
+        "why": "Wanting to give back is sweet. Cooking together, or simply saying thank you, is enough.",
         "re": "Okay, chef! Let's cook it together."
        },
        {
@@ -2410,7 +2410,7 @@
        {
         "g": "okay",
         "t": "Fish for comfort: “Do you think I've been doing okay lately? Be honest…”",
-        "why": "Indirect testing leaves needs unmet.",
+        "why": "Needing reassurance is okay. Saying it directly—“I'm feeling insecure today”—helps them comfort you better.",
         "re": "You've been doing great. Really. Come here."
        },
        {
@@ -2438,7 +2438,7 @@
        {
         "g": "okay",
         "t": "Deflect: “I barely did anything, you deserve the credit.”",
-        "why": "Reflexively erasing effort blocks wins.",
+        "why": "Sharing the credit is generous. Try just saying “thank you”—you earned it.",
         "re": "We make a good team. But you did the hard part.",
         "say": "I barely did anything, you deserve the credit."
        },
@@ -2471,7 +2471,7 @@
        {
         "g": "okay",
         "t": "“Brain fogged on one paragraph—once I hit send, I'll switch off.”",
-        "why": "Hyper-focusing on tasks avoids heavier weight.",
+        "why": "Wanting to finish is responsible. Taking the tea and stopping for tonight is kinder to yourself.",
         "re": "Okay. I'll keep your tea warm until you're done.",
         "say": "Brain fogged on one paragraph—once I hit send, I'll switch off."
        },
@@ -2499,7 +2499,7 @@
        {
         "g": "okay",
         "t": "Use it for tomorrow's tasks: “I'll just make a clean priority list. That's more useful.”",
-        "why": "Structuring tasks sidesteps emotions.",
+        "why": "Using their gift is lovely. Writing a few feelings in it can help you more than a task list.",
         "re": "A list is a great start. You're using it—that makes me happy."
        },
        {
@@ -2527,7 +2527,7 @@
        {
         "g": "okay",
         "t": "Put it off: “I'll wait until talking feels easier. Maybe in a couple of weeks.”",
-        "why": "Waiting for zero fear means silence.",
+        "why": "Knowing your limits is wise. Sharing even one word tonight keeps the connection open.",
         "re": "Okay. I'll be here whenever you're ready—even for one word."
        },
        {
@@ -2554,7 +2554,7 @@
        {
         "g": "okay",
         "t": "“Sure! Things are great, just super busy lately!”",
-        "why": "Agreeing to meet is good, but pretending everything's fine keeps you lonely even in company.",
+        "why": "Saying yes to coffee is a great step. Being honest when you meet lets your friend really support you.",
         "re": "Coffee with your best friend! I'm so glad you said yes."
        },
        {
@@ -2582,7 +2582,7 @@
        {
         "g": "okay",
         "t": "“It's hard to explain. Just stressful, I guess. Work stuff.”",
-        "why": "Shrinking it to 'work stress' keeps them guessing about what you really need.",
+        "why": "Trying to explain is brave. Even an image—“it feels like fog”—can help them understand.",
         "re": "Thanks for trying to explain. I'm here if more comes up."
        },
        {
@@ -2612,7 +2612,7 @@
        {
         "g": "okay",
         "t": "Smile brightly: “Oh, I'm totally better now! Fully back to normal.”",
-        "why": "Performing full recovery creates exhausting pressure.",
+        "why": "Staying kind in an awkward moment is graceful. You can be honest too—“I'm getting there.”",
         "re": "I love seeing you smile. You handled that so kindly."
        },
        {
@@ -2639,7 +2639,7 @@
        {
         "g": "okay",
         "t": "Push the thought away: “Let's not think about bad days. I don't want to jinx it.”",
-        "why": "Avoiding preparedness leaves you empty-handed.",
+        "why": "Enjoying the calm is good. Making a small plan for hard days while you feel steady keeps you safer.",
         "re": "Fair enough. Let's just enjoy today."
        },
        {
@@ -2666,7 +2666,7 @@
        {
         "g": "okay",
         "t": "Write a full schedule: “Self-care at 7, 8, 9 and 10—every hour, no skipping.”",
-        "why": "Rigid routines feel like punishment.",
+        "why": "Planning self-care is a great idea. One or two small things a day is easier to keep up.",
         "re": "Wow, a whole plan! Let's start with the first one together."
        },
        {
@@ -2694,7 +2694,7 @@
        {
         "g": "okay",
         "t": "Stop the video: “I shouldn't be laughing. I'm supposed to be struggling.”",
-        "why": "Believing you must look miserable traps you.",
+        "why": "Noticing that thought is a start. Laughing is allowed—good moments are part of healing.",
         "re": "Your laugh made my day. It's okay to keep watching, really."
        },
        {
@@ -2722,7 +2722,7 @@
        {
         "g": "okay",
         "t": "“Just got lucky things calmed down.”",
-        "why": "Attributing resilience to luck leaves you powerless.",
+        "why": "Staying humble is nice. Give yourself credit too—you did the hard work.",
         "re": "Maybe a little luck—but mostly you. I'm so proud of you.",
         "say": "Just got lucky things calmed down."
        },
@@ -2755,7 +2755,7 @@
        {
         "g": "okay",
         "t": "“Let me try fixing sleep first, and if stuck next month I'll book.”",
-        "why": "Setting conditions delays early intervention.",
+        "why": "Being open to counseling is a big step. Booking now means help arrives sooner.",
         "re": "That's a good start. I'll help you book whenever you're ready.",
         "say": "Let me try fixing sleep first, and if stuck next month I'll book."
        },
@@ -2785,7 +2785,7 @@
        {
         "g": "okay",
         "t": "“Keep this strictly between us so nobody treats me differently.”",
-        "why": "Treating therapy as shameful hurts commitment.",
+        "why": "Going to the appointment is brave. Privacy is your choice—just remember there's nothing shameful about it.",
         "re": "Of course. It stays between us. I'm proud of you for going.",
         "say": "Keep this strictly between us so nobody treats me differently."
        },
@@ -2814,7 +2814,7 @@
        {
         "g": "okay",
         "t": "Write a cancellation email, just in case: “If it gets too much, I'll just send this.”",
-        "why": "Keeping escape hatches open feeds anxiety.",
+        "why": "Staying in the waiting room is brave. Try putting the email away and taking one breath at a time.",
         "re": "You're still sitting there—that's brave. Text me after, okay?"
        },
        {
@@ -2841,7 +2841,7 @@
        {
         "g": "okay",
         "t": "Take the slot and decide: “I'll just white-knuckle it till then.”",
-        "why": "Getting on the list is good, but going it alone for six weeks is hard on you.",
+        "why": "Taking the slot is a great step. Plan small supports for the wait, so you're not holding on alone.",
         "re": "You got a slot—that's great. I'm here in the meantime, okay?"
        },
        {
@@ -2868,7 +2868,7 @@
        {
         "g": "okay",
         "t": "Book appointments at lunch only: “I'll squeeze them in so nobody notices.”",
-        "why": "Hiding care around your job adds stress and makes appointments easier to skip.",
+        "why": "Finding a way to keep going is resourceful. You also deserve the time you need, without hiding it.",
         "re": "You found a way to keep going. Proud of you. Want me to pack you lunch?"
        },
        {
@@ -2898,7 +2898,7 @@
        {
         "g": "okay",
         "t": "Talk about work instead: “Work's been really busy, so I've mostly been dealing with logistics…”",
-        "why": "Performing competence wastes safe space.",
+        "why": "Going to therapy is what matters most. Saying “my mind went blank” is a fine way to begin.",
         "re": "You went—that's what matters. Tell me whatever you want."
        },
        {
@@ -2926,7 +2926,7 @@
        {
         "g": "okay",
         "t": "Keep it simple: “Mostly I just can't sleep. Otherwise I'm okay.”",
-        "why": "Treating one symptom leaves the root of the problem unaddressed.",
+        "why": "Going to the checkup is a big step. Telling the doctor a bit more helps them help you.",
         "re": "You went to the checkup—that's a big step. Next time, tell them a bit more?"
        },
        {
@@ -2954,7 +2954,7 @@
        {
         "g": "okay",
         "t": "Stay put to be polite: “I'll keep going for six months. I don't want to hurt their feelings.”",
-        "why": "People-pleasing stalls healing.",
+        "why": "Caring about your therapist's feelings is kind. Your healing comes first—it's okay to find a better fit.",
         "re": "You're so considerate. And it's okay to look for someone who fits you better."
        },
        {
@@ -2982,7 +2982,7 @@
        {
         "g": "okay",
         "t": "Adjust it yourself: “I'll just cut the pills in half. That should fix it.”",
-        "why": "Self-adjusting risks rebound symptoms.",
+        "why": "Noticing how the medicine affects you is good. Change the dose only with your doctor.",
         "re": "You're paying attention to your body—that's good. Let's ask the doctor together?"
        },
        {
@@ -3009,7 +3009,7 @@
        {
         "g": "okay",
         "t": "“Maybe later. I'll try it once I'm feeling better.”",
-        "why": "Waiting until you feel better can mean missing the support that would help you get there.",
+        "why": "Being open to it later is a start. Groups often help most when things are hard—you could try just one visit.",
         "re": "That's fair. Whenever you're ready, I'll go with you."
        },
        {
@@ -3040,7 +3040,7 @@
        {
         "g": "okay",
         "t": "“Give me twenty minutes to dissect where focus slipped.”",
-        "why": "Rumination traps you in self-punishment.",
+        "why": "Wanting to learn from mistakes is good. Keep it short, then be kind to yourself.",
         "re": "You really care about doing well. Twenty minutes, then come rest with me.",
         "say": "Give me twenty minutes to dissect where focus slipped."
        },
@@ -3069,7 +3069,7 @@
        {
         "g": "okay",
         "t": "Make a silent promise: “From now on, I'll keep the heavy days to myself.”",
-        "why": "Going silent leaves you isolated.",
+        "why": "Wanting to protect them is loving. Sharing the load—and finding more support—is better for you both.",
         "re": "You're so kind to want to protect me. But I'm always here for the hard days too."
        },
        {
@@ -3097,7 +3097,7 @@
        {
         "g": "okay",
         "t": "Set an early alarm: “I'll get up at 5 tomorrow to make up for being lazy.”",
-        "why": "Punitive compensation treats rest as debt.",
+        "why": "Wanting to do better is admirable. Eating takeout isn't failure—rest is okay.",
         "re": "Up at 5? Okay, champ. I'll make coffee—but takeout is totally fine."
        },
        {
@@ -3125,7 +3125,7 @@
        {
         "g": "okay",
         "t": "Keep scrolling and commenting: “So happy for you!! Amazing news!!”",
-        "why": "Performing cheerfulness deepens dissonance.",
+        "why": "Cheering for friends is kind. Putting the phone down when it hurts is kind to yourself too.",
         "re": "You're such a good friend to everyone. Come sit with me for a bit?"
        },
        {
@@ -3153,7 +3153,7 @@
        {
         "g": "okay",
         "t": "Keep apologizing: “I'm so sorry. Really. I'm sorry. Are you mad? I'm sorry.”",
-        "why": "Excessive punishment forces partner to comfort.",
+        "why": "Apologizing shows you care. One sincere sorry is enough—trust that it was heard.",
         "re": "Apology accepted, a hundred times over. We're okay. Come here."
        },
        {
@@ -3182,7 +3182,7 @@
        {
         "g": "okay",
         "t": "Start cleaning anyway: “If I deep-clean the whole house, I'll feel productive.”",
-        "why": "Ignoring exhaustion leads to crashes.",
+        "why": "Wanting to feel productive is understandable. On zero-energy days, one small task is enough.",
         "re": "Look at you go! I'll help—then we both rest, deal?"
        },
        {
@@ -3210,7 +3210,7 @@
        {
         "g": "okay",
         "t": "Start a long explanation: “Actually, it's all about neurotransmitters, so let me explain…”",
-        "why": "Debating drains scarce energy.",
+        "why": "Speaking up for yourself is brave. A short, calm answer is enough—you don't owe anyone a lecture.",
         "re": "Ha, you really know your stuff. Proud of you for speaking up."
        },
        {
@@ -3238,7 +3238,7 @@
        {
         "g": "okay",
         "t": "Stay on the couch: “I'll just sit here a bit longer. I'm not even tired.”",
-        "why": "Forcing presence delays needed rest.",
+        "why": "Wanting to sit a bit longer is fine. Going to bed is the real rest your body needs.",
         "re": "Okay, a little longer. Come lean on me."
        },
        {
@@ -3266,7 +3266,7 @@
        {
         "g": "okay",
         "t": "Plan to push through: “Four hours of sleep is fine for one week.”",
-        "why": "Sleep debt destabilizes mood.",
+        "why": "Being committed is admirable. Protecting your sleep keeps you able to do your best work.",
         "re": "You're so committed. Snacks are on me this week—just promise me some real sleep too?"
        },
        {
@@ -3294,7 +3294,7 @@
        {
         "g": "okay",
         "t": "Practice for an hour: “I used to be good at this. I'm not stopping until I'm back to that level.”",
-        "why": "Demanding peak performance turns hobbies into chores.",
+        "why": "Coming back to music is wonderful. Play for joy, not to prove you're as good as before.",
         "re": "I love hearing you play again. I'll be your audience."
        },
        {
@@ -3621,7 +3621,7 @@
      {
       "g": "okay",
       "t": "“Slow start, give me ten minutes and I'll force myself.”",
-      "why": "Masking drains remaining energy.",
+      "why": "Giving yourself ten minutes is gentle. You don't need to force it—slow days are part of recovery.",
       "re": "Ten minutes it is. I'll be right here.",
       "say": "Slow start, give me ten minutes and I'll force myself."
      },
@@ -3650,7 +3650,7 @@
      {
       "g": "okay",
       "t": "“Work ran into it, I'll catch them next month.”",
-      "why": "Practical excuses delay getting back on track.",
+      "why": "Planning to go back is good. Calling back soon keeps your care on track.",
       "re": "Okay. I'll help you rebook whenever you're ready.",
       "say": "Work ran into it, I'll catch them next month."
      },
