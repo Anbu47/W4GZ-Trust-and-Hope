@@ -1,6 +1,7 @@
 // Vietnamese translations for Trust and Hope, keyed by the original English text.
 // Placeholders: {p}/{P} = loved one's name, {0}/{1} = numbers or names filled in by the game.
 window.W4GZ_VI = {
+"<b>Note:</b> Some lines may not yet fit your context and culture.": "<b>Lưu ý:</b> Một số câu sẽ chưa phù hợp với bối cảnh và văn hóa.",
 "🌐 Language": "🌐 Ngôn ngữ",
 "Choose a language": "Chọn ngôn ngữ",
 "Prefer other colours? Tap here 🎨": "Muốn đổi màu khác? Chạm vào đây 🎨",
