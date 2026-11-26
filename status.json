@@ -63,10 +63,10 @@
   "schema_version": 1,
   "source": "https://findahelpline.com/countries/vn",
   "scope": "Names, telephone numbers, official website links and opening hours published in the directory profiles. HOPE hours are not published there and are not automatically verified.",
-  "checked_at": "2026-11-26T06:18:50.865316+00:00",
-  "source_sha": "3f277dbc0b1c70f9c233a818d437d2f33256c0bb",
-  "run_number": 30,
-  "run_url": "https://github.com/Anbu47/W4GZ-Trust-and-Hope/actions/runs/45767313577",
-  "last_verified_at": "2026-11-26T06:18:50.865316+00:00",
+  "checked_at": "2026-11-26T09:18:08.883699+00:00",
+  "source_sha": "399bc32eac2013785f225a45ada53ef19e822822",
+  "run_number": 31,
+  "run_url": "https://github.com/Anbu47/W4GZ-Trust-and-Hope/actions/runs/45790678588",
+  "last_verified_at": "2026-11-26T09:18:08.883699+00:00",
   "last_verified_support_sha256": "cfc7e64845eae49698450000f7a17c4d929b8f9083b59a8940a4c84f24c2ba01"
 }
