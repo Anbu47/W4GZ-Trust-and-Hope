@@ -346,7 +346,6 @@ window.W4GZ_VI = {
 "What you practised": "Những gì bạn đã luyện tập",
 "What you learned about yourself": "Những gì bạn học được về bản thân",
 "Writing for": "Writing for",
-"We learn how to do things. We do things, seriously and kindly. We share how to do it so others can learn.": "Chúng mình học cách làm mọi việc. Chúng mình làm việc một cách nghiêm túc và tử tế. Chúng mình chia sẻ cách làm để người khác cũng có thể học.",
 "This experience is educational and cannot replace clinical psychiatric care. If someone faces imminent danger, contact emergency services immediately. Locate confidential global hotlines at": "Trải nghiệm này mang tính giáo dục và không thể thay thế chăm sóc tâm thần chuyên môn. Nếu ai đó đang gặp nguy hiểm cận kề, hãy liên hệ ngay dịch vụ cấp cứu. Tìm các đường dây nóng bảo mật trên toàn thế giới tại",
 "Continue to Part 2: Hope Recovery ▶": "Tiếp tục Phần 2: Phục hồi Hy vọng ▶",
 "Play again ♥": "Chơi lại ♥",
