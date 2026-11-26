@@ -480,7 +480,7 @@
        {
         "g": "okay",
         "t": "“Just breathe slowly with me—if we sit here through the noise, you'll prove you can handle it.”",
-        "why": "Breathing together is calming. Moving somewhere quieter first makes it easier to breathe.",
+        "why": "Breathing together is calming. Turning the TV down or moving somewhere quieter first makes it easier to breathe.",
         "re": "Okay… slow breaths. Can we sit closer to the door?",
         "say": "Just breathe slowly with me—if we sit here through the noise, you'll prove you can handle it."
        },
@@ -752,7 +752,7 @@
        {
         "g": "okay",
         "t": "“You have a kind heart—let's donate to that cause together to channel that feeling!”",
-        "why": "Seeing their kind heart is lovely. Gently ask about the shame too, so they don't carry it alone.",
+        "why": "Seeing their kind heart is lovely. Gently ask about the self-blame too, so they don't carry it alone.",
         "re": "Yeah… doing something small might help. Thank you.",
         "say": "You have a kind heart—let's donate to that cause together to channel that feeling!"
        },
@@ -844,7 +844,7 @@
        {
         "g": "okay",
         "t": "“Don't talk like that! Statistics prove almost everyone recovers if you stay positive.”",
-        "why": "Believing in their recovery is powerful. Pair hope with “It's okay if you can't feel positive right now.”",
+        "why": "Believing in their recovery is powerful. Skip the statistics and add: “It's okay if you can't feel positive right now.”",
         "re": "I'm not sure about statistics… but I like hearing you believe it.",
         "say": "Don't talk like that! Statistics prove almost everyone recovers if you stay positive."
        },
@@ -1346,7 +1346,7 @@
        {
         "g": "okay",
         "t": "“Sorry I raised my voice—it's been a lot managing everything while you struggle.”",
-        "why": "Apologizing is a good step. Leave out the “but” so the apology stands on its own.",
+        "why": "Apologizing is a good step. Leave out the explanation so the apology stands on its own.",
         "re": "Thank you for saying sorry. I know it's been a lot for you.",
         "say": "Sorry I raised my voice—it's been a lot managing everything while you struggle."
        },
@@ -2179,7 +2179,7 @@
        {
         "g": "okay",
         "t": "“Looks great, leave it and I'll eat once my stomach settles.”",
-        "why": "Thanking them is kind. Even a few bites now can help—and lets them know their care reached you.",
+        "why": "Appreciating the food is kind. Even a few bites now can help—and lets them know their care reached you.",
         "re": "Of course. It'll be right here whenever you're ready.",
         "say": "Looks great, leave it and I'll eat once my stomach settles."
        },
