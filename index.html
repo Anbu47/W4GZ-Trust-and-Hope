@@ -2761,7 +2761,7 @@ function answer(i, btn){
   why.innerHTML = `<div class="why ${G.cls}"><h4>${G.head}${dl ? `<span class="delta life ${dl > 0 ? "up" : "down"}">${dl > 0 ? "+" : "−"}${Math.abs(dl)} ❤️</span>` : ""}</h4><span class="w"></span>${lightMsg ? `<div class="lm"></div>` : ""}${heartHTML(heartsGot)}</div>
     ${mySay(o) ? `<div class="say small mine"><div class="bubble"></div><div class="face">${avatar(GAME.player.kind, null, "mf", playerMood())}</div></div>` : ""}
     <div class="say small"><div class="face">${partnerAvatar("rf")}</div><div class="bubble"></div></div>
-    <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? (PART === 2 ? "Let the light in ✨" : "Resurrect ✨") : t.collect ? "Warm it up" : "Continue"}</button>`;
+    <button class="cta" id="doneBtn">${t.collect && lightNow === 2 ? "Let the light in ✨" : t.collect ? "Warm it up" : "Continue"}</button>`;
   why.querySelector(".w").textContent = T(o.why);
   if (lightMsg) why.querySelector(".lm").textContent = lightMsg;
   { const rb = why.querySelector(".say:not(.mine) .bubble"), mb = why.querySelector(".say.mine .bubble");

@@ -172,7 +172,6 @@ window.W4GZ_VI = {
 "STREAK!": "CHUỖI!",
 "<b>{0}</b> in a row": "<b>{0}</b> liên tiếp",
 "streak<br>bonus": "thưởng<br>chuỗi",
-"Resurrect ✨": "Hồi sinh ✨",
 "Let the light in ✨": "Đón ánh sáng vào ✨",
 "Warm it up": "Sưởi ấm nó",
 "Continue": "Tiếp tục",
