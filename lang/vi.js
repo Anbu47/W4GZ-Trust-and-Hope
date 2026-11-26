@@ -2421,7 +2421,7 @@ window.W4GZ_VI = {
 "Nothing happened between us, I promise. Just a rough week. Thanks for asking.": "Giữa tụi mình không có chuyện gì đâu, thật đó. Chỉ là tuần này khó khăn thôi. Cảm ơn cậu đã hỏi.",
 "Okay, okay… a shower. Thanks for the clean clothes.": "Thôi được rồi… đi tắm. Cảm ơn cậu đã chuẩn bị đồ sạch.",
 "Maybe later. Right now I just want quiet—but thanks for asking.": "Để lát nữa nhé. Giờ mình chỉ muốn yên tĩnh—nhưng cảm ơn cậu đã hỏi.",
-"Three bites… okay. Only because you cut it so neatly.": "Ba miếng… thôi được. Tại cậu cắt gọn gàng quá đó.",
+"Ahh… fine, just three bites. Thanks for cutting it up for me.": "A-a-a… thôi được, ba miếng thôi nhé. Cảm ơn cậu đã cắt sẵn cho mình.",
 "Thank you for being honest… and for staying anyway.": "Cảm ơn cậu đã thành thật… và vẫn ở lại bên mình.",
 "Thank you… maybe just help me with the scary ones?": "Cảm ơn cậu… hay cậu chỉ giúp mình mấy lá thư đáng sợ thôi nhé?",
 "Okay, okay, phone away. Just stay close, okay?": "Rồi rồi, cất điện thoại đây. Cậu ở gần mình chút nhé?",
