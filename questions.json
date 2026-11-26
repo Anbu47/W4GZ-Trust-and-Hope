@@ -47,7 +47,7 @@
         "t": "Sit down a safe distance away and murmur: “Mind if I sit near you, but quietly? You don't have to say anything.”",
         "why": "Their brain capacity is maxed out. Quiet presence respects boundaries while proving they aren't stranded.",
         "re": "Yeah. You can sit there. Just... don't ask me any questions, okay?",
-        "say": "Mind if I occupy space near you in absolute silence? Zero conversation required on your end."
+        "say": "Mind if I sit near you, but quietly? You don't have to say anything."
        },
        {
         "g": "okay",
@@ -61,7 +61,7 @@
         "t": "Look at the headphones and say: “Do Not Disturb mode today, huh?”",
         "why": "Using clipped minimalism to comment on withdrawal isolates them further by highlighting detachment without warmth.",
         "re": "Yeah. So what?",
-        "say": "Quiet day."
+        "say": "Do Not Disturb mode today, huh?"
        }
       ]
      },
@@ -475,7 +475,7 @@
         "t": "Mute the TV smoothly: “Totally fine. Go lie down somewhere quiet—I'll close all the doors and check on you later.”",
         "why": "Providing an immediate, zero-shame exit route stops sensory overload from escalating.",
         "re": "Thank you... the noise was literally making my chest tighten up.",
-        "say": "Totally fine. Go lie down somewhere quiet—I'll close all doors and check on you later."
+        "say": "Totally fine. Go lie down somewhere quiet—I'll close all the doors and check on you later."
        },
        {
         "g": "okay",
@@ -1086,7 +1086,7 @@
         "t": "“Maybe that therapist isn't proactive—should we find someone with action plans?”",
         "why": "Jumping to switch therapists undermines rapport.",
         "re": "Maybe… but let me try a couple more sessions first.",
-        "say": "Maybe that therapist wasn't proactive—should we find someone with action plans?"
+        "say": "Maybe that therapist isn't proactive—should we find someone with action plans?"
        },
        {
         "g": "hurt",
@@ -1493,7 +1493,7 @@
         "g": "okay",
         "t": "Push it down: “I'm not allowed to feel this. They're the one who's struggling.”",
         "why": "Burying the feeling doesn't make it go away—it builds pressure until it bursts.",
-        "re": "You've been carrying so much. Thank you—for everything."
+        "re": "You look worn out. Come sit with me for a minute?"
        },
        {
         "g": "hurt",
@@ -1880,14 +1880,14 @@
         "t": "Take a breath: “Not great, actually. I think I've been running on empty.”",
         "why": "Admitting truth to someone who cares is the first step.",
         "re": "Thank you for telling me the truth. We'll take it slow, together.",
-        "say": "Not great, actually. I think I've been running on empty for a while, and I didn't want to admit it."
+        "say": "Not great, actually. I think I've been running on empty."
        },
        {
         "g": "okay",
         "t": "“Just dealing with a mental backlog from work, I'll fix it this week.”",
         "why": "Intellectualizing exhaustion keeps you in your head.",
         "re": "A plan for work is good. And I'm here for the rest, too.",
-        "say": "Just dealing with a massive mental backlog from work, but I'll fix it this week."
+        "say": "Just dealing with a mental backlog from work, I'll fix it this week."
        },
        {
         "g": "hurt",
@@ -2239,7 +2239,7 @@
         "g": "okay",
         "t": "“Don't spend money on me! Take it home, I have food.”",
         "why": "Refusing care out of pride deprives friends of love.",
-        "re": "That's so like you, always thinking of others. They'll be happy you said thanks.",
+        "re": "That's so like you, always thinking of others. But keep the soup—they made it for you.",
         "say": "Don't spend money on me! Take it home, I have food."
        },
        {
@@ -3120,7 +3120,7 @@
         "t": "Set phone across room: “Comparing struggle to highlight reels.”",
         "why": "Naming illusions protects self-esteem.",
         "re": "Good move. Highlight reels aren't real life.",
-        "say": "I'm comparing my struggle to everyone's highlight reels."
+        "say": "Comparing struggle to highlight reels."
        },
        {
         "g": "okay",
@@ -3267,7 +3267,7 @@
         "g": "okay",
         "t": "Plan to push through: “Four hours of sleep is fine for one week.”",
         "why": "Sleep debt destabilizes mood.",
-        "re": "You're so committed. I'll keep the snacks coming this week."
+        "re": "You're so committed. Snacks are on me this week—just promise me some real sleep too?"
        },
        {
         "g": "hurt",
