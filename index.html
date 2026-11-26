@@ -1114,6 +1114,17 @@ html.t-dusk .langbtn{background:#2C4463 !important;border-color:#56789F !importa
 .lang-pop{position:absolute;top:calc(max(14px,env(safe-area-inset-top)) + 50px);right:16px;z-index:7;display:grid;gap:8px;min-width:190px;padding:12px;border-radius:16px;background:#FAF8F3;color:#2C4463;border:1px solid #BFCDDC;box-shadow:0 10px 28px rgba(0,0,0,.25)}
 html.t-dusk .lang-pop{background:#2C4463;color:#F0F4FA;border-color:#56789F}
 .lang-pop[hidden]{display:none}
+.hback{width:34px;height:40px;flex:none;border-radius:12px;border:1px solid var(--line);background:var(--card);color:inherit;font-size:18px;font-weight:700;display:grid;place-items:center;padding:0;cursor:pointer}
+html.t-light .hback{background:#FAF8F3;color:#2C4463;border-color:#BFCDDC}
+.vol-pop{position:fixed;z-index:60;display:grid;gap:10px;width:min(280px,calc(100vw - 16px));box-sizing:border-box;padding:12px 14px;border-radius:16px;background:#2C4463;color:#F0F4FA;border:1px solid #56789F;box-shadow:0 10px 28px rgba(0,0,0,.3);font-family:"Hanken Grotesk",sans-serif}
+html.t-light .vol-pop{background:#FAF8F3;color:#2C4463;border-color:#BFCDDC}
+.vol-pop[hidden]{display:none}
+.vol-pop .vp-title{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+.vp-row{display:grid;grid-template-columns:22px 1fr 42px;grid-template-areas:"ic name out" "bar bar bar";align-items:center;gap:2px 6px;font-size:14px;font-weight:600}
+.vp-ic{grid-area:ic}.vp-name{grid-area:name}
+.vp-row output{grid-area:out;text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;opacity:.85}
+.vp-row input{grid-area:bar;width:100%;margin:4px 0 0;accent-color:#8FD3E8;height:28px;cursor:pointer}
+html.t-light .vp-row input{accent-color:#1B6E96}
 .lang-pop small{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
 .lang-pop button{min-height:44px;border-radius:12px;border:1px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:15px;font-weight:800;text-align:left;padding:0 14px}
 .lang-pop button[aria-pressed="true"]{background:#2C4463;border-color:#2C4463;color:#fff}
@@ -1229,6 +1240,7 @@ html.lang-vi #qSheet .qcard.restq .scene::before{content:"🌿 TÌNH HUỐNG"}
   <!-- HOUSE -->
   <section class="screen" id="s-house">
     <div class="hud">
+      <button class="hback" data-go="s-title" aria-label="Back to the title screen">←</button>
       <div class="hmood" id="hMood"></div>
       <div class="hmeter">
         <div class="hlabel"><b id="hName"></b></div>
@@ -1375,10 +1387,15 @@ window.HEART_QUEST = { get state(){ return GAME; }, showName: k => showName(k), 
 // ================= SOUND =================
 let AC = null;
 const activeEffectTones = new Set();
+// Volume sliders (0–1), kept between visits.
+const VOL = { music:1, sfx:1 };
+try { const v = JSON.parse(localStorage.getItem("hq_vol")); if (v) { if (v.music >= 0 && v.music <= 1) VOL.music = v.music; if (v.sfx >= 0 && v.sfx <= 1) VOL.sfx = v.sfx; } } catch (e) {}
+let SFX_BUS = null;
+function sfxOut(){ if (!SFX_BUS) { SFX_BUS = AC.createGain(); SFX_BUS.gain.value = VOL.sfx; SFX_BUS.connect(AC.destination); } return SFX_BUS; }
 function audio(){ try { if (!AC) AC = new (window.AudioContext||window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume(); } catch(e){} }
 function tone(f,d,v=.12,delay=0,type="sine"){ if(!AC || !VOICE.on) return; const t=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();
   o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);
-  o.connect(g);g.connect(AC.destination);
+  o.connect(g);g.connect(sfxOut());
   activeEffectTones.add(o);
   o.onended = () => activeEffectTones.delete(o);
   o.start(t);o.stop(t+d+.05); }
@@ -1451,7 +1468,7 @@ function loadTrack(){
 function synthStart(){
   musicSetup();
   MUSIC.master.gain.cancelScheduledValues(AC.currentTime);
-  MUSIC.master.gain.setTargetAtTime(1.5, AC.currentTime, 1.5);
+  MUSIC.master.gain.setTargetAtTime(1.5 * VOL.music, AC.currentTime, 1.5);
   if (!MUSIC.timer) { MUSIC.next = AC.currentTime + 0.1; MUSIC.timer = setInterval(musicTick, 250); musicTick(); }
 }
 function musicStart(){
@@ -1470,7 +1487,7 @@ function musicStart(){
     }
     if (AC.state === "suspended") AC.resume();
     MUSIC.tgain.gain.cancelScheduledValues(AC.currentTime);
-    MUSIC.tgain.gain.setTargetAtTime(TRACK.vol, AC.currentTime, 0.8);
+    MUSIC.tgain.gain.setTargetAtTime(TRACK.vol * VOL.music, AC.currentTime, 0.8);
   });
 }
 function musicStop(){
@@ -1488,6 +1505,7 @@ function musicLabel(button){
 }
 function musicToggle(){
   MUSIC.on = !MUSIC.on;
+  if (MUSIC.on && VOL.music === 0) { VOL.music = 0.5; try { localStorage.setItem("hq_vol", JSON.stringify(VOL)); } catch (e) {} }
   try { localStorage.setItem("hq_music", MUSIC.on ? "on" : "off"); } catch(e) {}
   MUSIC.on ? musicStart() : musicStop();
   document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.setAttribute("aria-label", musicLabel(b)); });
@@ -1547,7 +1565,7 @@ function blip(kind, mood){
     lp.type = "lowpass"; lp.frequency.value = 2600; lp.Q.value = 0.7;     // soft, but with enough overtones to be heard on phones
     const vol = kind === "man" ? 0.06 : 0.05;
     g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.075);
-    o.connect(lp); o2.connect(lp); lp.connect(g); g.connect(AC.destination);
+    o.connect(lp); o2.connect(lp); lp.connect(g); g.connect(sfxOut());
     o.start(t); o2.start(t); o.stop(t + 0.09); o2.stop(t + 0.09);
   } catch (e) {}
 }
@@ -1586,6 +1604,63 @@ function voiceToggle(){
   const inMatching = $("s-support-match").classList.contains("active");
   toast(inMatching ? (VOICE.on ? "🔊 Đã bật giọng nhân vật và hiệu ứng âm thanh" : "🔇 Đã tắt giọng nhân vật và hiệu ứng âm thanh") : (VOICE.on ? "🔊 Voices and sound effects on" : "🔇 Voices and sound effects muted"));
 }
+// Sound panel: the 🔊 button opens two sliders, one for music and one for voices and sound effects.
+function volSave(){ try { localStorage.setItem("hq_vol", JSON.stringify(VOL)); } catch (e) {} }
+function volApply(){
+  if (AC) {
+    if (SFX_BUS) SFX_BUS.gain.setTargetAtTime(VOL.sfx, AC.currentTime, 0.03);
+    if (MUSIC.on && MUSIC.tgain && MUSIC.src) MUSIC.tgain.gain.setTargetAtTime(TRACK.vol * VOL.music, AC.currentTime, 0.05);
+    if (MUSIC.on && MUSIC.master && MUSIC.timer) MUSIC.master.gain.setTargetAtTime(1.5 * VOL.music, AC.currentTime, 0.05);
+  }
+  const was = VOICE.on; VOICE.on = VOL.sfx > 0;
+  if (was && !VOICE.on) activeEffectTones.forEach(o => { try { o.stop(); } catch (e) {} });
+  try { localStorage.setItem("hq_voice", VOICE.on ? "1" : "0"); } catch (e) {}
+  document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = !VOICE.on ? "🔇" : VOL.sfx < 0.5 ? "🔉" : "🔊"; });
+}
+function volSetup(){
+  if ($("volPop")) return;
+  const p = document.createElement("div"); p.id = "volPop"; p.className = "vol-pop"; p.hidden = true; p.setAttribute("role", "group");
+  p.innerHTML = `<small class="vp-title"></small>
+    <label class="vp-row"><span class="vp-ic">🎵</span><span class="vp-name" data-k="music"></span><input type="range" min="0" max="100" step="5" data-k="music"><output data-k="music"></output></label>
+    <label class="vp-row"><span class="vp-ic">🗣️</span><span class="vp-name" data-k="sfx"></span><input type="range" min="0" max="100" step="5" data-k="sfx"><output data-k="sfx"></output></label>`;
+  document.body.append(p);
+  p.addEventListener("click", e => e.stopPropagation());
+  p.addEventListener("pointerdown", e => e.stopPropagation());
+  p.querySelectorAll("input").forEach(inp => inp.addEventListener("input", () => {
+    const k = inp.dataset.k; VOL[k] = (+inp.value) / 100;
+    p.querySelector(`output[data-k="${k}"]`).textContent = inp.value + "%";
+    if (k === "music" && VOL.music > 0 && !MUSIC.on) { audio(); musicToggle(); }
+    volApply(); volSave();
+  }));
+  p.querySelector('input[data-k="sfx"]').addEventListener("change", () => { if (VOICE.on) sfx.tap(); });
+  document.addEventListener("click", () => volClose());
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !p.hidden) { volClose(); if (volOpen.btn) volOpen.btn.focus(); } });
+  volApply();
+}
+function volOpen(btn){
+  const p = $("volPop");
+  if (!p.hidden && volOpen.btn === btn) { volClose(); return; }
+  const vi = btn.closest("#s-support-match") || I18N.vi;
+  p.lang = vi ? "vi" : "en";
+  p.setAttribute("aria-label", vi ? "Âm lượng" : "Volume");
+  p.querySelector(".vp-title").textContent = vi ? "Âm lượng" : "Volume";
+  p.querySelector('.vp-name[data-k="music"]').textContent = vi ? "Nhạc" : "Music";
+  p.querySelector('.vp-name[data-k="sfx"]').textContent = vi ? "Giọng & hiệu ứng" : "Voices & effects";
+  p.querySelectorAll("input").forEach(inp => {
+    const k = inp.dataset.k, v = Math.round(VOL[k] * 100);
+    inp.value = k === "music" && !MUSIC.on ? 0 : v;
+    inp.setAttribute("aria-label", p.querySelector(`.vp-name[data-k="${k}"]`).textContent);
+    p.querySelector(`output[data-k="${k}"]`).textContent = inp.value + "%";
+  });
+  p.hidden = false;
+  const r = btn.getBoundingClientRect(), w = p.offsetWidth;
+  p.style.top = Math.round(r.bottom + 8) + "px";
+  p.style.left = Math.round(Math.max(8, Math.min(innerWidth - w - 8, r.right - w))) + "px";
+  document.querySelectorAll(".voicebtn").forEach(b => b.setAttribute("aria-expanded", b === btn ? "true" : "false"));
+  volOpen.btn = btn;
+  p.querySelector("input").focus({ preventScroll:true });
+}
+function volClose(){ const p = $("volPop"); if (!p || p.hidden) return; p.hidden = true; document.querySelectorAll(".voicebtn").forEach(b => b.setAttribute("aria-expanded", "false")); }
 // Reveal a question card step by step: the situation types out, the speaker talks, then the answers pop up.
 function revealCard(card, steps){
   colourCharacterNames(card);
@@ -1614,6 +1689,7 @@ const typeStep = (el, text, speed, voice) => (go) => el ? typeText(el, text, spe
 function go(id){
   $("qSheet").lang = (id === "s-support-match" || I18N.vi) ? "vi" : "en";
   ["qSheet","chapterCard","helpSheet","toast"].forEach(k => { const el = $(k); if (el) el.classList.remove("show"); });
+  volClose();
   document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
   if (id === "s-support-match") renderSupportMatch();
   if (id === "s-player") renderPlayer();
@@ -3115,7 +3191,8 @@ $("againBtn").onclick = () => { audio(); sfx.next(); go("s-intro"); };
 $("nextPartBtn").onclick = () => { applyPart(2); audio(); sfx.next(); go("s-intro"); };
 
 document.querySelectorAll(".musicbtn:not(.voicebtn)").forEach(b => { b.classList.toggle("off", !MUSIC.on); b.setAttribute("aria-label", musicLabel(b)); b.onclick = e => { e.stopPropagation(); audio(); musicToggle(); }; });
-document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🔊" : "🔇"; b.setAttribute("aria-label", voiceLabel(b)); b.onclick = e => { e.stopPropagation(); audio(); voiceToggle(); }; });
+document.querySelectorAll(".voicebtn").forEach(b => { b.classList.toggle("off", !VOICE.on); b.textContent = VOICE.on ? "🔊" : "🔇"; b.setAttribute("aria-label", voiceLabel(b)); b.setAttribute("aria-haspopup","true"); b.setAttribute("aria-expanded","false"); b.onclick = e => { e.stopPropagation(); audio(); volOpen(b); }; });
+volSetup();
 
 // ---------------- colour theme: Light sky (default) or Soft dusk ----------------
 function setTheme(t){

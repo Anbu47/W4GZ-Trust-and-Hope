@@ -7,6 +7,7 @@ window.W4GZ_VI = {
 "Help": "Hỗ trợ",
 "♡ Help": "♡ Hỗ trợ",
 "Get help": "Tìm hỗ trợ",
+"Back to the title screen": "Về màn hình chính",
 "Need support now? Tap here 💗": "Cần hỗ trợ ngay? Chạm vào đây 💗",
 "Visit W4GZ — Writing for Gen Z (opens in a new tab)": "Ghé thăm W4GZ — Writing for Gen Z (mở trong thẻ mới)",
 "Trust": "Niềm tin",
